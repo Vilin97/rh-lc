@@ -66,6 +66,7 @@ private theorem lte_val (g δ l : ℕ) (hg : 2 ≤ g) (h4 : 4 ∣ g - 1) (hδ : 
       simp at this; omega
     rw [← padicValNat_eq_emultiplicity n1, ← padicValNat_eq_emultiplicity (by omega : g - 1 ≠ 0),
       ← padicValNat_eq_emultiplicity (by omega : δ ≠ 0)] at key
+    simp only [Nat.padicValNat_def]
     exact_mod_cast key
   · have := padicValNat.pow_sub_pow (p := l) hodd (x := g) (y := 1) (by omega) hd hlg (n := δ) (by omega)
     simpa using this

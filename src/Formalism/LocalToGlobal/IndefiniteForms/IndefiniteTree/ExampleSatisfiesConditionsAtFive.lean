@@ -396,7 +396,8 @@ theorem index_pos (U : Subgroup P) : (0 : ℝ) < (U.index : ℝ) := by
 
 theorem card_pos (U : Subgroup P) : (0 : ℝ) < (Nat.card U : ℝ) := by
   have h : 0 < Nat.card U := Nat.card_pos
-  exact_mod_cast h
+  push_cast [ENat.card_eq_coe_natCard]
+  exact h
 
 theorem matLat_one' {d : ℕ} (L : Submodule (𝓞 K) (Fin d → K)) :
     matLat (1 : Matrix (Fin d) (Fin d) K) L = L := by

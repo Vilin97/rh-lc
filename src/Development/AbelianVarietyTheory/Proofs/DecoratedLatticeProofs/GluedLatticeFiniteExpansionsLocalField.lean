@@ -61,7 +61,8 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 theorem card_ne_zero (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] : ((resCard k : ℂ) ^ Fintype.card n) ≠ 0 := by
   have h : Nat.card (Module.Dual 𝓀[k] (Red L)) ≠ 0 := Nat.card_pos.ne'
   rw [card_dual] at h
-  exact_mod_cast h
+  push_cast [ENat.card_eq_coe_natCard]
+  exact h
 
 omit [Fintype n] in
 

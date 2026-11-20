@@ -28,7 +28,8 @@ private theorem ringKrullDim_finite_of_finiteType_int (A : Type) [CommRing A]
     IsPrincipalIdealRing.ringKrullDim_eq_one ℤ Int.not_isField]
   have h : ((1 + Nat.card (Fin n) : ℕ) : WithBot ℕ∞) < ⊤ :=
     WithBot.coe_lt_coe.mpr (ENat.coe_lt_top _)
-  exact_mod_cast h
+  push_cast [ENat.card_eq_coe_natCard]
+  exact h
 
 open IsLocalRing in
 

@@ -327,7 +327,7 @@ theorem expSeries_sub_one_sub_self_mem {a : ℤ} {x : K} (hx : x ∈ valBall K a
   have hp2 : (2 : ℤ) ≤ p := by exact_mod_cast hp.out.two_le
   have hp1 : ((p - 1 : ℕ) : ℤ) = (p : ℤ) - 1 := by
     rw [Nat.cast_sub hp.out.one_le]; simp
-  have h0' : (((p - 1) * v : ℕ) : ℤ) < k + 1 + 1 := by exact_mod_cast h0
+  have h0' : (((p - 1) * v : ℕ) : ℤ) < k + 1 + 1 := by exact_mod_cast (by simpa only [v, Nat.padicValNat_def] using h0)
   push_cast [hp1] at h0' h1
   have he : (0 : ℤ) ≤ e := by positivity
   have h0'' : ((p : ℤ) - 1) * v ≤ k + 1 := by linarith

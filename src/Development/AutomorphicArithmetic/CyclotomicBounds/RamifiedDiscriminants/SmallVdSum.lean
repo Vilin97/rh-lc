@@ -40,7 +40,7 @@ theorem UpperTheory.KR.small_vd_sum :
           obtain ⟨hpp, hpd⟩ := (H.mem_small_iff).mp hp
           haveI := Fact.mk hpp
           have hv1 : (1 : ℝ) ≤ padicValNat p H.QS := by
-            exact_mod_cast one_le_padicValNat_of_dvd hQ0 hpd
+            exact_mod_cast (by simpa only [Nat.padicValNat_def] using one_le_padicValNat_of_dvd hQ0 hpd)
           have hvd := (hsm p hp).1
           have hlp : 0 ≤ Real.log p := Real.log_natCast_nonneg p
           nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ 3 / 2 * padicValNat p H.QS - 1 - H.vdH p / 2) hlp]
