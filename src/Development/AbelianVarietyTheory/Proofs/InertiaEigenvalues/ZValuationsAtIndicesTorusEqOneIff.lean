@@ -8,7 +8,7 @@ theorem valsAt_torus_eq_one_iff (G : Type) [CommGroup G] (τ : G →* G) (T : Su
     (hT : ∀ t, t ∈ T ↔ t * τ t = 1) (ι : Type) (s : ι → ι) (w : ι → G →* Multiplicative ℤ)
     (hs : ∀ i x, 0 ≤ Multiplicative.toAdd (w (s i) x) ↔ 0 ≤ Multiplicative.toAdd (w i (τ x)))
     (r : ℕ) (e : Fin r → ι) (hcov : ∀ i, s i = i ∨ ∃ j, i = e j ∨ i = s (e j)) (t : T) :
-    (valsAt w e).comp T.subtype t = 1 ↔ ∀ i, Multiplicative.toAdd (w i (t : G)) = 0 := by
+    ((MulEquiv.funMultiplicative _ ℤ).symm.toMonoidHom.comp (MonoidHom.pi (w ∘ e))).comp T.subtype t = 1 ↔ ∀ i, Multiplicative.toAdd (w i (t : G)) = 0 := by
   have hinv : ∀ i (x : G), Multiplicative.toAdd (w i x⁻¹) = - Multiplicative.toAdd (w i x) := by
     intro i x; rw [map_inv, toAdd_inv]
   have hτ : τ (t : G) = (t : G)⁻¹ := eq_inv_of_mul_eq_one_right ((hT t).1 t.2)
@@ -18,7 +18,8 @@ theorem valsAt_torus_eq_one_iff (G : Type) [CommGroup G] (τ : G →* G) (T : Su
     have he : ∀ j, Multiplicative.toAdd (w (e j) (t : G)) = 0 := by
       intro j
       have := congrArg (fun y : Multiplicative (Fin r → ℤ) => Multiplicative.toAdd y j) h
-      simpa [valsAt_apply] using this
+      simpa [MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom,
+        MulEquiv.piMultiplicative_symm_apply, toAdd_ofAdd, MonoidHom.pi_apply, Function.comp_apply] using this
     intro i
     rcases hcov i with hi | ⟨j, hj | hj⟩
     · have h1 := hs i (t : G)
@@ -35,7 +36,9 @@ theorem valsAt_torus_eq_one_iff (G : Type) [CommGroup G] (τ : G →* G) (T : Su
     apply Multiplicative.toAdd.injective
     funext j
     simp only [MonoidHom.comp_apply, Subgroup.coe_subtype]
-    rw [valsAt_apply, h]
+    simp only [MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom,
+      MulEquiv.piMultiplicative_symm_apply, toAdd_ofAdd, MonoidHom.pi_apply, Function.comp_apply]
+    rw [h]
     rfl
 
 end GlobalTheory.TorusKer
