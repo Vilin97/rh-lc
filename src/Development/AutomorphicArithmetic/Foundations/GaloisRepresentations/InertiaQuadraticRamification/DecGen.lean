@@ -97,7 +97,7 @@ theorem UpperTheory.Gal.UnramifiedFromSplittingCriterion.decGen :
   let O : Set (Dec A) := Subtype.val ⁻¹' ((fun σ : G F Ω => g⁻¹ * σ) ⁻¹'
     ((IntermediateField.adjoin F X).fixingSubgroup : Set (G F Ω)))
   have hO : IsOpen O :=
-    ((IntermediateField.adjoin F X).fixingSubgroup_isOpen.preimage (continuous_mul_left g⁻¹)).preimage
+    ((IntermediateField.adjoin F X).fixingSubgroup_isOpen.preimage (continuous_const_mul g⁻¹)).preimage
       continuous_subtype_val
   have hgO : (⟨g, hg⟩ : Dec A) ∈ O := by
     show g⁻¹ * g ∈ (IntermediateField.adjoin F X).fixingSubgroup

@@ -172,7 +172,7 @@ theorem exists_compact_tile [NeZero m] (hc : IsCentralCoeff m α c) :
   obtain ⟨d₁, hd₁⟩ := (hC.image hcont).bddAbove
   obtain ⟨d₀, hd₀⟩ := (hC.image hcont).bddBelow
   refine ⟨⋃ j ∈ Finset.Icc (-|d₀| - 1) |d₁|, (fun h => centralUnif F m ^ (-j) * h) '' C,
-    (Finset.Icc (-|d₀| - 1) |d₁|).isCompact_biUnion fun j _ => hC.image (continuous_mul_left _),
+    (Finset.Icc (-|d₀| - 1) |d₁|).isCompact_biUnion fun j _ => hC.image (continuous_const_mul _),
     fun g hg hcg => ?_⟩
   obtain ⟨j, hj⟩ := hCs g hcg
   have h1 := hd₁ ⟨_, hj, rfl⟩

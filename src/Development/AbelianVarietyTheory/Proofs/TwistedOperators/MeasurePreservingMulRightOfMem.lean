@@ -169,10 +169,10 @@ theorem continuous_of_level (V : HSp D) (K : Subgroup (GL (Fin V.rank) (Lev.EAf 
   intro x0
   let p : GA D V → GinfC V := fun x => ⟨realPart V (x0⁻¹ * x), realPart_mem V _⟩
   have hp : Continuous p :=
-    ((continuous_realPart V).comp (continuous_mul_left x0⁻¹)).subtype_mk _
+    ((continuous_realPart V).comp (continuous_const_mul x0⁻¹)).subtype_mk _
   have hev : (fun x => Φ (x0 * (p x : GA D V))) =ᶠ[𝓝 x0] Φ := by
     have hn : (fun x => x0⁻¹ * x) ⁻¹' ((K.comap (Lev.finE V) : Subgroup (GA D V)) : Set (GA D V)) ∈ 𝓝 x0 :=
-      (ho.preimage (continuous_mul_left x0⁻¹)).mem_nhds (by
+      (ho.preimage (continuous_const_mul x0⁻¹)).mem_nhds (by
         simp only [Set.mem_preimage, inv_mul_cancel, SetLike.mem_coe]
         exact (K.comap (Lev.finE V)).one_mem)
     filter_upwards [hn] with x hx

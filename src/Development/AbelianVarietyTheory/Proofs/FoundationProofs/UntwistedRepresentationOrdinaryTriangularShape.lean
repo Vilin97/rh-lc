@@ -35,7 +35,7 @@ theorem unifCont : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ
   obtain ⟨U, hU1, hU⟩ : ∃ U ∈ nhds (1 : Ω ≃ₐ[ℚ] Ω), ∀ s, ∀ u ∈ U, ‖f (s * u) - f s‖ < δ := by
     obtain ⟨t, ht⟩ := isCompact_univ.elim_finite_subcover
       (fun x => (fun y => x⁻¹ * y) ⁻¹' interior (V x))
-      (fun x => isOpen_interior.preimage (continuous_mul_left x⁻¹))
+      (fun x => isOpen_interior.preimage (continuous_const_mul x⁻¹))
       (fun y _ => Set.mem_iUnion.2 ⟨y, by
         show y⁻¹ * y ∈ interior (V y)
         rw [inv_mul_cancel]

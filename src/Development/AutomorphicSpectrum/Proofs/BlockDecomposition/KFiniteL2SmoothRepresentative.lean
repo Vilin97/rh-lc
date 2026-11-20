@@ -129,7 +129,7 @@ variable {U : Subgroup (GL (Fin a) (Af E))}
 theorem locallyIntegrable_mul_left {Fl : GA E a → ℂ} (hFl : LocallyIntegrable Fl μ) (x : GA E a) :
     LocallyIntegrable (fun y => Fl (x * y)) μ := by
   refine locallyIntegrable_iff.2 fun K hK => ?_
-  have h1 := locallyIntegrable_iff.1 hFl _ (hK.image (continuous_mul_left x))
+  have h1 := locallyIntegrable_iff.1 hFl _ (hK.image (continuous_const_mul x))
   have h2 := ((measurePreserving_mul_left μ x).integrableOn_comp_preimage
     (Homeomorph.mulLeft x).measurableEmbedding).2 h1
   refine h2.mono_set fun y hy => ⟨y, hy, rfl⟩

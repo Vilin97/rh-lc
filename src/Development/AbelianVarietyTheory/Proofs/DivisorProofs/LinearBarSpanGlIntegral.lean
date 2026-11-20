@@ -85,7 +85,7 @@ theorem isHaar_map_trGL (n : ℕ) (μ : Measure (GL (Fin n) k)) [μ.IsHaarMeasur
     (μ.map (trGL n)).IsHaarMeasure := by
   have hm : Measurable (trGL n : GL (Fin n) k → GL (Fin n) k) := (trGL n).continuous.measurable
   haveI : (μ.map (trGL n)).IsMulLeftInvariant := ⟨fun a => by
-    rw [Measure.map_map (continuous_mul_left a).measurable hm]
+    rw [Measure.map_map (continuous_const_mul a).measurable hm]
     have e : (fun x => a * x) ∘ (trGL n) = (trGL n) ∘ (fun x => x * trGL n a) := by
       funext g; apply Units.ext
       simp only [Function.comp_apply, Units.val_mul, trGL_val, Matrix.transpose_mul, Matrix.transpose_transpose]

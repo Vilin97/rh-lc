@@ -55,7 +55,7 @@ theorem sigma_finite_of_integrable_positive [μ.IsMulLeftInvariant] (f : G → �
     exact hh'.le.trans (le_abs_self _)
   haveI : IsLocallyFiniteMeasure μ := by
     refine ⟨fun g => ⟨(fun h => g⁻¹ * h) ⁻¹' {h : G | f 1 / 2 < f h}, ?_, ?_⟩⟩
-    · apply (continuous_mul_left g⁻¹).continuousAt.preimage_mem_nhds
+    · apply (continuous_const_mul g⁻¹).continuousAt.preimage_mem_nhds
       simpa using hUo.mem_nhds h1U
     · rw [measure_preimage_mul]
       exact hUfin

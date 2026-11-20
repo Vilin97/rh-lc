@@ -133,7 +133,7 @@ theorem coc_near {AI : LocAinf l (LT l)} (T : LocTied l (LT l) AI) (e M n : ℕ)
     (h : qB (LT l) (tw LT e σ) * (LT l).actQdR σ x = x) :
     ∀ᶠ τ in 𝓝 σ, coc LT e x b τ - coc LT e x b σ ∈ Lat AI M n := by
   have ht : Tendsto (fun τ : GQ l => σ⁻¹ * τ) (𝓝 σ) (𝓝 1) := by
-    have := (continuous_mul_left σ⁻¹).tendsto σ
+    have := (continuous_const_mul σ⁻¹).tendsto σ
     rwa [inv_mul_cancel] at this
   filter_upwards [ht.eventually (coc_small LT T e M n hx hb)] with τ hτ
   have h1 := coc_mul LT e x b σ (σ⁻¹ * τ) h

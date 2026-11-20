@@ -200,7 +200,7 @@ theorem exists_equiv_detRep (k : Type) [Field k] [ValuativeRel k] [TopologicalSp
       scalar_det_of_subsingleton g
     generalize Matrix.GeneralLinearGroup.det g = x at hgx
     have hUo : IsOpen {y : kˣ | σ (Matrix.GeneralLinearGroup.scalar c (x⁻¹ * y)) v = v} :=
-      (hs v).preimage (hsc.comp (continuous_mul_left x⁻¹))
+      (hs v).preimage (hsc.comp (continuous_const_mul x⁻¹))
     have hxU : x ∈ {y : kˣ | σ (Matrix.GeneralLinearGroup.scalar c (x⁻¹ * y)) v = v} := by
       show σ (Matrix.GeneralLinearGroup.scalar c (x⁻¹ * x)) v = v
       rw [inv_mul_cancel, map_one, map_one, Module.End.one_apply]

@@ -30,7 +30,7 @@ theorem UpperTheory.ConvolutionTheory.R2.M.ideleSum :
       ENNReal.ofReal q ^ n * (ENNReal.ofReal B * ideleMeasure F C) := by
     intro n
     have hS : MeasurableSet ((ρ ^ n * ·) '' C) :=
-      (hC.image (continuous_mul_left _)).measurableSet
+      (hC.image (continuous_const_mul _)).measurableSet
     have hμ : ideleMeasure F ((ρ ^ n * ·) '' C) = ideleMeasure F C := by
       rw [Set.image_mul_left]; exact measure_preimage_mul _ _ _
     calc ∫⁻ a in (ρ ^ n * ·) '' C, M.wt a ∂(ideleMeasure F)

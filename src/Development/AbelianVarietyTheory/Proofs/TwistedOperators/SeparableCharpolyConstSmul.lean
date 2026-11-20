@@ -73,10 +73,10 @@ theorem charFn_central_mul : ∀ (n : ℕ) (ε : Fin n → Bool) (μ : Measure (
       have hpre : K = (c * ·) ⁻¹' ((c * ·) '' K) := (Set.preimage_image_eq K (mul_right_injective c)).symm
       rw [hpre]
       exact ((measurePreserving_mul_left μ c).integrableOn_comp_preimage (measurableEmbedding_mulLeft c)).2
-        ((locallyIntegrable_iff.1 hΘ.1) _ (hK.image (continuous_mul_left c)))
+        ((locallyIntegrable_iff.1 hΘ.1) _ (hK.image (continuous_const_mul c)))
     exact h0.smul χ⁻¹
   have hcont : ∀ s, IsRegSS (suMat ε s) → ContinuousAt Θ₂ s := fun s hs =>
-    continuousAt_const.mul ((hΘ.2.1 (c * s) (isRegSS_central_mul hc hs)).comp (continuous_mul_left c).continuousAt)
+    continuousAt_const.mul ((hΘ.2.1 (c * s) (isRegSS_central_mul hc hs)).comp (continuous_const_mul c).continuousAt)
   have hΘ₂c : IsCharFn (suMat ε) μ ρ Θ₂ := by
     refine ⟨hli, hcont, fun f hf => ?_⟩
     set f₂ : SUJ ε → ℂ := fun x => f (c⁻¹ * x) with hf₂

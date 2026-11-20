@@ -46,13 +46,13 @@ theorem inflation_basic : ∀ (I : AutInst) (g : ℕ) (Q : Type) [Group Q] (ρ :
   · intro q
     obtain ⟨t, ht⟩ := fibre_eq ρ q
     rw [ht]
-    exact ⟨measure_preimage_mul μf t _, hopen.preimage (continuous_mul_left t)⟩
+    exact ⟨measure_preimage_mul μf t _, hopen.preimage (continuous_const_mul t)⟩
   · intro a
     refine ⟨integrable_lift ρ μf hg a, ?_, fun x k hk k' hk' => lift_biinv ρ μf a x k hk k' hk'⟩
     rw [IsLocallyConstant.iff_eventually_eq]
     intro x
     have hnhds : (fun y => x⁻¹ * y) ⁻¹' I.Kg g ∈ nhds x :=
-      (hopen.preimage (continuous_mul_left x⁻¹)).mem_nhds (by
+      (hopen.preimage (continuous_const_mul x⁻¹)).mem_nhds (by
         show x⁻¹ * x ∈ I.Kg g
         rw [inv_mul_cancel]
         exact h1)

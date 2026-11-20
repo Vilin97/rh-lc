@@ -48,7 +48,7 @@ private theorem lint_cover {G ι : Type} [CommGroup G] [TopologicalSpace G] [IsT
     (hs : ∀ a, f a ≠ 0 → ∃ k : ι → ℤ, ∃ c ∈ C, a = (∏ i, ρ i ^ k i) * c)
     (hb : ∀ k : ι → ℤ, ∀ c ∈ C, f ((∏ i, ρ i ^ k i) * c) ≤ A * ∏ i, g (k i)) : ∫⁻ a, f a ∂μ < ⊤ := by
   set T : (ι → ℤ) → Set G := fun k => ((∏ i, ρ i ^ k i) * ·) '' C with hT
-  have hTm : ∀ k, MeasurableSet (T k) := fun k => (hC.image (continuous_mul_left _)).measurableSet
+  have hTm : ∀ k, MeasurableSet (T k) := fun k => (hC.image (continuous_const_mul _)).measurableSet
   have hμ : ∀ k, μ (T k) = μ C := fun k => by
     simp only [hT]
     rw [Set.image_mul_left]; exact measure_preimage_mul _ _ _

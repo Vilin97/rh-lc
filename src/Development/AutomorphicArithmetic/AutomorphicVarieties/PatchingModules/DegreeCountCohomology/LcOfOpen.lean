@@ -13,7 +13,7 @@ private theorem lc_of_open {R Γ M : Type} [CommRing R] [Group Γ] [TopologicalS
     hH.isOpenMap_subtype_val _ ((h m).isOpen_fiber m)
   have h1 : (1 : Γ) ∈ (Subtype.val : H → Γ) '' {z : H | ρ z m = m} := ⟨1, by simp, rfl⟩
   have ht : Filter.Tendsto (fun y => x⁻¹ * y) (nhds x) (nhds 1) := by
-    have h0 := (continuous_mul_left x⁻¹).tendsto x
+    have h0 := (continuous_const_mul x⁻¹).tendsto x
     simpa using h0
   filter_upwards [ht (hU.mem_nhds h1)] with y hy
   obtain ⟨z, hz, hzy⟩ := hy

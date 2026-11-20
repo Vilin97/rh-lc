@@ -108,7 +108,7 @@ theorem exists_open_sub : ∀ (K Ω : Type) [Field Ω] [Field K] [NumberField K]
       rw [← h1] at hx
       exact closure_mono h2 hx
     have hopen : IsOpen {x : Dec (F := K) A | d⁻¹ * x ∈ U.toSubgroup} :=
-      U.isOpen.preimage (continuous_mul_left d⁻¹)
+      U.isOpen.preimage (continuous_const_mul d⁻¹)
     obtain ⟨x, hxU, w, rfl⟩ := hd.inter_open_nonempty _ hopen ⟨d, by simp⟩
     exact ⟨w, (d⁻¹ * ι w)⁻¹, U.toSubgroup.inv_mem hxU, by group⟩
   have hJW : ∀ (w : Weil h) (j : Dec (F := K) A), j ∈ J → ι w * j * (ι w)⁻¹ ∈ J := by

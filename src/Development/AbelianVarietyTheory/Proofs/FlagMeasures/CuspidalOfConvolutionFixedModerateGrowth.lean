@@ -40,8 +40,8 @@ theorem isHaarSub_map_emb {H G : Type} [Group H] [TopologicalSpace H] [IsTopolog
     have hcomm : (fun z : G => ι k * z) ∘ ι = ι ∘ (fun z : H => k * z) := by
       funext z
       simp only [Function.comp_apply, map_mul]
-    rw [Measure.map_map (continuous_mul_left (ι k)).measurable hme.measurable, hcomm,
-      ← Measure.map_map hme.measurable (continuous_mul_left k).measurable, hinv k hk]
+    rw [Measure.map_map (continuous_const_mul (ι k)).measurable hme.measurable, hcomm,
+      ← Measure.map_map hme.measurable (continuous_const_mul k).measurable, hinv k hk]
 
 theorem constTerm_repro {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G] (μ ν : Measure G) [SFinite μ]

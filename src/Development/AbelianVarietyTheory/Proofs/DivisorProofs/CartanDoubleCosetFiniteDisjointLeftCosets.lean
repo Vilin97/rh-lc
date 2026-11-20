@@ -32,7 +32,7 @@ theorem shell_cosets : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpa
   set K := KO k (Fin a) with hK
   set P : GL (Fin a) k → Set (GL (Fin a) k) := fun x => {g | (x * d)⁻¹ * g ∈ K} with hP
   have hPo : ∀ x, IsOpen (P x) := fun x =>
-    (GlobalTheory.SplitFlip.isOpen_KO (k := k) (n := Fin a)).preimage (continuous_mul_left _)
+    (GlobalTheory.SplitFlip.isOpen_KO (k := k) (n := Fin a)).preimage (continuous_const_mul _)
   have hsub : ∀ x ∈ K, P x ⊆ shellSet ϖ n := by
     intro x hx g hg
     rw [mem_shellSet]

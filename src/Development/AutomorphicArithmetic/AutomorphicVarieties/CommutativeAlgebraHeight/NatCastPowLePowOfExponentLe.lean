@@ -115,7 +115,7 @@ private theorem lc_of_ker {G E : Type} [Group G] [TopologicalSpace G] [IsTopolog
     (ρ : G →* E) (h : IsOpen (ρ.ker : Set G)) : IsLocallyConstant ρ := by
   rw [IsLocallyConstant.iff_exists_open]
   intro x
-  refine ⟨(fun y => x⁻¹ * y) ⁻¹' (ρ.ker : Set G), h.preimage (continuous_mul_left x⁻¹), ?_, ?_⟩
+  refine ⟨(fun y => x⁻¹ * y) ⁻¹' (ρ.ker : Set G), h.preimage (continuous_const_mul x⁻¹), ?_, ?_⟩
   · simp
   · intro y hy
     simp only [Set.mem_preimage, SetLike.mem_coe, MonoidHom.mem_ker, map_mul] at hy

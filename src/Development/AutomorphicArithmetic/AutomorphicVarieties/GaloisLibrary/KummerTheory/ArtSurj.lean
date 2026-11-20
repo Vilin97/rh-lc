@@ -33,7 +33,7 @@ theorem UpperTheory.V.Kum.artSurj :
         rw [Set.mem_preimage, Set.mem_preimage, Set.mem_singleton_iff, SetLike.mem_coe,
           MonoidHom.mem_ker, map_mul, map_inv, inv_mul_eq_one, eq_comm]
       rw [this]
-      exact hopen.preimage (continuous_mul_left g⁻¹)
+      exact hopen.preimage (continuous_const_mul g⁻¹)
     · push_neg at hy
       have : (artCl K Ω) ⁻¹' {y} = ∅ := by
         ext x

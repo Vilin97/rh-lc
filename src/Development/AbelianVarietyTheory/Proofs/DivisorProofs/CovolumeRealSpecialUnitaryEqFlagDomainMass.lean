@@ -286,7 +286,7 @@ theorem covolume_realSU : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   haveI : MeasurableConstSMul (inReal X.Ψ X.Gm X.Γ) (realSU X.Ψ X.Gm) :=
     ⟨fun c => by
       show Measurable fun a : realSU X.Ψ X.Gm => (c : realSU X.Ψ X.Gm) * a
-      exact (continuous_mul_left _).measurable⟩
+      exact (continuous_const_mul _).measurable⟩
   haveI : (riemHaar X.Ψ X.Gm x).IsMulLeftInvariant := by rw [hμ]; infer_instance
   haveI : SMulInvariantMeasure (inReal X.Ψ X.Gm X.Γ) (realSU X.Ψ X.Gm) (riemHaar X.Ψ X.Gm x) :=
     ⟨fun c s _ => measure_preimage_mul (riemHaar X.Ψ X.Gm x) (c : realSU X.Ψ X.Gm) s⟩

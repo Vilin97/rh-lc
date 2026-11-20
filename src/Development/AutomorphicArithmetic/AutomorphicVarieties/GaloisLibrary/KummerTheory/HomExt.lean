@@ -107,7 +107,7 @@ theorem UpperTheory.V.Kum.homExt :
       intro x hx
       have hxc := hinter x hx
       refine Filter.mem_of_superset
-        (IsOpen.mem_nhds (hNopen.preimage (continuous_mul_left x⁻¹)) (by simpa using Subgroup.one_mem _))
+        (IsOpen.mem_nhds (hNopen.preimage (continuous_const_mul x⁻¹)) (by simpa using Subgroup.one_mem _))
         (fun a ha => ⟨x, hxc, x⁻¹ * a, ha, by group⟩))
   have hex : ∀ y : levU l U n, ∃ c : cycU l U, ∃ w ∈ E.fixingSubgroup, (y : G F Ω) = c * w := by
     intro y

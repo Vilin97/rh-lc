@@ -88,7 +88,7 @@ theorem measure_fundamental_domain_lt_top (hS : GlobalTheory.Published.SiegelSet
     exact Function.Injective.countable (f := fun γ : Γ =>
       (⟨γ.1.1, γ.2⟩ : (Matrix.GeneralLinearGroup.map (n := Fin n) (inclR (F := F) (E := E) (AF F))).range))
       fun x y h => Subtype.ext (Subtype.ext (Subtype.mk.inj h))
-  haveI : MeasurableConstSMul Γ (HR (AF F) σ J) := ⟨fun γ => (continuous_mul_left γ.1).measurable⟩
+  haveI : MeasurableConstSMul Γ (HR (AF F) σ J) := ⟨fun γ => (continuous_const_mul γ.1).measurable⟩
   haveI : SMulInvariantMeasure Γ (HR (AF F) σ J) μ := ⟨fun γ s _ => measure_preimage_mul μ γ.1 s⟩
   refine lt_of_le_of_lt (GlobalTheory.measure_le_of_isFundamentalDomain_of_ae_covers hD (.of_forall fun g => ?_)) (hvol μ hμ)
   obtain ⟨γ, ⟨δ, -, hδ⟩, s, hs, e⟩ := hcov g

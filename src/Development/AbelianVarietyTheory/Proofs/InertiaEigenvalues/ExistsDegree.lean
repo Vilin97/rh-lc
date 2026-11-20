@@ -43,7 +43,7 @@ theorem exists_degree : ∀ (l : ℕ) [Fact l.Prime],
       refine (GlobalTheory.UnramifiedCrys.finite_fixedPow (p := l) (R := Om l) (hpos k)).eventually_all.2
         fun x _ => ?_
       have ho := (stabilizer_isOpen_of_isIntegral (K := ℚ_[l]) x).preimage
-        (continuous_mul_left σ₀⁻¹)
+        (continuous_const_mul σ₀⁻¹)
       filter_upwards [ho.mem_nhds (show σ₀ ∈ _ by simp)] with σ hσ
       have h : σ₀⁻¹ (σ x) = x := hσ
       have h' := congrArg σ₀ h

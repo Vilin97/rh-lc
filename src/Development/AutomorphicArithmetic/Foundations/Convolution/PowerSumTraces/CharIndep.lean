@@ -20,7 +20,7 @@ private theorem isLocallyConstant_of_right {U : Subgroup G} (hUo : IsOpen (U : S
     (hf : ∀ k ∈ U, ∀ x, f (x * k) = f x) : IsLocallyConstant f := by
   rw [IsLocallyConstant.iff_exists_open]
   intro g
-  refine ⟨(fun x => g⁻¹ * x) ⁻¹' (U : Set G), hUo.preimage (continuous_mul_left _), by simp [U.one_mem],
+  refine ⟨(fun x => g⁻¹ * x) ⁻¹' (U : Set G), hUo.preimage (continuous_const_mul _), by simp [U.one_mem],
     fun x hx => ?_⟩
   have := hf _ hx g
   simpa using this

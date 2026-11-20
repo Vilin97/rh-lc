@@ -64,7 +64,7 @@ theorem integral_lift [Fintype Q] (μf : Measure I.Gf) [μf.IsHaarMeasure] (hg :
   obtain ⟨hfin, hvol⟩ := vol_ne_zero I μf hg
   have hopen := ((GlobalTheory.CongTop.adelic_topology I).2.2.2.2.2.2 g hg).1
   have hSm : ∀ q, MeasurableSet ((fun y => (s q)⁻¹ * y) ⁻¹' I.Kg g) := fun q =>
-    (hopen.preimage (continuous_mul_left _)).measurableSet
+    (hopen.preimage (continuous_const_mul _)).measurableSet
   have hpt : ∀ x, ρ.lift μf a x * φ x = ∑ q, ((fun y => (s q)⁻¹ * y) ⁻¹' I.Kg g).indicator
       (fun _ => a.coeff q * φ (s q) / ((μf (I.Kg g)).toReal : ℂ)) x := by
     intro x

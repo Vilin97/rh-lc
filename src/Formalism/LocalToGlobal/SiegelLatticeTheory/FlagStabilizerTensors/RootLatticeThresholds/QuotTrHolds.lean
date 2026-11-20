@@ -94,7 +94,7 @@ theorem quotTr_holds (u u' : D.what₂.Word) (τ : D.what₂.Tau) : QuotTr C u u
     rw [key]
   simp only [hin]
   have hg : Measurable fun w : Formalism.REAL.UJ (X.B.I.ε (vOf X τ)) => f (F (γ⁻¹ * w * y')) :=
-    hf.comp (hFm.comp ((continuous_mul_right y').measurable.comp (continuous_mul_left γ⁻¹).measurable))
+    hf.comp (hFm.comp ((continuous_mul_right y').measurable.comp (continuous_const_mul γ⁻¹).measurable))
   rw [← hq _ hg]
   symm
   calc ∫⁻ x, f (F (γ⁻¹ * x * y')) ∂(Formalism.REAL.muG (X.B.I.ε (vOf X τ)))

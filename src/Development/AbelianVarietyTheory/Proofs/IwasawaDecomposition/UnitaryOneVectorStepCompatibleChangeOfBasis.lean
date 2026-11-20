@@ -237,10 +237,10 @@ theorem GlobalTheory.GaugeEx.stepRel_basis : ∀ (F E : Type) [Field F] [NumberF
     exact hm.subtype_mk
   have hin : ∀ c : HA (AF F) σ J₂,
       Measurable fun h' : Hstab (AF F) σ J₂ x₂ => f (c * (h' : HA (AF F) σ J₂)) :=
-    fun c => hf.comp ((continuous_mul_left c).measurable.comp measurable_subtype_coe)
+    fun c => hf.comp ((continuous_const_mul c).measurable.comp measurable_subtype_coe)
   have hin1 : ∀ c : HA (AF F) σ J,
       Measurable fun h' : Hstab (AF F) σ J x => f (eP (c * (h' : HA (AF F) σ J))) :=
-    fun c => hf.comp (hPm.comp ((continuous_mul_left c).measurable.comp measurable_subtype_coe))
+    fun c => hf.comp (hPm.comp ((continuous_const_mul c).measurable.comp measurable_subtype_coe))
   have hin2 : ∀ c : HA (AF F) σ J₂,
       Measurable fun k : HA (AF F) σ J₂' => f (c * ((e₂.symm k : Hstab (AF F) σ J₂ x₂) : HA (AF F) σ J₂)) :=
     fun c => (hin c).comp h2m

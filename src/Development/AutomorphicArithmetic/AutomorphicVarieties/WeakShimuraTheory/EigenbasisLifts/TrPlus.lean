@@ -46,7 +46,7 @@ theorem UpperTheory.V.Ws.Eb.trPlus :
       | mem x hx =>
         obtain ⟨h, rfl⟩ := hx
         simp_rw [← map_mul]
-        exact hc.comp (continuous_mul_left h)
+        exact hc.comp (continuous_const_mul h)
       | zero => simpa using continuous_const
       | add x y _ _ hx hy =>
         simp_rw [add_mul, Matrix.trace_add]

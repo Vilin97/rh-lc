@@ -181,7 +181,7 @@ theorem proj_left (hc : ∀ i, Continuous (φ i)) (hli : LinearIndependent ℂ �
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [ip_resid μ φ hc hli hg i, mul_zero]
   have hrc : Continuous (fun x => g (a * x) - proj μ φ g (a * x)) :=
-    (hg.comp (continuous_mul_left a)).sub (hpc.comp (continuous_mul_left a))
+    (hg.comp (continuous_const_mul a)).sub (hpc.comp (continuous_const_mul a))
   have hcoef0 : coef μ φ (fun x => g (a * x) - proj μ φ g (a * x)) = 0 := by
     unfold coef
     have hz : (fun j => ip μ (φ j) (fun x => g (a * x) - proj μ φ g (a * x))) = 0 := funext hr
@@ -197,7 +197,7 @@ theorem proj_left (hc : ∀ i, Continuous (φ i)) (hli : LinearIndependent ℂ �
   have hsplit : (fun x => g (a * x)) = fun x => proj μ φ g (a * x) + (g (a * x) - proj μ φ g (a * x)) := by
     funext x
     ring
-  have hadd := proj_add μ φ hc (hpc.comp (continuous_mul_left a)) hrc
+  have hadd := proj_add μ φ hc (hpc.comp (continuous_const_mul a)) hrc
   simp only [Function.comp_def] at hadd
   rw [hsplit, hadd, hpp, hproj0]
   funext x
@@ -234,7 +234,7 @@ theorem repKer : RepKer := by
   have key : ∀ f : H → ℂ, Continuous f → ∀ x,
       ∫ v, star (∑ j, star (∑ i, φ i 1 * (gram μ φ)⁻¹ i j) * φ j v) * f (x * v) ∂μ = proj μ φ f x := by
     intro f hf x
-    have hfx : Continuous (fun v => f (x * v)) := hf.comp (continuous_mul_left x)
+    have hfx : Continuous (fun v => f (x * v)) := hf.comp (continuous_const_mul x)
     have h1 : ∫ v, star (∑ j, star (∑ i, φ i 1 * (gram μ φ)⁻¹ i j) * φ j v) * f (x * v) ∂μ =
         ip μ (fun v => ∑ j, star (∑ i, φ i 1 * (gram μ φ)⁻¹ i j) * φ j v) (fun v => f (x * v)) := rfl
     rw [h1, ip_sum_left μ Finset.univ hfx _ φ hc]

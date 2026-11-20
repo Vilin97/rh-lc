@@ -52,7 +52,7 @@ theorem integral_eq_sum_cosets {G : Type} [Group G] [TopologicalSpace G] [IsTopo
     exact QuotientGroup.eq
   have hmeas : ∀ q : G ⧸ S, MeasurableSet {x : G | (x : G ⧸ S) = q} := fun q => by
     rw [hset]
-    exact (hS.preimage (continuous_mul_left _)).measurableSet
+    exact (hS.preimage (continuous_const_mul _)).measurableSet
   have hμ : ∀ q : G ⧸ S, μ {x : G | (x : G ⧸ S) = q} = μ (S : Set G) := fun q => by
     rw [hset]
     exact measure_preimage_mul μ _ _

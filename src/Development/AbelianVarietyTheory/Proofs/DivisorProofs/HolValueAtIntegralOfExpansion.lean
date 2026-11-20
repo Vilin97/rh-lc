@@ -175,7 +175,7 @@ theorem measure_lt_top_of_cover {μ : Measure G} [μ.IsMulLeftInvariant] [IsFini
     (h𝓕 : IsFundamentalDomain Γ 𝓕 μ) (hKc : IsCompact (K : Set G)) (A : Finset G)
     (hcov : ∀ x, ∃ a ∈ A, ∃ γ ∈ Γ, ∃ k ∈ K, x = γ * a * k) : μ 𝓕 < ⊤ := by
   refine lt_of_le_of_lt (measure_le_of_cover h𝓕 (C := ⋃ a ∈ A, (a * ·) '' (K : Set G)) fun x => ?_)
-    ((A.isCompact_biUnion fun a _ => hKc.image (continuous_mul_left a)).measure_lt_top)
+    ((A.isCompact_biUnion fun a _ => hKc.image (continuous_const_mul a)).measure_lt_top)
   obtain ⟨a, ha, γ, hγ, k, hk, rfl⟩ := hcov x
   exact ⟨⟨γ⁻¹, inv_mem hγ⟩, mem_biUnion ha ⟨k, hk, by simp [mul_assoc]⟩⟩
 

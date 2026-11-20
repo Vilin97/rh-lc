@@ -45,7 +45,7 @@ theorem weil_dense : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Alg
     show θ.symm τ ∈ V
     rw [hτθ, MulEquiv.symm_apply_apply]; exact hgV
   have hnhds : {x : GalLoc w | τ * x ∈ W} ∈ nhds (1 : GalLoc w) := by
-    apply (continuous_mul_left τ).continuousAt.preimage_mem_nhds
+    apply (continuous_const_mul τ).continuousAt.preimage_mem_nhds
     simpa using hW.mem_nhds hτW
   obtain ⟨L, hL, hLs⟩ := (krullTopology_mem_nhds_one_iff _ _ _).mp hnhds
   let H : Subgroup (GalLoc w) := U ⊓ L.fixingSubgroup

@@ -24,7 +24,7 @@ theorem continuous_conv {G : Type} [Group G] [TopologicalSpace G] [IsTopological
   refine continuousAt_of_dominated
     (bound := fun z => C * L.indicator (fun z => ‖f z‖) z) ?_ ?_ ?_ ?_
   · exact Filter.Eventually.of_forall fun x =>
-      ((hψ.comp (continuous_mul_left x⁻¹)).aestronglyMeasurable).mul hf
+      ((hψ.comp (continuous_const_mul x⁻¹)).aestronglyMeasurable).mul hf
   · filter_upwards [hKx] with x hx
     refine Filter.Eventually.of_forall fun z => ?_
     by_cases hz : z ∈ L

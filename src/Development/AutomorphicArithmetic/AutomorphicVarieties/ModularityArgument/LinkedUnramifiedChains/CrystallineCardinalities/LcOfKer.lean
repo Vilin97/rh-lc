@@ -8,7 +8,7 @@ private theorem lc_of_ker {D N : Type} [Group D] [TopologicalSpace D] [IsTopolog
     (τ : Representation ℤ D N) (h : IsOpen (τ.ker : Set D)) : IsLocallyConstant fun s => τ s := by
   rw [IsLocallyConstant.iff_exists_open]
   intro s
-  refine ⟨(fun y => s⁻¹ * y) ⁻¹' (τ.ker : Set D), h.preimage (continuous_mul_left s⁻¹), ?_, ?_⟩
+  refine ⟨(fun y => s⁻¹ * y) ⁻¹' (τ.ker : Set D), h.preimage (continuous_const_mul s⁻¹), ?_, ?_⟩
   · show s⁻¹ * s ∈ τ.ker
     rw [inv_mul_cancel]
     exact one_mem _

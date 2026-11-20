@@ -199,7 +199,7 @@ theorem dualBall_mem_nhds {ψ : AddChar K ℂ} (hψc : Continuous ψ) (t : K) :
     (dualBall ψ t : Set K) ∈ 𝓝 0 := by
   have h := GlobalTheory.Published.SvN.eventually_psi hψc
   have ht : Tendsto (fun y : K => t * y) (𝓝 0) (𝓝 0) := by
-    have := (continuous_mul_left t).tendsto (0 : K)
+    have := (continuous_const_mul t).tendsto (0 : K)
     rwa [mul_zero] at this
   filter_upwards [ht.eventually h] with y hy using hy
 

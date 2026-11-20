@@ -18,7 +18,7 @@ private theorem haar {n : ℕ} {U : Type} [Group U] [TopologicalSpace U] [Second
   have hm : Measurable e.symm := e.symm.continuous.measurable
   have hE : MeasurePreserving e.symm (Measure.pi fun _ : ι => ν) (Measure.map e.symm (Measure.pi fun _ : ι => ν)) := ⟨hm, rfl⟩
   refine ⟨Measure.isProbabilityMeasure_map hm.aemeasurable, fun k => ?_, fun k => ?_⟩
-  · refine hE.of_semiconj (measurePreserving_pi _ _ fun i => hl (e k i)) (fun x => ?_) (continuous_mul_left k).measurable
+  · refine hE.of_semiconj (measurePreserving_pi _ _ fun i => hl (e k i)) (fun x => ?_) (continuous_const_mul k).measurable
     change e.symm (e k * x) = _
     rw [map_mul, e.symm_apply_apply]
   · refine hE.of_semiconj (measurePreserving_pi _ _ fun i => hr (e k i)) (fun x => ?_) (continuous_mul_right k).measurable

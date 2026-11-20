@@ -62,7 +62,7 @@ theorem exists_weight_nt (T N : Subgroup H) (hT : IsClosed (T : Set H)) (hN : Is
   have hUo : ∀ k, IsOpen (U k) := fun k => by
     have : U k = ⋃ p : N × T, (fun x => j p * x) ⁻¹' W k := by ext x; simp [U]
     rw [this]
-    exact isOpen_iUnion fun p => (hWo k).preimage (continuous_mul_left _)
+    exact isOpen_iUnion fun p => (hWo k).preimage (continuous_const_mul _)
   have hcov : ∀ x, ∃ k, x ∈ U k := fun x => by
     obtain ⟨k, hk⟩ := K.exists_mem x
     exact ⟨k, (1, 1), by simpa [j] using K.subset_interior_succ k hk⟩

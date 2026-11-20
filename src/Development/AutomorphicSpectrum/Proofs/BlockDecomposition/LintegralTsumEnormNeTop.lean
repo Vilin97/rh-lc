@@ -63,7 +63,7 @@ theorem exists_strict_domain [SecondCountableTopology G] [MeasurableSpace G] [Bo
       ext x; simp [A]
     rw [this]
     exact MeasurableSet.iUnion fun h =>
-      ((huo i).preimage (continuous_mul_left _)).measurableSet
+      ((huo i).preimage (continuous_const_mul _)).measurableSet
   let D : Set G := ⋃ i, (u i ∩ ⋂ j : Fin i, (A j)ᶜ)
   have hD : MeasurableSet D := MeasurableSet.iUnion fun i =>
     (huo i).measurableSet.inter (MeasurableSet.iInter fun j => (hAm j).compl)

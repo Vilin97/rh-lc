@@ -37,7 +37,7 @@ theorem isLocallyConstant_char_absPow : ∀ (F E : Type) [Field F] [NumberField 
   have hker : IsOpen (νS.ker : Set S) := GroundTheory.Global.isOpen_ker_of_profinite_circle νS hνS
   refine (IsLocallyConstant.iff_eventually_eq _).2 fun x => ?_
   have hV : IsOpen ((fun y : idelesAt E (evFin F v) => x⁻¹ * y) ⁻¹' (Subtype.val '' (νS.ker : Set S))) :=
-    (ho'.isOpenMap_subtype_val _ hker).preimage (continuous_mul_left _)
+    (ho'.isOpenMap_subtype_val _ hker).preimage (continuous_const_mul _)
   filter_upwards [hV.mem_nhds (show x ∈ _ from ⟨1, one_mem _, by simp⟩)] with y hy
   obtain ⟨s, hs, hsy⟩ := hy
   have hy' : y = x * s.1 := by rw [hsy]; group

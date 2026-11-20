@@ -109,6 +109,6 @@ theorem haarTr_holds (u u' : D.what₂.Word) (τ : D.what₂.Tau) : HaarTr C u u
         exact continuous_const.matrix_mul continuous_id
       exact this.measurable
     rw [Measure.map_map hcont_l hme.measurable, hcomp,
-      ← Measure.map_map hme.measurable (continuous_mul_left y0).measurable, hinv y0 hy0S]
+      ← Measure.map_map hme.measurable (continuous_const_mul y0).measurable, hinv y0 hy0S]
 
 end Formalism.L2.SG.Pf.Carrier.CarPinTor

@@ -158,7 +158,7 @@ private theorem solveGen (l : ℕ) [Fact l.Prime] (R N : Type) [CommRing R] [Add
   · intro x
     refine (denseGen l).induction_on
       (p := fun x => C (Multiplicative.ofAdd 1 * x) = σ (Multiplicative.ofAdd 1) (C x) - φ x) x ?_ ?_
-    · exact (clopenEq (hCc.comp (continuous_mul_left _))
+    · exact (clopenEq (hCc.comp (continuous_const_mul _))
         ((continuous_of_discreteTopology
           (f := fun pr : N × N => σ (Multiplicative.ofAdd 1) pr.1 - pr.2)).comp
           (hCc.prodMk hφ))).isClosed

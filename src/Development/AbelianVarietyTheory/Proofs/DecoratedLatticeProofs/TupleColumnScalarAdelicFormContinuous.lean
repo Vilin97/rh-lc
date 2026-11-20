@@ -70,7 +70,7 @@ theorem rd_continuous : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok →
   let V := (I.rec7 l Z).sp.X j
   let hn := rankN (I.rec7 l Z) j hj
   have hpc : Continuous fun g : GA (I.rec7 l Z) V => GlobalTheory.AdForm.RdLaw.pf V (g0⁻¹ * g) :=
-    (GlobalTheory.AdForm.RdLaw.continuous_pf V).comp (continuous_mul_left g0⁻¹)
+    (GlobalTheory.AdForm.RdLaw.continuous_pf V).comp (continuous_const_mul g0⁻¹)
   let p : GA (I.rec7 l Z) V → GfC V := fun g => ⟨GlobalTheory.AdForm.RdLaw.pf V (g0⁻¹ * g), GlobalTheory.AdForm.RdLaw.pf_fin V _⟩
   have hp : Continuous p := hpc.subtype_mk _
   let O : Set (GA (I.rec7 l Z) V) := {g | GlobalTheory.AdForm.RdLaw.pf V (g0⁻¹ * g) ∈ A.U j b}
@@ -106,7 +106,7 @@ theorem rd_continuous : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok →
       (1 : (I.rec7 l Z).what₂.Tau → Matrix (Fin (B.R.N j)) (Fin (B.R.N j)) ℂ) τ * M g τ := by
     intro τ
     have h1 : Continuous fun g : GA (I.rec7 l Z) V => infM θ V hn (g0⁻¹ * g) τ :=
-      (continuous_infM' θ hθ V hn τ).comp (continuous_mul_left g0⁻¹)
+      (continuous_infM' θ hθ V hn τ).comp (continuous_const_mul g0⁻¹)
     show Continuous fun g : GA (I.rec7 l Z) V => (1 : (I.rec7 l Z).what₂.Tau → Matrix (Fin (B.R.N j)) (Fin (B.R.N j)) ℂ) τ * ((show Matrix (Fin (B.R.N j)) (Fin (B.R.N j)) ℂ from infM θ V hn k τ * infM θ V hn (g0⁻¹ * g) τ) * y.1 τ)
     exact continuous_const.matrix_mul ((continuous_const.matrix_mul h1).matrix_mul continuous_const)
   let Φ : GA (I.rec7 l Z) V → ℂ := fun g =>

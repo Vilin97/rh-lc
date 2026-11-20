@@ -81,7 +81,7 @@ private theorem lc_hom {G H : Type} [Group G] [TopologicalSpace G] [IsTopologica
   intro x
   have h1 : ∀ᶠ z in nhds (1 : G), z ∈ (φ.ker : Set G) := h.mem_nhds (one_mem _)
   have hc : Filter.Tendsto (fun y => x⁻¹ * y) (nhds x) (nhds 1) := by
-    have := (continuous_mul_left x⁻¹).tendsto x
+    have := (continuous_const_mul x⁻¹).tendsto x
     rwa [inv_mul_cancel] at this
   filter_upwards [hc.eventually h1] with y hy
   rw [SetLike.mem_coe, MonoidHom.mem_ker, map_mul, map_inv, inv_mul_eq_one] at hy

@@ -88,8 +88,8 @@ theorem admissible_tuple_holds : AdTup := by
     have := hμ
     infer_instance
   refine ⟨hmI.prodMk hmF, fun g₁ g₂ => ⟨PI.UnitaryGroupMassFormula.MeasWCore.haPair σ J g₁ g₂,
-      PI.UnitaryGroupMassFormula.MeasWCore.splitA_haPair σ J g₁ g₂⟩, ?_, ?_, ?_, fun g => (continuous_mul_left g).measurable,
-    fun g => (continuous_mul_left g).measurable, fun μ hμ => by have := hμ; infer_instance,
+      PI.UnitaryGroupMassFormula.MeasWCore.splitA_haPair σ J g₁ g₂⟩, ?_, ?_, ?_, fun g => (continuous_const_mul g).measurable,
+    fun g => (continuous_const_mul g).measurable, fun μ hμ => by have := hμ; infer_instance,
     fun μ hμ => by have := hμ; infer_instance, fun r P μ hμ => hsub (Ainf F) r P μ hμ,
     fun r P μ hμ => hsub (Af F) r P μ hμ, ?_, ?_⟩
   · intro a g X

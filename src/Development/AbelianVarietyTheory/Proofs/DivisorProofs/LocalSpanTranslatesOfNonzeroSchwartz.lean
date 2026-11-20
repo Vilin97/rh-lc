@@ -192,7 +192,7 @@ theorem exists_cond (ψ : AddChar (AF F) ℂ) (v : Pl F) (hc : Continuous (psiLo
         exact mul_le_of_le_one_right' ((HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 ho)
     rw [this]
     exact (isCompact_iff_compactSpace.2 (GlobalTheory.AdelicUnitaryTop.compactSpace_adicCompletionIntegers F v)).image
-      (continuous_mul_left w)
+      (continuous_const_mul w)
   set C := {s : Fv F v | Valued.v s ≤ Valued.v w} ∩ {s | psiLoc ψ v s ≠ 1} with hC
   have hCc : IsCompact C := hball.inter_right (show IsClosed {s : Fv F v | psiLoc ψ v s ≠ 1} from hopen.isClosed_compl)
   have hloc : ∀ s ∈ C, {t : Fv F v | Valued.v t = Valued.v s} ∈ 𝓝 s := by

@@ -111,7 +111,7 @@ theorem continuous_deg : Continuous (deg : GQ l → ℤ_[l]) := by
   obtain ⟨n, hn⟩ := PadicInt.exists_pow_neg_lt l hε
   obtain ⟨ξ, hξ⟩ := exists_prim (l := l) n
   haveI : NeZero (l ^ (l ^ n) - 1) := ⟨(lev_pos n).ne'⟩
-  have ho := (stabilizer_isOpen_of_isIntegral (K := ℚ_[l]) ξ).preimage (continuous_mul_left g⁻¹)
+  have ho := (stabilizer_isOpen_of_isIntegral (K := ℚ_[l]) ξ).preimage (continuous_const_mul g⁻¹)
   filter_upwards [ho.mem_nhds (show g⁻¹ * g ∈ MulAction.stabilizer (GQ l) ξ by simp)] with h hh
   have h1 : (g⁻¹ * h) ξ = ξ := hh
   have h2 : h ξ = g ξ := by

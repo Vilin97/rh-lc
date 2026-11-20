@@ -38,7 +38,7 @@ private theorem pt_exists (l : ℕ) (hl : l.Prime) (Γ : Type) [Group Γ] [Topol
   rw [(nhds_basis_opens g').tendsto_right_iff]
   rintro V ⟨hgV, hVo⟩
   obtain ⟨H, hH⟩ := ProfiniteGrp.exist_openNormalSubgroup_sub_open_nhds_of_one
-    (hVo.preimage (continuous_mul_left g')) (by simpa using hgV)
+    (hVo.preimage (continuous_const_mul g')) (by simpa using hgV)
   haveI : H.toSubgroup.Normal := H.isNormal'
   haveI : Finite (Γ ⧸ H.toSubgroup) := H.toSubgroup.quotient_finite_of_isOpen H.isOpen'
   obtain ⟨y, hy⟩ := pt_const l hl (QuotientGroup.mk (s := H.toSubgroup) g)

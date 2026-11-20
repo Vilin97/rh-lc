@@ -218,7 +218,7 @@ theorem conjMap_isAutFunSm_gen {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSet
       · rw [← hK] at hKo
         exact hKo.preimage (f := fun k => (iotaX X h (t * k * t⁻¹)).2)
           (continuous_snd.comp ((iotaX X h).continuous.comp
-            ((continuous_mul_right _).comp (continuous_mul_left _))))
+            ((continuous_mul_right _).comp (continuous_const_mul _))))
       · have hk' : (iotaX X h (t * k * t⁻¹)).2 ∈ X.B.I.Kg X.B.g := by rw [← hK]; exact hk
         have h1 : (iotaX X h (t * k * t⁻¹)).1 = 1 :=
           hfst _ ((GfC _).mul_mem ((GfC _).mul_mem ht hkf) ((GfC _).inv_mem ht))

@@ -184,7 +184,7 @@ theorem exists_odd_prime_gt_two_bounds : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type
   choose α hα using hα
   let T : Finset Ω := insert ζ (S.image α)
   let O : Set (G ℚ Ω) := {τ | σ⁻¹ * τ ∈ U} ∩ ⋂ x ∈ T, {τ | τ x = x}
-  have hO : IsOpen O := (hU.preimage (continuous_mul_left σ⁻¹)).inter
+  have hO : IsOpen O := (hU.preimage (continuous_const_mul σ⁻¹)).inter
     (isOpen_biInter_finset fun x _ => isOpen_stab x)
   have hσker : σ ∈ (cycBar ℚ Ω l).ker := Subgroup.commutator_le_left _ _ hσ
   have hσO : σ ∈ O := by

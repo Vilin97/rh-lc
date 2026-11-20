@@ -269,7 +269,7 @@ theorem decomp {N B : Subgroup G} {T : Set (G → ℂ)}
   obtain ⟨V, hV, hVP⟩ := nhds_of_relOpen hPo
   obtain ⟨t₀, ht₀C, hcov⟩ := hC.elim_nhds_subcover (fun x => (fun y => x⁻¹ * y) ⁻¹' V)
     (fun x _ => by
-      apply (continuous_mul_left x⁻¹).continuousAt.preimage_mem_nhds
+      apply (continuous_const_mul x⁻¹).continuousAt.preimage_mem_nhds
       simpa using hV)
   have hcov' : ∀ c ∈ C, ∃ x ∈ t₀, c ∈ dcos N P x := by
     intro c hc
@@ -369,7 +369,7 @@ theorem unif_inv {F : G → ℂ} (hL : IsLocallyConstant F) {C : Set G} (hC : Is
   have hW : ∀ c : G, ∃ W ∈ nhds (1 : G), ∀ v ∈ W, ∀ w ∈ W, F (c * (v * w)) = F c := by
     intro c
     have : (fun k => c * k) ⁻¹' {y | F y = F c} ∈ nhds (1 : G) := by
-      apply (continuous_mul_left c).continuousAt.preimage_mem_nhds
+      apply (continuous_const_mul c).continuousAt.preimage_mem_nhds
       show _ ∈ nhds (c * 1)
       rw [mul_one]
       exact (hL.isOpen_fiber (F c)).mem_nhds rfl
@@ -378,7 +378,7 @@ theorem unif_inv {F : G → ℂ} (hL : IsLocallyConstant F) {C : Set G} (hC : Is
   choose W hW hWW using hW
   obtain ⟨t, -, hcov⟩ := hC.elim_nhds_subcover (fun c => (fun y => c⁻¹ * y) ⁻¹' W c)
     (fun c _ => by
-      apply (continuous_mul_left c⁻¹).continuousAt.preimage_mem_nhds
+      apply (continuous_const_mul c⁻¹).continuousAt.preimage_mem_nhds
       simpa using hW c)
   refine ⟨⋂ c ∈ t, W c, (Filter.biInter_finset_mem t).mpr fun c _ => hW c, ?_⟩
   intro c' hc' k hk

@@ -83,7 +83,7 @@ theorem continuous_density {P : Subgroup G} {h : G → ℝ} {mu : (G → ℂ) �
 
 theorem continuous_smul_quot {P : Subgroup G} (x : G) : Continuous fun q : G ⧸ P => x • q := by
   rw [(QuotientGroup.isOpenQuotientMap_mk (N := P)).isQuotientMap.continuous_iff]
-  exact QuotientGroup.continuous_mk.comp (continuous_mul_left x)
+  exact QuotientGroup.continuous_mk.comp (continuous_const_mul x)
 
 theorem compact_quot' {P : Subgroup G}
     (hco : ∃ C : Set G, IsCompact C ∧ ∀ g, ∃ q ∈ P, ∃ c ∈ C, g = q * c) : CompactSpace (G ⧸ P) := by

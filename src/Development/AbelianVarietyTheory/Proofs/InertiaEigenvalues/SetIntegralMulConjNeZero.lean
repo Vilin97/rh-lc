@@ -23,7 +23,7 @@ theorem kernel_mem_bddForms {ω : HChar E} {F : GA E a → ℂ} (h : F ∈ bddFo
   have hki : Integrable (fun x => ‖k x‖) ν := by simpa using hk.2.2 0
   have hγ : Measurable γ := GlobalTheory.RSThetaM.measurable_gl_of_matrix hk.2.1
   have hm : ∀ g, AEStronglyMeasurable (fun x => k x * F (g * infGL E a (γ x))) ν := fun g =>
-    (hk.1.mul ((h.1.comp ((continuous_mul_left g).comp GlobalTheory.CuspQuot.continuous_infGL)).measurable.comp hγ)).aestronglyMeasurable
+    (hk.1.mul ((h.1.comp ((continuous_const_mul g).comp GlobalTheory.CuspQuot.continuous_infGL)).measurable.comp hγ)).aestronglyMeasurable
   have hbd : ∀ g, ∀ᵐ x ∂ν, ‖k x * F (g * infGL E a (γ x))‖ ≤ ‖k x‖ * C := fun g =>
     .of_forall fun x => (norm_mul _ _).trans_le (mul_le_mul_of_nonneg_left (hC _) (norm_nonneg _))
   refine ⟨?_, fun γ' g => ?_, fun z g => ?_, ∫ x, ‖k x‖ * C ∂ν, fun g => ?_⟩

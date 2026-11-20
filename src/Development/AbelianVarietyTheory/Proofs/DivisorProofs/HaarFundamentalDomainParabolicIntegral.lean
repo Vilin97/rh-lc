@@ -134,8 +134,8 @@ theorem lintegral_fd_le_iwasawa : ∀ (F E : Type) [Field F] [NumberField F] [Fi
   intro 𝓓 h𝓓 f hf hfQ hfN
   exact GlobalTheory.T.unfolding_fundamental_domain_integral μX μ₁ μ μK (unip σ X H) Q (ratU σ X₁.J) μN (fun k : K => k.1) m (fun γ => m 1 γ)
     (fun l => ENNReal.ofReal ((absE F E l : ℝ) ^ (1 - (n : ℝ)))) c D₁ 𝓕
-    hQc inferInstance inferInstance inferInstance inferInstance (fun g => (continuous_mul_left g).measurable)
-    (fun g => (continuous_mul_left g).measurable) (fun g => (continuous_mul_right g).measurable) hjoint hw hw0
+    hQc inferInstance inferInstance inferInstance inferInstance (fun g => (continuous_const_mul g).measurable)
+    (fun g => (continuous_const_mul g).measurable) (fun g => (continuous_mul_right g).measurable) hjoint hw hw0
     (fun _ => ENNReal.ofReal_ne_top) inferInstance hform hc0 hcT hmulm hιQ huniq
     (fun γ _ f hf => GlobalTheory.T.unipotent_haar_levi_decomposition F E σ B n n₁ X Y X₁ H r s i₀ i₁ hB hX hXY hH m hm μN hμN γ f hf)
     inferInstance h𝓕' h𝓕top hD₁ inferInstance 𝓓 h𝓓 f hf hfQ hfN

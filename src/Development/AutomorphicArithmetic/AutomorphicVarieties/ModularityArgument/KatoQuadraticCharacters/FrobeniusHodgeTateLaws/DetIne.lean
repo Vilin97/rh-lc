@@ -19,7 +19,7 @@ private theorem cont_of_apply [IsAlgClosure ℚ Ω] {Y : Type} [TopologicalSpace
   refine continuous_iff_continuousAt.2 fun t => ?_
   have hU : IsOpen ((fun s : Ω ≃ₐ[ℚ] Ω => t⁻¹ * s) ⁻¹'
       (((IntermediateField.adjoin ℚ {ζ}).fixingSubgroup : Subgroup (Ω ≃ₐ[ℚ] Ω)) :
-        Set (Ω ≃ₐ[ℚ] Ω))) := hH.preimage (continuous_mul_left _)
+        Set (Ω ≃ₐ[ℚ] Ω))) := hH.preimage (continuous_const_mul _)
   have ht : t ∈ (fun s : Ω ≃ₐ[ℚ] Ω => t⁻¹ * s) ⁻¹'
       (((IntermediateField.adjoin ℚ {ζ}).fixingSubgroup : Subgroup (Ω ≃ₐ[ℚ] Ω)) :
         Set (Ω ≃ₐ[ℚ] Ω)) := by

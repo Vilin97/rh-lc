@@ -263,8 +263,8 @@ theorem integral_iwasawa {B : Base F E} {n₁ : ℕ} {X : Spc F E n} {X₁ : Spc
     (mul_ne_zero hc0 h𝓕0) (ENNReal.mul_ne_top hcT h𝓕top) (fun p hp => by
       rw [GlobalTheory.UnfoldSemidirect.lintegral_fundamentalDomain_eq μX μ₁ μ μK (unip σ X H) Q (ratU σ X₁.J) μN (fun k : K => k.1) m
         (fun γ => m 1 γ) w c D₁ 𝓕
-        hQc inferInstance inferInstance inferInstance (fun g => (continuous_mul_left g).measurable)
-        (fun g => (continuous_mul_left g).measurable) (fun g => (continuous_mul_right g).measurable) hjoint hw hw0
+        hQc inferInstance inferInstance inferInstance (fun g => (continuous_const_mul g).measurable)
+        (fun g => (continuous_const_mul g).measurable) (fun g => (continuous_mul_right g).measurable) hjoint hw hw0
         (fun _ => ENNReal.ofReal_ne_top) inferInstance hform hc0 hcT hmulm hιQ huniq
         (fun γ _ f hf => GlobalTheory.T.unipotent_haar_levi_decomposition F E σ B n n₁ X X X₁ H r s i₀ i₁ hB hX hX hH m hm μN hμN γ f hf)
         inferInstance h𝓕' h𝓕0 h𝓕top hD₁ inferInstance 𝓓 h𝓓 (fun g => p (f g)) (hp.comp hf)

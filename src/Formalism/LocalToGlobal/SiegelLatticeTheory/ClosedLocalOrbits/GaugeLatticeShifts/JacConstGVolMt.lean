@@ -755,7 +755,7 @@ theorem gauge_measure_is_haar : IsHaarOn (SW k r) (nu0 k r) := by
       funext g
       simp only [Function.comp, Formalism.QuantumDeterminants.lmulM]
       rw [phi_mul]
-    have hml : Measurable (fun g : ↥(Formalism.REAL.UJ (εT k)) => g0 * g) := (continuous_mul_left g0).measurable
+    have hml : Measurable (fun g : ↥(Formalism.REAL.UJ (εT k)) => g0 * g) := (continuous_const_mul g0).measurable
     rw [nu0, Measure.map_map hlm cont_phi.measurable, hcomp,
       ← Measure.map_map cont_phi.measurable hml]
     congr 1

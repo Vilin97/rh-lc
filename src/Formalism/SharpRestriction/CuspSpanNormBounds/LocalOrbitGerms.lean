@@ -672,7 +672,7 @@ theorem grp (hS : TriangularShearMeasurePreserving) : UnipotentProductMeasureInv
     Grp.meas_int hcL μ R hR, Grp.meas_int hcU μ R hR, fun G => ?_⟩
   · exact Grp.meas_map_of hcL hS μ (· * g) (continuous_mul_right g)
       (fun i x x' h => Grp.dep_right (P := PW sb) (fun p hp => hp.1) _ g.2.1 i x x' h)
-  · exact Grp.meas_map_of hcU hS μ (g * ·) (continuous_mul_left g)
+  · exact Grp.meas_map_of hcU hS μ (g * ·) (continuous_const_mul g)
       (fun i x x' h => Grp.dep_left (P := PU s.sum) (fun p hp => hp) _ g.2 i x x' h)
   · have h1 : MeasurePreserving (Grp.homeo hcL).toMeasurableEquiv (Measure.pi fun _ => μ) (Grp.meas hcL μ) :=
       ⟨(Grp.homeo hcL).toMeasurableEquiv.measurable, rfl⟩

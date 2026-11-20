@@ -75,7 +75,7 @@ theorem fibre_meas (X : HidaSetting D) {red : X.B.I.Gf → G0g D.nd} (hr : IsRed
   have e : {x | x ∈ X.B.I.Kset ∧ red x = red s} = (fun x => s⁻¹ * x) ⁻¹' (X.B.I.Kg X.B.g) := by
     ext x; exact fibre_iff X hr hs x
   rw [e]
-  refine ⟨((kg_open X).preimage (continuous_mul_left s⁻¹)).measurableSet, ?_⟩
+  refine ⟨((kg_open X).preimage (continuous_const_mul s⁻¹)).measurableSet, ?_⟩
   exact measure_preimage_mul X.B.μf s⁻¹ _
 
 open scoped InnerProductSpace in

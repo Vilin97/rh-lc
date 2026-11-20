@@ -159,7 +159,7 @@ theorem term_smul (e : ℂ) (γ : ratPts σ J) (q : Lines σ J X) (g : GAd σ J)
       inv_mul_cancel_left]
 
 theorem continuous_term (e : ℂ) (q : Lines σ J X) : Continuous (term X h e q) :=
-  (Complex.continuous_ofReal.comp ((HtCont.continuous_iwaHt F E σ n J r X Y L a h hS).comp (continuous_mul_left _))).cpow
+  (Complex.continuous_ofReal.comp ((HtCont.continuous_iwaHt F E σ n J r X Y L a h hS).comp (continuous_const_mul _))).cpow
     continuous_const fun _ => Complex.ofReal_mem_slitPlane.2 (ht_pos hS _)
 
 theorem term_mul_left (e : ℂ) {γ : ratPts σ J} {w : Fin n → AF F ⊗[F] E} {c : (AF F ⊗[F] E)ˣ}

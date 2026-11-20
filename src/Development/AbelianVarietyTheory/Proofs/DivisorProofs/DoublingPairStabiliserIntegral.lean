@@ -66,7 +66,7 @@ theorem finite_cover : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     · rintro ⟨⟨_, hf1⟩, hf2⟩
       exact ⟨(hK f).2 ⟨fun w => h1 w (map_piInf_eq_one W₂ f hf2 (B.emb w)) _, hf1⟩, hf2⟩
   obtain ⟨t, ht, hcov⟩ := hC.elim_nhds_subcover (fun k : UA σ W₂.J => (fun f => k⁻¹ * f) ⁻¹' N) (fun k _ => by
-    refine (continuous_mul_left k⁻¹).continuousAt.preimage_mem_nhds ?_
+    refine (continuous_const_mul k⁻¹).continuousAt.preimage_mem_nhds ?_
     rw [inv_mul_cancel]; exact hN)
   refine ⟨t, fun k hk => (hCeq k).2 (ht k hk), fun f hf1 hf2 => ?_⟩
   obtain ⟨k, hk, hfk⟩ := Set.mem_iUnion₂.1 (hcov ((hCeq f).1 ⟨hf1, hf2⟩))

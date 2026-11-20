@@ -139,7 +139,7 @@ theorem exists_back : ∀ (G W V : Type) [Group G] [TopologicalSpace G] [IsTopol
     rw [isOpen_iff_mem_nhds]
     intro g hg
     have hg' : ρ.dual g l = l := hg
-    have ho : IsOpen ((fun x => g⁻¹ * x) ⁻¹' (K : Set G)) := hKopen.preimage (continuous_mul_left g⁻¹)
+    have ho : IsOpen ((fun x => g⁻¹ * x) ⁻¹' (K : Set G)) := hKopen.preimage (continuous_const_mul g⁻¹)
     refine Filter.mem_of_superset (ho.mem_nhds ?_) ?_
     · show g⁻¹ * g ∈ K
       rw [inv_mul_cancel]

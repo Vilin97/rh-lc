@@ -13,7 +13,7 @@ private theorem ce_ext {D W B : Type} [Group D] [TopologicalSpace D] [IsTopologi
     (hχ : ∀ s, i s ∈ V → χ s = 1) : ∃ ψ : D →* B, IsLocallyConstant ψ ∧ ∀ s, ψ (i s) = χ s := by
   set π : W →* D ⧸ V := (QuotientGroup.mk' V).comp i with hπdef
   have hopen : ∀ d : D, IsOpen {y : D | d⁻¹ * y ∈ V} := fun d =>
-    hV.preimage (continuous_mul_left d⁻¹)
+    hV.preimage (continuous_const_mul d⁻¹)
   have hπ : Function.Surjective π := by
     intro q
     induction q using QuotientGroup.induction_on with

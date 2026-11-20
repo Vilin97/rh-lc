@@ -149,7 +149,7 @@ private lemma map_diagonal_mulVec_eq_inv_prod_smul {R : Type} [CommRing R] [Topo
     haveI : ∀ i, SigmaFinite ((Measure.addHaar : Measure R).map (fun y => (d i : R) * y)) := fun i => by
       rw [h1]; infer_instance
     rw [hf, hν0, Measure.pi_map_pi (f := fun i y => (d i : R) * y)
-      (fun i => (continuous_mul_left (d i : R)).measurable.aemeasurable)]
+      (fun i => (continuous_const_mul (d i : R)).measurable.aemeasurable)]
     simp_rw [h1]
     refine Measure.pi_eq (fun s hs => ?_)
     rw [Measure.smul_apply, Measure.nnreal_smul_coe_apply, Measure.pi_pi]

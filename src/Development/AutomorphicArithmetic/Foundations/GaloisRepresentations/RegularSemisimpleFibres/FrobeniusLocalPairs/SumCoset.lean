@@ -40,7 +40,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.sumCoset :
     exact hg
   have hfin : Q.Finite := by
     obtain ⟨s, hs⟩ := hC.elim_finite_subcover (fun c : G => {z : G | c⁻¹ * z ∈ K})
-      (fun c => hKo.preimage (continuous_mul_left c⁻¹))
+      (fun c => hKo.preimage (continuous_const_mul c⁻¹))
       (fun c _ => Set.mem_iUnion.2 ⟨c, by simp [K.one_mem]⟩)
     refine (s.finite_toSet.image (DoubleCoset.mk T K)).subset ?_
     rintro q ⟨y, hy, hq⟩
@@ -62,7 +62,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.sumCoset :
     intro q
     rw [isOpen_iff_forall_mem_open]
     intro g hg
-    refine ⟨{z | g⁻¹ * z ∈ K}, fun z hz => ?_, hKo.preimage (continuous_mul_left g⁻¹),
+    refine ⟨{z | g⁻¹ * z ∈ K}, fun z hz => ?_, hKo.preimage (continuous_const_mul g⁻¹),
       by simp [K.one_mem]⟩
     show DoubleCoset.mk T K z = q
     rw [← (show DoubleCoset.mk T K g = q from hg), eq_comm, DoubleCoset.eq]

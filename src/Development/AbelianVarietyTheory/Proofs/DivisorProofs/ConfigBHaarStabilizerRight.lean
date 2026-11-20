@@ -98,7 +98,7 @@ theorem hasSum_levi : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Number
       have h2 : inclR (F := F) (AF F) ((ξ⁻¹ * ξ₀ : Eˣ) : E) = 1 := smul_incV_inj hx0 (by rw [h1, one_smul])
       rw [← map_one (inclR (F := F) (E := E) (AF F))] at h2
       exact inv_mul_eq_one.1 (Units.ext (inclR_inj h2))
-  obtain ⟨D₁, hD₁, hX⟩ := GlobalTheory.exists_fundamentalDomain_hasSum_integral_cosetReps G.M'.μ (fun g => (continuous_mul_left g).measurable) (ratStab σ G.V'.J H.x) Q
+  obtain ⟨D₁, hD₁, hX⟩ := GlobalTheory.exists_fundamentalDomain_hasSum_integral_cosetReps G.M'.μ (fun g => (continuous_const_mul g).measurable) (ratStab σ G.V'.J H.x) Q
     (Subgroup.inclusion_injective hΓr).countable hQΓ 𝓓 h𝓓 mL hmΓ hcos
   have hcont : Continuous hf := GlobalTheory.ConeSmallMeas.continuous_ht K hKc H.x hf hIw hdec
   have hnorm : ∀ g, ‖(hf g : ℂ) ^ (s + (((b + 2 : ℕ) : ℂ) - 1) / 2)‖ = hf g ^ (s.re + (((b + 2 : ℕ) : ℝ) - 1) / 2) := by

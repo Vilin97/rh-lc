@@ -71,7 +71,7 @@ theorem covolTie_of (hM : X.MeasTie hb) : CovolTie X := by
     exact (toHA X.B.I hb).isHaarMeasure_map (X.B.I.muA X.B.μf)
   haveI : (X.measG.μG).IsMulLeftInvariant := inferInstance
   haveI : MeasurableConstSMul Γ (HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF X.B.I.F) X.B.I.cm.sig X.B.I.J) :=
-    ⟨fun c => (continuous_mul_left (c : HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF X.B.I.F) X.B.I.cm.sig X.B.I.J)).measurable⟩
+    ⟨fun c => (continuous_const_mul (c : HA (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF X.B.I.F) X.B.I.cm.sig X.B.I.J)).measurable⟩
   unfold CovolTie covolBy
   split_ifs with h
   · have h1 : IsFundamentalDomain Γ h.choose X.measG.μG := h.choose_spec

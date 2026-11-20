@@ -66,7 +66,7 @@ theorem continuous_mul_left_GA {D : D7} (V : HSp D) (x : GA D V) : Continuous fu
   haveI : IsModuleTopology (AF D.host.F) (AE D) := ⟨rfl⟩
   haveI : IsTopologicalRing (AE D) := inferInstance
   refine continuous_induced_rng.2 ?_
-  exact (continuous_mul_left _).comp continuous_induced_dom
+  exact (continuous_const_mul _).comp continuous_induced_dom
 
 theorem closure_to_series : ∀ {D : D7} (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)) (V : HSp D)
     (τ : D.what₂.Tau) (S : SPar) (φ : GA D V → ℂ),

@@ -36,7 +36,7 @@ theorem om_gen_inj {D : D7} (P : PairedCharacterCondition.Pend D) (k : Fin 2) (w
     rintro s (rfl | hs)
     · exact ⟨hγ.1, e⟩
     · exact ⟨GlobalTheory.TameGenPowers.wild_mem_Ine hs, by rw [P.om_wild k w hw x hx s hs, P.om_wild k w hw y hy s hs]⟩
-  have hO : IsOpen {s : GE D.nd | σ⁻¹ * s ∈ (U : Set (GE D.nd)) ∩ V} := (hU.inter hV).preimage (continuous_mul_left σ⁻¹)
+  have hO : IsOpen {s : GE D.nd | σ⁻¹ * s ∈ (U : Set (GE D.nd)) ∩ V} := (hU.inter hV).preimage (continuous_const_mul σ⁻¹)
   obtain ⟨s, hs1, hs2⟩ := mem_closure_iff.1 (hγ.2 hσ) _ hO (by simp [U.one_mem, V.one_mem])
   have hs := hK hs2
   have hi : σ⁻¹ * s ∈ Ine (F := D.host.E) (D.nd.plOm.1 w) := mul_mem (inv_mem hσ) hs.1

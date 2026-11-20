@@ -51,7 +51,7 @@ theorem locconst_finset {F Ω' : Type} [Field F] [Field Ω'] [Algebra F Ω'] (H 
     have := Set.ext_iff.1 hUe t
     simpa using this
   have hV : (fun t => g * t) ⁻¹' U ∈ nhds (1 : Ω' ≃ₐ[F] Ω') :=
-    (hU.preimage (continuous_mul_left g)).mem_nhds (by simpa using (hmem ⟨g, hg⟩).2 rfl)
+    (hU.preimage (continuous_const_mul g)).mem_nhds (by simpa using (hmem ⟨g, hg⟩).2 rfl)
   obtain ⟨M, hM, hsub⟩ := (krullTopology_mem_nhds_one_iff F Ω' _).1 hV
   let b := Module.finBasis F M
   refine ⟨Finset.univ.image (fun i => (b i : Ω')), fun h hh hS => ?_⟩

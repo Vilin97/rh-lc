@@ -27,7 +27,7 @@ theorem avg_exists [TopologicalSpace G] [IsTopologicalGroup G] (hsm : IsSmooth �
   have hf : Continuous fun g : G => ρ g z := by
     refine continuous_discrete_rng.2 fun b => isOpen_iff_forall_mem_open.2 fun g hg => ?_
     refine ⟨(fun h => g⁻¹ * h) ⁻¹' {h | ρ h z = z}, fun h hh => ?_,
-      (continuous_mul_left g⁻¹).isOpen_preimage _ (hsm z), ?_⟩
+      (continuous_const_mul g⁻¹).isOpen_preimage _ (hsm z), ?_⟩
     · simp only [Set.mem_preimage, Set.mem_setOf_eq, Set.mem_singleton_iff] at hh hg ⊢
       rw [← hg, show h = g * (g⁻¹ * h) by group, rho_mul, hh]
     · simp only [Set.mem_preimage, Set.mem_setOf_eq, inv_mul_cancel, rho_one]

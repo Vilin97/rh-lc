@@ -9,7 +9,7 @@ private theorem continuous_of_right_invariant_open_subgroup {Γ X : Type*} [Grou
     (hf : ∀ g, ∀ h ∈ H, f (g * h) = f g) : Continuous f := by
   refine continuous_iff_continuousAt.2 fun g => ?_
   have ht : Filter.Tendsto (fun x => g⁻¹ * x) (nhds g) (nhds 1) := by
-    have := (continuous_mul_left g⁻¹).tendsto g
+    have := (continuous_const_mul g⁻¹).tendsto g
     simpa using this
   have hev : ∀ᶠ x in nhds g, f x = f g := by
     filter_upwards [ht (hH.mem_nhds H.one_mem)] with x hx

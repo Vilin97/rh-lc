@@ -46,7 +46,7 @@ theorem mulEquivHaarChar_heisenberg_chart (N A B : Type) [Group N] [TopologicalS
       rcases p with ⟨a, b⟩
       exact hlaw a' b' a b
     change Measure.map (fun x => Ψ (a', b') * x) (ρ.map Ψ) = ρ.map Ψ
-    rw [Measure.map_map (continuous_mul_left _).measurable hΨm, hcomp,
+    rw [Measure.map_map (continuous_const_mul _).measurable hΨm, hcomp,
       ← Measure.map_map hΨm (hT a' b').measurable, (hT a' b').map_eq]
   haveI : IsFiniteMeasureOnCompacts μ := Measure.IsFiniteMeasureOnCompacts.map _ Ψ
   haveI : μ.IsOpenPosMeasure := Ψ.continuous.isOpenPosMeasure_map Ψ.surjective

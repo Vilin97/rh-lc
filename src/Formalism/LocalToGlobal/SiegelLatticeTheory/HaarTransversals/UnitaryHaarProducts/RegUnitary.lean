@@ -867,7 +867,7 @@ theorem regular_representation_unitary : Formalism.L2.SG.ProjRows.RegUnitary := 
     rw [continuous_iff_continuousAt]
     intro g₀
     have h1 : Tendsto (fun g : I.Ginf => g₀⁻¹ * g) (𝓝 g₀) (𝓝 1) := by
-      simpa using (continuous_mul_left g₀⁻¹).tendsto g₀
+      simpa using (continuous_const_mul g₀⁻¹).tendsto g₀
     have h4 := ((R (g₀, 1)).continuous.tendsto v).comp ((all_tendsto I μf fund hfd R hR v).comp h1)
     show Tendsto (fun g => R (g, 1) v) (𝓝 g₀) (𝓝 (R (g₀, 1) v))
     refine h4.congr (fun g => ?_)

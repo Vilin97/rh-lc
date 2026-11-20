@@ -26,8 +26,8 @@ theorem GlobalTheory.HaarR.map_prodR_isMulLeftInvariant : ∀ (k : Type) [Field 
   have hφ : Measurable (prodR (k := k) (n := n) (c := c) p) :=
     (Continuous.subtype_mk ((hE.comp continuous_fst).mul (continuous_subtype_val.comp continuous_snd)) _).measurable
   have hmulJ : ∀ g : R k n c p, Measurable (fun y : R k n c p => g * y) :=
-    fun g => (continuous_mul_left g).measurable
-  have hmulH : ∀ g : GL n k, Measurable (fun y : GL n k => g * y) := fun g => (continuous_mul_left g).measurable
+    fun g => (continuous_const_mul g).measurable
+  have hmulH : ∀ g : GL n k, Measurable (fun y : GL n k => g * y) := fun g => (continuous_const_mul g).measurable
   let μR : Measure (R k n c p) := (m.prod (volN ν n c p)).map (prodR p)
   let K : Subgroup (GL (n ⊕ Fin c) k) :=
     { carrier := {x | ∃ hx : x ∈ R k n c p,

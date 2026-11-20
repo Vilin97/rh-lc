@@ -67,7 +67,7 @@ theorem orbitSpan_finiteDimensional (L : Subgroup (GL (Fin N) (Af E))) (hL : IsC
     (ψ : Sm E N) (hψ : IsAutForm ψ) : FiniteDimensional ℂ (orbitSpan L ψ) := by
   classical
   obtain ⟨t, ht⟩ := hL.elim_finite_subcover (fun l : GL (Fin N) (Af E) => {m | finRep E N (l⁻¹ * m) ψ = ψ})
-    (fun l => hψ.level.preimage (continuous_mul_left l⁻¹))
+    (fun l => hψ.level.preimage (continuous_const_mul l⁻¹))
     (fun m _ => Set.mem_iUnion.2 ⟨m, by simp only [Set.mem_setOf_eq, inv_mul_cancel, map_one]; rfl⟩)
   have := hψ.kfin
   refine Submodule.finiteDimensional_of_le

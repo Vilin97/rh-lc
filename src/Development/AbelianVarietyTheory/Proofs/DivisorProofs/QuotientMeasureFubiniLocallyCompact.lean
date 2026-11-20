@@ -25,7 +25,7 @@ theorem mulEquivHaarChar_eq_mul_of_heisenberg_chart : ∀ (N V L : Type) [Group 
   have hχsm : Measurable χ.symm := χ.symm.continuous.measurable
   have hinv : ∀ g : N, μ.map (g * ·) = μ := by
     intro g
-    have hgm : Measurable (g * · : N → N) := (continuous_mul_left g).measurable
+    have hgm : Measurable (g * · : N → N) := (continuous_const_mul g).measurable
     set τ : V × L → V × L := fun p => ((χ g).1 + p.1, (χ g).2 + p.2 + ω (χ g).1 p.1) with hτ
     have hcomp : (g * · : N → N) ∘ χ.symm = χ.symm ∘ τ := by
       funext p

@@ -103,7 +103,7 @@ theorem level_mul_inf_mem_nhds : ∀ (D : D7) (V : HSp D) (N : ℕ) (Kf : Subgro
   haveI : IsTopologicalGroup (GA D V) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
   have hU := GlobalTheory.Member.PrincLevel.finCong_mem_nhds V hN
   have ht : Filter.Tendsto (fun x : GA D V => g₀⁻¹ * x) (𝓝 g₀) (𝓝 1) := by
-    have := (continuous_mul_left g₀⁻¹).tendsto g₀
+    have := (continuous_const_mul g₀⁻¹).tendsto g₀
     rwa [inv_mul_cancel] at this
   refine Filter.mem_of_superset (ht hU) fun x hx => ?_
   have hx' : GlobalTheory.Member.FinCong V N (g₀⁻¹ * x) := hx
