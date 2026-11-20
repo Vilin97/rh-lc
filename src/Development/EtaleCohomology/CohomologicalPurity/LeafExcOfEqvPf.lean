@@ -8,7 +8,7 @@ open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 namespace LateralTheory.CohomologicalPurity.TubeCut
 
 @[reassoc] theorem dinl_map {A B : Arrow Spc} (ψ : A ⟶ B) : dbl.inl A ≫ dbl.map ψ = ψ.right ≫ dbl.inl B :=
-  pushout.inl_desc _ _ _
+  pushout.inl_desc (f := A.hom) (g := A.hom) _ _ _
 
 variable {P' P : Arrow Spc} (φ : P' ⟶ P)
 

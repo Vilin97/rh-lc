@@ -137,7 +137,7 @@ theorem etale_complement_continuity_induction_of_five_lemma_inputs (hL : OffCont
   offContStep_of' hL offExcMV (hG hS hR)
 
 theorem dbl.inl_map {P' P : Arrow Spc} (φ : P' ⟶ P) : dbl.inl P' ≫ dbl.map φ = φ.right ≫ dbl.inl P :=
-  pushout.inl_desc _ _ _
+  pushout.inl_desc (f := P'.hom) (g := P'.hom) _ _ _
 
 theorem dbl.map_comp {P'' P' P : Arrow Spc} (φ : P'' ⟶ P') (ψ : P' ⟶ P) :
     dbl.map (φ ≫ ψ) = dbl.map φ ≫ dbl.map ψ := by

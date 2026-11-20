@@ -130,7 +130,7 @@ theorem unit_B {X : Scheme.{0}} {q : ℕ} (hq : IsUnit (q : Γ(X, ⊤))) {B : Ty
   simpa using (hq.map w.appTop.hom).map (Scheme.ΓSpecIso (CommRingCat.of B)).hom.hom
 
 theorem inl_map {P' P : Arrow Spc} (φ : P' ⟶ P) : dbl.inl P' ≫ dbl.map φ = φ.right ≫ dbl.inl P :=
-  pushout.inl_desc _ _ _
+  pushout.inl_desc (f := P'.hom) (g := P'.hom) _ _ _
 
 theorem dbl_comp {P'' P' P : Arrow Spc} (φ : P'' ⟶ P') (ψ : P' ⟶ P) : dbl.map (φ ≫ ψ) = dbl.map φ ≫ dbl.map ψ := by
   apply pushout.hom_ext

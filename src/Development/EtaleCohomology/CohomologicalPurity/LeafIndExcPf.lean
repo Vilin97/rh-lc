@@ -27,7 +27,7 @@ theorem off_map {R S : Type} [CommRing R] [CommRing S] (ψ : R →+* S) (J : Ide
   exact Iff.rfl
 
 theorem dbl.inl_map' {P' P : Arrow Spc} (φ : P' ⟶ P) : dbl.inl P' ≫ dbl.map φ = φ.right ≫ dbl.inl P :=
-  pushout.inl_desc _ _ _
+  pushout.inl_desc (f := P'.hom) (g := P'.hom) _ _ _
 
 theorem dbl.map_comp' {P'' P' P : Arrow Spc} (φ : P'' ⟶ P') (ψ : P' ⟶ P) :
     dbl.map (φ ≫ ψ) = dbl.map φ ≫ dbl.map ψ := by

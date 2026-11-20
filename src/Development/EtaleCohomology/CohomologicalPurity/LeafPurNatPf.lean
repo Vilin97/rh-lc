@@ -31,7 +31,7 @@ theorem act_pull (hN : DivisorNaturality) (q : ℕ) [NeZero q] {P' P : Arrow Spc
   rw [← pull_comp, ← pull_comp, fold_map]
 
 theorem inl_map {P' P : Arrow Spc} (φ : P' ⟶ P) : dbl.inl P' ≫ dbl.map φ = φ.right ≫ dbl.inl P :=
-  pushout.inl_desc _ _ _
+  pushout.inl_desc (f := P'.hom) (g := P'.hom) _ _ _
 
 theorem dbl_map_comp {P'' P' P : Arrow Spc} (α : P'' ⟶ P') (β : P' ⟶ P) :
     dbl.map α ≫ dbl.map β = dbl.map (α ≫ β) := by
