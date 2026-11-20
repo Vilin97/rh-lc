@@ -1,5 +1,6 @@
 import Mathlib
 import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HasMultiplier
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 noncomputable section
 
@@ -52,9 +53,7 @@ structure SectionInputs (y : (Σ k, ι k) → Ω) (F : Type) [Field F] [NumberFi
 
   m₃ : ℕ
 
-  u : MRing ι
-
-  S : Finset ℕ
+  u : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver S ι : Finset ℕ
 
   e : ℕ → ℝ
 

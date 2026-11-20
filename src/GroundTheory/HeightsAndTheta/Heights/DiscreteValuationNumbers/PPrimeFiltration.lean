@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -13,13 +14,13 @@ universe u
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 theorem decompose_blockWeight {R : Type*} [CommRing R] {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*}
-    (r : MRing ι R) (b : K → ℕ) :
-    (DirectSum.decompose (weightedHomogeneousSubmodule R (blockWeight ι)) r b : MRing ι R) =
+    (r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (b : K → ℕ) :
+    (DirectSum.decompose (weightedHomogeneousSubmodule R (blockWeight ι)) r b : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) =
       weightedHomogeneousComponent (blockWeight ι) b r :=
   weightedDecomposition.decompose'_apply R (blockWeight ι) r b
 
 theorem isMultiHomogIdeal_iff_isHomogeneous {R : Type*} [CommRing R] {K : Type*} [Fintype K] [DecidableEq K]
-    {ι : K → Type*} (I : Ideal (MRing ι R)) :
+    {ι : K → Type*} (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
     IsMultiHomogIdeal I ↔ I.IsHomogeneous (weightedHomogeneousSubmodule R (blockWeight ι)) := by
   constructor
   · intro h b r hr
@@ -30,7 +31,7 @@ theorem isMultiHomogIdeal_iff_isHomogeneous {R : Type*} [CommRing R] {K : Type*}
     exact h b hr
 
 theorem isMultiHomogIdeal_sup_span {R : Type*} [CommRing R] {K : Type*} [Fintype K] [DecidableEq K]
-    {ι : K → Type*} {J : Ideal (MRing ι R)} {f : MRing ι R} {s : K → ℕ}
+    {ι : K → Type*} {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {s : K → ℕ}
     (hJ : IsMultiHomogIdeal J) (hf : IsMultiHomog f s) :
     IsMultiHomogIdeal (J ⊔ Ideal.span {f}) := by
   rw [isMultiHomogIdeal_iff_isHomogeneous] at hJ ⊢
@@ -39,9 +40,9 @@ theorem isMultiHomogIdeal_sup_span {R : Type*} [CommRing R] {K : Type*} [Fintype
   exact ⟨s, (mem_weightedHomogeneousSubmodule _ _ _ _).mpr hf⟩
 
 theorem multAt_top {R : Type*} [CommRing R] {K : Type*} {ι : K → Type*}
-    (W : Ideal (MRing ι R)) [W.IsPrime] : multAt (⊤ : Ideal (MRing ι R)) W = 0 := by
+    (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [W.IsPrime] : multAt (⊤ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) W = 0 := by
   unfold multAt
-  have : Subsingleton (MRing ι R ⧸ (⊤ : Ideal (MRing ι R))) :=
+  have : Subsingleton (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ (⊤ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))) :=
     Ideal.Quotient.subsingleton_iff.mpr rfl
   exact Module.length_eq_zero
 
@@ -49,7 +50,7 @@ theorem PrimeFiltration.proof (h1 : AssociatedMultiHomogPrime.Statement.{u})
     (h2 : FiltrationStepHilb.Statement.{u}) (h3 : FiltrationStepLength.Statement.{u})
     (h4 : ColonMultiHomog.Statement.{u}) : PrimeFiltration.Statement.{u} := by
   intro F _ K _ _ ι _ J
-  have : WellFoundedGT (Ideal (MRing ι F)) := inferInstance
+  have : WellFoundedGT (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) := inferInstance
   induction J using WellFoundedGT.induction
   rename_i J ih
   intro hJ

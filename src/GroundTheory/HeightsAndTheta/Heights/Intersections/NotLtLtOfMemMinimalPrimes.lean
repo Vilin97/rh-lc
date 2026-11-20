@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsSwap
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -114,24 +115,24 @@ theorem mem_divSupp_of_mem {P W : Ideal (MRing ι)} [P.IsPrime] {s t : MRing ι}
   ⟨mem_minimalPrimes_of_mem hW.1 htP htW, hW.2⟩
 
 theorem divCycle_apply_of_mem {P W : Ideal (MRing ι)} {s : MRing ι} (h : W ∈ divSupp P s) :
-    divCycle P s W = multAt (P ⊔ Ideal.span {s}) W := by
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = multAt (P ⊔ Ideal.span {s}) W := by
   classical
   simp only [divCycle, Finsupp.ofSupportFinite_coe]
   rw [if_pos h]
 
 theorem divCycle_apply_of_not_mem {P W : Ideal (MRing ι)} {s : MRing ι} (h : W ∉ divSupp P s) :
-    divCycle P s W = 0 := by
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0 := by
   classical
   simp only [divCycle, Finsupp.ofSupportFinite_coe]
   rw [if_neg h]
 
 theorem finsum_divSupp_eq_sum (P : Ideal (MRing ι)) (s : MRing ι) (f : Ideal (MRing ι) → ℝ) :
     ∑ᶠ W ∈ divSupp P s, (multAt (P ⊔ Ideal.span {s}) W : ℝ) * f W =
-      (divCycle P s).sum fun W m => (m : ℝ) * f W := by
+      ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).sum fun W m => (m : ℝ) * f W := by
   classical
   rw [finsum_mem_eq_finite_toFinset_sum _ (divSupp_finite P s), Finsupp.sum]
   have h1 : ∀ W ∈ (divSupp_finite P s).toFinset,
-      (multAt (P ⊔ Ideal.span {s}) W : ℝ) * f W = (divCycle P s W : ℝ) * f W := by
+      (multAt (P ⊔ Ideal.span {s}) W : ℝ) * f W = (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) : ℝ) * f W := by
     intro W hW
     rw [Set.Finite.mem_toFinset] at hW
     rw [divCycle_apply_of_mem hW]
@@ -178,7 +179,7 @@ theorem Swap.of_cycles (hCut : GeoNumCut.Statement) (hPL2 : SectionSpaceSymmetry
     (hCyc : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (n : ℕ)
       (A A' : HermLine ι) (s s' : MRing ι), IsArithVar P (n + 2) → IsSectionOn P A s →
       IsSectionOn P A' s' → (∀ W, W ∈ divSupp P s → W ∉ divSupp P s') →
-      ((divCycle P s).sum fun W m => m • divCycle W s') = (divCycle P s').sum fun W m => m • divCycle W s) :
+      (((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).sum fun W m => m • (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W s') W : ℤ))) = ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s') W : ℤ))).sum fun W m => m • (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W s) W : ℤ))) :
     Swap.Statement := by
   intro K _ ι _ I P n L A A' s s' hR hP hL hA hA' hs hs' hd
   classical
@@ -193,7 +194,7 @@ theorem Swap.of_cycles (hCut : GeoNumCut.Statement) (hPL2 : SectionSpaceSymmetry
       (if IsHorizontal W then I W (n + 1) (Fin.snoc L B')
         else (geoNum (n + 1) W (fun j => ((Fin.snoc L B' : Fin (n + 1) → HermLine ι) j).a) : ℝ) *
           Real.log (charOf W)) =
-        (divCycle W u').sum (fun U m => (m : ℝ) * c U) -
+        ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).sum (fun U m => (m : ℝ) * c U) -
           (if IsHorizontal W then arInt W u' B' L else 0) := by
     intro B B' u u' e' hsec hB' hB'e hu'e hno W hW
     have hdiv := divSuppArith K ι P (n + 1) B u W hP hsec hW
@@ -236,7 +237,7 @@ theorem Swap.of_cycles (hCut : GeoNumCut.Statement) (hPL2 : SectionSpaceSymmetry
   have side : ∀ (B B' : HermLine ι) (u u' : MRing ι) (e' : K → ℕ), IsSectionOn P B u →
       IsSmoothHerm B' → (∀ k, B'.a k = e' k) → IsMultiHomog u' e' → (∀ W ∈ divSupp P u, u' ∉ W) →
       recR I P (Fin.snoc L B') B u =
-        ((divCycle P u).sum fun W m => m • divCycle W u').sum (fun U k => (k : ℝ) * c U) -
+        (((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P u) W : ℤ))).sum fun W m => m • (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).sum (fun U k => (k : ℝ) * c U) -
           (∑ᶠ (W) (_ : W ∈ divSupp P u ∧ IsHorizontal W),
             (multAt (P ⊔ Ideal.span {u}) W : ℝ) * ptsIntegral W (pot L) (logNorm B' u')) -
           ptsIntegral P (Fin.cons (fun z => Real.log (B'.h z)) (pot L)) (logNorm B u) := by
@@ -261,7 +262,7 @@ theorem Swap.of_cycles (hCut : GeoNumCut.Statement) (hPL2 : SectionSpaceSymmetry
       rfl
     have hrec : recR I P (Fin.snoc L B') B u =
         (∑ᶠ W ∈ divSupp P u, (multAt (P ⊔ Ideal.span {u}) W : ℝ) *
-          ((divCycle W u').sum (fun U m => (m : ℝ) * c U) -
+          (((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).sum (fun U m => (m : ℝ) * c U) -
             (if IsHorizontal W then arInt W u' B' L else 0))) - arInt P u B (Fin.snoc L B') := by
       unfold recR
       congr 1

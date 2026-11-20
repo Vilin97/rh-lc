@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDivCycleMi
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PPFContractedDim
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PPFContracted
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleMul
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -14,12 +15,12 @@ noncomputable section
 universe u
 
 theorem DivCycleMinimal.ringKrullDim_eq {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    [∀ k, Fintype (ι k)] {F : Type u} [Field F] (Q : Ideal (MRing ι F)) (m : ℕ)
+    [∀ k, Fintype (ι k)] {F : Type u} [Field F] (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : ℕ)
     (h : relDim Q = (m : ℕ)) :
-    ringKrullDim (MRing ι F ⧸ Q) = ((m + Fintype.card K : ℕ) : WithBot ℕ∞) := by
-  obtain ⟨d, hd⟩ : ∃ d : ℕ, ringKrullDim (MRing ι F ⧸ Q) = d := by
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) = ((m + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+  obtain ⟨d, hd⟩ : ∃ d : ℕ, ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) = d := by
     have h2 := PFContracted.ringKrullDim_lt_top Q
-    cases hc : ringKrullDim (MRing ι F ⧸ Q) with
+    cases hc : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) with
     | bot =>
       rw [relDim, hc] at h
       exact absurd h (by simp)

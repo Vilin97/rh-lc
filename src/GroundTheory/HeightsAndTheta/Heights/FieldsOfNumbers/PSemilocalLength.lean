@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsFibreRelDi
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDivCycleMinimal
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsConeLocalLength
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDivCycleSupport
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -30,7 +31,7 @@ theorem SemilocalLength.proof (h1 : SemilocalLengthSum.Statement.{u})
       haveI := hW'.isPrime
       Ring.ord (degZeroLoc P' {W'}) (β W') = multAt (P' ⊔ Ideal.span {(rename (blockIncl j ι') a)}) W' ∧
         multAt (P' ⊔ Ideal.span {(rename (blockIncl j ι') a)}) W' ≠ ⊤ ∧
-        divCycle P' (rename (blockIncl j ι') a) W' = ((multAt (P' ⊔ Ideal.span {(rename (blockIncl j ι') a)}) W').toNat : ℤ) ∧ M W' = d W' := by
+        ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P' (rename (blockIncl j ι') a)) W' : ℤ) = ((multAt (P' ⊔ Ideal.span {(rename (blockIncl j ι') a)}) W').toNat : ℤ) ∧ M W' = d W' := by
     intro W' hT
     obtain ⟨hWf, haW'⟩ := Finset.mem_filter.mp hT
     have hWf' := hfin.mem_toFinset.mp hWf
@@ -44,7 +45,7 @@ theorem SemilocalLength.proof (h1 : SemilocalLengthSum.Statement.{u})
       (fun hm => hhW (by rw [← hcW']; exact hm)) (β W')
       (by rw [hβ W' hWf', hα, map_div₀, contractFracMap_algebraMap, contractFracMap_algebraMap])
     refine ⟨hW'p, hcone.symm, hmin.2, ?_, by rw [hM1 W' hW'p hcW', hd W' hW'p]⟩
-    unfold divCycle
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
     rw [dif_pos ⟨hmin.1, hW'p.relevant⟩]
   refine ⟨∑ W' ∈ hfin.toFinset.filter (fun W' => (rename (blockIncl j ι') a) ∈ W'),
     (Ring.ord (degZeroLoc P' {W'}) (β W')).toNat * d W', ?_, ?_⟩
@@ -61,13 +62,13 @@ theorem SemilocalLength.proof (h1 : SemilocalLengthSum.Statement.{u})
       push_cast
       ring
     · intro W' hW'
-      have hdc : divCycle P' (rename (blockIncl j ι') a) W' ≠ 0 := left_ne_zero_of_mul (Function.mem_support.mp hW')
+      have hdc : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P' (rename (blockIncl j ι') a)) W' : ℤ) ≠ 0 := left_ne_zero_of_mul (Function.mem_support.mp hW')
       have hMW : M W' ≠ 0 := right_ne_zero_of_mul (Function.mem_support.mp hW')
       obtain ⟨hWp, -⟩ := DivCycleSupport.proof F K' ι' P' hP' n hP'n (Function.extend j c 0) (rename (blockIncl j ι') a)
         (isMultiHomog_rename j ι' ha) haP W' hdc
       have hmin : W' ∈ (P' ⊔ Ideal.span {(rename (blockIncl j ι') a)}).minimalPrimes := by
         by_contra hn
-        exact hdc (by unfold divCycle; rw [dif_neg (fun hc => hn hc.1)])
+        exact hdc (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dif_neg (fun hc => hn hc.1)])
       have hc : contractPrime j W' = W := by
         by_contra hne
         exact hMW (hM0 W' hne)

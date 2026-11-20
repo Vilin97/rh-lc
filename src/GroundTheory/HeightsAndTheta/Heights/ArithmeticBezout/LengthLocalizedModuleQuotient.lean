@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ImportsAlt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -11,7 +12,7 @@ namespace ObjectsChow
 namespace VerticalPartMultiplicity
 
 open MvPolynomial NumberField
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk Xc)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver Xc PBlk)
 
 theorem length_localizedModule_quotient {A : Type*} [CommRing A] (K W : Ideal A) [W.IsPrime] :
     Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (A ⧸ K)) =

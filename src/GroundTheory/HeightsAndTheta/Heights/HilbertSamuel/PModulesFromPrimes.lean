@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsDegLTGrowth
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsFiltrationHilbSum
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -73,16 +74,16 @@ theorem ModulesFromPrimes.proof (hF : MultigradedFiltration.Statement.{u, v})
   obtain ⟨n, N, x, c, q, hN0, hNtop, hstep, hcount⟩ := hF F K ι M piece hM
   have hsum := hS F K ι M piece hM n N x c q hN0 hNtop
     (fun j => ⟨(hstep j).1, (hstep j).2.1, (hstep j).2.2.2.2⟩)
-  have hann : ∀ j, Module.annihilator (MRing ι F) M ≤ q j := by
+  have hann : ∀ j, Module.annihilator (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M ≤ q j := by
     intro j s hs
     refine ((hstep j).2.2.2.2 s).1 ?_
     rw [Module.mem_annihilator.mp hs (x j)]
     exact Submodule.zero_mem _
 
-  have hmin : ∀ W : Ideal (MRing ι F), IsMultiProjPrime W →
-      Module.annihilator (MRing ι F) M ≤ W →
-      ringKrullDim (MRing ι F ⧸ W) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) →
-      W ∈ (Module.annihilator (MRing ι F) M).minimalPrimes ∧ ∃ j, q j = W := by
+  have hmin : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiProjPrime W →
+      Module.annihilator (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M ≤ W →
+      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) →
+      W ∈ (Module.annihilator (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M).minimalPrimes ∧ ∃ j, q j = W := by
     intro W hW hannW hdimW
     have := hW.isPrime
     obtain ⟨p, hp, hpW⟩ := Ideal.exists_minimalPrimes_le hannW
@@ -97,7 +98,7 @@ theorem ModulesFromPrimes.proof (hF : MultigradedFiltration.Statement.{u, v})
       have hrel : IsRelevant (q j) := fun k =>
         (hW.relevant k).imp fun i hi hm => hi ((hjp.trans hpW) hm)
       have h1 := hdim (q j) ⟨hprime, hhom, hrel⟩ (hann j)
-      have h2 := DimStrictDrop.full (MRing ι F) (q j) W hlt
+      have h2 := DimStrictDrop.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (q j) W hlt
       rw [hdimW] at h2
       have h3 := h2.trans h1
       have h4 : (((d + Fintype.card K + 1 : ℕ)) : WithBot ℕ∞) ≤
@@ -109,7 +110,7 @@ theorem ModulesFromPrimes.proof (hF : MultigradedFiltration.Statement.{u, v})
 
   obtain ⟨t, ht_def⟩ : ∃ t : Fin n → (K → ℕ) → ℤ, ∀ j a, t j a =
       if IsRelevant (q j) ∧
-          ringKrullDim (MRing ι F ⧸ q j) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) then
+          ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q j) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) then
         intNum F (q j) (fun _ : Fin d => fun k => (a k : ℤ))
       else 0 := ⟨_, fun _ _ => rfl⟩
 
@@ -119,10 +120,10 @@ theorem ModulesFromPrimes.proof (hF : MultigradedFiltration.Statement.{u, v})
     intro j
     obtain ⟨-, -, hprime, hhom, -⟩ := hstep j
     by_cases hrel : IsRelevant (q j)
-    · by_cases htop : ringKrullDim (MRing ι F ⧸ q j) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞)
+    · by_cases htop : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q j) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞)
       ·
         obtain ⟨a₁, C₁, h₁⟩ := hP d le_rfl F K ι (q j) ⟨hprime, hhom, hrel⟩ htop
-        have hlt : ringKrullDim (MRing ι F ⧸ q j) <
+        have hlt : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q j) <
             (((d + 1) + Fintype.card K : ℕ) : WithBot ℕ∞) := by
           rw [htop]
           exact_mod_cast (by omega : d + Fintype.card K < d + 1 + Fintype.card K)
@@ -138,7 +139,7 @@ theorem ModulesFromPrimes.proof (hF : MultigradedFiltration.Statement.{u, v})
         constructor <;> nlinarith [e1.1, e1.2, e2.1, e2.2]
       ·
         have hle := hdim (q j) ⟨hprime, hhom, hrel⟩ (hann j)
-        have hlt : ringKrullDim (MRing ι F ⧸ q j) < ((d + Fintype.card K : ℕ) : WithBot ℕ∞) :=
+        have hlt : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q j) < ((d + Fintype.card K : ℕ) : WithBot ℕ∞) :=
           lt_of_le_of_ne hle htop
         have hdeg := HilbDegBound.full F K ι d (q j) hprime hhom hlt
         have hsh := (DegLTClosure.full K d (hilbFn (q j)) (hilbFn (q j)) 0 (c j)).2.2.1 hdeg
@@ -185,9 +186,9 @@ theorem ModulesFromPrimes.proof (hF : MultigradedFiltration.Statement.{u, v})
     rw [Finset.sum_congr rfl hfib, Finset.sum_const, nsmul_eq_mul, ht_def]
     obtain ⟨-, -, hprime, hhom, -⟩ := hstep j₀
     by_cases htop : IsRelevant (q j₀) ∧
-        ringKrullDim (MRing ι F ⧸ q j₀) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞)
-    · have hc : IsMultiProjPrime (q j₀) ∧ Module.annihilator (MRing ι F) M ≤ q j₀ ∧
-          ringKrullDim (MRing ι F ⧸ q j₀) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) :=
+        ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q j₀) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞)
+    · have hc : IsMultiProjPrime (q j₀) ∧ Module.annihilator (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M ≤ q j₀ ∧
+          ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q j₀) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) :=
         ⟨⟨hprime, hhom, htop.1⟩, hann j₀, htop.2⟩
       rw [dif_pos hc, if_pos htop]
       have hm := (hmin _ hc.1 hc.2.1 hc.2.2).1

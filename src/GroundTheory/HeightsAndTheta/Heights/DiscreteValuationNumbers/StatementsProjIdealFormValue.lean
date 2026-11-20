@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundleSectionDiv
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -13,7 +14,7 @@ def ProjIdealFormValue.Statement : Prop :=
     (K : Type) [DecidableEq K] (ι : K → Type) (y : (Σ k, ι k) → Ω)
     (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E] (w : Module.Basis (Fin N) Ω E)
     (M : ℕ) (φ : Fin M → Module.Dual Ω E) (Φ : Type) [Field Φ] [Algebra Ω Φ] (t : Fin N → Φ)
-    (d : Option K → ℕ) (x : MRing (bundleIdx ι M) F), IsMultiHomog x d →
+    (d : Option K → ℕ) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)), IsMultiHomog x d →
       (x ∈ projIdeal F y w φ t ↔
         eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ t) x = 0)
 

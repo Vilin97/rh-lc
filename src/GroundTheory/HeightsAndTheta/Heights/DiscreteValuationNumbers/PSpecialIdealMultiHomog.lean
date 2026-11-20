@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -20,7 +21,7 @@ theorem isWeightedHomogeneous_map_of {σ M R S : Type*} [AddCommMonoid M] [CommR
   exact hd (by rw [h0, map_zero])
 
 theorem span_forms_of_isMultiHomogIdeal {K : Type} [DecidableEq K] {ι : K → Type}
-    {R : Type*} [CommRing R] {P : Ideal (MRing ι R)} (hP : IsMultiHomogIdeal P) :
+    {R : Type*} [CommRing R] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hP : IsMultiHomogIdeal P) :
     Ideal.span {f | f ∈ P ∧ ∃ b, IsWeightedHomogeneous (blockWeight ι) f b} = P := by
   apply le_antisymm
   · rw [Ideal.span_le]

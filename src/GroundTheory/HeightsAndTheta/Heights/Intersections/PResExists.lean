@@ -6,6 +6,7 @@ import ReciprocityTheory.AnalyticForms.RegularLocalRings.SchemeRes
 import ReciprocityTheory.AnalyticForms.RegularLocalRings.ConeChart
 import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjLogResCOfCR
 import ReciprocityTheory.AnalyticForms.RegularLocalRings.IfaceInh
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -19,19 +20,19 @@ section
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem exists_forms_span {P : Ideal (MRing ι ℂ)} (hP : NumbersDVR.IsMultiHomogIdeal P) :
-    ∃ (t : ℕ) (G : Fin t → MRing ι ℂ), (∀ i, ∃ a, ReciprocityTheory.AnForm.R.IsMultiHomog (G i) a) ∧
+theorem exists_forms_span {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hP : NumbersDVR.IsMultiHomogIdeal P) :
+    ∃ (t : ℕ) (G : Fin t → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι), (∀ i, ∃ a, ReciprocityTheory.AnForm.R.IsMultiHomog (G i) a) ∧
       Ideal.span (Set.range G) = P := by
   classical
   obtain ⟨S, hS, hPS⟩ := (Bridge.isMultiHomogIdeal_iff P).mp hP
-  obtain ⟨T, hTS, hT⟩ : ∃ T : Finset (MRing ι ℂ), (T : Set (MRing ι ℂ)) ⊆ S ∧
-      Ideal.span S = Ideal.span (T : Set (MRing ι ℂ)) := by
+  obtain ⟨T, hTS, hT⟩ : ∃ T : Finset (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι), (T : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) ⊆ S ∧
+      Ideal.span S = Ideal.span (T : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) := by
     have hfg : (Ideal.span S).FG := by
       rw [← hPS]
       exact IsNoetherian.noetherian P
     exact (Submodule.fg_span_iff_fg_span_finset_subset S).mp hfg
   refine ⟨T.card, fun i => (T.equivFin.symm i).1, fun i => hS _ (hTS (T.equivFin.symm i).2), ?_⟩
-  have hrange : Set.range (fun i => (T.equivFin.symm i).1) = (T : Set (MRing ι ℂ)) := by
+  have hrange : Set.range (fun i => (T.equivFin.symm i).1) = (T : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) := by
     ext f
     constructor
     · rintro ⟨i, rfl⟩
@@ -44,7 +45,7 @@ theorem isEmpty_sigma [IsEmpty K] : IsEmpty (Σ k, ι k) := ⟨fun q => isEmptyE
 
 attribute [local instance] isEmpty_sigma
 
-theorem eq_bot_of_isEmpty [IsEmpty K] {P : Ideal (MRing ι ℂ)} (hP : P.IsPrime) : P = ⊥ := by
+theorem eq_bot_of_isEmpty [IsEmpty K] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hP : P.IsPrime) : P = ⊥ := by
   rw [eq_bot_iff]
   intro f hf
   rw [Ideal.mem_bot, eq_C_of_isEmpty f]
@@ -55,12 +56,12 @@ theorem eq_bot_of_isEmpty [IsEmpty K] {P : Ideal (MRing ι ℂ)} (hP : P.IsPrime
   exact (isUnit_iff_ne_zero.mpr hc).map C
 
 theorem ringKrullDim_bot_of_isEmpty [IsEmpty K] :
-    ringKrullDim (MRing ι ℂ ⧸ (⊥ : Ideal (MRing ι ℂ))) = 0 := by
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι ⧸ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι))) = 0 := by
   rw [ringKrullDim_eq_of_ringEquiv
-    ((RingEquiv.quotientBot (MRing ι ℂ)).trans (isEmptyRingEquiv ℂ (Σ k, ι k)))]
+    ((RingEquiv.quotientBot (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)).trans (isEmptyRingEquiv ℂ (Σ k, ι k)))]
   exact ringKrullDim_eq_zero_of_field ℂ
 
-def emptyAlgRes [IsEmpty K] : ReciprocityTheory.AnForm.R.AlgRes ι (⊥ : Ideal (MRing ι ℂ)) ⊤ 0 where
+def emptyAlgRes [IsEmpty K] : ReciprocityTheory.AnForm.R.AlgRes ι (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) ⊤ 0 where
   M := Unit
   n := 1
   amb _ := 0
@@ -127,7 +128,7 @@ theorem ResExists.proof (h : ReciprocityTheory.AnForm.R.FinalTheorems.GFLogStC �
   · haveI := hprime
     obtain ⟨t, G, hG, hspan⟩ := exists_forms_span hhom
     have hdimQ : ∀ Q ∈ P.minimalPrimes,
-        ringKrullDim (MRing ι ℂ ⧸ Q) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+        ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι ⧸ Q) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) := by
       intro Q hQ
       rw [Ideal.minimalPrimes_eq_subsingleton_self, Set.mem_singleton_iff] at hQ
       rw [hQ]

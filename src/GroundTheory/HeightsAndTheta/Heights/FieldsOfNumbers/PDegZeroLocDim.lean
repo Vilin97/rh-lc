@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsMChart
 import GroundTheory.ArithmeticGeometry.AbelianVarieties.JacobianSmoothness.RingKrullDimLeRingKrullDimQuotientAddOne
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -18,25 +19,25 @@ variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K �
 
 omit [DecidableEq K] in
 
-theorem finiteType_quotient_mRing (I : Ideal (MRing ι F)) : Algebra.FiniteType F (MRing ι F ⧸ I) :=
+theorem finiteType_quotient_mRing (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : Algebra.FiniteType F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) :=
   Algebra.FiniteType.of_surjective (Ideal.Quotient.mkₐ F I) (Ideal.Quotient.mkₐ_surjective F I)
 
 omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
-theorem chartMonomial_not_mem (Q : Ideal (MRing ι F)) [Q.IsPrime] (u : ∀ k, ι k)
-    (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ Q) (b : K → ℕ) : chartMonomial u b ∉ Q := by
+theorem chartMonomial_not_mem (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [Q.IsPrime] (u : ∀ k, ι k)
+    (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ Q) (b : K → ℕ) : chartMonomial u b ∉ Q := by
   unfold chartMonomial
   intro h
   obtain ⟨k, -, hk⟩ := Ideal.IsPrime.prod_mem_iff.mp h
   exact hu k (Ideal.IsPrime.mem_of_pow_mem ‹_› _ hk)
 
-theorem chart_ringKrullDim_add_card (h : MChartTrdeg.Statement.{u}) (Q : Ideal (MRing ι F)) [Q.IsPrime]
-    (hQ : IsMultiHomogIdeal Q) (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ Q) :
-    ringKrullDim (MRing ι F ⧸ chartIdeal Q u) + Fintype.card K = ringKrullDim (MRing ι F ⧸ Q) := by
+theorem chart_ringKrullDim_add_card (h : MChartTrdeg.Statement.{u}) (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [Q.IsPrime]
+    (hQ : IsMultiHomogIdeal Q) (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ Q) :
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ chartIdeal Q u) + Fintype.card K = ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) := by
   have := finiteType_quotient_mRing (F := F) (chartIdeal Q u)
   have := finiteType_quotient_mRing (F := F) Q
   rw [GroundTheory.Arith.Abelian.Jacobian.ringKrullDim_eq_trdeg F,
-    GroundTheory.Arith.Abelian.Jacobian.ringKrullDim_eq_trdeg F (A := MRing ι F ⧸ Q), ← h F K ι Q hQ u hu,
+    GroundTheory.Arith.Abelian.Jacobian.ringKrullDim_eq_trdeg F (A := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q), ← h F K ι Q hQ u hu,
     map_add, map_natCast]
   norm_cast
 
@@ -48,7 +49,7 @@ theorem DegZeroLocDim.proof (h₁ : MChartHomog.Statement.{u}) (h₂ : MChartTrd
   have := hP.isPrime
   have := hW.isPrime
   choose u hu using hW.relevant
-  have huP : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ P := fun k hk => hu k (hPW hk)
+  have huP : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P := fun k hk => hu k (hPW hk)
   have hle : chartIdeal P u ≤ chartIdeal W u := by
     intro p hp
     obtain ⟨b, h, -, hh⟩ := h₁ F K ι u p
@@ -67,7 +68,7 @@ theorem DegZeroLocDim.proof (h₁ : MChartHomog.Statement.{u}) (h₂ : MChartTrd
   have hform := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient F
     ((chartIdeal W u).map (Ideal.Quotient.mk (chartIdeal P u)))
   rw [ringKrullDim_eq_of_ringEquiv (DoubleQuot.quotQuotEquivQuotOfLE hle)] at hform
-  show ringKrullDim (degZeroLoc P {W}) + ringKrullDim (MRing ι F ⧸ W) = ringKrullDim (MRing ι F ⧸ P)
+  show ringKrullDim (degZeroLoc P {W}) + ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) = ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)
   rw [h₃ F K ι P W hPW u hu, ← chart_ringKrullDim_add_card h₂ W hW.multiHomog u hu,
     ← chart_ringKrullDim_add_card h₂ P hP.multiHomog u huP, ← hform, add_assoc]
 

@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PHilbExactDivide
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumAdd
 import GroundTheory.ArithmeticGeometry.AbelianVarieties.JacobianSmoothness.RingKrullDimLeRingKrullDimQuotientAddOne
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -46,28 +47,28 @@ theorem eventualValue_eq_zero {f : (K → ℤ) → ℤ} (hf : ∀ᶠ m in Filter
     rw [← h1, h2]
   · rfl
 
-theorem intNum_eq_zero_of_eventually {I : Ideal (MRing ι F)}
+theorem intNum_eq_zero_of_eventually {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}
     (hI : ∀ᶠ m in Filter.atTop, hilbFn I m = 0) {n : ℕ} (bs : Fin n → K → ℤ) :
     intNum F I bs = 0 :=
   eventualValue_eq_zero (foldr_diffStep_eventually_zero hI (List.ofFn bs))
 
-theorem hilbFn_top (m : K → ℤ) : hilbFn (⊤ : Ideal (MRing ι F)) m = 0 := by
+theorem hilbFn_top (m : K → ℤ) : hilbFn (⊤ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) m = 0 := by
   unfold hilbFn
   split_ifs
-  · have : gradedPiece (⊤ : Ideal (MRing ι F)) (fun k => (m k).toNat) = ⊥ := by
+  · have : gradedPiece (⊤ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (fun k => (m k).toNat) = ⊥ := by
       rw [eq_bot_iff]
       intro x _
       rw [Submodule.mem_bot]
-      have : Subsingleton (MRing ι F ⧸ (⊤ : Ideal (MRing ι F))) :=
+      have : Subsingleton (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ (⊤ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))) :=
         Ideal.Quotient.subsingleton_iff.mpr rfl
       exact Subsingleton.elim _ _
     rw [this, finrank_bot, Nat.cast_zero]
   · rfl
 
-theorem mem_of_block_le {I : Ideal (MRing ι F)} {k : K}
-    (hk : ∀ i : ι k, (X ⟨k, i⟩ : MRing ι F) ∈ I) {m : K → ℕ} (hm : 1 ≤ m k)
-    {f : MRing ι F} (hf : IsMultiHomog f m) : f ∈ I := by
-  have hspan : Ideal.span ((X : (Σ k, ι k) → MRing ι F) '' {v | v.1 = k}) ≤ I := by
+theorem mem_of_block_le {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} {k : K}
+    (hk : ∀ i : ι k, (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∈ I) {m : K → ℕ} (hm : 1 ≤ m k)
+    {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hf : IsMultiHomog f m) : f ∈ I := by
+  have hspan : Ideal.span ((X : (Σ k, ι k) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) '' {v | v.1 = k}) ≤ I := by
     rw [Ideal.span_le]
     rintro _ ⟨⟨k', i⟩, hv, rfl⟩
     simp only [Set.mem_ofPred_eq] at hv
@@ -88,7 +89,7 @@ theorem mem_of_block_le {I : Ideal (MRing ι F)} {k : K}
   rw [hw] at h0
   omega
 
-theorem hilbFn_eventually_zero_of_not_relevant {I : Ideal (MRing ι F)} (hI : ¬ IsRelevant I) :
+theorem hilbFn_eventually_zero_of_not_relevant {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : ¬ IsRelevant I) :
     ∀ᶠ m in Filter.atTop, hilbFn I m = 0 := by
   unfold IsRelevant at hI
   push Not at hI
@@ -107,8 +108,8 @@ theorem hilbFn_eventually_zero_of_not_relevant {I : Ideal (MRing ι F)} (hI : ¬
     rw [this, finrank_bot, Nat.cast_zero]
   · rfl
 
-theorem isMultiHomogIdeal_sup_span {P : Ideal (MRing ι F)} (hP : IsMultiHomogIdeal P)
-    {c : K → ℕ} {s : MRing ι F} (hs : IsMultiHomog s c) :
+theorem isMultiHomogIdeal_sup_span {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hP : IsMultiHomogIdeal P)
+    {c : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hs : IsMultiHomog s c) :
     IsMultiHomogIdeal (P ⊔ Ideal.span {s}) := by
   classical
   intro f hf b
@@ -122,7 +123,7 @@ theorem isMultiHomogIdeal_sup_span {P : Ideal (MRing ι F)} (hP : IsMultiHomogId
 
 omit [DecidableEq K] in
 
-theorem colon_eq_of_not_mem {P : Ideal (MRing ι F)} [hP : P.IsPrime] {s : MRing ι F}
+theorem colon_eq_of_not_mem {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [hP : P.IsPrime] {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
     (hs : s ∉ P) : P.colon (Ideal.span {s}) = P := by
   ext g
   rw [HilbExactDivide.mem_colon_span_iff]
@@ -130,11 +131,11 @@ theorem colon_eq_of_not_mem {P : Ideal (MRing ι F)} [hP : P.IsPrime] {s : MRing
 
 omit [DecidableEq K] in
 
-theorem relDim_eq_natCast_iff [Fintype K] (I : Ideal (MRing ι F)) (d : ℕ) :
+theorem relDim_eq_natCast_iff [Fintype K] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (d : ℕ) :
     relDim I = ((d : ℕ) : WithBot (WithTop ℤ)) ↔
-      ringKrullDim (MRing ι F ⧸ I) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) := by
   unfold relDim
-  cases hd : ringKrullDim (MRing ι F ⧸ I) using WithBot.recBotCoe with
+  cases hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) using WithBot.recBotCoe with
   | bot =>
     rw [WithBot.map_bot]
     exact iff_of_false (WithBot.bot_ne_natCast _) (WithBot.bot_ne_natCast _)
@@ -203,9 +204,9 @@ theorem le_of_height_add {h : ℕ∞} {x : WithBot ℕ∞} {e : ℕ} (hh : h ≤
 
 omit [DecidableEq K] in
 
-theorem ringKrullDim_sup_span_add_one_le {P : Ideal (MRing ι F)} [P.IsPrime] {s : MRing ι F}
+theorem ringKrullDim_sup_span_add_one_le {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [P.IsPrime] {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
     (hs : s ∉ P) :
-    ringKrullDim (MRing ι F ⧸ (P ⊔ Ideal.span {s})) + 1 ≤ ringKrullDim (MRing ι F ⧸ P) := by
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ (P ⊔ Ideal.span {s})) + 1 ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) := by
   have hne : (P ⊔ Ideal.span {s}).map (Ideal.Quotient.mk P) ≠ ⊥ := by
     intro h
     apply hs
@@ -216,16 +217,16 @@ theorem ringKrullDim_sup_span_add_one_le {P : Ideal (MRing ι F)} [P.IsPrime] {s
   have := GroundTheory.Arith.Abelian.Jacobian.ringKrullDim_quotient_add_one_le _ hne
   rwa [ringKrullDim_eq_of_ringEquiv (DoubleQuot.quotQuotEquivQuotOfLE le_sup_left)] at this
 
-theorem ringKrullDim_minimalPrime [Fintype K] [∀ k, Fintype (ι k)] {P W : Ideal (MRing ι F)}
-    [P.IsPrime] {s : MRing ι F} (hs : s ∉ P) (hW : W ∈ (P ⊔ Ideal.span {s}).minimalPrimes)
-    {e : ℕ} (hdim : ringKrullDim (MRing ι F ⧸ P) = ((e + 1 : ℕ) : WithBot ℕ∞)) :
-    ringKrullDim (MRing ι F ⧸ W) = ((e : ℕ) : WithBot ℕ∞) := by
+theorem ringKrullDim_minimalPrime [Fintype K] [∀ k, Fintype (ι k)] {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}
+    [P.IsPrime] {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hs : s ∉ P) (hW : W ∈ (P ⊔ Ideal.span {s}).minimalPrimes)
+    {e : ℕ} (hdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) = ((e + 1 : ℕ) : WithBot ℕ∞)) :
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) = ((e : ℕ) : WithBot ℕ∞) := by
   have hWprime : W.IsPrime := hW.1.1
   have hPW : P ≤ W := le_sup_left.trans hW.1.2
   have hsW : s ∈ W := (le_sup_right.trans hW.1.2) (Ideal.mem_span_singleton_self _)
-  have _ : Algebra.FiniteType F (MRing ι F ⧸ P) :=
+  have _ : Algebra.FiniteType F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) :=
     Algebra.FiniteType.of_surjective (Ideal.Quotient.mkₐ F P) (Ideal.Quotient.mkₐ_surjective F P)
-  set W' : Ideal (MRing ι F ⧸ P) := W.map (Ideal.Quotient.mk P)
+  set W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) := W.map (Ideal.Quotient.mk P)
   have _ : W'.IsPrime :=
     Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective (by rwa [Ideal.mk_ker])
   have hW'ne : W' ≠ ⊥ := by
@@ -235,7 +236,7 @@ theorem ringKrullDim_minimalPrime [Fintype K] [∀ k, Fintype (ι k)] {P W : Ide
     have : Ideal.Quotient.mk P s ∈ W' := Ideal.mem_map_of_mem _ hsW
     rwa [h, Ideal.mem_bot] at this
   have hht : W'.height ≤ 1 := Ideal.map_height_le_one_of_mem_minimalPrimes hW
-  have hquot : ringKrullDim ((MRing ι F ⧸ P) ⧸ W') = ringKrullDim (MRing ι F ⧸ W) :=
+  have hquot : ringKrullDim ((ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) ⧸ W') = ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) :=
     ringKrullDim_eq_of_ringEquiv (DoubleQuot.quotQuotEquivQuotOfLE hPW)
   have hform := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient F W'
   have hdrop := GroundTheory.Arith.Abelian.Jacobian.ringKrullDim_quotient_add_one_le W' hW'ne
@@ -261,11 +262,11 @@ theorem CutRegular.proof (h1 : HilbExactDivide.Statement.{u}) (h2 : MultEqualsCo
     unfold intNum
     rw [mixedDiff_snoc, hdiff]
   rw [hLHS]
-  have hP' : ringKrullDim (MRing ι F ⧸ P) = ((n + Fintype.card K + 1 : ℕ) : WithBot ℕ∞) := by
+  have hP' : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) = ((n + Fintype.card K + 1 : ℕ) : WithBot ℕ∞) := by
     rw [(relDim_eq_natCast_iff P (n + 1)).mp hdim, show n + 1 + Fintype.card K =
       n + Fintype.card K + 1 by omega]
   have hmin : ∀ W ∈ I.minimalPrimes,
-      ringKrullDim (MRing ι F ⧸ W) = ((n + Fintype.card K : ℕ) : WithBot ℕ∞) :=
+      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) = ((n + Fintype.card K : ℕ) : WithBot ℕ∞) :=
     fun W hW => ringKrullDim_minimalPrime hsP hW hP'
   by_cases hgood : IsRelevant I ∧ I ≠ ⊤
   · obtain ⟨hrel, hne⟩ := hgood
@@ -273,7 +274,7 @@ theorem CutRegular.proof (h1 : HilbExactDivide.Statement.{u}) (h2 : MultEqualsCo
       rw [relDim_eq_natCast_iff]
       obtain ⟨⟨W, hW⟩⟩ := Ideal.nonempty_minimalPrimes hne
       have _ : W.IsPrime := hW.1.1
-      have hle : ringKrullDim (MRing ι F ⧸ W) ≤ ringKrullDim (MRing ι F ⧸ I) :=
+      have hle : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) :=
         ringKrullDim_le_of_surjective (Ideal.Quotient.factor hW.1.2)
           (Ideal.Quotient.factor_surjective hW.1.2)
       rw [hmin W hW] at hle
@@ -283,8 +284,7 @@ theorem CutRegular.proof (h1 : HilbExactDivide.Statement.{u}) (h2 : MultEqualsCo
     rw [h2 F K ι I (isMultiHomogIdeal_sup_span hP.multiHomog hs) hrel n hIdim bs]
     congr 1
     funext W
-    unfold topCycle divCycle
-    by_cases hW : W ∈ I.minimalPrimes ∧ IsRelevant W
+    unfold topCycle (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle by_cases hW) W : ℤ)) : W ∈ I.minimalPrimes ∧ IsRelevant W
     · have hWd : relDim W = ((n : ℕ) : WithBot (WithTop ℤ)) :=
         (relDim_eq_natCast_iff W n).mpr (hmin W hW.1)
       rw [dif_pos ⟨hW.1, hW.2, hWd⟩, dif_pos hW]
@@ -295,10 +295,10 @@ theorem CutRegular.proof (h1 : HilbExactDivide.Statement.{u}) (h2 : MultEqualsCo
         exact Filter.Eventually.of_forall hilbFn_top
       · exact hilbFn_eventually_zero_of_not_relevant (fun h => hgood ⟨h, htop⟩)
     rw [intNum_eq_zero_of_eventually hzero]
-    have hdiv : divCycle P s = 0 := by
+    have hdiv : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ)) = 0 := by
       funext W
       simp only [Pi.zero_apply]
-      unfold divCycle
+      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
       rw [dif_neg]
       rintro ⟨hWm, hWr⟩
       have hIW : I ≤ W := hWm.1.2

@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBundles
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.InstFintypeSumElim
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -15,7 +16,7 @@ def ChernClassOnFlagPair.Statement : Prop :=
       IsModelOver (pointIdeal O y) d →
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E] (B B' : ChartBundle O (segreVec y) N E),
       SameGenericFibre ϖ B B' →
-    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O),
+    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       IsFlagPair ϖ y B B' w w' x x' f g →
     (∀ (k : ℕ), 1 ≤ k → k ≤ d + 1 → ∀ Gs : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ,
       IsPairExpansion k (psum (Fin N) ℤ k) Gs →
@@ -27,6 +28,6 @@ def ChernClassOnFlagPair.Statement : Prop :=
       ∀ a : O, a ≠ 0 →
         IndefiniteRowSideFullHecke.NumbersDVR.Bundles.rootNum O y d N B G L Q a =
           ∑ μ ∈ Q.support, Q.coeff μ *
-            cycEval (fun W => classNum x G (classList L μ) W) (divCycle (pointIdeal O y) (C a)))
+            cycEval (fun W => classNum x G (classList L μ) W) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O y) (C a)) W : ℤ))))
 
 end GroundTheory.Heights₂.Heights.NumbersDVR

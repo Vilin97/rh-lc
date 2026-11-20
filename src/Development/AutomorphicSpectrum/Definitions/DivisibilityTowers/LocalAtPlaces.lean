@@ -1,12 +1,13 @@
 import Mathlib
 import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.Proportional
 import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.LaurentCechNerveLevelSpecTensorPower
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 namespace GlobalTheory.CompanionTheory.Ar.Num
 
 open MvPolynomial GlobalTheory.CompanionTheory.Ar.Top
 open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsConjInvariantH IntersectionSystem)
-open GroundTheory.Heights₂.Heights.NumbersDVR (pointIdeal divCycle cycEval intNumL)
+open GroundTheory.Heights₂.Heights.NumbersDVR (pointIdeal (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle cycEval intNumL) W : ℤ)))
 
 noncomputable section
 
@@ -16,7 +17,7 @@ def vertAt {K : Type} [DecidableEq K] {ι : K → Type} (p : Nat.Primes) (P : Id
     (f : MvPolynomial (Σ k, ι k) ℤ) (l : List (K → ℤ)) : ℤ :=
   haveI : Fact (p : ℕ).Prime := ⟨p.2⟩
   cycEval (fun W => if (C ((p : ℕ) : ℤ) : MvPolynomial (Σ k, ι k) ℤ) ∈ W then
-    intNumL (ZMod p) (extTo (ZMod p) W) l else 0) (divCycle P f)
+    intNumL (ZMod p) (extTo (ZMod p) W) l else 0) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ)))
 
 def AtPlacesOver (A : Type) [CommRing A] (Ω : Type) [Field Ω] [Algebra A Ω] (p : ℕ)
     (Pr : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Algebra O Ω], Prop) : Prop :=

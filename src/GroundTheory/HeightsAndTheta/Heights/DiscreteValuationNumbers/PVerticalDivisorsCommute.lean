@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Statements
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -14,7 +15,7 @@ universe u
 
 theorem ratDiv_support_finite (h4 : DivCycleFiniteSupport.Statement.{u}) {O : Type u} [CommRing O]
     [IsNoetherianRing O] {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
-    (P : Ideal (MRing ι O)) (f g : MRing ι O) : (Function.support (ratDiv P f g)).Finite := by
+    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) : (Function.support (ratDiv P f g)).Finite := by
   refine ((h4 O K ι P f).union (h4 O K ι P g)).subset ?_
   intro W hW
   by_contra h
@@ -42,21 +43,21 @@ theorem VerticalDivisorsCommute.proof (h1 : CutByEffectiveDivisor.Statement.{u})
   have hPmh : IsMultiHomogIdeal P := hP.multiProj.multiHomog
   have : P.IsPrime := hP.multiProj.isPrime
 
-  have hmh : ∀ (h : MRing ι O) (e : K → ℕ), IsMultiHomog h e → ∀ W, divCycle P h W ≠ 0 →
+  have hmh : ∀ (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (e : K → ℕ), IsMultiHomog h e → ∀ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P h) W : ℤ) ≠ 0 →
       IsMultiHomogIdeal W ∧ W ∈ (P ⊔ Ideal.span {h}).minimalPrimes ∧ IsRelevant W := by
     intro h e he W hW
-    unfold divCycle at hW
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
     split_ifs at hW with hW'
     · exact ⟨h5 O K ι _ W (h6 O K ι P h e hPmh he) hW'.1, hW'.1, hW'.2⟩
     · exact absurd rfl hW
-  have hϖP : (C ϖ : MRing ι O) ∉ P := by
+  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
     intro h
-    have h' : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
+    have h' : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
     rw [hP.noTorsion, Ideal.mem_bot] at h'
     exact hϖ.ne_zero h'
 
-  have hTfin : {H : Ideal (MRing ι O) | (divCycle P f' H ≠ 0 ∨ divCycle P g' H ≠ 0) ∧
-      (C ϖ : MRing ι O) ∉ H}.Finite :=
+  have hTfin : {H : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) | (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f') H : ℤ) ≠ 0 ∨ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g') H : ℤ) ≠ 0) ∧
+      (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H}.Finite :=
     ((h4 O K ι P f').union (h4 O K ι P g')).subset fun H hH => hH.1
   obtain ⟨f₁, g₁, hV₁, hrat, hT₁⟩ := h2 O ϖ hϖ K ι P b f g hP.multiProj hD hTfin.toFinset (by
     intro H hH
@@ -77,10 +78,10 @@ theorem VerticalDivisorsCommute.proof (h1 : CutByEffectiveDivisor.Statement.{u})
       vNum W (Matrix.vecCons b' L) = vNum W (Matrix.vecCons (fun k => (c' k : ℤ)) L) -
         vNum W (Matrix.vecCons (fun k => (c'' k : ℤ)) L) := by
     intro W hW
-    have hϖW : (C ϖ : MRing ι O) ∈ W := hD.vertical W hW
+    have hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := hD.vertical W hW
     have hWdata : IsMultiHomogIdeal W ∧ W.IsPrime ∧ P ≤ W := by
-      by_cases hWf : divCycle P f W = 0
-      · have hWg : divCycle P g W ≠ 0 := by
+      by_cases hWf : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = 0
+      · have hWg : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) ≠ 0 := by
           intro hWg; apply hW; simp [ratDiv, hWf, hWg]
         obtain ⟨hm, hmin, -⟩ := hmh g bg hbg W hWg
         exact ⟨hm, hmin.1.1, le_sup_left.trans hmin.1.2⟩
@@ -89,7 +90,7 @@ theorem VerticalDivisorsCommute.proof (h1 : CutByEffectiveDivisor.Statement.{u})
     obtain ⟨hWm, hWp, hPW⟩ := hWdata
     have := hWp
     have hlt : P < W := lt_of_le_of_ne hPW (fun e => hϖP (e ▸ hϖW))
-    have hdrop := h10 (MRing ι O) P W hlt
+    have hdrop := h10 (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P W hlt
     rw [hP.dim] at hdrop
     have hdim : ringKrullDim (MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal W) <
         ((d + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) := by

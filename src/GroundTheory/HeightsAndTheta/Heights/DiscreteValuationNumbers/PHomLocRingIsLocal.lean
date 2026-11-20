@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsHomLocRingLocal
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -12,14 +13,14 @@ universe u
 
 theorem HomLocRingIsLocal.proof (h : HomLocRingMem.Statement.{u}) : HomLocRingIsLocal.Statement.{u} := by
   intro R _ K _ ι P W _ hW hPW
-  let F := FractionRing (MRing ι R ⧸ P)
-  let φ : MRing ι R →+* F := (algebraMap (MRing ι R ⧸ P) F).comp (Ideal.Quotient.mk P)
+  let F := FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)
+  let φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* F := (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) F).comp (Ideal.Quotient.mk P)
   have hφ : ∀ a, φ a = 0 ↔ a ∈ P := by
     intro a
     simp only [φ, RingHom.comp_apply]
     rw [IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
   have hne : ∀ a, a ∉ W → φ a ≠ 0 := fun a ha h0 => ha (hPW ((hφ a).1 h0))
-  have key : ∀ (b : K → ℕ) (f g : MRing ι R), IsMultiHomog f b → IsMultiHomog g b → g ∉ W →
+  have key : ∀ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι), IsMultiHomog f b → IsMultiHomog g b → g ∉ W →
       ∀ hz : φ f / φ g ∈ homLocRing P W, IsUnit (⟨_, hz⟩ : homLocRing P W) ↔ f ∉ W := by
     intro b f g hf hg hgW hz
     constructor
@@ -49,7 +50,7 @@ theorem HomLocRingIsLocal.proof (h : HomLocRingMem.Statement.{u}) : HomLocRingIs
       rw [div_mul_div_comm, mul_comm (φ f) (φ g)]
       exact div_self (mul_ne_zero (hne g hgW) (hne f hfW))
   refine ⟨?_, key⟩
-  have hnu : ∀ z : homLocRing P W, ¬ IsUnit z → ∃ (b : K → ℕ) (f g : MRing ι R),
+  have hnu : ∀ z : homLocRing P W, ¬ IsUnit z → ∃ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι),
       IsMultiHomog f b ∧ IsMultiHomog g b ∧ g ∉ W ∧ f ∈ W ∧ (z : F) = φ f / φ g := by
     intro z hz
     obtain ⟨b, f, g, hf, hg, hgW, hzfg⟩ := (h R K ι P W hW hPW z).1 z.2

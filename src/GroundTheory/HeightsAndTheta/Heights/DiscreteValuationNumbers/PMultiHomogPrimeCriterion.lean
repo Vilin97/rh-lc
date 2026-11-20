@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -42,13 +43,13 @@ lemma weight_lexDeg (d : (Σ k, ι k) →₀ ℕ) :
     Finsupp.weight (lexDeg ∘ blockWeight ι) d = lexDeg (Finsupp.weight (blockWeight ι) d) := by
   simp only [Finsupp.weight_apply, map_finsuppSum, map_nsmul, Function.comp_apply]
 
-lemma component_lexDeg (b : K → ℕ) (f : MRing ι R) :
+lemma component_lexDeg (b : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
     weightedHomogeneousComponent (lexDeg ∘ blockWeight ι) (lexDeg b) f =
       weightedHomogeneousComponent (blockWeight ι) b f := by
   ext d
   simp only [coeff_weightedHomogeneousComponent, weight_lexDeg, lexDeg_injective.eq_iff]
 
-lemma isMultiHomog_of_lex {x : MRing ι R} {i : Lex (Fin (Fintype.card K) → ℕ)}
+lemma isMultiHomog_of_lex {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {i : Lex (Fin (Fintype.card K) → ℕ)}
     (hx : IsWeightedHomogeneous (lexDeg ∘ blockWeight ι) x i) : ∃ s, IsMultiHomog x s := by
   obtain ⟨b, rfl⟩ := lexDeg_surjective i
   refine ⟨b, fun d hd => ?_⟩

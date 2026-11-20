@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsF
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagLineDegree
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PNumericalSegre
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -15,7 +16,7 @@ noncomputable section
 namespace FlagBundleLineBaseProof
 
 theorem intNum_eq_intNumL {K : Type*} [DecidableEq K] {ι : K → Type*} (F : Type*) [Field F]
-    (P : Ideal (MRing ι F)) {n : ℕ} (bs : Fin n → K → ℤ) :
+    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {n : ℕ} (bs : Fin n → K → ℤ) :
     intNum F P bs = intNumL F P (List.ofFn bs) := by
   unfold intNumL intNum mixedDiff
   rw [List.ofFn_get]
@@ -35,8 +36,8 @@ theorem pullDeg_some {K : Type*} (c : K → ℤ) :
     exact (Option.some_injective K).extend_apply c 0 k
 
 theorem relDim_of_krull {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} (F : Type)
-    [Field F] (I : Ideal (MRing ι F)) (e : ℕ)
-    (h : ringKrullDim (MRing ι F ⧸ I) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞)) :
+    [Field F] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (e : ℕ)
+    (h : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞)) :
     FieldNumbers.relDim I = ((e : ℕ) : WithBot (WithTop ℤ)) := by
   exact (FieldNumbers.CutRegular.relDim_eq_natCast_iff I e).2 h
 
@@ -67,9 +68,9 @@ theorem contractPrime_projIdeal {K : Type} {ι : K → Type} {Ω : Type} [Field 
     ((congrArg RingHom.ker hcomp).trans (RingHom.ker_comp_of_injective _ hψ))
 
 theorem replace_zeta {K : Type} [Fintype K] [DecidableEq K] {ι' : Option K → Type}
-    [∀ o, Fintype (ι' o)] (F : Type) [Field F] (P : Ideal (MRing ι' F)) (hP : IsMultiProjPrime P)
+    [∀ o, Fintype (ι' o)] (F : Type) [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) (hP : IsMultiProjPrime P)
     (e : ℕ) (hd : FieldNumbers.relDim P = ((e : ℕ) : WithBot (WithTop ℤ))) (c : K → ℤ)
-    (bf bg : Option K → ℕ) (f g : MRing ι' F) (hf : IsMultiHomog f bf) (hg : IsMultiHomog g bg)
+    (bf bg : Option K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι') (hf : IsMultiHomog f bf) (hg : IsMultiHomog g bg)
     (hfP : f ∉ P) (hgP : g ∉ P) (hfg : (fun o => (bf o : ℤ) - bg o) = zetaDeg - liftDeg c)
     (hdiv : ratDiv P f g = 0) :
     ∀ (n : ℕ) (Y : List (K → ℤ)), n + Y.length = e →

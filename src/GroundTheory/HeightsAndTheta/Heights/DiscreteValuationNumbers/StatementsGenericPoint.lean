@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBundles
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.TrivBundleIsTwistedForms
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -16,7 +17,7 @@ def GenericPointTransfer.Statement : Prop :=
     (B : ChartBundle F (segreVec y) N E) (w : Module.Basis (Fin N) Ω E) (b : Fin N → K → ℤ),
     IsFlagFrame y B w b →
     ∀ (M : ℕ) (a : K → ℤ) (φ : Fin M → Module.Dual Ω E), IsTwistedDualGens y B a φ →
-    ∃ (Ω' : Type) (_ : Field Ω') (_ : Algebra F Ω') (pt : MRing ι F →ₐ[F] Ω')
+    ∃ (Ω' : Type) (_ : Field Ω') (_ : Algebra F Ω') (pt : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₐ[F] Ω')
       (E' : Type) (_ : AddCommGroup E') (_ : Module Ω' E')
       (B' : ChartBundle F (IndefiniteRowSideFullHecke.NumbersDVR.segreVec pt) N E') (u : Module.Basis (Fin N) Ω' E')
       (ω : Fin N → Ω') (φ' : Fin M → E' →ₗ[Ω'] Ω'),

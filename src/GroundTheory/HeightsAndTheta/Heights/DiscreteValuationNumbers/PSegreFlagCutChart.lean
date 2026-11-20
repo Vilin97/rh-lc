@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCutPreimage
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PGenericProjClosureDivisor
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -51,7 +52,7 @@ theorem SegreFlagCutChart.proof (hCS : SegreFlagCutChartSection.Statement)
     show algebraMap Ω Φ (y ⟨j, c j⟩) = 0
     rw [h0, map_zero]
   have hcne : segreVec y c ≠ 0 := Finset.prod_ne_zero_iff.mpr fun j _ => nz j
-  have hvW : (∏ j, (X ⟨some (some j), c j⟩ : MRing (bundleIdx (bundleIdx ι M) M') O)) ∉ W := fun hm => by
+  have hvW : (∏ j, (X ⟨some (some j), c j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))) ∉ W := fun hm => by
     obtain ⟨j, -, hj⟩ := hW.prod_mem_iff.mp hm
     exact hc j hj
   obtain ⟨-, dl, dm, l, μ, m, hμ, hl, hμh, hdeg, hval, hsat⟩ :=
@@ -80,7 +81,7 @@ theorem SegreFlagCutChart.proof (hCS : SegreFlagCutChartSection.Statement)
   ·
     obtain ⟨u₀, hu₀W, hu₀⟩ := hPre O ϖ hϖ Ω K ι y d hV N E B B' hB w w' x x' f g hfl M M' a₀ a₀' φ φ' hφ hφ'
       Φ e t ht k hk W hW hWr hPW hϖW
-    refine ⟨dl, dm, l, μ, u₀ * ∏ j, (X ⟨some (some j), c j⟩ : MRing (bundleIdx (bundleIdx ι M) M') O), hl, hμh, hdeg,
+    refine ⟨dl, dm, l, μ, u₀ * ∏ j, (X ⟨some (some j), c j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')), hl, hμh, hdeg,
       hμW, fun hm => ?_, hval, fun h => absurd h (Nat.pos_iff_ne_zero.mp hk0), fun _ q hq => ?_⟩
     · rcases hW.mem_or_mem hm with h | h
       · exact hu₀W h
@@ -88,9 +89,9 @@ theorem SegreFlagCutChart.proof (hCS : SegreFlagCutChartSection.Statement)
     · obtain ⟨n, hn⟩ := hu₀ q hq
       obtain ⟨m', hm'⟩ := exists_pow_mul_mem_of_mem_sup_map _ _ _ _ _ le_sup_left hsat _ hn
       refine ⟨n + m', ?_⟩
-      have h : (u₀ * ∏ j, (X ⟨some (some j), c j⟩ : MRing (bundleIdx (bundleIdx ι M) M') O)) ^ (n + m') * q =
-          u₀ ^ m' * (∏ j, (X ⟨some (some j), c j⟩ : MRing (bundleIdx (bundleIdx ι M) M') O)) ^ n *
-            ((∏ j, (X ⟨some (some j), c j⟩ : MRing (bundleIdx (bundleIdx ι M) M') O)) ^ m' * (u₀ ^ n * q)) := by
+      have h : (u₀ * ∏ j, (X ⟨some (some j), c j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))) ^ (n + m') * q =
+          u₀ ^ m' * (∏ j, (X ⟨some (some j), c j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))) ^ n *
+            ((∏ j, (X ⟨some (some j), c j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))) ^ m' * (u₀ ^ n * q)) := by
         ring
       rw [h]
       exact Ideal.mul_mem_left _ _ hm'

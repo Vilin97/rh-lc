@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsSectionCycleModP
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LengthLocalizedModuleQuotient
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialMultAt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -13,7 +14,7 @@ namespace ObjectsChow
 namespace SectionCycleModP
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsMultiProjPrime)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiProjPrime PBlk)
 
 variable {n : ℕ} {F : Type} [Field F]
 
@@ -116,7 +117,7 @@ theorem proof : SectionCycleModP.Statement := by
   have hinj : Set.InjOn (Ideal.map (red n F)) {W' : Ideal (MRing (PBlk n)) | J ≤ W'} :=
     fun a ha b hb hab => by
       rw [← comap_map_red hF (hkJ.trans ha), ← comap_map_red hF (hkJ.trans hb), hab]
-  unfold divCycle
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   rw [hJF, hfun]
   ext Q
   by_cases hQ : ∃ W' ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp W s, W'.map (red n F) = Q

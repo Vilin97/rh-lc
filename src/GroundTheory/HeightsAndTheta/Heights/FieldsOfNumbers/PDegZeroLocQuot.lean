@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocQuot
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -13,14 +14,14 @@ universe u
 theorem DegZeroLocQuot.proof : DegZeroLocQuot.Statement := by
   intro F _ K _ ι P _ 𝒲 h𝒲 x hx
 
-  set φ : MRing ι F →+* FractionRing (MRing ι F ⧸ P) :=
-    (algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P))).comp (Ideal.Quotient.mk P) with hφ
-  have hne : ∀ g : MRing ι F, g ∉ P → φ g ≠ 0 := fun g hg => by
+  set φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) :=
+    (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P))).comp (Ideal.Quotient.mk P) with hφ
+  have hne : ∀ g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, g ∉ P → φ g ≠ 0 := fun g hg => by
     rw [hφ, RingHom.comp_apply, Ne, IsFractionRing.to_map_eq_zero_iff,
       Ideal.Quotient.eq_zero_iff_mem]
     exact hg
-  let Q : FractionRing (MRing ι F ⧸ P) → Prop := fun y =>
-    ∃ (b : K → ℕ) (f g : MRing ι F), IsMultiHomog f b ∧ IsMultiHomog g b ∧
+  let Q : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) → Prop := fun y =>
+    ∃ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f b ∧ IsMultiHomog g b ∧
       g ∉ P ∧ (∀ W ∈ 𝒲, g ∉ W) ∧ y = φ f / φ g
   have key : Q x := by
     refine Algebra.adjoin_induction (p := fun y _ => Q y) ?_ ?_ ?_ ?_ hx
@@ -32,7 +33,7 @@ theorem DegZeroLocQuot.proof : DegZeroLocQuot.Statement := by
       · intro W hW
         exact (Ideal.ne_top_iff_one W).mp (h𝒲 W hW).ne_top
       · rw [map_one, div_one, hφ, RingHom.comp_apply,
-          IsScalarTower.algebraMap_apply F (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P))]
+          IsScalarTower.algebraMap_apply F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P))]
         rfl
     · rintro y z - - ⟨b, f, g, hf, hg, hgP, hgW, rfl⟩ ⟨b', f', g', hf', hg', hgP', hgW', rfl⟩
       refine ⟨b + b', f * g' + g * f', g * g', (hf.mul hg').add (hg.mul hf'), hg.mul hg', ?_, ?_, ?_⟩

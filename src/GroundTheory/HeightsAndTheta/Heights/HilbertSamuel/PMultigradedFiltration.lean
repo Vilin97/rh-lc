@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.LengthLocalizedQuotientEqZero
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -14,8 +15,8 @@ universe u v
 namespace MultigradedFiltration
 
 variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-  [∀ k, Fintype (ι k)] {M : Type v} [AddCommGroup M] [Module (MRing ι F) M] [Module F M]
-  [IsScalarTower F (MRing ι F) M] {piece : (K → ℤ) → Submodule F M}
+  [∀ k, Fintype (ι k)] {M : Type v} [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module F M]
+  [IsScalarTower F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] {piece : (K → ℤ) → Submodule F M}
 
 def degZ (b : K → ℕ) : K → ℤ := fun k => (b k : ℤ)
 
@@ -33,7 +34,7 @@ theorem degZ_zero : degZ (0 : K → ℕ) = 0 := by
 
 theorem X_pow_smul_mem (hM : IsMultigrading ι M piece) (v : Σ k, ι k) (n : ℕ) :
     ∀ (m : K → ℤ) (x : M), x ∈ piece m →
-      ((X v : MRing ι F) ^ n) • x ∈ piece (m + degZ (n • blockWeight ι v)) := by
+      ((X v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ n) • x ∈ piece (m + degZ (n • blockWeight ι v)) := by
   induction n with
   | zero => intro m x hx; simpa [degZ_zero] using hx
   | succ n ih =>
@@ -45,20 +46,20 @@ theorem X_pow_smul_mem (hM : IsMultigrading ι M piece) (v : Σ k, ι k) (n : �
 
 theorem monomial_smul_mem (hM : IsMultigrading ι M piece) (d : (Σ k, ι k) →₀ ℕ) :
     ∀ (m : K → ℤ) (x : M), x ∈ piece m →
-      (monomial d (1 : F) : MRing ι F) • x ∈ piece (m + degZ (Finsupp.weight (blockWeight ι) d)) := by
+      (monomial d (1 : F) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) • x ∈ piece (m + degZ (Finsupp.weight (blockWeight ι) d)) := by
   induction d using Finsupp.induction with
   | zero => intro m x hx; simpa [degZ_zero] using hx
   | single_add v n d _ _ ih =>
     intro m x hx
-    have e : (monomial (Finsupp.single v n + d) (1 : F) : MRing ι F) =
-        (X v : MRing ι F) ^ n * monomial d (1 : F) := by
+    have e : (monomial (Finsupp.single v n + d) (1 : F) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) =
+        (X v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ n * monomial d (1 : F) := by
       rw [X_pow_eq_monomial, monomial_mul, one_mul]
     rw [e, mul_smul]
     have h := X_pow_smul_mem hM v n _ _ (ih m x hx)
     convert h using 2
     rw [map_add (f := _), Finsupp.weight_single, degZ_add, add_assoc, add_comm (degZ _)]
 
-theorem homog_smul_mem (hM : IsMultigrading ι M piece) {f : MRing ι F} {b : K → ℕ}
+theorem homog_smul_mem (hM : IsMultigrading ι M piece) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {b : K → ℕ}
     (hf : IsWeightedHomogeneous (blockWeight ι) f b) {m : K → ℤ} {x : M} (hx : x ∈ piece m) :
     f • x ∈ piece (m + degZ b) := by
   have ef := f.as_sum
@@ -66,7 +67,7 @@ theorem homog_smul_mem (hM : IsMultigrading ι M piece) {f : MRing ι F} {b : K 
   rw [Finset.sum_smul]
   refine Submodule.sum_mem _ fun d hd => ?_
   have hw : Finsupp.weight (blockWeight ι) d = b := hf (mem_support_iff.mp hd)
-  have e : (monomial d (AddMonoidAlgebra.coeff f d) : MRing ι F) = AddMonoidAlgebra.coeff f d • monomial d (1 : F) := by
+  have e : (monomial d (AddMonoidAlgebra.coeff f d) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) = AddMonoidAlgebra.coeff f d • monomial d (1 : F) := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [e, smul_assoc]
   exact Submodule.smul_mem _ _ (hw ▸ monomial_smul_mem hM d m x hx)
@@ -75,7 +76,7 @@ section Graded
 
 variable [DecidableEq (K → ℤ)] [DirectSum.Decomposition piece]
 
-theorem decompose_smul (hM : IsMultigrading ι M piece) (f : MRing ι F) {c : K → ℤ} {x : M}
+theorem decompose_smul (hM : IsMultigrading ι M piece) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) {c : K → ℤ} {x : M}
     (hx : x ∈ piece c) (m : K → ℤ) :
     (DirectSum.decompose piece (f • x) m : M) =
       (∑ d ∈ f.support with c + degZ (Finsupp.weight (blockWeight ι) d) = m,
@@ -85,7 +86,7 @@ theorem decompose_smul (hM : IsMultigrading ι M piece) (f : MRing ι F) {c : K 
   rw [Finset.sum_smul, DirectSum.decompose_sum, DFinsupp.finsetSum_apply,
     AddSubmonoidClass.coe_finsetSum, Finset.sum_filter, Finset.sum_smul]
   refine Finset.sum_congr rfl fun d _ => ?_
-  have hd : (monomial d (AddMonoidAlgebra.coeff f d) : MRing ι F) • x ∈
+  have hd : (monomial d (AddMonoidAlgebra.coeff f d) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) • x ∈
       piece (c + degZ (Finsupp.weight (blockWeight ι) d)) :=
     homog_smul_mem hM (isWeightedHomogeneous_monomial _ _ _ rfl) hx
   split_ifs with h
@@ -93,18 +94,18 @@ theorem decompose_smul (hM : IsMultigrading ι M piece) (f : MRing ι F) {c : K 
   · rw [zero_smul]; exact DirectSum.decompose_of_mem_ne piece hd h
 
 def IsGradedSub (piece : (K → ℤ) → Submodule F M) [DirectSum.Decomposition piece]
-    (N : Submodule (MRing ι F) M) : Prop :=
+    (N : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M) : Prop :=
   ∀ y ∈ N, ∀ m, (DirectSum.decompose piece y m : M) ∈ N
 
-theorem isGradedSub_bot : IsGradedSub piece (⊥ : Submodule (MRing ι F) M) := by
+theorem isGradedSub_bot : IsGradedSub piece (⊥ : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M) := by
   intro y hy m
   rw [Submodule.mem_bot] at hy
   subst hy
   simp
 
-theorem isGradedSub_sup (hM : IsMultigrading ι M piece) {N : Submodule (MRing ι F) M}
+theorem isGradedSub_sup (hM : IsMultigrading ι M piece) {N : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M}
     (hN : IsGradedSub piece N) {c : K → ℤ} {x : M} (hx : x ∈ piece c) :
-    IsGradedSub piece (N ⊔ Submodule.span (MRing ι F) {x}) := by
+    IsGradedSub piece (N ⊔ Submodule.span (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) {x}) := by
   intro y hy m
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hy
   obtain ⟨s, rfl⟩ := Submodule.mem_span_singleton.mp hb
@@ -113,7 +114,7 @@ theorem isGradedSub_sup (hM : IsMultigrading ι M piece) {N : Submodule (MRing �
   rw [decompose_smul hM s hx m]
   exact Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self x)
 
-theorem isMultiHomog_colon (hM : IsMultigrading ι M piece) {N : Submodule (MRing ι F) M}
+theorem isMultiHomog_colon (hM : IsMultigrading ι M piece) {N : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M}
     (hN : IsGradedSub piece N) {c : K → ℤ} {x : M} (hx : x ∈ piece c) :
     IsMultiHomogIdeal (N.colon {x}) := by
   intro f hf b
@@ -125,7 +126,7 @@ theorem isMultiHomog_colon (hM : IsMultigrading ι M piece) {N : Submodule (MRin
   refine Finset.sum_congr (Finset.filter_congr fun d _ => ?_) fun _ _ => rfl
   exact ⟨fun h => by rw [h], fun h => degZ_injective (add_left_cancel h)⟩
 
-theorem exists_homog_not_mem {N : Submodule (MRing ι F) M} (hN : N ≠ ⊤) :
+theorem exists_homog_not_mem {N : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M} (hN : N ≠ ⊤) :
     ∃ (c : K → ℤ) (x : M), x ∈ piece c ∧ x ∉ N := by
   classical
   by_contra h
@@ -155,8 +156,8 @@ theorem isPrime_of_forms_ordered {σ L : Type*} [AddCommMonoid L] [LinearOrder L
   rintro a b ⟨i, hi⟩ ⟨j, hj⟩ hab
   exact h a b ⟨i, hi⟩ ⟨j, hj⟩ hab
 
-theorem isPrime_of_forms (q : Ideal (MRing ι F)) (hq : IsMultiHomogIdeal q) (hne : q ≠ ⊤)
-    (h : ∀ a b : MRing ι F, (∃ i, IsWeightedHomogeneous (blockWeight ι) a i) →
+theorem isPrime_of_forms (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hq : IsMultiHomogIdeal q) (hne : q ≠ ⊤)
+    (h : ∀ a b : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, (∃ i, IsWeightedHomogeneous (blockWeight ι) a i) →
       (∃ j, IsWeightedHomogeneous (blockWeight ι) b j) → a * b ∈ q → a ∈ q ∨ b ∈ q) :
     q.IsPrime := by
   classical
@@ -170,14 +171,14 @@ theorem isPrime_of_forms (q : Ideal (MRing ι F)) (hq : IsMultiHomogIdeal q) (hn
     | single_add v n d _ _ ih =>
       rw [map_add (f := _), map_add (f := _), ih, Finsupp.weight_single, Finsupp.weight_single, toLex_add, toLex_smul]
       rfl
-  have hc : ∀ (i : Lex (K → ℕ)) (r : MRing ι F),
+  have hc : ∀ (i : Lex (K → ℕ)) (r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι),
       weightedHomogeneousComponent (fun v => toLex (blockWeight ι v)) i r =
         weightedHomogeneousComponent (blockWeight ι) (ofLex i) r := by
     intro i r
     ext d
     rw [coeff_weightedHomogeneousComponent, coeff_weightedHomogeneousComponent, hw]
     exact if_congr ⟨fun e => by rw [← e]; rfl, fun e => by rw [e]; rfl⟩ rfl rfl
-  have hh : ∀ (a : MRing ι F) (i : Lex (K → ℕ)),
+  have hh : ∀ (a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (i : Lex (K → ℕ)),
       IsWeightedHomogeneous (fun v => toLex (blockWeight ι v)) a i →
         IsWeightedHomogeneous (blockWeight ι) a (ofLex i) := by
     intro a i ha d hd
@@ -193,14 +194,14 @@ section Chain
 
 variable [DecidableEq (K → ℤ)] [DirectSum.Decomposition piece]
 
-theorem isPrime_colon (hM : IsMultigrading ι M piece) {N : Submodule (MRing ι F) M}
+theorem isPrime_colon (hM : IsMultigrading ι M piece) {N : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M}
     (hN : IsGradedSub piece N) {c : K → ℤ} {x : M} (hx : x ∈ piece c) (hxN : x ∉ N)
     (hmax : ∀ (c' : K → ℤ) (y : M), y ∈ piece c' → y ∉ N → ¬ N.colon {x} < N.colon {y}) :
     (N.colon {x}).IsPrime := by
   refine isPrime_of_forms _ (isMultiHomog_colon hM hN hx) ?_ ?_
   · intro htop
     apply hxN
-    have h1 : (1 : MRing ι F) ∈ N.colon {x} := htop ▸ Submodule.mem_top
+    have h1 : (1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∈ N.colon {x} := htop ▸ Submodule.mem_top
     rwa [Submodule.mem_colon_singleton, one_smul] at h1
   · rintro a b - ⟨j, hj⟩ hab
     by_cases hb : b ∈ N.colon {x}
@@ -219,30 +220,30 @@ theorem isPrime_colon (hM : IsMultigrading ι M piece) {N : Submodule (MRing ι 
       exact hab
     rwa [← heq] at ha
 
-theorem exists_step (hM : IsMultigrading ι M piece) {N : Submodule (MRing ι F) M}
+theorem exists_step (hM : IsMultigrading ι M piece) {N : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M}
     (hN : IsGradedSub piece N) (hNt : N ≠ ⊤) :
     ∃ (c : K → ℤ) (x : M), x ∈ piece c ∧ x ∉ N ∧ (N.colon {x}).IsPrime ∧
       IsMultiHomogIdeal (N.colon {x}) := by
   obtain ⟨c₀, x₀, hx₀, hx₀N⟩ := exists_homog_not_mem (piece := piece) hNt
   obtain ⟨I, ⟨c, x, hx, hxN, rfl⟩, hI⟩ :=
-    set_has_maximal_iff_noetherian.mpr (inferInstance : IsNoetherian (MRing ι F) (MRing ι F))
+    set_has_maximal_iff_noetherian.mpr (inferInstance : IsNoetherian (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
       {I | ∃ (c : K → ℤ) (x : M), x ∈ piece c ∧ x ∉ N ∧ N.colon {x} = I}
       ⟨_, c₀, x₀, hx₀, hx₀N, rfl⟩
   exact ⟨c, x, hx, hxN,
     isPrime_colon hM hN hx hxN fun c' y hy hyN => hI _ ⟨c', y, hy, hyN, rfl⟩,
     isMultiHomog_colon hM hN hx⟩
 
-theorem exists_chain [Module.Finite (MRing ι F) M] (hM : IsMultigrading ι M piece) :
-    ∀ N₀ : Submodule (MRing ι F) M, IsGradedSub piece N₀ →
-      ∃ (n : ℕ) (N : Fin (n + 1) → Submodule (MRing ι F) M) (x : Fin n → M) (c : Fin n → K → ℤ)
-        (q : Fin n → Ideal (MRing ι F)),
+theorem exists_chain [Module.Finite (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] (hM : IsMultigrading ι M piece) :
+    ∀ N₀ : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M, IsGradedSub piece N₀ →
+      ∃ (n : ℕ) (N : Fin (n + 1) → Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M) (x : Fin n → M) (c : Fin n → K → ℤ)
+        (q : Fin n → Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)),
         N 0 = N₀ ∧ N (Fin.last n) = ⊤ ∧
         ∀ j : Fin n, x j ∈ piece (c j) ∧
-          N j.succ = N j.castSucc ⊔ Submodule.span (MRing ι F) {x j} ∧
+          N j.succ = N j.castSucc ⊔ Submodule.span (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) {x j} ∧
           (q j).IsPrime ∧ IsMultiHomogIdeal (q j) ∧
-          ∀ s : MRing ι F, s • x j ∈ N j.castSucc ↔ s ∈ q j := by
-  haveI : IsNoetherian (MRing ι F) M := inferInstance
-  haveI : WellFoundedGT (Submodule (MRing ι F) M) := isNoetherian_iff'.mp inferInstance
+          ∀ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, s • x j ∈ N j.castSucc ↔ s ∈ q j := by
+  haveI : IsNoetherian (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M := inferInstance
+  haveI : WellFoundedGT (Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M) := isNoetherian_iff'.mp inferInstance
   intro N₀
   induction N₀ using WellFoundedGT.induction with
   | _ N₀ ih =>
@@ -250,7 +251,7 @@ theorem exists_chain [Module.Finite (MRing ι F) M] (hM : IsMultigrading ι M pi
   by_cases ht : N₀ = ⊤
   · exact ⟨0, fun _ => N₀, Fin.elim0, Fin.elim0, Fin.elim0, rfl, ht, fun j => j.elim0⟩
   obtain ⟨c, x, hx, hxN, hq, hqh⟩ := exists_step hM hN₀ ht
-  have hlt : N₀ < N₀ ⊔ Submodule.span (MRing ι F) {x} := by
+  have hlt : N₀ < N₀ ⊔ Submodule.span (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) {x} := by
     refine lt_of_le_of_ne le_sup_left fun h => hxN ?_
     rw [h]
     exact Submodule.mem_sup_right (Submodule.mem_span_singleton_self x)

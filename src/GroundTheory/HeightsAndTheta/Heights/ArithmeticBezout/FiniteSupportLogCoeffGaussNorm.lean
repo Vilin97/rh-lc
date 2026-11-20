@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Statements
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.SpecFirstDetFormNeZero
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ImportsAlt
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.AevalGenericIdealIff
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -12,7 +13,7 @@ namespace GroundTheory.Heights₂.Heights
 namespace VerticalPartGauss
 
 open MvPolynomial NumberField
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar IsHorizontal coeffGaussNorm)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk IsHorizontal coeffGaussNorm)
 open ObjectsChow (genericIdeal)
 
 section Places

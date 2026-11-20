@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ImportsAlt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -9,7 +10,7 @@ namespace GroundTheory.Heights₂.Heights
 namespace ObjectsChow
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsMultiProjPrime IsMultiHomog IsRelevant geoNum)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiProjPrime PBlk IsMultiHomog IsRelevant geoNum)
 
 def ChowDegreeGeoNum.Statement : Prop :=
   ∀ (n e p : ℕ) (W : Ideal (MRing (PBlk n))) (F : Type) [Field F],

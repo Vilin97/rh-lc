@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -14,8 +15,8 @@ theorem mixedDiff_zero {K : Type*} (h : (K → ℤ) → ℤ) (bs : Fin 0 → K �
   simp [mixedDiff]
 
 theorem relDim_eq_zero_of_ringKrullDim {F : Type*} [Field F] {K : Type} [Fintype K]
-    {ι : K → Type} (q : Ideal (MRing ι F))
-    (hd : ringKrullDim (MRing ι F ⧸ q) = ((Fintype.card K : ℕ) : WithBot ℕ∞)) :
+    {ι : K → Type} (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
+    (hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((Fintype.card K : ℕ) : WithBot ℕ∞)) :
     GroundTheory.Heights₂.Heights.FieldNumbers.relDim q = ((0 : ℕ) : WithBot (WithTop ℤ)) := by
   unfold GroundTheory.Heights₂.Heights.FieldNumbers.relDim
   rw [hd]

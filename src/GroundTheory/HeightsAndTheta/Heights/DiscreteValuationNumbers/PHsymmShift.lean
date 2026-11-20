@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsH
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PNumericalSegre
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.RingKrullDimQuotComapRename
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -27,7 +28,7 @@ theorem length_rootList {n : ℕ} (x : Fin n → K → ℤ) (α : Fin n → ℕ)
   unfold rootList
   simp [List.length_flatMap, Fin.sum_univ_def]
 
-theorem cons_add (W : Ideal (MRing ι F)) (hW : IsMultiProjPrime W) (l : List (K → ℤ))
+theorem cons_add (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hW : IsMultiProjPrime W) (l : List (K → ℤ))
     (hd : FieldNumbers.relDim W = ((l.length + 1 : ℕ) : WithBot (WithTop ℤ))) (c c' : K → ℤ) :
     intNumL F W ((c + c') :: l) = intNumL F W (c :: l) + intNumL F W (c' :: l) := by
   have key : ∀ e, Function.update (c :: l).get (0 : Fin (l.length + 1)) e = (e :: l).get := by
@@ -42,7 +43,7 @@ theorem cons_add (W : Ideal (MRing ι F)) (hW : IsMultiProjPrime W) (l : List (K
   rw [key, key, key] at h
   exact h
 
-theorem replicate_add (W : Ideal (MRing ι F)) (hW : IsMultiProjPrime W)
+theorem replicate_add (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hW : IsMultiProjPrime W)
     (z s : K → ℤ) : ∀ (n : ℕ) (L : List (K → ℤ)),
     FieldNumbers.relDim W = ((n + L.length : ℕ) : WithBot (WithTop ℤ)) →
     intNumL F W (List.replicate n (z + s) ++ L) =
@@ -72,27 +73,27 @@ theorem replicate_add (W : Ideal (MRing ι F)) (hW : IsMultiProjPrime W)
       rw [show n + 1 - (k + 1) = n - k by omega, List.replicate_succ']
       simp only [List.append_assoc, List.singleton_append]
 
-def H (W : Ideal (MRing ι F)) {n : ℕ} (x : Fin n → K → ℤ) (c : ℕ) (L : List (K → ℤ)) : ℤ :=
+def H (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {n : ℕ} (x : Fin n → K → ℤ) (c : ℕ) (L : List (K → ℤ)) : ℤ :=
   ∑ α ∈ Finset.Nat.antidiagonalTuple n c, intNumL F W (rootList x α ++ L)
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
-theorem H_zero (W : Ideal (MRing ι F)) {n : ℕ} (x : Fin n → K → ℤ) (L : List (K → ℤ)) :
+theorem H_zero (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {n : ℕ} (x : Fin n → K → ℤ) (L : List (K → ℤ)) :
     H W x 0 L = intNumL F W L := by
   simp [H, Finset.Nat.antidiagonalTuple_zero_right, rootList_zero]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
-theorem H_one (W : Ideal (MRing ι F)) (x : Fin 1 → K → ℤ) (c : ℕ) (L : List (K → ℤ)) :
+theorem H_one (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (x : Fin 1 → K → ℤ) (c : ℕ) (L : List (K → ℤ)) :
     H W x c L = intNumL F W (List.replicate c (x 0) ++ L) := by
   unfold H
   rw [Finset.Nat.antidiagonalTuple_one, Finset.sum_singleton, rootList_succ]
   simp [rootList]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
-theorem H_perm (W : Ideal (MRing ι F)) {n : ℕ} (x : Fin n → K → ℤ) (c : ℕ)
+theorem H_perm (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {n : ℕ} (x : Fin n → K → ℤ) (c : ℕ)
     {L L' : List (K → ℤ)} (h : L.Perm L') : H W x c L = H W x c L' :=
   Finset.sum_congr rfl fun _ _ => intNumL_perm F W (h.append_left _)
 
-theorem H_add (W : Ideal (MRing ι F)) (hW : IsMultiProjPrime W) {n : ℕ} (x : Fin n → K → ℤ)
+theorem H_add (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hW : IsMultiProjPrime W) {n : ℕ} (x : Fin n → K → ℤ)
     (c : ℕ) (L : List (K → ℤ))
     (hd : FieldNumbers.relDim W = ((c + 1 + L.length : ℕ) : WithBot (WithTop ℤ))) (a b : K → ℤ) :
     H W x c ((a + b) :: L) = H W x c (a :: L) + H W x c (b :: L) := by
@@ -110,7 +111,7 @@ theorem H_add (W : Ideal (MRing ι F)) (hW : IsMultiProjPrime W) {n : ℕ} (x : 
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 
-theorem H_succ (W : Ideal (MRing ι F)) {i : ℕ} (x : Fin (i + 1) → K → ℤ) (c : ℕ)
+theorem H_succ (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {i : ℕ} (x : Fin (i + 1) → K → ℤ) (c : ℕ)
     (L : List (K → ℤ)) :
     H W x (c + 1) L = H W (fun j => x (Fin.castSucc j)) (c + 1) L + H W x c (x (Fin.last i) :: L) := by
   unfold H
@@ -130,7 +131,7 @@ theorem sum_choose_pascal (M r : ℕ) (f : ℕ → ℤ) :
     Nat.choose_zero_right]
   ring
 
-theorem main (W : Ideal (MRing ι F)) (hW : IsMultiProjPrime W) (s : K → ℤ) :
+theorem main (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hW : IsMultiProjPrime W) (s : K → ℤ) :
     ∀ (N : ℕ) (x : Fin (N + 1) → K → ℤ) (r : ℕ) (Y : List (K → ℤ)),
     FieldNumbers.relDim W = ((r + Y.length : ℕ) : WithBot (WithTop ℤ)) →
     H W (fun i => x i + s) r Y =

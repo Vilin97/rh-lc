@@ -5,6 +5,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsP
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsTruncSpecialize
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundleChartSection
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleMul
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -42,14 +43,14 @@ theorem eq_of_lt_of_le_of_mem_minimalPrimes {A : Type*} [CommRing A] [IsNoetheri
   exact h3
 
 theorem divCycle_eq_zero_of_not_mem {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
-    {P W : Ideal (MRing ι R)} {x : MRing ι R} (hx : x ∉ W) : divCycle P x W = 0 := by
-  unfold divCycle
+    {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hx : x ∉ W) : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) = 0 := by
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   rw [dif_neg]
   rintro ⟨h, -⟩
   exact hx (h.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self x)))
 
 theorem divCycle_congr {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
-    {P : Ideal (MRing ι R)} {x x' : MRing ι R} (h : x - x' ∈ P) : divCycle P x = divCycle P x' := by
+    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {x x' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (h : x - x' ∈ P) : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ)) = (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x') W : ℤ)) := by
   have hJ : P ⊔ Ideal.span {x} = P ⊔ Ideal.span {x'} := by
     apply le_antisymm
     · refine sup_le le_sup_left ?_
@@ -63,7 +64,7 @@ theorem divCycle_congr {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
         (Ideal.mem_sup_left h : x - x' ∈ P ⊔ Ideal.span {x})
       rwa [sub_sub_cancel] at this
   funext W
-  unfold divCycle
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   split_ifs with h1 h2 h2
   · simp only [hJ]
   · exact absurd (hJ ▸ h1) h2
@@ -89,7 +90,7 @@ theorem FlagBundleSectionDiv.proof (hDim : FlagBundleDim.Statement)
   have := hQ.isPrime
   obtain ⟨hPQ, hspec⟩ := hTrunc F Ω K ι y N E w M φ Φ t ht i
   have hti : t i ≠ 0 := ht.ne_zero i
-  have hval0 := fun (d : Option K → ℕ) (x : MRing (bundleIdx ι M) F) (hx : IsMultiHomog x d) =>
+  have hval0 := fun (d : Option K → ℕ) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) (hx : IsMultiHomog x d) =>
     hForm F Ω K ι y N E w M φ Φ (truncCoord t ((i : ℕ) + 1)) d x hx
   have hgv := fun h => hgP ((hval0 _ _ hg).mpr h)
   have hfP : f ∉ projIdeal F y w φ (truncCoord t ((i : ℕ) + 1)) := fun h =>
@@ -106,7 +107,7 @@ theorem FlagBundleSectionDiv.proof (hDim : FlagBundleDim.Statement)
       simp [projCoord, hk]
     obtain ⟨dl, dm, l, μ, m, hμ, hl, hμh, hdl, hlv, hsat⟩ :=
       hChart F Ω K ι y N E B w b hB M a φ hφ Φ t ht i c hy
-    have hsW : ∀ n : ℕ, (∏ k, (X ⟨some k, c k⟩ : MRing (bundleIdx ι M) F)) ^ n ∉ W := by
+    have hsW : ∀ n : ℕ, (∏ k, (X ⟨some k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M))) ^ n ∉ W := by
       intro n h
       obtain ⟨k, -, hk⟩ := (Ideal.IsPrime.prod_mem_iff (hp := hWp)).mp (hWp.mem_of_pow_mem n h)
       exact hc k hk
@@ -135,7 +136,7 @@ theorem FlagBundleSectionDiv.proof (hDim : FlagBundleDim.Statement)
       rw [hval0 _ _ h1, eval₂_sub, eval₂_mul, eval₂_mul, hval, hlv]
       ring
     have hrat : ratDiv (projIdeal F y w φ (truncCoord t ((i : ℕ) + 1))) f g W =
-        divCycle (projIdeal F y w φ (truncCoord t ((i : ℕ) + 1))) l W := by
+        ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (projIdeal F y w φ (truncCoord t ((i : ℕ) + 1))) l) W : ℤ) := by
       have h1 := congrFun (divCycle_congr hdiff) W
       rw [DivCycleMul.proof.{0} F (Option K) (bundleIdx ι M) _ f μ hP.isPrime hfP hμP,
         DivCycleMul.proof.{0} F (Option K) (bundleIdx ι M) _ l g hP.isPrime hlP hgP] at h1
@@ -152,12 +153,12 @@ theorem FlagBundleSectionDiv.proof (hDim : FlagBundleDim.Statement)
         (fun q hq => by
           obtain ⟨n, hn⟩ := hsat q hq
           exact ⟨_, hsW n, hn⟩)
-      unfold divCycle
+      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
       rw [dif_pos ⟨hmin, hQ.relevant⟩, hmult]
       rfl
     · by_contra hne
       have hmin : W ∈ (projIdeal F y w φ (truncCoord t ((i : ℕ) + 1)) ⊔ Ideal.span {l}).minimalPrimes := by
-        unfold divCycle at hne
+        unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hne
         split_ifs at hne with h
         · exact h.1
         · exact absurd rfl hne
@@ -167,8 +168,8 @@ theorem FlagBundleSectionDiv.proof (hDim : FlagBundleDim.Statement)
       have hPQ' : projIdeal F y w φ (truncCoord t ((i : ℕ) + 1)) < projIdeal F y w φ (truncCoord t i) :=
         lt_of_le_of_ne hPQ (fun h => hlP (by rw [h]; exact hlQ))
       exact hWQ (eq_of_lt_of_le_of_mem_minimalPrimes hmin hPQ' hQW).symm
-  · have h0 : ∀ x, divCycle (projIdeal F y w φ (truncCoord t ((i : ℕ) + 1))) x W = 0 := fun x => by
-      unfold divCycle
+  · have h0 : ∀ x, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (projIdeal F y w φ (truncCoord t ((i : ℕ) + 1))) x) W : ℤ) = 0 := fun x => by
+      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
       rw [dif_neg]
       rintro ⟨h, hr⟩
       exact hW ⟨h.1.1, hr, le_sup_left.trans h.1.2⟩

@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -11,7 +12,7 @@ attribute [local instance] MvPolynomial.weightedGradedAlgebra
 open scoped Classical in
 
 theorem isHomogeneous_of_isMultiHomogIdeal' {K : Type*} [DecidableEq K] {ι : K → Type*}
-    {R : Type*} [CommRing R] {I : Ideal (MRing ι R)} (hI : IsMultiHomogIdeal I) :
+    {R : Type*} [CommRing R] {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hI : IsMultiHomogIdeal I) :
     I.IsHomogeneous (weightedHomogeneousSubmodule R (blockWeight ι)) := by
   classical
   have e : I = Ideal.span

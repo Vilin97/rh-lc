@@ -30,6 +30,7 @@ import GroundTheory.HeightsAndTheta.Heights.ChowForms.PIncIdealDim
 import GroundTheory.HeightsAndTheta.Heights.ChowForms.PConeDimOfChowForm
 import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChowFormExists
 import GroundTheory.HeightsAndTheta.Heights.ChowForms.PConeDimComponent
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -160,12 +161,12 @@ theorem ChowFormSectionPerfect.proof (hA : ChowFormSectionAlgClosed.Statement)
   intro F _ _ n e I f u hI hf hu
 
   have hdimI := coneDimOfChowForm_full F n (e + 1) I f hI hf
-  have hWc : ∀ W ∈ (divCycle I u).support, IsProjPrime W ∧
+  have hWc : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, IsProjPrime W ∧
       ringKrullDim (MvPolynomial (Fin n) F ⧸ W) = ((e : ℕ) : WithBot ℕ∞) := fun W hW =>
     ConeDimComponent.proof_closed F n e I W u hI hdimI hu (mem_relComps_of_mem_support hW)
   let g : Ideal (MvPolynomial (Fin n) F) → MvPolynomial (Fin e × Fin n) F :=
     fun W => if h : ∃ g, IsChowForm W e g then h.choose else 1
-  have hg : ∀ W ∈ (divCycle I u).support, IsChowForm W e (g W) := fun W hW => by
+  have hg : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, IsChowForm W e (g W) := fun W hW => by
     have hex := chowFormExists_full F n e W (hWc W hW).1 (hWc W hW).2
     simp only [g, dif_pos hex]
     exact hex.choose_spec
@@ -204,9 +205,9 @@ theorem ChowFormSectionPerfect.proof (hA : ChowFormSectionAlgClosed.Statement)
     coneDimOfChowForm_full K n (e + 1) P (gP P)
       (isProjPrime_of_mem_support_fundCycle hIKh (hPsupp P hP)) (hgP P (hPsupp P hP))
 
-  have hL : IsChowFormCycle (∑ P ∈ (fundCycle IK).support, divCycle P uK) e
+  have hL : IsChowFormCycle (∑ P ∈ (fundCycle IK).support, (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P uK) W : ℤ))) e
       (specFirst (map σ f) uK) := by
-    have h1 : IsChowFormCycle (∑ P ∈ (fundCycle IK).support, divCycle P uK) e
+    have h1 : IsChowFormCycle (∑ P ∈ (fundCycle IK).support, (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P uK) W : ℤ))) e
         (∏ P ∈ (fundCycle IK).support, specFirst (gP P) uK ^ fundCycle IK P) := by
       refine isChowFormCycle_sum _ _ _ fun P hP => ?_
       rw [fundCycle_apply_of_isRadical hIKr hP, pow_one]
@@ -216,7 +217,7 @@ theorem ChowFormSectionPerfect.proof (hA : ChowFormSectionAlgClosed.Statement)
     rw [hfKeq, specFirst_C_mul_prod]
     exact isChowFormCycle_C_mul hc h1
   have hsec : fundCycle (IK ⊔ Ideal.span {linForm uK}) =
-      ∑ P ∈ (fundCycle IK).support, divCycle P uK :=
+      ∑ P ∈ (fundCycle IK).support, (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P uK) W : ℤ)) :=
     hS K n IK uK hIKr (fun P hP Q hQ => by rw [hPdim P hP, hPdim Q hQ]) hPu
   have hmapJ : (I ⊔ Ideal.span {linForm u}).map φ = IK ⊔ Ideal.span {linForm uK} := by
     rw [Ideal.map_sup, Ideal.map_span, Set.image_singleton]
@@ -225,24 +226,24 @@ theorem ChowFormSectionPerfect.proof (hA : ChowFormSectionAlgClosed.Statement)
 
   have hbase := hB F K σ n (I ⊔ Ideal.span {linForm u})
   have hR : IsChowFormCycle
-      (∑ W ∈ (divCycle I u).support, divCycle I u W • fundCycle (W.map φ)) e
-      (∏ W ∈ (divCycle I u).support, map σ (g W) ^ divCycle I u W) := by
+      (∑ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ) • fundCycle (W.map φ)) e
+      (∏ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, map σ (g W) ^ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ)) := by
     refine isChowFormCycle_sum _ _ _ fun W hW => ?_
     refine ChowFormCycleSmul.proof K n e _ _ _ ?_
     exact chowFormReduced_full K n e (W.map φ) (map σ (g W)) (isHomogIdeal_map σ (hWc W hW).1.isHomog)
       (RadicalBaseChange.proof F K σ (Fin n) W (hWc W hW).1.isPrime.isRadical)
       (chowFormExtend_full F K σ n e W (g W) (hg W hW))
-  have hcyc : ∑ P ∈ (fundCycle IK).support, divCycle P uK =
-      ∑ W ∈ (divCycle I u).support, divCycle I u W • fundCycle (W.map φ) := by
+  have hcyc : ∑ P ∈ (fundCycle IK).support, (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P uK) W : ℤ)) =
+      ∑ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ) • fundCycle (W.map φ) := by
     rw [← hsec, ← hmapJ]
     exact hbase
   rw [hcyc] at hL
   obtain ⟨c', hc', hc'eq⟩ := isChowFormCycle_unique hL hR
 
-  have hprod0 : ∏ W ∈ (divCycle I u).support, g W ^ divCycle I u W ≠ 0 :=
+  have hprod0 : ∏ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, g W ^ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ) ≠ 0 :=
     Finset.prod_ne_zero_iff.mpr fun W hW => pow_ne_zero _ (hg W hW).1
   have hmapeq : map σ (specFirst f u) =
-      C c' * map σ (∏ W ∈ (divCycle I u).support, g W ^ divCycle I u W) := by
+      C c' * map σ (∏ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, g W ^ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ)) := by
     rw [map_specFirst, hc'eq, map_prod]
     simp only [map_pow]
   obtain ⟨c₀, hc₀, heq⟩ := eq_C_mul_of_map_eq σ hprod0 hc' hmapeq

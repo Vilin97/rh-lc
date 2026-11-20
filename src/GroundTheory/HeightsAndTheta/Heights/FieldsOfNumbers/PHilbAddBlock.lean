@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsAddBlock
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PGradedFinite
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumBaseChange
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -42,17 +43,17 @@ theorem newVar_injective : Function.Injective (newVar ι N) := by
   exact eq_of_heq (Sigma.mk.inj h).2
 
 def splitEquiv (F : Type u) [Field F] (ι : K → Type) (N : ℕ) :
-    MRing (addBlock ι N) F ≃ₐ[F] MvPolynomial (Fin (N + 1)) (MRing ι F) :=
+    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (addBlock ι N) ≃ₐ[F] MvPolynomial (Fin (N + 1)) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :=
   (renameEquiv F (varSplit ι N)).trans (sumAlgEquiv F (Fin (N + 1)) (Σ k, ι k))
 
 variable {F : Type u} [Field F]
 
 omit [DecidableEq K] in
 
-theorem splitEquiv_rename_incl (p : MRing ι F) :
+theorem splitEquiv_rename_incl (p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
     splitEquiv F ι N (rename (addBlockIncl ι N) p) = C p := by
   have h : (splitEquiv F ι N).toAlgHom.comp (rename (addBlockIncl ι N)) =
-      IsScalarTower.toAlgHom F (MRing ι F) (MvPolynomial (Fin (N + 1)) (MRing ι F)) := by
+      IsScalarTower.toAlgHom F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (MvPolynomial (Fin (N + 1)) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) := by
     apply MvPolynomial.algHom_ext
     rintro ⟨k, i⟩
     simp [splitEquiv, varSplit, addBlockIncl, sumAlgEquiv_X_inr, MvPolynomial.algebraMap_eq]
@@ -63,7 +64,7 @@ omit [DecidableEq K] in
 theorem splitEquiv_rename_newVar (q : MvPolynomial (Fin (N + 1)) F) :
     splitEquiv F ι N (rename (newVar ι N) q) = map C q := by
   have h : (splitEquiv F ι N).toRingHom.comp (rename (newVar ι N)).toRingHom =
-      (map C : MvPolynomial (Fin (N + 1)) F →+* MvPolynomial (Fin (N + 1)) (MRing ι F)) := by
+      (map C : MvPolynomial (Fin (N + 1)) F →+* MvPolynomial (Fin (N + 1)) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) := by
     apply MvPolynomial.ringHom_ext
     · intro r
       simp [splitEquiv, MvPolynomial.algebraMap_eq]
@@ -89,10 +90,10 @@ theorem splitEquiv_monomial_comb (d : (Σ k, ι k) →₀ ℕ) (a : Fin (N + 1) 
 
 omit [DecidableEq K] in
 
-theorem map_splitEquiv (I : Ideal (MRing ι F)) :
+theorem map_splitEquiv (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) :
     (addBlockPrime N I).map (splitEquiv F ι N) = I.map C := by
   have h : (splitEquiv F ι N).toRingEquiv.toRingHom.comp (rename (addBlockIncl ι N)).toRingHom =
-      (C : MRing ι F →+* MvPolynomial (Fin (N + 1)) (MRing ι F)) :=
+      (C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* MvPolynomial (Fin (N + 1)) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) :=
     RingHom.ext fun p => by simpa using splitEquiv_rename_incl (N := N) p
   change Ideal.map (splitEquiv F ι N).toRingEquiv.toRingHom
     (Ideal.map (rename (addBlockIncl ι N)).toRingHom I) = _
@@ -147,7 +148,7 @@ theorem weight_comb (d : (Σ k, ι k) →₀ ℕ) (a : Fin (N + 1) →₀ ℕ) :
 
 variable [Fintype K] [∀ k, Fintype (ι k)]
 
-theorem finrank_gradedPiece (I : Ideal (MRing ι F)) (M : Option K → ℕ) :
+theorem finrank_gradedPiece (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (M : Option K → ℕ) :
     Module.finrank F (gradedPiece (addBlockPrime N I) M) =
       Module.finrank F (gradedPiece I (fun k => M (some k))) * (M none + N).choose N := by
   classical
@@ -171,7 +172,7 @@ theorem finrank_gradedPiece (I : Ideal (MRing ι F)) (M : Option K → ℕ) :
     have h := finrank_span_eq_card hBind
     rw [Subtype.range_coe] at h
     rw [gradedPiece_eq_span, ← hBspan, h]
-  let v : B × E → MRing (addBlock ι N) F ⧸ J :=
+  let v : B × E → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (addBlock ι N) ⧸ J :=
     fun p => Ideal.Quotient.mk J (monomial (comb (lift p.1) p.2.1) (1 : F))
   have hind : LinearIndependent F v := by
     rw [Fintype.linearIndependent_iff]
@@ -218,7 +219,7 @@ theorem finrank_gradedPiece (I : Ideal (MRing ι F)) (M : Option K → ℕ) :
       have hd : Finsupp.weight (blockWeight ι) d = m' := funext fun k => congrFun hμ' (some k)
       have ha : a ∈ E := Finset.mem_finsuppAntidiag.mpr ⟨congrFun hμ' none, Finset.subset_univ _⟩
       have hmem : Ideal.Quotient.mk I (monomial d (1 : F)) ∈
-          Submodule.span F (Set.range ((↑) : B → MRing ι F ⧸ I)) := by
+          Submodule.span F (Set.range ((↑) : B → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I)) := by
         rw [Subtype.range_coe, hBspan]
         exact Submodule.subset_span ⟨d, hd, rfl⟩
       obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun F).mp hmem

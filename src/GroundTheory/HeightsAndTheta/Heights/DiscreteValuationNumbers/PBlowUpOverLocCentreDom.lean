@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpOverLocMaxCentreCut
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PBlowUpValuationCentre
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -25,8 +26,8 @@ theorem BlowUpOverLocCentreDom.proof : BlowUpOverLocCentreDom.Statement.{u} := b
   obtain ⟨w, hw⟩ := hunit
   obtain ⟨hyV, hymax⟩ := (ValuationSubring.mem_nonunits_iff_exists_mem_maximalIdeal (A := V)).1
     (hnV ⟨y, hy, rfl⟩)
-  have hinv : ((w⁻¹ : (blowUpLocRing P u W')ˣ) : FractionRing (MRing ι O ⧸ P)) ∈ V := hloc ((w⁻¹ : (blowUpLocRing P u W')ˣ) : blowUpLocRing P u W').2
-  have hmul : (y : FractionRing (MRing ι O ⧸ P)) * ((w⁻¹ : (blowUpLocRing P u W')ˣ) : _) = 1 := by
+  have hinv : ((w⁻¹ : (blowUpLocRing P u W')ˣ) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) ∈ V := hloc ((w⁻¹ : (blowUpLocRing P u W')ˣ) : blowUpLocRing P u W').2
+  have hmul : (y : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) * ((w⁻¹ : (blowUpLocRing P u W')ˣ) : _) = 1 := by
     have h1 := congrArg Subtype.val w.mul_inv
     rw [hw] at h1
     exact h1

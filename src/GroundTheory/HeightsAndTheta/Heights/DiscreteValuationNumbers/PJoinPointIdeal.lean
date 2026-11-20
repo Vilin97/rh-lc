@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsJoinPointIdeal
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -45,9 +46,9 @@ theorem cone_comp (y : (Σ k, ι k) → Ω) :
         ((mcMap R (joinCoord y (ptCoord (Ω := Ω))) :
             MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R →ₐ[R] MvPolynomial (K ⊕ Unit) Ω) :
           MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R →+* MvPolynomial (K ⊕ Unit) Ω) =
-      (MvPolynomial.map ((pointConeMap R y : MRing ι R →ₐ[R] MvPolynomial K Ω) : MRing ι R →+* _)).comp
+      (MvPolynomial.map ((pointConeMap R y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →ₐ[R] MvPolynomial K Ω) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* _)).comp
         (srcEquiv (ι := ι) R :
-          MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R →+* MvPolynomial Unit (MRing ι R)) := by
+          MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R →+* MvPolynomial Unit (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) := by
   apply MvPolynomial.ringHom_ext
   · intro r
     simp [tgtEquiv, srcEquiv, mcMap, pointConeMap, MvPolynomial.algebraMap_eq]
@@ -56,10 +57,10 @@ theorem cone_comp (y : (Σ k, ι k) → Ω) :
     · simp [tgtEquiv, srcEquiv, mcMap, pointConeMap, joinCoord, joinIdx, ptCoord]
 
 theorem rename_liftVar_eq :
-    ((rename (liftVar (ι := ι) ptIdx) : MRing ι R →ₐ[R] MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R) :
-        MRing ι R →+* MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R) =
-      ((srcEquiv (ι := ι) R).symm : MvPolynomial Unit (MRing ι R) →+* _).comp
-        (C : MRing ι R →+* MvPolynomial Unit (MRing ι R)) := by
+    ((rename (liftVar (ι := ι) ptIdx) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →ₐ[R] MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R) :
+        ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R) =
+      ((srcEquiv (ι := ι) R).symm : MvPolynomial Unit (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) →+* _).comp
+        (C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* MvPolynomial Unit (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) := by
   apply MvPolynomial.ringHom_ext
   · intro r
     simp [srcEquiv]
@@ -72,11 +73,11 @@ end JoinPointIdeal
 
 theorem JoinPointIdeal.proof : JoinPointIdeal.Statement := by
   intro R _ Ω _ _ K _ ι _ y
-  set φ : MRing ι R →+* MvPolynomial K Ω :=
-    ((pointConeMap R y : MRing ι R →ₐ[R] MvPolynomial K Ω) : MRing ι R →+* MvPolynomial K Ω) with hφ
+  set φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* MvPolynomial K Ω :=
+    ((pointConeMap R y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →ₐ[R] MvPolynomial K Ω) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* MvPolynomial K Ω) with hφ
   have h1 : mcIdeal R (joinCoord y (ptCoord (Ω := Ω))) =
       Ideal.comap (JoinPointIdeal.srcEquiv (ι := ι) R :
-          MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R →+* MvPolynomial Unit (MRing ι R))
+          MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R →+* MvPolynomial Unit (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))
         (RingHom.ker (MvPolynomial.map (σ := Unit) φ)) := by
     ext f
     have hc := RingHom.congr_fun (JoinPointIdeal.cone_comp R Ω y) f

@@ -11,6 +11,7 @@ import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PVarIntAdd
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PFormIntSymm
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PLelongRegularise
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PSliceSectionMass
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -125,7 +126,7 @@ theorem SliceRegMassLimit.proof (hC : SliceCutOffLimit.Statement) (hS : StokesOn
     convert this using 2
     funext k x
     simp
-  have hlinP : ∀ P ∈ (divCycle W u').support, varInt (P ⊔ Ideal.span {linForm ℓ - 1}) e (fun x => 1 - f x)
+  have hlinP : ∀ P ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).support, varInt (P ⊔ Ideal.span {linForm ℓ - 1}) e (fun x => 1 - f x)
       (fun _ x => Real.log (h.dualNorm x)) =
       varInt (P ⊔ Ideal.span {linForm ℓ - 1}) e (fun _ => 1) (fun _ x => Real.log (h.dualNorm x)) -
       varInt (P ⊔ Ideal.span {linForm ℓ - 1}) e f (fun _ x => Real.log (h.dualNorm x)) := by

@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LocalizedQuotientIsSimpleModuleOfMul
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleFiniteSupport
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -9,9 +10,9 @@ open MvPolynomial
 
 universe u
 
-theorem zero_le_divCycle {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R] (P : Ideal (MRing ι R))
-    (f : MRing ι R) (W : Ideal (MRing ι R)) : 0 ≤ divCycle P f W := by
-  unfold divCycle
+theorem zero_le_divCycle {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))
+    (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) : 0 ≤ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) := by
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   split_ifs <;> positivity
 
 theorem BlowUpExcessDecreases.proof (hpos : ExcessPositive.Statement.{u})
@@ -21,19 +22,19 @@ theorem BlowUpExcessDecreases.proof (hpos : ExcessPositive.Statement.{u})
   set N := commonExcess ϖ P f g s with hN
   have hε : 0 < N := hpos O ϖ hϖ K ι P d hP b f g hD s hsP hcommon
 
-  have hbdd : BddAbove (Set.range fun G : {G : Ideal (MRing ι O) // (C ϖ : MRing ι O) ∈ G} =>
-      (divCycle P s G.1 * ratDiv P f g G.1).toNat) := by
+  have hbdd : BddAbove (Set.range fun G : {G : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) // (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ G} =>
+      (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G.1 : ℤ) * ratDiv P f g G.1).toNat) := by
     refine (((DivCycleFiniteSupport.proof O K ι P s).image
-      fun G => (divCycle P s G * ratDiv P f g G).toNat).insert 0).bddAbove.mono ?_
+      fun G => (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G : ℤ) * ratDiv P f g G).toNat).insert 0).bddAbove.mono ?_
     rintro _ ⟨G, rfl⟩
-    by_cases h : divCycle P s G.1 = 0
+    by_cases h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G.1 : ℤ) = 0
     · left; simp [h]
     · right; exact ⟨G.1, h, rfl⟩
-  have hle : ∀ G, (C ϖ : MRing ι O) ∈ G → ∀ x y : ℤ, 0 ≤ x → 0 ≤ y → x ≤ divCycle P s G →
+  have hle : ∀ G, (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ G → ∀ x y : ℤ, 0 ≤ x → 0 ≤ y → x ≤ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G : ℤ) →
       y ≤ ratDiv P f g G → x * y ≤ N := by
     intro G hG x y hx hy hxG hyG
-    have h1 : (divCycle P s G * ratDiv P f g G).toNat ≤ N := le_ciSup hbdd ⟨G, hG⟩
-    have h2 : x * y ≤ divCycle P s G * ratDiv P f g G := mul_le_mul hxG hyG hy (hx.trans hxG)
+    have h1 : (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G : ℤ) * ratDiv P f g G).toNat ≤ N := le_ciSup hbdd ⟨G, hG⟩
+    have h2 : x * y ≤ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G : ℤ) * ratDiv P f g G := mul_le_mul hxG hyG hy (hx.trans hxG)
     exact h2.trans ((Int.self_le_toNat _).trans (by exact_mod_cast h1))
 
   have hterm : ∀ x y : ℤ, 0 ≤ x → (0 < x → 0 < y → x * y < N) → (x * y).toNat ≤ N - 1 := by
@@ -48,8 +49,8 @@ theorem BlowUpExcessDecreases.proof (hpos : ExcessPositive.Statement.{u})
         omega
     · obtain rfl : x = 0 := le_antisymm hx' hx
       simp
-  have hne : Nonempty {G' : Ideal (MRing (extIdx ι (BlowUpIdx ι)) O) //
-      (C ϖ : MRing (extIdx ι (BlowUpIdx ι)) O) ∈ G'} := ⟨⟨⊤, Submodule.mem_top⟩⟩
+  have hne : Nonempty {G' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) //
+      (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∈ G'} := ⟨⟨⊤, Submodule.mem_top⟩⟩
   constructor
   ·
     have h : commonExcess ϖ (blowUpOf P (blowUpGens s g f m e)) (newVar (some none)) (liftForm m)

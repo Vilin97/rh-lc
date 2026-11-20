@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsArith
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -20,12 +21,12 @@ def SwapCyclesArith.Statement : Prop :=
         ringKrullDim (Localization.AtPrime (U.map (Ideal.Quotient.mk P))) = 2) ∧
     (∀ W ∈ divSupp P s, ∀ U ∈ divSupp W s',
       U ∈ (P ⊔ Ideal.span {s} ⊔ Ideal.span {s'}).minimalPrimes) ∧
-    ((divCycle P s).sum (fun W m => m • divCycle W s') =
-      (divCycle P s').sum (fun W m => m • divCycle W s)) ∧
-    ((divCycle P s).sum (fun W m => m • horCycle W s') =
-      (divCycle P s').sum (fun W m => m • horCycle W s)) ∧
-    ((divCycle P s).sum (fun W m => m • vertCycle W s') =
-      (divCycle P s').sum (fun W m => m • vertCycle W s))
+    (((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).sum (fun W m => m • (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W s') W : ℤ))) =
+      ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s') W : ℤ))).sum (fun W m => m • (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W s) W : ℤ)))) ∧
+    (((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).sum (fun W m => m • horCycle W s') =
+      ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s') W : ℤ))).sum (fun W m => m • horCycle W s)) ∧
+    (((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).sum (fun W m => m • vertCycle W s') =
+      ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s') W : ℤ))).sum (fun W m => m • vertCycle W s))
 
 end
 

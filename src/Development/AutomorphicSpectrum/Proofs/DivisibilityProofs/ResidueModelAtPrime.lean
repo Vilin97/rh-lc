@@ -4,14 +4,15 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsF
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyCN
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.DescentIntersectionNumberStatement
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.ConstantsMonomialApproximationStatement
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num GlobalTheory.CompanionTheory.Ar.Top GroundTheory.Heights₂.Heights.ModelLeaves
 open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar IsHorizontal mcPts mCoordIdeal IsIntersectionFamily IsIntersectionSystem IntersectionSystem ptsIntegral geoNum charOf recR arInt ChartBundle chartRing)
 
 namespace GlobalTheory.CompanionTheory.Ar.Num
 
 theorem mem_of_residue_map_mem_specialIdeal {K : Type} [DecidableEq K] {ι : K → Type} {O : Type}
-    [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {W : Ideal (MRing ι O)}
-    (hW : (IsLocalRing.maximalIdeal O).map (C : O →+* MRing ι O) ≤ W) {f : MRing ι O}
+    [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}
+    (hW : (IsLocalRing.maximalIdeal O).map (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ≤ W) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
     (hf : MvPolynomial.map (IsLocalRing.residue O) f ∈ specialIdeal W) : f ∈ W := by
   obtain ⟨g, hg, hgf⟩ := (Ideal.mem_map_iff_of_surjective _
     (MvPolynomial.map_surjective _ IsLocalRing.residue_surjective)).1 hf
@@ -28,7 +29,7 @@ theorem mem_of_residue_map_mem_specialIdeal {K : Type} [DecidableEq K] {ι : K �
 
 theorem map_mem_pointIdeal {K : Type} {ι : K → Type} {Ω : Type} [Field Ω]
     {y : (Σ k, ι k) → Ω} {A O : Type} [CommRing A] [CommRing O] [Algebra A O] [Algebra A Ω]
-    [Algebra O Ω] [IsScalarTower A O Ω] {f : MRing ι A} (hf : f ∈ pointIdeal A y) :
+    [Algebra O Ω] [IsScalarTower A O Ω] {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι} (hf : f ∈ pointIdeal A y) :
     MvPolynomial.map (algebraMap A O) f ∈ pointIdeal O y := by
   rw [pointIdeal, RingHom.mem_ker] at hf ⊢
   rw [← hf]
@@ -36,7 +37,7 @@ theorem map_mem_pointIdeal {K : Type} {ι : K → Type} {Ω : Type} [Field Ω]
   exact MvPolynomial.aeval_map_algebraMap _ _ _
 
 theorem isMultiHomog_map {K : Type} [DecidableEq K] {ι : K → Type} {R S : Type} [CommRing R]
-    [CommRing S] (φ : R →+* S) {G : MRing ι R} {b : K → ℕ} (hG : IsMultiHomog G b) :
+    [CommRing S] (φ : R →+* S) {G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {b : K → ℕ} (hG : IsMultiHomog G b) :
     IsMultiHomog (MvPolynomial.map φ G) b := by
   intro d hd
   apply hG
@@ -44,7 +45,7 @@ theorem isMultiHomog_map {K : Type} [DecidableEq K] {ι : K → Type} {R S : Typ
   apply hd
   rw [MvPolynomial.coeff_map, h0, map_zero]
 
-theorem intNumL_zmod_eq_residueDegree_mul_vNumL : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] (y : (Σ k, ι k) → Ω) (A : Type) [CommRing A] [Algebra A Ω] [IsDedekindDomain A] [Module.Finite ℤ A], HasConstants ℤ A y → ∀ (p : ℕ) [Fact p.Prime] (m : Ideal A) [m.IsPrime] (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Algebra A O] [IsLocalization.AtPrime O m] [Algebra O Ω] [IsScalarTower A O Ω], (p : A) ∈ m → ∀ fd : ℕ, Nat.card (A ⧸ m) = p ^ fd → ∀ W' : Ideal (MRing ι O), W'.IsPrime → IsMultiHomogIdeal W' → pointIdeal O y ≤ W' → (IsLocalRing.maximalIdeal O).map (C : O →+* MRing ι O) ≤ W' → ∀ l : List (K → ℤ), intNumL (ZMod p) (extTo (ZMod p) (W'.comap (MvPolynomial.map (Int.castRingHom O)))) l = (fd : ℤ) * vNumL W' l := by
+theorem intNumL_zmod_eq_residueDegree_mul_vNumL : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] (y : (Σ k, ι k) → Ω) (A : Type) [CommRing A] [Algebra A Ω] [IsDedekindDomain A] [Module.Finite ℤ A], HasConstants ℤ A y → ∀ (p : ℕ) [Fact p.Prime] (m : Ideal A) [m.IsPrime] (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Algebra A O] [IsLocalization.AtPrime O m] [Algebra O Ω] [IsScalarTower A O Ω], (p : A) ∈ m → ∀ fd : ℕ, Nat.card (A ⧸ m) = p ^ fd → ∀ W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), W'.IsPrime → IsMultiHomogIdeal W' → pointIdeal O y ≤ W' → (IsLocalRing.maximalIdeal O).map (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ≤ W' → ∀ l : List (K → ℤ), intNumL (ZMod p) (extTo (ZMod p) (W'.comap (MvPolynomial.map (Int.castRingHom O)))) l = (fd : ℤ) * vNumL W' l := by
   intro K _ _ ι _ Ω _ y A _ _ _ _ hconst p _ m _ O _ _ _ _ _ _ _ hpm fd hcard W' hWp hWh hpt hϖ l
   have hmne : m ≠ ⊥ := by
     intro h
@@ -84,7 +85,7 @@ theorem intNumL_zmod_eq_residueDegree_mul_vNumL : ∀ (K : Type) [Fintype K] [De
   have hhom : (algebraMap (ZMod p) (IsLocalRing.ResidueField O)).comp
       (Int.castRingHom (ZMod p)) = (IsLocalRing.residue O).comp (Int.castRingHom O) :=
     Subsingleton.elim _ _
-  have hmm : ∀ g : MRing ι ℤ,
+  have hmm : ∀ g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι,
       MvPolynomial.map (algebraMap (ZMod p) (IsLocalRing.ResidueField O))
         (MvPolynomial.map (Int.castRingHom (ZMod p)) g) =
       MvPolynomial.map (IsLocalRing.residue O) (MvPolynomial.map (Int.castRingHom O) g) := by

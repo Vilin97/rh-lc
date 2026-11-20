@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ProjectiveSpaceIncrementHyp
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HilbertSamuel
@@ -12,7 +13,7 @@ noncomputable section
 section Grading
 
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
-  {M : Type*} [AddCommGroup M] [Module (MRing ι F) M] [Module F M]
+  {M : Type*} [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module F M]
 
 theorem isMultigraded_iff_isMultigrading (ℳ : (K → ℤ) → Submodule F M) :
     IsMultigraded ι ℳ ↔ GroundTheory.Heights₂.Heights.HilbertSamuel.IsMultigrading ι M ℳ :=
@@ -24,14 +25,14 @@ end Grading
 section Multiplicity
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
-  (M : Type*) [AddCommGroup M] [Module (MRing ι R) M]
+  (M : Type*) [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) M]
 
 end Multiplicity
 
 section Cycle
 
 variable {K : Type*} [Fintype K] [DecidableEq K] (ι : K → Type*) (F : Type*) [Field F]
-  (M : Type*) [AddCommGroup M] [Module (MRing ι F) M]
+  (M : Type*) [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M]
 
 end Cycle
 

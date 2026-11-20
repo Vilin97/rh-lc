@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerLast
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsVerticalDivOfIsVerticalDivisorAlt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -113,7 +114,7 @@ theorem rename_weightedHomogeneousComponent [DecidableEq K] [DecidableEq K'] [De
         (Sum.elim (fun k => c (.inl k)) (Sum.elim (fun k => c (.inr k)) 0)) (rename (assocVar ι₂) h) := by
   induction h using MvPolynomial.induction_on' with
   | monomial d r =>
-    have hm : IsMultiHomog (monomial d r : MRing (Sum.elim ι ι') R)
+    have hm : IsMultiHomog (monomial d r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (Sum.elim ι ι'))
         (Finsupp.weight (blockWeight (Sum.elim ι ι')) d) :=
       isWeightedHomogeneous_monomial _ _ _ rfl
     have hj := isMultiHomog_rename_assocVar' (ι₂ := ι₂) hm

@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsConeChart
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChartGram
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeIntegralMass
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -9,7 +10,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial MeasureTheory Matrix
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar IsGoodProj IsSheet fibre)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk IsGoodProj IsSheet fibre)
 
 def chartGramDensity {n e : ℕ} (P : Ideal (MRing (PBlk n)))
     (Ψ : (((k : Unit) → PBlk n k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (S : Matrix (Fin n) (Fin n) ℂ)

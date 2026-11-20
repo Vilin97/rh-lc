@@ -5,6 +5,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsP
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsVerticalDivisorJoinPullback
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagClosureBirational
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagIndependenceAlgebra
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -53,7 +54,7 @@ theorem joinDeg_comp_closureBlockEquiv (L : K → ℤ) :
   funext o
   rcases o with _ | (_ | k) <;> rfl
 
-theorem rename_liftPairForm {R : Type*} [CommRing R] (F : MRing ι R) :
+theorem rename_liftPairForm {R : Type*} [CommRing R] (F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
     rename (closureVarEquiv ι M M') (liftPairForm M M' F) = joinForm (ι' := lineBlocks M M') F := by
   rw [liftPairForm, rename_rename]
   rfl
@@ -67,8 +68,8 @@ variable {K : Type} {ι : K → Type} {m : ℕ}
 def joinClosureDeg (ζ : Option (Option K) → ℤ) (L : Fin m → K → ℤ) : Fin (1 + m) → K ⊕ Option Unit → ℤ :=
   Fin.append (fun _ : Fin 1 => ζ ∘ (closureBlockEquiv K).symm) (fun j => joinDeg (L j))
 
-def joinClosureForm {R : Type*} [CommRing R] (M M' : ℕ) (h : MRing (Sum.elim ι (lineBlocks M M')) R)
-    (F : Fin m → MRing ι R) : Fin (1 + m) → MRing (Sum.elim ι (lineBlocks M M')) R :=
+def joinClosureForm {R : Type*} [CommRing R] (M M' : ℕ) (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (Sum.elim ι (lineBlocks M M')))
+    (F : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : Fin (1 + m) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (Sum.elim ι (lineBlocks M M')) :=
   Fin.append (fun _ : Fin 1 => h) (fun j => joinForm (F j))
 
 theorem joinClosureDeg_comp (ζ : Option (Option K) → ℤ) (L : Fin m → K → ℤ) :
@@ -86,8 +87,8 @@ theorem joinClosureDeg_natAdd (ζ : Option (Option K) → ℤ) (L : Fin m → K 
   funext j
   simp [joinClosureDeg, Fin.append_right]
 
-theorem rename_closureForm {R : Type*} [CommRing R] (M M' : ℕ) (h : MRing (bundleIdx (bundleIdx ι M) M') R)
-    (F : Fin m → MRing ι R) :
+theorem rename_closureForm {R : Type*} [CommRing R] (M M' : ℕ) (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (bundleIdx (bundleIdx ι M) M'))
+    (F : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
     (fun i => rename (closureVarEquiv ι M M') (closureForm M M' h F i)) =
       joinClosureForm M M' (rename (closureVarEquiv ι M M') h) F := by
   funext i
@@ -96,8 +97,8 @@ theorem rename_closureForm {R : Type*} [CommRing R] (M M' : ℕ) (h : MRing (bun
   · simp only [joinClosureForm, closureForm, Fin.append_right]
     exact rename_liftPairForm ι M M' _
 
-theorem joinClosureForm_natAdd {R : Type*} [CommRing R] (M M' : ℕ) (h : MRing (Sum.elim ι (lineBlocks M M')) R)
-    (F : Fin m → MRing ι R) : joinClosureForm M M' h F ∘ Fin.natAdd 1 = fun j => joinForm (F j) := by
+theorem joinClosureForm_natAdd {R : Type*} [CommRing R] (M M' : ℕ) (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (Sum.elim ι (lineBlocks M M')))
+    (F : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : joinClosureForm M M' h F ∘ Fin.natAdd 1 = fun j => joinForm (F j) := by
   funext j
   simp [joinClosureForm, Fin.append_right]
 

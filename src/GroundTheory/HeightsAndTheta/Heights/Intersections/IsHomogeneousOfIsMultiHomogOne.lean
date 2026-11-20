@@ -4,6 +4,7 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersecti
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.InhDivCycleOfSuppEmpty
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsLineFibre
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsLinearQuotient
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -96,9 +97,9 @@ theorem LineFibreBlocks.proof (hLin : LinearQuotient.Statement) : LineFibreBlock
     obtain rfl : k = s₁.1 := (hk k).trans (hk s₁.1).symm
     exact ⟨s₁.2, hs₁⟩
 
-  have hdivℓ : divCycle Q ℓ = Finsupp.single W 1 := inh_divCycle_prime Q ℓ W hQW hWrel
+  have hdivℓ : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q ℓ) W : ℤ)) = Finsupp.single W 1 := inh_divCycle_prime Q ℓ W hQW hWrel
   have hℓpow : ∀ n : ℕ, ℓ ^ n ∉ Q := fun n h => hi₀ (hQp.mem_of_pow_mem n h)
-  have hdivpow : ∀ n : ℕ, divCycle Q (ℓ ^ n) = Finsupp.single W n := by
+  have hdivpow : ∀ n : ℕ, (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (ℓ ^ n)) W : ℤ)) = Finsupp.single W n := by
     intro n
     induction n with
     | zero => simp [divCycle_one]

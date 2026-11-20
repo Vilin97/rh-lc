@@ -4,6 +4,7 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.I
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsArith
 import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiHomogTwoXc
 import GroundTheory.HeightsAndTheta.Heights.Intersections.MultAtHorizontalEqZero
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -41,7 +42,7 @@ theorem multAt_eq' (J W : Ideal (MRing ι)) (hW : W.IsPrime) :
   simp [multAt, hW, locLen]
 
 theorem divCycle_mul' {P : Ideal (MRing ι)} (hP : P.IsPrime) {f g : MRing ι}
-    (hf : f ∉ P) (hg : g ∉ P) : divCycle P (f * g) = divCycle P f + divCycle P g := by
+    (hf : f ∉ P) (hg : g ∉ P) : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (f * g)) W : ℤ)) = divCycle P f + (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)) := by
   classical
   ext W
   simp only [Finsupp.add_apply, divCycle, Finsupp.ofSupportFinite_coe]
@@ -72,10 +73,10 @@ def cycWeight (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) �
 
 theorem cycR_eq_sum (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (P : Ideal (MRing ι))
     {n : ℕ} (L : Fin n → HermLine ι) (s : MRing ι) :
-    cycR I P L s = (divCycle P s).sum fun W m => (m : ℝ) * cycWeight I L W := by
+    cycR I P L s = ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).sum fun W m => (m : ℝ) * cycWeight I L W := by
   classical
   unfold cycR
-  rw [finsum_mem_def, finsum_eq_sum_of_support_subset _ (s := (divCycle P s).support)]
+  rw [finsum_mem_def, finsum_eq_sum_of_support_subset _ (s := ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).support)]
   · refine Finset.sum_congr rfl fun W _ => ?_
     by_cases h : W ∈ divSupp P s
     · simp [Set.indicator, h, divCycle, Finsupp.ofSupportFinite_coe, cycWeight]

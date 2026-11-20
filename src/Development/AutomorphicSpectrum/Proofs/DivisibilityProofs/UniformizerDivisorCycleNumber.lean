@@ -3,6 +3,7 @@ import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.BundleCher
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagIndependence
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PScalarQuotient
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num
 
@@ -18,26 +19,26 @@ theorem length_classList {K σ : Type} (cls : σ → K → ℤ) {H : MvPolynomia
 
 theorem cycList_const {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {ϖ : O}
     (hϖ : Irreducible ϖ) {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    [∀ k, Fintype (ι k)] {P : Ideal (MRing ι O)} (l : List (K → ℤ))
+    [∀ k, Fintype (ι k)] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (l : List (K → ℤ))
     (hM : IsModelOver P l.length) (u : Oˣ) (e : ℕ) :
-    cycList (divCycle P (C ((u : O) * ϖ ^ e))) l =
+    cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ((u : O) * ϖ ^ e))) W : ℤ))) l =
       (e : ℤ) * intNumL (FractionRing O) (genFib P) l := by
   haveI : P.IsPrime := hM.multiProj.isPrime
-  have hC : ∀ a : O, a ≠ 0 → (C a : MRing ι O) ∉ P := by
+  have hC : ∀ a : O, a ≠ 0 → (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
     intro a ha hmem
     apply ha
-    have ha' : a ∈ P.comap (C : O →+* MRing ι O) := Ideal.mem_comap.2 hmem
+    have ha' : a ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := Ideal.mem_comap.2 hmem
     rw [hM.noTorsion] at ha'
     exact Ideal.mem_bot.1 ha'
   have hfin := ScalarQuotient.divCycle_support_finite P (C ϖ)
-  have key : cycEval (fun W => vNumL W l) (divCycle P (C ϖ)) =
+  have key : cycEval (fun W => vNumL W l) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ))) =
       intNumL (FractionRing O) (genFib P) l :=
     ConservationOfNumber.full O ϖ hϖ K ι P l.length hM l.get
   unfold cycList
   rw [ScalarQuotient.divCycle_const P hC hϖ.ne_zero u e, ← key]
   unfold cycEval
-  show ∑ᶠ W, ((e : ℤ) * divCycle P (C ϖ) W) * vNumL W l =
-    (e : ℤ) * ∑ᶠ W, divCycle P (C ϖ) W * vNumL W l
+  show ∑ᶠ W, ((e : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ)) * vNumL W l =
+    (e : ℤ) * ∑ᶠ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ) * vNumL W l
   rw [mul_finsum]
   · exact finsum_congr fun W => by ring
   all_goals exact hfin.subset (Function.support_mul_subset_left _ _)
@@ -46,7 +47,7 @@ end GlobalTheory.CompanionTheory.Ar.Num.ConsPoly
 
 open GlobalTheory.CompanionTheory.Ar.Num.ConsPoly in
 
-theorem GlobalTheory.CompanionTheory.Ar.Num.cycNum_divCycle_const : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P d → ∀ (u : Oˣ) (e : ℕ) (σ : Type) (cls : σ → K → ℤ) (H : MvPolynomial σ ℝ) (m : ℕ), H.IsHomogeneous m → ∀ Q : List (K → ℤ), m + Q.length = d → cycNum (divCycle P (C ((u : O) * ϖ ^ e))) cls H Q = (e : ℝ) * genNum (FractionRing O) (genFib P) cls H Q := by
+theorem GlobalTheory.CompanionTheory.Ar.Num.cycNum_divCycle_const : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P d → ∀ (u : Oˣ) (e : ℕ) (σ : Type) (cls : σ → K → ℤ) (H : MvPolynomial σ ℝ) (m : ℕ), H.IsHomogeneous m → ∀ Q : List (K → ℤ), m + Q.length = d → cycNum ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ((u : O) * ϖ ^ e))) W : ℤ))) cls H Q = (e : ℝ) * genNum (FractionRing O) (genFib P) cls H Q := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hM u e σ cls H m hH Q hd
   unfold cycNum genNum
   rw [Finset.mul_sum]

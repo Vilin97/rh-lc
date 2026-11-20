@@ -1,13 +1,14 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.SegreChartProjObjects
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsIntegralSegreChartProj
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
 
 namespace GroundTheory.Heights₂.Heights
 
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsMultiHomogIdeal PBlk)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver PBlk IsMultiHomogIdeal)
 open ComplexSets
 
 def SegreChartZeroSet.Statement : Prop :=

@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.PBaseChange
 import GroundTheory.HeightsAndTheta.Heights.Intersections.PReducedCutLength
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -33,7 +34,7 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
 
 omit [DecidableEq K] in
 
-theorem flat_map : (MvPolynomial.map (algebraMap ℚ ℂ) : MRing ι ℚ →+* MRing ι ℂ).Flat :=
+theorem flat_map : (MvPolynomial.map (algebraMap ℚ ℂ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι).Flat :=
   ReciprocityTheory.AnForm.R.BaseChangeC.flat_mvPolynomial_rat_complex (σ := Σ k, ι k)
 
 end BCMultProof
@@ -64,8 +65,8 @@ theorem BCMult.intersectionNumber_baseChange : BCMult.Statement := by
     exact hWa.2 ⟨this, Ideal.map_le_iff_le_comap.mpr hge⟩ hQWa
 
   have hcomp : (Localization.localRingHom W Wa (MvPolynomial.map (algebraMap ℚ ℂ)) hWc.symm).comp
-      (algebraMap (MRing ι ℚ) (Localization.AtPrime W)) =
-      (algebraMap (MRing ι ℂ) (Localization.AtPrime Wa)).comp
+      (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι) (Localization.AtPrime W)) =
+      (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι) (Localization.AtPrime Wa)).comp
         (MvPolynomial.map (algebraMap ℚ ℂ)) :=
     RingHom.ext fun z => Localization.localRingHom_to_map _ _ _ hWc.symm z
   have hmaxL : (maximalIdeal (Localization.AtPrime W)).map
@@ -77,10 +78,10 @@ theorem BCMult.intersectionNumber_baseChange : BCMult.Statement := by
   have hflat := length_quot_map_of_flat
     (Localization.localRingHom W Wa (MvPolynomial.map (algebraMap ℚ ℂ)) hWc.symm)
     (RingHom.Flat.localRingHom flat_map Wa W hWc.symm) hmaxL
-    ((P0 ⊔ Ideal.span {s}).map (algebraMap (MRing ι ℚ) (Localization.AtPrime W)))
-  have hJ : ((P0 ⊔ Ideal.span {s}).map (algebraMap (MRing ι ℚ) (Localization.AtPrime W))).map
+    ((P0 ⊔ Ideal.span {s}).map (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι) (Localization.AtPrime W)))
+  have hJ : ((P0 ⊔ Ideal.span {s}).map (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι) (Localization.AtPrime W))).map
       (Localization.localRingHom W Wa (MvPolynomial.map (algebraMap ℚ ℂ)) hWc.symm) =
-      (extC P0 ⊔ Ideal.span {sC s}).map (algebraMap (MRing ι ℂ) (Localization.AtPrime Wa)) := by
+      (extC P0 ⊔ Ideal.span {sC s}).map (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι) (Localization.AtPrime Wa)) := by
     rw [Ideal.map_map, hcomp, ← Ideal.map_map, hext]
   have h1 : NumbersDVR.multAt (P0 ⊔ Ideal.span {s}) W =
       NumbersDVR.multAt (extC P0 ⊔ Ideal.span {sC s}) Wa := by
@@ -90,7 +91,7 @@ theorem BCMult.intersectionNumber_baseChange : BCMult.Statement := by
 
   have h2 : NumbersDVR.multAt (extC P0 ⊔ Ideal.span {sC s}) Wa =
       ∑ᶠ Z ∈ (extC P0).minimalPrimes, NumbersDVR.multAt (Z ⊔ Ideal.span {sC s}) Wa :=
-    ReducedCutLength.intersectionNumber_baseChange (MRing ι ℂ) (extC P0) (sC s) Wa (ReciprocityTheory.AnForm.R.extC_isRadical P0)
+    ReducedCutLength.intersectionNumber_baseChange (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι) (extC P0) (sC s) Wa (ReciprocityTheory.AnForm.R.extC_isRadical P0)
       (fun _ hZ => sC_not_mem (comap_extC hZ) hsP) hWaMin
   have hfin : NumbersDVR.multAt (extC P0 ⊔ Ideal.span {sC s}) Wa ≠ ⊤ :=
     NumbersDVR.length_localizedQuot_ne_top _ Wa hWaMin

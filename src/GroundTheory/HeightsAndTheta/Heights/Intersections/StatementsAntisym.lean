@@ -3,6 +3,7 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersecti
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.KappaSt
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MixedFieldContraction.ContractMixedFieldStatement
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsArith
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -75,10 +76,7 @@ structure ProjectiveLineBundle (D : ℕ) where
   metric : IsEEMetric G
   n : ℕ
 
-  g : MRing (T.wwIdx ι ν κ)
-
-  h : MRing (T.wwIdx ι ν κ)
-  g_deg : IsMultiHomog g (T.wwDeg n 1)
+  g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver h (T.wwIdx ι ν κ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver g_deg (T.wwIdx ι ν κ) : IsMultiHomog g (T.wwDeg n 1)
   h_deg : IsMultiHomog h (T.wwDeg (n + 3) 0)
   h_nmem : h ∉ T.wwIdeal x δ e φ (a 0) (a 1)
   quot : aeval (T.wwCoord x δ e φ (a 0) (a 1)) g =

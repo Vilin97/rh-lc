@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpHorizontalMult
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LiftFormNotMemBlowUpOf
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPolynomialLocalizedLength
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -18,13 +19,13 @@ theorem BlowUpHorizontalMult.proof (hmin : BlowUpHorizontalMinimal.Statement.{u}
   obtain ⟨-, -, hrel₀, -⟩ := comap_liftForm_facts hWp hBW hrel
   have hcond : W ∈ (blowUpOf P u ⊔ Ideal.span {liftForm x}).minimalPrimes ∧ IsRelevant W := by
     by_contra h
-    unfold divCycle at hW
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
     rw [dif_neg h] at hW
     exact hW rfl
   have hch := hchart O ϖ hϖ K ι J P n hP N u hu hex hloc c x hx hxP W hW hϖW hWp
   have := hWp
-  have hp := PolynomialLocalizedLength.full (MRing ι O) (W.comap (liftForm (ι := ι) (J := J) (R := O))) (P ⊔ Ideal.span {x})
-  unfold divCycle
+  have hp := PolynomialLocalizedLength.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (W.comap (liftForm (ι := ι) (J := J) (R := O))) (P ⊔ Ideal.span {x})
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   rw [dif_pos ⟨hm, hrel₀⟩, dif_pos hcond]
   congr 2
   exact (hp.symm.trans hch.symm : _)

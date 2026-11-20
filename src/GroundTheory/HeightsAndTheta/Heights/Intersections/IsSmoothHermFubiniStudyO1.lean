@@ -127,7 +127,7 @@ def InductiveIntersectionFormula.Statement : Prop :=
     ∀ (P : Ideal (MRing ι)) (n : ℕ) (L : Fin n → HermLine ι) (A : HermLine ι) (f g : MRing ι)
       (α β : K → ℕ), IsArithVar P (n + 1) → AllSmooth L → IsSmoothHerm A →
       IsMultiHomog f α → IsMultiHomog g β → (∀ k, (α k : ℤ) - β k = A.a k) → f ∉ P → g ∉ P →
-      (∀ W, IsHorizontal W → divCycle P f W = divCycle P g W) →
+      (∀ W, IsHorizontal W → ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)) →
       (∀ z ∈ mcPts P, ‖eval z (map (Int.castRingHom ℂ) f)‖ =
         ‖eval z (map (Int.castRingHom ℂ) g)‖ * A.h z) →
       I P (n + 1) (Fin.snoc L A) = vertPart P L f - vertPart P L g

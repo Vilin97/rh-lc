@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumBaseChange
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -89,11 +90,11 @@ theorem weight_mapDomain (d : (Σ k, ι₁ k) →₀ ℕ) :
 
 include hφ in
 
-theorem gradedPiece_map_rename (I : Ideal (MRing ι₁ F)) (d : K₂ → ℕ) :
+theorem gradedPiece_map_rename (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι₁)) (d : K₂ → ℕ) :
     gradedPiece (I.map (renameEquiv F φ)) d =
       (gradedPiece I (d ∘ e)).map
         ((Ideal.quotientEquivAlg I (I.map (renameEquiv F φ)) (renameEquiv F φ) (Ideal.map_coe _ _).symm).toLinearEquiv :
-          (MRing ι₁ F ⧸ I) →ₗ[F] MRing ι₂ F ⧸ I.map (renameEquiv F φ)) := by
+          (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι₁ ⧸ I) →ₗ[F] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι₂ ⧸ I.map (renameEquiv F φ)) := by
   rw [gradedPiece_eq_span, gradedPiece_eq_span, Submodule.map_span, Set.image_image]
   congr 1
   ext x
@@ -116,14 +117,14 @@ theorem gradedPiece_map_rename (I : Ideal (MRing ι₁ F)) (d : K₂ → ℕ) :
 
 include hφ in
 
-theorem finrank_gradedPiece_map_rename (I : Ideal (MRing ι₁ F)) (d : K₂ → ℕ) :
+theorem finrank_gradedPiece_map_rename (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι₁)) (d : K₂ → ℕ) :
     Module.finrank F (gradedPiece (I.map (renameEquiv F φ)) d) =
       Module.finrank F (gradedPiece I (d ∘ e)) := by
   rw [gradedPiece_map_rename e φ hφ, LinearEquiv.finrank_map_eq]
 
 include hφ in
 
-theorem hilbFn_map_rename (I : Ideal (MRing ι₁ F)) (m : K₂ → ℤ) :
+theorem hilbFn_map_rename (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι₁)) (m : K₂ → ℤ) :
     hilbFn (I.map (renameEquiv F φ)) m = hilbFn I (m ∘ e) := by
   unfold hilbFn
   have hpos : (∀ k, 0 ≤ m k) ↔ ∀ k, 0 ≤ (m ∘ e) k :=
@@ -135,7 +136,7 @@ theorem hilbFn_map_rename (I : Ideal (MRing ι₁ F)) (m : K₂ → ℤ) :
 
 include hφ in
 
-theorem intNum_map_rename (I : Ideal (MRing ι₁ F)) {n : ℕ} (bs : Fin n → K₂ → ℤ) :
+theorem intNum_map_rename (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι₁)) {n : ℕ} (bs : Fin n → K₂ → ℤ) :
     intNum F (I.map (renameEquiv F φ)) bs = intNum F I (fun i => bs i ∘ e) := by
   unfold intNum
   have h : hilbFn (I.map (renameEquiv F φ)) = fun m => hilbFn I (m ∘ e) :=

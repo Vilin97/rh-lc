@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpHorizontalMult
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AevalChartSubstMemOfMemBlowUpOf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -17,14 +18,14 @@ theorem BlowUpHorizontalMinimal.full : BlowUpHorizontalMinimal.Statement.{u} := 
   have hPp : P.IsPrime := hP.multiProj.isPrime
 
   have hmin : W ∈ (blowUpOf P u ⊔ Ideal.span {liftForm x}).minimalPrimes := by
-    unfold divCycle at hW
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
     split_ifs at hW with h
     · exact h.1
     · exact absurd rfl hW
   obtain ⟨hWp, hBW, hWrel⟩ := le_and_isRelevant_of_divCycle_ne_zero hW
   set W₀ := W.comap (liftForm (ι := ι) (J := J) (R := O)) with hW₀
   obtain ⟨hW₀p, hPW₀, hrel₀, -⟩ := comap_liftForm_facts hWp hBW hWrel
-  have hϖW₀ : (C ϖ : MRing ι O) ∉ W₀ := by rw [Ideal.mem_comap, liftForm_C]; exact hϖW
+  have hϖW₀ : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W₀ := by rw [Ideal.mem_comap, liftForm_C]; exact hϖW
   obtain ⟨j₀, hj₀⟩ := hloc W₀ hW₀p hPW₀ hrel₀ hϖW₀
   choose v w hv hvw using hj₀
 
@@ -36,7 +37,7 @@ theorem BlowUpHorizontalMinimal.full : BlowUpHorizontalMinimal.Statement.{u} := 
       rwa [sub_add_cancel] at this
     exact hj ((hPp.mem_or_mem h1).resolve_left fun h' => hv j (hPW₀ h'))
 
-  obtain ⟨u₀, a, hu₀W, hrelP⟩ : ∃ (u₀ : MRing ι O) (a : J → MRing ι O), u₀ ∉ W₀ ∧
+  obtain ⟨u₀, a, hu₀W, hrelP⟩ : ∃ (u₀ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (a : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), u₀ ∉ W₀ ∧
       ∀ j, u₀ * u j - u j₀ * a j ∈ P := by
     have := hW₀p
     refine ⟨∏ j, v j, fun j => w j * ∏ j' ∈ Finset.univ.erase j, v j',
@@ -69,7 +70,7 @@ theorem BlowUpHorizontalMinimal.full : BlowUpHorizontalMinimal.Statement.{u} := 
   have := hP'.1
   have hxP' : x ∈ P' := hP'.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self x))
 
-  let Q' := (Ideal.map (Polynomial.C : MRing ι O →+* Polynomial (MRing ι O)) P').comap
+  let Q' := (Ideal.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) P').comap
     (aeval (R := O) (chartSubst a))
   have hQ'p : Q'.IsPrime := Ideal.comap_isPrime _ _
   have hBQ' : blowUpOf P u ⊔ Ideal.span {liftForm x} ≤ Q' := by
@@ -83,7 +84,7 @@ theorem BlowUpHorizontalMinimal.full : BlowUpHorizontalMinimal.Statement.{u} := 
 
   have hWQ' : W ≤ Q' := hmin.2 ⟨hQ'p, hBQ'⟩ hQ'W
   intro p hp
-  have h5 : Polynomial.C p ∈ Ideal.map (Polynomial.C : MRing ι O →+* Polynomial (MRing ι O)) P' := by
+  have h5 : Polynomial.C p ∈ Ideal.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) P' := by
     rw [← aeval_chartSubst_liftForm a p]
     exact hWQ' hp
   simpa using Ideal.mem_map_C_iff.mp h5 0

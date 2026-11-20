@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -13,17 +14,17 @@ theorem SpecialCycleEval.proof (h1 : SpecialIdealCorresp.Statement.{u})
     SpecialCycleEval.Statement.{u} := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P n
   classical
-  let s : Set (Ideal (MRing ι O)) :=
+  let s : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :=
     {W | W ∈ (P ⊔ Ideal.span {C ϖ}).minimalPrimes ∧ IsRelevant W}
   let t : Set (Ideal (MRing ι (IsLocalRing.ResidueField O))) :=
     {V | V ∈ (specialIdeal P).minimalPrimes ∧ IsRelevant V}
-  have hsupp1 : Function.support (fun W => divCycle P (C ϖ) W * n (specialIdeal W)) ⊆ s := by
+  have hsupp1 : Function.support (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ) * n (specialIdeal W)) ⊆ s := by
     intro W hW
     by_contra h
     apply hW
-    show divCycle P (C ϖ) W * n (specialIdeal W) = 0
+    show ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ) * n (specialIdeal W) = 0
     have h' : ¬ (W ∈ (P ⊔ Ideal.span {C ϖ}).minimalPrimes ∧ IsRelevant W) := h
-    unfold divCycle
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
     rw [dif_neg h', zero_mul]
   have hsupp2 : Function.support (fun V => idealCycle (specialIdeal P) V * n V) ⊆ t := by
     intro V hV
@@ -33,20 +34,20 @@ theorem SpecialCycleEval.proof (h1 : SpecialIdealCorresp.Statement.{u})
     have h' : ¬ (V ∈ (specialIdeal P).minimalPrimes ∧ IsRelevant V) := h
     unfold idealCycle
     rw [dif_neg h', zero_mul]
-  have hmem : ∀ W ∈ s, W.IsPrime ∧ (C ϖ : MRing ι O) ∈ W := fun W hW =>
+  have hmem : ∀ W ∈ s, W.IsPrime ∧ (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := fun W hW =>
     ⟨hW.1.1.1, hW.1.1.2 (Ideal.mem_sup_right (Ideal.subset_span rfl))⟩
   have hmaps : ∀ W ∈ s, specialIdeal W ∈ t := by
     intro W hW
     obtain ⟨hp, hc⟩ := hmem W hW
     obtain ⟨-, hmin, hrel, -⟩ := h1 O ϖ hϖ K ι P W hp hc
     exact ⟨hmin.mp hW.1, hrel.mp hW.2⟩
-  have e1 : (∑ᶠ W, divCycle P (C ϖ) W * n (specialIdeal W)) =
-      ∑ᶠ W ∈ s, divCycle P (C ϖ) W * n (specialIdeal W) := by
+  have e1 : (∑ᶠ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ) * n (specialIdeal W)) =
+      ∑ᶠ W ∈ s, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ) * n (specialIdeal W) := by
     rw [finsum_mem_def, Set.indicator_eq_self.mpr hsupp1]
   have e2 : (∑ᶠ V, idealCycle (specialIdeal P) V * n V) =
       ∑ᶠ V ∈ t, idealCycle (specialIdeal P) V * n V := by
     rw [finsum_mem_def, Set.indicator_eq_self.mpr hsupp2]
-  show (∑ᶠ W, divCycle P (C ϖ) W * n (specialIdeal W)) =
+  show (∑ᶠ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ) * n (specialIdeal W)) =
     ∑ᶠ V, idealCycle (specialIdeal P) V * n V
   rw [e1, e2]
   refine finsum_mem_eq_of_bijOn specialIdeal ⟨hmaps, ?_, ?_⟩ ?_
@@ -65,7 +66,7 @@ theorem SpecialCycleEval.proof (h1 : SpecialIdealCorresp.Statement.{u})
     have := (h1 O ϖ hϖ K ι P W hp hc).1
     have hm := h3 O ϖ hϖ K ι P W hc
     congr 1
-    unfold divCycle idealCycle
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle idealCycle
     have hW' : W ∈ (P ⊔ Ideal.span {C ϖ}).minimalPrimes ∧ IsRelevant W := hW
     have hV' : specialIdeal W ∈ (specialIdeal P).minimalPrimes ∧ IsRelevant (specialIdeal W) :=
       hmaps W hW

@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCutChartSection
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagCutTools
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -14,13 +15,13 @@ namespace SegreFlagCutLiesOverProof
 variable {κ : Type} [Fintype κ] [DecidableEq κ] {ικ : κ → Type} [∀ o, Fintype (ικ o)] {O : Type} [CommRing O] [IsDomain O]
   [IsDiscreteValuationRing O] {Φ : Type} [Field Φ] [Algebra O Φ]
 
-theorem le_comap_of_chart (pt : (Σ o, ικ o) → Φ) {A F : Type*} [CommRing A] [FunLike F A (MRing ικ O)]
-    [RingHomClass F A (MRing ικ O)] (ρ : F) (Q : Ideal A) (u : MRing ικ O) (τ : Φ) {cs ch dl dm : κ → ℕ}
-    {s h l μ : MRing ικ O} (hs : IsMultiHomog s cs) (hh : IsMultiHomog h ch) (hl : IsMultiHomog l dl)
+theorem le_comap_of_chart (pt : (Σ o, ικ o) → Φ) {A F : Type*} [CommRing A] [FunLike F A (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ικ)]
+    [RingHomClass F A (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ικ)] (ρ : F) (Q : Ideal A) (u : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ικ) (τ : Φ) {cs ch dl dm : κ → ℕ}
+    {s h l μ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ικ} (hs : IsMultiHomog s cs) (hh : IsMultiHomog h ch) (hl : IsMultiHomog l dl)
     (hμ : IsMultiHomog μ dm) (hdeg : cs + dm = dl + ch) (hsP : s ∉ pointIdeal O pt)
     (hhP : h ∉ pointIdeal O pt) (hsv : aeval pt s = τ * aeval pt h) (hlv : aeval pt l = τ * aeval pt μ)
     (hsat : ∀ q ∈ Q, ∃ n : ℕ, u ^ n * ρ q ∈ pointIdeal O pt ⊔ Ideal.span {l})
-    {W : Ideal (MRing ικ O)} (hμW : μ ∉ W) (huW : ∀ n : ℕ, u ^ n ∉ W)
+    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ικ)} (hμW : μ ∉ W) (huW : ∀ n : ℕ, u ^ n ∉ W)
     (hPW : pointIdeal O pt ≤ W) (hW : ratDiv (pointIdeal O pt) s h W ≠ 0) : Q ≤ W.comap ρ := by
   have : (pointIdeal O pt).IsPrime := RingHom.ker_isPrime _
   have hμP : μ ∉ pointIdeal O pt := fun h' => hμW (hPW h')
@@ -42,17 +43,17 @@ theorem le_comap_of_chart (pt : (Σ o, ικ o) → Φ) {A F : Type*} [CommRing A
     rw [map_sub, map_mul, map_mul, hsv, hlv]
     ring
   have hrat := congrFun (ratDiv_eq_of_sub_mem hsP hhP hlP hμP hdiff) W
-  have hμ0 : divCycle (pointIdeal O pt) μ W = 0 := by
-    unfold divCycle
+  have hμ0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O pt) μ) W : ℤ) = 0 := by
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
     rw [dif_neg]
     rintro ⟨h', -⟩
     exact hμW (h'.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self μ)))
-  have hl0 : divCycle (pointIdeal O pt) l W ≠ 0 := by
+  have hl0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O pt) l) W : ℤ) ≠ 0 := by
     rw [hrat] at hW
     unfold ratDiv at hW
     rwa [hμ0, sub_zero] at hW
   have hmin : W ∈ (pointIdeal O pt ⊔ Ideal.span {l}).minimalPrimes := by
-    unfold divCycle at hl0
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hl0
     split_ifs at hl0 with h'
     · exact h'.1
     · exact absurd rfl hl0
@@ -63,15 +64,15 @@ theorem le_comap_of_chart (pt : (Σ o, ικ o) → Φ) {A F : Type*} [CommRing A
 
 omit [Fintype κ] [DecidableEq κ] [∀ o, Fintype (ικ o)] [IsDomain O] [IsDiscreteValuationRing O] in
 
-theorem support_ratDiv {P W : Ideal (MRing ικ O)} {s h : MRing ικ O} (hW : ratDiv P s h W ≠ 0) :
+theorem support_ratDiv {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ικ)} {s h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ικ} (hW : ratDiv P s h W ≠ 0) :
     W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
-  have key : ∀ v, divCycle P v W ≠ 0 → W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
+  have key : ∀ v, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P v) W : ℤ) ≠ 0 → W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
     intro v hv
-    unfold divCycle at hv
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hv
     split_ifs at hv with h'
     · exact ⟨h'.1.1.1, le_sup_left.trans h'.1.1.2, h'.2⟩
     · exact absurd rfl hv
-  by_cases h1 : divCycle P s W = 0
+  by_cases h1 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0
   · exact key h fun h2 => hW (by simp [ratDiv, h1, h2])
   · exact key s h1
 
@@ -83,10 +84,10 @@ theorem SegreFlagCutLiesOver.proof (hChart : SegreFlagCutChartSection.Statement)
     SegreFlagCutLiesOver.Statement := by
   intro O _ _ _ ϖ hϖ Ω _ _ K _ _ ι _ y d hV N E _ _ B B' hBB' w w' x x' f g hfl M M' a₀ a₀' φ φ' hφ hφ'
     Φ _ _ _ _ e t ht k hk
-  have hchart : ∀ (s h : MRing (bundleIdx (bundleIdx ι M) M') O) (W : Ideal (MRing (bundleIdx (bundleIdx ι M) M') O)),
+  have hchart : ∀ (s h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))),
       ratDiv (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) s h W ≠ 0 →
       ∃ c : ∀ j, ι j, segreVec y c ≠ 0 ∧ pointIdeal O (flagClosurePt y w e φ φ' t (k + 1)) ≤ W ∧
-        ∀ m : K → ℕ, (∏ j, (X ⟨some (some j), c j⟩ : MRing (bundleIdx (bundleIdx ι M) M') O) ^ m j) ∉ W := by
+        ∀ m : K → ℕ, (∏ j, (X ⟨some (some j), c j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ^ m j) ∉ W := by
     intro s h W hW
     obtain ⟨hWp, hPW, hWr⟩ := support_ratDiv hW
     choose c hc using fun j : K => hWr (some (some j))

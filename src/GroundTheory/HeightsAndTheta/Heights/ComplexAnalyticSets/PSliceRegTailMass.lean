@@ -6,6 +6,7 @@ import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceRegMassLi
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceSectionTailMass
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceRegCutTail
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceCutTailMass
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -21,7 +22,7 @@ theorem SliceRegTailMass.proof (hMono : SliceRegMassMono.Statement) (hCont : Sli
         (vecCons (fsLogReg h u' ε) fun _ x => Real.log (h.dualNorm x)) +
       varInt (W ⊔ Ideal.span {linForm ℓ - 1}) (e + 1) (fun x => 1 - sliceCut h k x)
         (fun _ x => Real.log (h.dualNorm x)) with hΦ
-  set L : ℕ → ℝ := fun k => ∑ P ∈ (divCycle W u').support, ((divCycle W u' P : ℕ) : ℝ) *
+  set L : ℕ → ℝ := fun k => ∑ P ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).support, ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') P : ℤ) : ℕ) : ℝ) *
     varInt (P ⊔ Ideal.span {linForm ℓ - 1}) e (fun x => 1 - sliceCut h k x)
       (fun _ x => Real.log (h.dualNorm x)) with hL
   set G : ℕ → ℝ → ℝ := fun k t => if 0 < t then Φ k t else L k with hG
@@ -59,8 +60,8 @@ theorem SliceRegTailMass.proof (hMono : SliceRegMassMono.Statement) (hCont : Sli
       rcases ht.1.eq_or_lt with h0 | hpos
       · subst h0
         simp only [hG0]
-        have := tendsto_finsetSum (divCycle W u').support fun P hP =>
-          (hSec n e h W F u' ℓ hW hF hu hℓ hℓP P hP).const_mul (((divCycle W u' P : ℕ) : ℝ))
+        have := tendsto_finsetSum ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).support fun P hP =>
+          (hSec n e h W F u' ℓ hW hF hu hℓ hℓP P hP).const_mul (((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') P : ℤ) : ℕ) : ℝ))
         simpa only [mul_zero, Finset.sum_const_zero] using this
       · simp only [hGpos _ t hpos]
         simpa only [add_zero] using (hReg n e h W F u' ℓ t hW hF hℓ hpos).add (hM n e h W F ℓ hW hF hℓ))

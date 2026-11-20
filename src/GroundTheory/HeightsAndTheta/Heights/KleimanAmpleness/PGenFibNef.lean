@@ -1,12 +1,13 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsMoreExtra
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization
 
 open MvPolynomial
 open ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH (mIdealOver mConeMapOver)
-open GroundTheory.Heights₂.Heights.NumbersDVR (MRing blockWeight IsMultiHomog IsMultiProjPrime gradedPiece hilbFn intNum
+open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiHomog blockWeight IsMultiProjPrime gradedPiece hilbFn intNum
   genFib)
 open GroundTheory.Heights₂.Heights.FieldNumbers (relDim)
 
@@ -19,24 +20,24 @@ variable {F₁ F₂ : Type} [Field F₁] [Field F₂] (e : F₁ ≃+* F₂)
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 
-theorem isMultiHomog_map_iff (f : MRing ι F₁) (b : K → ℕ) :
+theorem isMultiHomog_map_iff (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι) (b : K → ℕ) :
     IsMultiHomog (map (e : F₁ →+* F₂) f) b ↔ IsMultiHomog f b := by
   unfold IsMultiHomog IsWeightedHomogeneous
   simp only [coeff_map, ne_eq, RingHom.coe_coe, EmbeddingLike.map_eq_zero_iff]
 
-noncomputable def quotEquiv (P : Ideal (MRing ι F₁)) :
-    (MRing ι F₁ ⧸ P) ≃+* (MRing ι F₂ ⧸ P.map (map (e : F₁ →+* F₂))) :=
+noncomputable def quotEquiv (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι)) :
+    (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι ⧸ P) ≃+* (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₂ ι ⧸ P.map (map (e : F₁ →+* F₂))) :=
   Ideal.quotientEquiv P _ (mapEquiv (Σ k, ι k) e) (by
     congr 1)
 
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 
-theorem quotEquiv_mk (P : Ideal (MRing ι F₁)) (f : MRing ι F₁) :
+theorem quotEquiv_mk (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι) :
     quotEquiv e P (Ideal.Quotient.mk P f) = Ideal.Quotient.mk _ (map (e : F₁ →+* F₂) f) := rfl
 
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 
-theorem quotEquiv_smul (P : Ideal (MRing ι F₁)) (r : F₁) (x : MRing ι F₁ ⧸ P) :
+theorem quotEquiv_smul (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι)) (r : F₁) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι ⧸ P) :
     quotEquiv e P (r • x) = e r • quotEquiv e P x := by
   obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective x
   have h₁ : r • Ideal.Quotient.mk P f = Ideal.Quotient.mk P (C r * f) := by
@@ -49,14 +50,14 @@ theorem quotEquiv_smul (P : Ideal (MRing ι F₁)) (r : F₁) (x : MRing ι F₁
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 
-theorem quotEquiv_mem_gradedPiece (P : Ideal (MRing ι F₁)) (n : K → ℕ) (x : MRing ι F₁ ⧸ P)
+theorem quotEquiv_mem_gradedPiece (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι)) (n : K → ℕ) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι ⧸ P)
     (hx : x ∈ gradedPiece P n) : quotEquiv e P x ∈ gradedPiece (P.map (map (e : F₁ →+* F₂))) n := by
   obtain ⟨f, hf, rfl⟩ := Submodule.mem_map.1 hx
   refine Submodule.mem_map.2 ⟨map (e : F₁ →+* F₂) f, ?_, rfl⟩
   rw [mem_weightedHomogeneousSubmodule] at hf ⊢
   exact (isMultiHomog_map_iff e f n).2 hf
 
-theorem finrank_gradedPiece_map (P : Ideal (MRing ι F₁)) (n : K → ℕ) :
+theorem finrank_gradedPiece_map (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι)) (n : K → ℕ) :
     Module.finrank F₂ (gradedPiece (P.map (map (e : F₁ →+* F₂))) n) =
       Module.finrank F₁ (gradedPiece P n) := by
   let j₀ : gradedPiece P n →+ gradedPiece (P.map (map (e : F₁ →+* F₂))) n :=
@@ -89,7 +90,7 @@ theorem finrank_gradedPiece_map (P : Ideal (MRing ι F₁)) (n : K → ℕ) :
   unfold Module.finrank
   rw [hrank]
 
-theorem hilbFn_map (P : Ideal (MRing ι F₁)) :
+theorem hilbFn_map (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι)) :
     hilbFn (P.map (map (e : F₁ →+* F₂))) = hilbFn P := by
   funext m
   unfold hilbFn
@@ -97,7 +98,7 @@ theorem hilbFn_map (P : Ideal (MRing ι F₁)) :
   · rw [finrank_gradedPiece_map]
   · rfl
 
-theorem intNum_map (P : Ideal (MRing ι F₁)) {n : ℕ} (bs : Fin n → K → ℤ) :
+theorem intNum_map (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι)) {n : ℕ} (bs : Fin n → K → ℤ) :
     intNum F₂ (P.map (map (e : F₁ →+* F₂))) bs = intNum F₁ P bs := by
   unfold intNum
   rw [hilbFn_map]

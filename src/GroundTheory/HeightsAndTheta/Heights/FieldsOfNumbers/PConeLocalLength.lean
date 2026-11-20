@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsConeLocalLength
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsConeLocalFlat
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsLocalizedQuotientLength
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -22,20 +23,20 @@ theorem ConeLocalLength.proof (h₁ : LocalizedQuotientLength.Statement.{u, u})
   obtain ⟨_, _, _, hmax⟩ := h₂ F K ι P hP W hW hPW
   have : IsLocalHom (algebraMap (degZeroLoc P {W}) (coneLocal P W hPW)) :=
     ((local_hom_tfae _).out 3 1).mp hmax.le
-  have hu : IsUnit (algebraMap (MRing ι F ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P h)) :=
+  have hu : IsUnit (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P h)) :=
     IsLocalization.map_units (coneLocal P W hPW)
       (⟨_, ⟨h, hhW, rfl⟩⟩ : W.primeCompl.map (Ideal.Quotient.mk P))
-  have hne : algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P))
+  have hne : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P))
       (Ideal.Quotient.mk P h) ≠ 0 := by
     rw [Ne, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
     exact fun h' => hhW (hPW h')
-  have ha : algebraMap (MRing ι F ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P a) =
+  have ha : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P a) =
       algebraMap (degZeroLoc P {W}) (coneLocal P W hPW) α *
-        algebraMap (MRing ι F ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P h) := by
+        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P h) := by
     apply Subtype.ext
     rw [Subalgebra.coe_mul, degZeroLoc.algebraMap_cone_coe, Subalgebra.coe_algebraMap,
       Subalgebra.coe_algebraMap, hα, div_mul_cancel₀ _ hne]
-  have hspan : Ideal.span {algebraMap (MRing ι F ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P a)} =
+  have hspan : Ideal.span {algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P a)} =
       (Ideal.span {α}).map (algebraMap (degZeroLoc P {W}) (coneLocal P W hPW)) := by
     rw [Ideal.map_span, Set.image_singleton, ha, Ideal.span_singleton_mul_right_unit hu]
 

@@ -8,6 +8,7 @@ import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PFibreBound
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.Assembly
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSheet
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterOsgood
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -15,7 +16,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MeasureTheory Filter Topology Matrix
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar IsGoodProj IsMultiHomogIdeal IsMultiHomog
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine IsArithVar IsGoodProj IsMultiHomogIdeal IsMultiHomog
   IsSheet IsSectionOn sheetDensity pot segre mcPts bsmul logNorm)
 open ComplexSets
 

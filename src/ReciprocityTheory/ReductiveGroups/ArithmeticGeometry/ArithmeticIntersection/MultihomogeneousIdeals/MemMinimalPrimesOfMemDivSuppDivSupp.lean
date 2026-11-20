@@ -1,6 +1,7 @@
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.MemDivSuppOfDivCycleNeZero
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.SwapLoc
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 noncomputable section
 
@@ -93,22 +94,22 @@ theorem isRelevant_of_le {Y Z : Ideal (MRingOver F ι)} (hZ : IsRelevant Z) (hY 
   exact ⟨i, fun h => hi (hY h)⟩
 
 theorem divCycle_apply_of_mem {V W : Ideal (MRingOver F ι)} {f : MRingOver F ι}
-    (hW : W ∈ divSupp V f) : divCycle V f W = multAt (V ⊔ Ideal.span {f}) W := by
+    (hW : W ∈ divSupp V f) : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) = multAt (V ⊔ Ideal.span {f}) W := by
   simp [divCycle, Finsupp.ofSupportFinite_coe, hW]
 
 theorem divCycle_apply_of_not_mem {V W : Ideal (MRingOver F ι)} {f : MRingOver F ι}
-    (hW : W ∉ divSupp V f) : divCycle V f W = 0 := by
+    (hW : W ∉ divSupp V f) : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) = 0 := by
   simp [divCycle, Finsupp.ofSupportFinite_coe, hW]
 
 theorem ratDiv_one_eq (X : Ideal (MRingOver F ι)) (g : MRingOver F ι) :
-    ratDiv X g 1 = Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero (divCycle X g) := by
+    ratDiv X g 1 = Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle X g) W : ℤ))) := by
   simp [ratDiv, divCycle_one]
 
 theorem sum_ratDiv_eq (V Z : Ideal (MRingOver F ι)) (f t : MRingOver F ι) :
     (ratDiv V f 1).sum (fun W m => m * ratDiv W t 1 Z) =
-      ((∑ W ∈ (divSupp_finite V f).toFinset, divCycle V f W * divCycle W t Z : ℕ) : ℤ) := by
+      ((∑ W ∈ (divSupp_finite V f).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W t) Z : ℤ) : ℕ) : ℤ) := by
   classical
-  have hs : (divCycle V f).support ⊆ (divSupp_finite V f).toFinset := by
+  have hs : ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ))).support ⊆ (divSupp_finite V f).toFinset := by
     intro W hW
     rw [Finsupp.mem_support_iff] at hW
     exact (divSupp_finite V f).mem_toFinset.mpr (mem_divSupp_of_divCycle_ne_zero hW)
@@ -159,7 +160,7 @@ theorem sum_eq_zero_of_not {V Z : Ideal (MRingOver F ι)} {n : ℕ} {f t : MRing
     {α β : K → ℕ} (hV : IsProjVarF V (n + 2)) (hf : IsMultiHomog f α) (ht : IsMultiHomog t β)
     (hfV : f ∉ V) (hft : ∀ W ∈ divSupp V f, t ∉ W)
     (hZ : ¬ (IsRelevant Z ∧ Z ∈ (V ⊔ Ideal.span {f} ⊔ Ideal.span {t}).minimalPrimes)) :
-    ∑ W ∈ (divSupp_finite V f).toFinset, divCycle V f W * divCycle W t Z = 0 := by
+    ∑ W ∈ (divSupp_finite V f).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W t) Z : ℤ) = 0 := by
   refine Finset.sum_eq_zero fun W hW => ?_
   rw [Set.Finite.mem_toFinset] at hW
   by_contra hne
@@ -169,7 +170,7 @@ theorem sum_eq_zero_of_not {V Z : Ideal (MRingOver F ι)} {n : ℕ} {f t : MRing
 theorem sum_eq_finsum {V Z : Ideal (MRingOver F ι)} [V.IsPrime] [hZp : Z.IsPrime]
     [(Z.map (Ideal.Quotient.mk V)).IsPrime] {f t : MRingOver F ι} (hZr : IsRelevant Z)
     (hZ : Z ∈ (V ⊔ Ideal.span {f} ⊔ Ideal.span {t}).minimalPrimes) (hfV : f ∉ V) :
-    ((∑ W ∈ (divSupp_finite V f).toFinset, divCycle V f W * divCycle W t Z : ℕ) : ℕ∞) =
+    ((∑ W ∈ (divSupp_finite V f).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W t) Z : ℤ) : ℕ) : ℕ∞) =
       ∑ᶠ (p : PrimeSpectrum (Localization.AtPrime (Z.map (Ideal.Quotient.mk V))))
         (_ : p.asIdeal.height = 1 ∧
           algebraMap (MRingOver F ι) (Localization.AtPrime (Z.map (Ideal.Quotient.mk V))) f ∈
@@ -182,7 +183,7 @@ theorem sum_eq_finsum {V Z : Ideal (MRingOver F ι)} [V.IsPrime] [hZp : Z.IsPrim
       ∃ p : Ideal (Localization.AtPrime (Z.map (Ideal.Quotient.mk V))), p.IsPrime ∧
         p.comap (algebraMap (MRingOver F ι) _) = Q :=
     fun Q hQ hVQ hQZ => exists_prime_comap_atPrime_quot V Z Q hQ hVQ hQZ
-  have hterm : ∀ W ∈ (divSupp_finite V f).toFinset, divCycle V f W * divCycle W t Z =
+  have hterm : ∀ W ∈ (divSupp_finite V f).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W t) Z : ℤ) =
       if W ≤ Z then multAt (V ⊔ Ideal.span {f}) W * multAt (W ⊔ Ideal.span {t}) Z else 0 := by
     intro W hW
     rw [Set.Finite.mem_toFinset] at hW
@@ -251,8 +252,8 @@ theorem swap_coeff {V Z : Ideal (MRingOver F ι)} {n : ℕ} {f t : MRingOver F �
       (h.maximalIdeal_mem_minimalPrimes (hex Z inferInstance hVZ le_rfl) hZm)
     have key := (len2 _ _ _ hdim (fun e => hfV ((h.map_eq_zero_iff hVZ f).mp e))
       (fun e => htV ((h.map_eq_zero_iff hVZ t).mp e)) hlen).2.2
-    have e : ((∑ W ∈ (divSupp_finite V f).toFinset, divCycle V f W * divCycle W t Z : ℕ) : ℕ∞) =
-        ((∑ W ∈ (divSupp_finite V t).toFinset, divCycle V t W * divCycle W f Z : ℕ) : ℕ∞) := by
+    have e : ((∑ W ∈ (divSupp_finite V f).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W t) Z : ℤ) : ℕ) : ℕ∞) =
+        ((∑ W ∈ (divSupp_finite V t).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V t) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W f) Z : ℤ) : ℕ) : ℕ∞) := by
       rw [sum_eq_finsum hZr hZm hfV, sum_eq_finsum hZr hZm' htV]
       exact key
     exact_mod_cast e

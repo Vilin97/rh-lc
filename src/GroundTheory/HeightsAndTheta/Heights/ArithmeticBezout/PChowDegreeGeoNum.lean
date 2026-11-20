@@ -5,6 +5,7 @@ import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsReduction
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsSectionCycleModP
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsPointLengthModP
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -14,7 +15,7 @@ namespace GroundTheory.Heights₂.Heights
 namespace ObjectsChow
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsMultiProjPrime geoNum divSupp multAt)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiProjPrime PBlk geoNum divSupp multAt)
 
 theorem perfectField_of_intCast_surjective (F : Type) [Field F] (p : ℕ) (hp : p.Prime)
     (hs : Function.Surjective (Int.castRingHom F)) (h0 : ((p : ℤ) : F) = 0) : PerfectField F := by

@@ -3,6 +3,7 @@ import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.LocalAtPla
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagIndependence
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.IsMultiProjPrimeExtTo
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagCutChartSectionTools
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num GlobalTheory.CompanionTheory.Ar.Top GroundTheory.Heights₂.Heights.ModelLeaves
 open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar IsHorizontal mcPts mCoordIdeal IsIntersectionFamily IsIntersectionSystem IntersectionSystem ptsIntegral geoNum charOf recR arInt ChartBundle chartRing)
@@ -16,14 +17,14 @@ attribute [local instance] MvPolynomial.algebraMvPolynomial
 variable {K : Type} {ι : K → Type} {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω}
 
 theorem map_mem_iff {A O : Type} [CommRing A] [CommRing O] [Algebra A O] [Algebra A Ω] [Algebra O Ω]
-    [IsScalarTower A O Ω] {f : MRing ι A} :
+    [IsScalarTower A O Ω] {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι} :
     MvPolynomial.map (algebraMap A O) f ∈ pointIdeal O y ↔ f ∈ pointIdeal A y := by
   rw [pointIdeal, pointIdeal, RingHom.mem_ker, RingHom.mem_ker]
   simp only [pointConeMap]
   rw [MvPolynomial.aeval_map_algebraMap]
 
 theorem cast_mem_iff [Fintype K] [∀ k, Fintype (ι k)] {O : Type} [CommRing O] [Algebra O Ω]
-    {f : MRing ι ℤ} :
+    {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι} :
     MvPolynomial.map (Int.castRingHom O) f ∈ pointIdeal O y ↔ f ∈ mCoordIdeal y := by
   have h : algebraMap ℤ O = Int.castRingHom O := RingHom.ext_int _ _
   rw [← h, map_mem_iff]
@@ -53,17 +54,17 @@ theorem injective_toField [Algebra A Ω] [Algebra O Ω] [IsScalarTower A O Ω]
 include m in
 
 theorem pointIdeal_eq_map [Algebra A Ω] [Algebra O Ω] [IsScalarTower A O Ω] :
-    pointIdeal O y = (pointIdeal A y : Ideal (MRing ι A)).map (MvPolynomial.map (algebraMap A O)) := by
+    pointIdeal O y = (pointIdeal A y : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)).map (MvPolynomial.map (algebraMap A O)) := by
   refine le_antisymm (fun g hg => ?_) (Ideal.map_le_iff_le_comap.2 fun f hf => Ideal.mem_comap.2 (map_mem_iff.2 hf))
-  haveI : IsLocalization (m.primeCompl.map (C : A →+* MRing ι A)) (MRing ι O) :=
+  haveI : IsLocalization (m.primeCompl.map (C : A →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :=
     MvPolynomial.isLocalization _ _
-  obtain ⟨⟨f, s⟩, hs⟩ := IsLocalization.surj (m.primeCompl.map (C : A →+* MRing ι A)) g
-  have hs' : g * MvPolynomial.map (algebraMap A O) (s : MRing ι A) =
+  obtain ⟨⟨f, s⟩, hs⟩ := IsLocalization.surj (m.primeCompl.map (C : A →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)) g
+  have hs' : g * MvPolynomial.map (algebraMap A O) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι) =
       MvPolynomial.map (algebraMap A O) f := hs
   have hf : f ∈ pointIdeal A y :=
     map_mem_iff.1 (by rw [← hs']; exact Ideal.mul_mem_right _ _ hg)
-  have hu : IsUnit (MvPolynomial.map (algebraMap A O) (s : MRing ι A)) :=
-    IsLocalization.map_units (MRing ι O) s
+  have hu : IsUnit (MvPolynomial.map (algebraMap A O) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)) :=
+    IsLocalization.map_units (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) s
   exact (Ideal.mul_unit_mem_iff_mem _ hu).1 (by rw [hs']; exact Ideal.mem_map_of_mem _ hf)
 
 include m in
@@ -75,62 +76,62 @@ theorem isAlgebraic_int [IsDomain A] [Module.Finite ℤ A] : Algebra.IsAlgebraic
 end Place
 
 theorem trdeg_eq {O : Type} [CommRing O] [IsDomain O] [Algebra.IsAlgebraic ℤ O]
-    {P : Ideal (MRing ι ℤ)} {Q : Ideal (MRing ι O)} (hP : P.IsPrime) (hQ : Q.IsPrime)
+    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)} {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hP : P.IsPrime) (hQ : Q.IsPrime)
     (hQP : Q.comap (MvPolynomial.map (Int.castRingHom O)) = P)
-    (hCP : P.comap (C : ℤ →+* MRing ι ℤ) = ⊥) (hCQ : Q.comap (C : O →+* MRing ι O) = ⊥) :
-    Algebra.trdeg O (MRing ι O ⧸ Q) = Algebra.trdeg ℤ (MRing ι ℤ ⧸ P) := by
+    (hCP : P.comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) = ⊥) (hCQ : Q.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = ⊥) :
+    Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q) = Algebra.trdeg ℤ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P) := by
   haveI := hP
   haveI := hQ
-  let φ : (MRing ι ℤ ⧸ P) →+* (MRing ι O ⧸ Q) :=
+  let φ : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P) →+* (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q) :=
     Ideal.quotientMap Q (MvPolynomial.map (Int.castRingHom O)) hQP.ge
   have hφ : Function.Injective φ := Ideal.quotientMap_injective' hQP.le
-  let _ : Algebra (MRing ι ℤ ⧸ P) (MRing ι O ⧸ Q) := φ.toAlgebra
-  have : @IsScalarTower ℤ (MRing ι ℤ ⧸ P) (MRing ι O ⧸ Q)
+  let _ : Algebra (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q) := φ.toAlgebra
+  have : @IsScalarTower ℤ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q)
       Algebra.toSMul Algebra.toSMul Algebra.toSMul :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_int _ _)
-  have : @IsScalarTower ℤ O (MRing ι O ⧸ Q) Algebra.toSMul Algebra.toSMul Algebra.toSMul :=
+  have : @IsScalarTower ℤ O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q) Algebra.toSMul Algebra.toSMul Algebra.toSMul :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_int _ _)
-  have : FaithfulSMul (MRing ι ℤ ⧸ P) (MRing ι O ⧸ Q) :=
+  have : FaithfulSMul (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q) :=
     (faithfulSMul_iff_algebraMap_injective _ _).2 hφ
-  have hZ : Function.Injective (algebraMap ℤ (MRing ι ℤ ⧸ P)) := by
-    refine (injective_iff_map_eq_zero (algebraMap ℤ (MRing ι ℤ ⧸ P))).2 fun a ha => ?_
-    have h : (C a : MRing ι ℤ) ∈ P := Ideal.Quotient.eq_zero_iff_mem.1 (by simpa using ha)
-    have h' : a ∈ P.comap (C : ℤ →+* MRing ι ℤ) := h
+  have hZ : Function.Injective (algebraMap ℤ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P)) := by
+    refine (injective_iff_map_eq_zero (algebraMap ℤ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P))).2 fun a ha => ?_
+    have h : (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ P := Ideal.Quotient.eq_zero_iff_mem.1 (by simpa using ha)
+    have h' : a ∈ P.comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) := h
     rw [hCP] at h'
     exact (Submodule.mem_bot _).1 h'
-  have : @FaithfulSMul ℤ (MRing ι ℤ ⧸ P) Algebra.toSMul :=
-    (faithfulSMul_iff_algebraMap_injective ℤ (MRing ι ℤ ⧸ P)).2 hZ
-  have hOB : Function.Injective (algebraMap O (MRing ι O ⧸ Q)) := by
-    refine (injective_iff_map_eq_zero (algebraMap O (MRing ι O ⧸ Q))).2 fun a ha => ?_
-    have h : (C a : MRing ι O) ∈ Q :=
+  have : @FaithfulSMul ℤ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P) Algebra.toSMul :=
+    (faithfulSMul_iff_algebraMap_injective ℤ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P)).2 hZ
+  have hOB : Function.Injective (algebraMap O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q)) := by
+    refine (injective_iff_map_eq_zero (algebraMap O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q))).2 fun a ha => ?_
+    have h : (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ Q :=
       Ideal.Quotient.eq_zero_iff_mem.1 (show Ideal.Quotient.mk Q (C a) = 0 from ha)
-    have h' : a ∈ Q.comap (C : O →+* MRing ι O) := h
+    have h' : a ∈ Q.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
     rw [hCQ] at h'
     exact (Submodule.mem_bot _).1 h'
-  have : FaithfulSMul O (MRing ι O ⧸ Q) := (faithfulSMul_iff_algebraMap_injective _ _).2 hOB
+  have : FaithfulSMul O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q) := (faithfulSMul_iff_algebraMap_injective _ _).2 hOB
   have hZO : Function.Injective (algebraMap ℤ O) := by
     refine (injective_iff_map_eq_zero (algebraMap ℤ O)).2 fun a ha => ?_
-    have h : MvPolynomial.map (Int.castRingHom O) (C a : MRing ι ℤ) ∈ Q := by
+    have h : MvPolynomial.map (Int.castRingHom O) (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ Q := by
       rw [map_C]
       have e : Int.castRingHom O a = 0 := by simpa using ha
       rw [e, map_zero]
       exact Q.zero_mem
-    have h1 : (C a : MRing ι ℤ) ∈ P := by
+    have h1 : (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ P := by
       rw [← hQP]
       exact h
-    have h' : a ∈ P.comap (C : ℤ →+* MRing ι ℤ) := h1
+    have h' : a ∈ P.comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) := h1
     rw [hCP] at h'
     exact (Submodule.mem_bot _).1 h'
   have : @FaithfulSMul ℤ O Algebra.toSMul := (faithfulSMul_iff_algebraMap_injective ℤ O).2 hZO
-  have hφZ : Function.Injective (algebraMap ℤ (MRing ι O ⧸ Q)) := by
-    rw [IsScalarTower.algebraMap_eq ℤ O (MRing ι O ⧸ Q)]
+  have hφZ : Function.Injective (algebraMap ℤ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q)) := by
+    rw [IsScalarTower.algebraMap_eq ℤ O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q)]
     exact hOB.comp hZO
-  have : Algebra.IsAlgebraic (MRing ι ℤ ⧸ P) (MRing ι O ⧸ Q) := by
+  have : Algebra.IsAlgebraic (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q) := by
     refine ⟨fun b => ?_⟩
     obtain ⟨g, rfl⟩ := Ideal.Quotient.mk_surjective b
     induction g using MvPolynomial.induction_on with
     | C a =>
-      have h1 : IsAlgebraic ℤ (algebraMap O (MRing ι O ⧸ Q) a) :=
+      have h1 : IsAlgebraic ℤ (algebraMap O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q) a) :=
         (Algebra.IsAlgebraic.isAlgebraic a : IsAlgebraic ℤ a).algebraMap
       exact h1.extendScalars hZ
     | add f g hf hg =>
@@ -140,22 +141,22 @@ theorem trdeg_eq {O : Type} [CommRing O] [IsDomain O] [Algebra.IsAlgebraic ℤ O
       rw [map_mul]
       refine hf.mul ?_
       have e : Ideal.Quotient.mk Q (X i) =
-          algebraMap (MRing ι ℤ ⧸ P) (MRing ι O ⧸ Q) (Ideal.Quotient.mk P (X i)) := by
+          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q) (Ideal.Quotient.mk P (X i)) := by
         change _ = φ _
         simp only [φ, Ideal.quotientMap_mk, map_X]
       rw [e]
       exact isAlgebraic_algebraMap _
-  have h1 := trdeg_add_eq ℤ O (A := MRing ι O ⧸ Q)
-  have h2 := trdeg_add_eq ℤ (MRing ι ℤ ⧸ P) (A := MRing ι O ⧸ Q)
+  have h1 := trdeg_add_eq ℤ O (A := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q)
+  have h2 := trdeg_add_eq ℤ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P) (A := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q)
   rw [trdeg_eq_zero (R := ℤ) (A := O), zero_add] at h1
-  rw [trdeg_eq_zero (R := MRing ι ℤ ⧸ P) (A := MRing ι O ⧸ Q), add_zero] at h2
+  rw [trdeg_eq_zero (R := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ P) (A := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ Q), add_zero] at h2
   exact h1.trans h2.symm
 
 variable [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)]
   {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Algebra O Ω]
 
 theorem comap_C_pointIdeal (hO : Function.Injective (algebraMap O Ω)) :
-    (pointIdeal O y : Ideal (MRing ι O)).comap (C : O →+* MRing ι O) = ⊥ := by
+    (pointIdeal O y : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = ⊥ := by
   rw [eq_bot_iff]
   intro a ha
   have h0 : pointConeMap O y (C a) = 0 := ha
@@ -167,7 +168,7 @@ theorem isModelOver_pointIdeal [Algebra.IsAlgebraic ℤ O] (hO : Function.Inject
     {D : ℕ} (h : IsArithVar (mCoordIdeal y) (D + 1)) : IsModelOver (pointIdeal O y) D := by
   have h' := h
   obtain ⟨-, hmp, hC, -⟩ := h'
-  have hC' : (mCoordIdeal y).comap (C : ℤ →+* MRing ι ℤ) = ⊥ := hC
+  have hC' : (mCoordIdeal y).comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) = ⊥ := hC
   have hP : (mCoordIdeal y).IsPrime := hmp.1
   have hn := comap_C_pointIdeal (ι := ι) (y := y) hO
   have hcomap : (pointIdeal O y).comap (MvPolynomial.map (Int.castRingHom O)) = mCoordIdeal y := by
@@ -199,8 +200,8 @@ theorem isVert_map {D : ℕ} (h : IsArithVar (mCoordIdeal y) (D + 1)) {ϖ : O} (
     (T.map (Int.castRingHom O)).IsVert (pointIdeal O y) ϖ := by
   intro i
   obtain ⟨⟨bf, bg, hbf, hbg, hb⟩, hf, hg, hu⟩ := hT i
-  have hC' : (mCoordIdeal y).comap (C : ℤ →+* MRing ι ℤ) = ⊥ := h.2.2.1
-  have hhom : ∀ {f : MRing ι ℤ} {b : K → ℕ}, IsMultiHomog f b →
+  have hC' : (mCoordIdeal y).comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) = ⊥ := h.2.2.1
+  have hhom : ∀ {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι} {b : K → ℕ}, IsMultiHomog f b →
       IsMultiHomog (MvPolynomial.map (Int.castRingHom O) f) b := by
     intro f b h d hd
     refine h fun h0 => hd ?_
@@ -215,23 +216,23 @@ theorem isVert_map {D : ℕ} (h : IsArithVar (mCoordIdeal y) (D + 1)) {ϖ : O} (
     intro k
     obtain ⟨j, hj⟩ := hrel k
     refine ⟨j, fun h => hj ?_⟩
-    have h' : MvPolynomial.map (Int.castRingHom O) (X ⟨k, j⟩ : MRing ι ℤ) ∈ W := h
+    have h' : MvPolynomial.map (Int.castRingHom O) (X ⟨k, j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ W := h
     rwa [map_X] at h'
-  have hbot : W.comap (C : O →+* MRing ι O) = ⊥ :=
+  have hbot : W.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = ⊥ :=
     eq_bot_of_irreducible_notMem (Ideal.comap_isPrime _ _) hϖ hϖW
-  have hoff : ∀ q ∈ S, (C ((q : ℕ) : ℤ) : MRing ι ℤ) ∉
+  have hoff : ∀ q ∈ S, (C ((q : ℕ) : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∉
       W.comap (MvPolynomial.map (Int.castRingHom O)) := by
     intro q _ hq
-    have hq' : MvPolynomial.map (Int.castRingHom O) (C ((q : ℕ) : ℤ) : MRing ι ℤ) ∈ W := hq
+    have hq' : MvPolynomial.map (Int.castRingHom O) (C ((q : ℕ) : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ W := hq
     rw [map_C] at hq'
-    have h0 : Int.castRingHom O ((q : ℕ) : ℤ) ∈ W.comap (C : O →+* MRing ι O) := hq'
+    have h0 : Int.castRingHom O ((q : ℕ) : ℤ) ∈ W.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := hq'
     rw [hbot] at h0
     have h1 : Int.castRingHom O ((q : ℕ) : ℤ) = 0 := (Submodule.mem_bot _).1 h0
-    have h2 : (C ((q : ℕ) : ℤ) : MRing ι ℤ) ∈ mCoordIdeal y := by
+    have h2 : (C ((q : ℕ) : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ mCoordIdeal y := by
       refine cast_mem_iff (O := O).1 ?_
       rw [map_C, h1, map_zero]
       exact Ideal.zero_mem _
-    have h3 : ((q : ℕ) : ℤ) ∈ (mCoordIdeal y).comap (C : ℤ →+* MRing ι ℤ) := h2
+    have h3 : ((q : ℕ) : ℤ) ∈ (mCoordIdeal y).comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) := h2
     rw [hC'] at h3
     have h4 : ((q : ℕ) : ℤ) = 0 := (Submodule.mem_bot _).1 h3
     exact q.2.ne_zero (by exact_mod_cast h4)

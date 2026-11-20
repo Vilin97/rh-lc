@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsFibreFinite
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsSemilocalFinite
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocFrac
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -53,7 +54,7 @@ theorem finrank_eq_relfinrank_of_div (φ : L₀ →ₐ[F] L) {K₀ : Intermediat
 end Rank
 
 theorem mem_homFracDegZero_of_mem_degZeroLoc {K : Type*} [DecidableEq K] {ι : K → Type*}
-    {F : Type*} [Field F] (P : Ideal (MRing ι F)) [P.IsPrime] (𝒲 : Set (Ideal (MRing ι F))) :
+    {F : Type*} [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] (𝒲 : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))) :
     ∀ x ∈ degZeroLoc P 𝒲, x ∈ homFracDegZero P := by
   intro x hx
   refine (Algebra.adjoin_le (S := (homFracDegZero P).toSubalgebra) ?_) hx

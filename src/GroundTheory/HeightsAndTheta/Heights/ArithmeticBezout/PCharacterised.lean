@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LowerBoundConditional
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Characterised
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Imports
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -34,7 +35,7 @@ theorem ChowHeightCharacterised.proof (hR : ChowHeightRecursion.Statement)
     obtain ⟨u, -, hu⟩ := exists_mem_linForm_not_mem (K := K) hI.isRelevant (S := Set.univ)
       Submodule.span_univ
     obtain ⟨c, hc, g, hg, heq⟩ := hS K n 0 I f (fun j => (u j : K)) hI hf hu
-    have hempty : (divCycle I fun j => (u j : K)).support = ∅ := by
+    have hempty : (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I fun) j : ℤ) => (u j : K)).support = ∅ := by
       rw [Finset.eq_empty_iff_forall_notMem]
       intro W hW
       exact not_isChowForm_zero hPt (isProjPrime_of_mem_support_divCycle hI _ hW) _ (hg W hW)

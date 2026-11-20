@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -9,9 +10,9 @@ open GroundTheory.Heights₂.Heights.NumbersDVR
 universe u
 
 theorem divCycle_support_finite {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K]
-    {ι : K → Type} [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)) (f : MRing ι F) :
-    (Function.support (divCycle P f)).Finite := by
-  apply (Ideal.finite_minimalPrimes_of_isNoetherianRing (MRing ι F)
+    {ι : K → Type} [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
+    (Function.support ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ)))).Finite := by
+  apply (Ideal.finite_minimalPrimes_of_isNoetherianRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)
     (P ⊔ Ideal.span {f})).subset
   intro W hW
   by_contra h
@@ -20,9 +21,9 @@ theorem divCycle_support_finite {F : Type u} [Field F] {K : Type} [Fintype K] [D
   rw [dif_neg (fun h' => h h'.1)]
 
 theorem cycEval_ratDiv {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K]
-    {ι : K → Type} [∀ k, Fintype (ι k)] (N : Ideal (MRing ι F) → ℤ) (P : Ideal (MRing ι F))
-    (f g : MRing ι F) :
-    cycEval N (ratDiv P f g) = cycEval N (divCycle P f) - cycEval N (divCycle P g) := by
+    {ι : K → Type} [∀ k, Fintype (ι k)] (N : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) → ℤ) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
+    (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
+    cycEval N (ratDiv P f g) = cycEval N ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))) - cycEval N ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ))) := by
   simp only [cycEval, ratDiv, sub_mul]
   apply finsum_sub_distrib
   · exact (divCycle_support_finite P f).subset (Function.support_mul_subset_left _ _)

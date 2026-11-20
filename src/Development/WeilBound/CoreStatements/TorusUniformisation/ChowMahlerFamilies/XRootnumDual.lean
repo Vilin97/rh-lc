@@ -16,6 +16,7 @@ import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamili
 import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XPullLine
 import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XPullPreserve
 import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XFlagframeDual
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial GlobalTheory.CompanionTheory.Ar.Num GroundTheory.Heights₂.Heights.NumbersDVR
 open ReciprocityTheory.ChartRestriction.G.Geo (ChartBundle chartRing)
 open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.Bundles (mseg mcIdeal chartMon joinCoord bcCoord pullDeg liftVar fnField ck rootNum SameGeneric LatLE IsPull IsPullBC IsSubQuot QuotIso IsFrobPres FlagModel modelDeg)
@@ -72,7 +73,7 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
-theorem isVerticalDivisor_swap {P : Ideal (MRing ι O)} {ϖ : O} {b : K → ℤ} {f g : MRing ι O}
+theorem isVerticalDivisor_swap {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {ϖ : O} {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
     (hD : IsVerticalDivisor P ϖ b f g) : IsVerticalDivisor P ϖ (-b) g f where
   degrees := by
     obtain ⟨bf, bg, hf, hg, hb⟩ := hD.degrees
@@ -92,8 +93,8 @@ theorem isVerticalDivisor_swap {P : Ideal (MRing ι O)} {ϖ : O} {b : K → ℤ}
     rw [← neg_sub]
     exact P.neg_mem h
 
-theorem pairNum_dual {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (MRing ι O)} {d : ℕ}
-    (hP : IsModelOver P d) {N : ℕ} {b b' : Fin N → K → ℤ} {f g : Fin N → MRing ι O}
+theorem pairNum_dual {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {d : ℕ}
+    (hP : IsModelOver P d) {N : ℕ} {b b' : Fin N → K → ℤ} {f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
     (hD : ∀ i, IsVerticalDivisor P ϖ (b i - b' i) (f i) (g i))
     {k : ℕ} (hk : 1 ≤ k) {Q : List (K → ℤ)} (hQ : Q.length + k = d + 1) :
     pairNum P (fun j => -b j.rev) (fun j => -b' j.rev) (fun j => g j.rev) (fun j => f j.rev)
@@ -128,16 +129,16 @@ theorem pairNum_dual {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (MRing ι O)} {d
   rw [Nat.add_sub_cancel]
   ring
 
-theorem root_dual {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (MRing ι O)} {d : ℕ}
+theorem root_dual {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {d : ℕ}
     (hP : IsModelOver P d) {N : ℕ} (b : Fin N → K → ℤ) {a : O} (ha : a ≠ 0)
     {j : ℕ} {Q : List (K → ℤ)} (hQ : j + Q.length = d) :
     cycEval (fun W => classNum (fun i : Fin N => -b i.rev) (psum (Fin N) ℤ j) Q W)
-        (divCycle P (C a)) =
-      (-1) ^ j * cycEval (fun W => classNum b (psum (Fin N) ℤ j) Q W) (divCycle P (C a)) := by
+        ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a)) W : ℤ))) =
+      (-1) ^ j * cycEval (fun W => classNum b (psum (Fin N) ℤ j) Q W) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a)) W : ℤ))) := by
   have : P.IsPrime := hP.multiProj.isPrime
-  have hC : (C a : MRing ι O) ∉ P := by
+  have hC : (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
     intro hmem
-    have h1 : a ∈ P.comap (C : O →+* MRing ι O) := hmem
+    have h1 : a ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := hmem
     rw [hP.noTorsion] at h1
     exact ha (Ideal.mem_bot.mp h1)
   obtain ⟨n, u, rfl⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible ha hϖ
@@ -146,7 +147,7 @@ theorem root_dual {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (MRing ι O)} {d : 
   unfold cycEval
   rw [mul_finsum]
   refine finsum_congr fun W => ?_
-  by_cases hW : divCycle P (C ((u : O) * ϖ ^ n)) W = 0
+  by_cases hW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ((u : O) * ϖ ^ n))) W : ℤ) = 0
   · simp only [hW, zero_mul, mul_zero]
   have hW' : ratDiv P (C ((u : O) * ϖ ^ n)) 1 W ≠ 0 := by
     unfold ratDiv

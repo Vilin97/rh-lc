@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -72,7 +73,7 @@ theorem bound_of_eventually (f : ℕ → ℝ) (r : ℝ) (a₀ : ℕ) (C : ℝ)
 theorem proof (hP : HilbertPrime.Statement.{0}) (hM : MixedNumberPolynomial.Statement.{0}) :
     RankOfSections.Statement := by
   intro ι₀ _ q D hq hdim
-  have hdim' : ringKrullDim (MRing (fun _ : Unit => ι₀) ℚ ⧸ q) =
+  have hdim' : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => ι₀) ⧸ q) =
       ((D + Fintype.card Unit : ℕ) : WithBot ℕ∞) := by
     simpa using hdim
   obtain ⟨a₀, C, hC⟩ := hP D ℚ Unit (fun _ => ι₀) q hq hdim'

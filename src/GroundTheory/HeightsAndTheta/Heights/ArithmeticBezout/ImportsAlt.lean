@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.IsMultiHomogOfIsChowForm
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -9,7 +10,7 @@ namespace GroundTheory.Heights₂.Heights
 namespace ObjectsChow
 
 open MvPolynomial NumberField
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar IsHorizontal)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk IsHorizontal)
 
 def ComplexChowFormToChowForm.Statement : Prop :=
   ∀ (n e δ : ℕ) (P : Ideal (MRing (PBlk n))) (g : MvPolynomial (Fin (e + 1) × Fin n) ℂ),
@@ -29,7 +30,7 @@ open Classical in
 def DivCycleGeneric.Statement : Prop :=
   ∀ (n e : ℕ) (P : Ideal (MRing (PBlk n))) (u : Fin n → ℤ),
     IsArithVar P (e + 1) → IndefiniteRowSideFullHecke.ArithBezout.linForm u ∉ P →
-      divCycle (genericIdeal P) (fun j => (u j : ℚ)) =
+      (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (genericIdeal P) (fun j => (u j : ℚ))) W : ℤ)) =
         ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (IndefiniteRowSideFullHecke.ArithBezout.linForm u)).filter IsHorizontal).mapDomain
           genericIdeal
 

@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsDiagPull
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -36,8 +37,8 @@ def FibreProduct.Statement : Prop :=
       (∀ (n : ℕ) (g h : MRing (T.wwIdx ι ν κ)), IsMultiHomog g (T.wwDeg n 1) →
         IsMultiHomog h (T.wwDeg (n + 3) 0) → h ∉ T.wwIdeal x δ e φ (a 0) (a 1) →
         aeval (T.wwCoord x δ e φ (a 0) (a 1)) g = T.diagSec a * aeval (T.wwCoord x δ e φ (a 0) (a 1)) h →
-          T.toZCycle (divCycle (T.wwIdeal x δ e φ (a 0) (a 1)) g) -
-              T.toZCycle (divCycle (T.wwIdeal x δ e φ (a 0) (a 1)) h) =
+          T.toZCycle ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (T.wwIdeal x δ e φ (a 0) (a 1)) g) W : ℤ))) -
+              T.toZCycle ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (T.wwIdeal x δ e φ (a 0) (a 1)) h) W : ℤ))) =
             Finsupp.single (T.wwIdeal x δ e φ (a 0) (a 0)) 1) ∧
       ∀ (A : HermLine (T.yyIdx ι ν κ)) (A₀ A₁ : HermLine (T.wwIdx ι ν κ)), T.IsHermPull 0 A A₀ →
         T.IsHermPull 1 A A₁ → ∀ z ∈ mcPts (T.wwIdeal x δ e φ (a 0) (a 0)), ∃ c : ℂ, c ≠ 0 ∧

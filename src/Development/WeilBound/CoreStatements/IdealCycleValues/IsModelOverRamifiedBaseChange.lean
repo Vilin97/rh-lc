@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsF
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumBaseChange
 import Development.WeilBound.CoreStatements.IdealCycleValues.FlatColon
 import Development.WeilBound.CoreStatements.IdealCycleValues.OfIdealCycleNe
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 namespace BaseChangeColon.BC
 
@@ -46,15 +47,15 @@ theorem local_of (hϖ : Irreducible ϖ) (hϖ' : Irreducible ϖ') (he : 0 < e)
     (isUnit_of_mul_isUnit_right (isUnit_of_mul_isUnit_right ha)))
 
 theorem bc_vert (hϖ : Irreducible ϖ) (hϖ' : Irreducible ϖ') (he : 0 < e)
-    (h : algebraMap O O' ϖ = u * ϖ' ^ e) {d : ℕ} (bs : Fin d → K → ℤ) (J : Ideal (MRing ι O))
+    (h : algebraMap O O' ϖ = u * ϖ' ^ e) {d : ℕ} (bs : Fin d → K → ℤ) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))
     (hJ : IsMultiHomogIdeal J) (hJ' : IsMultiHomogIdeal (J.map (MvPolynomial.map (algebraMap O O'))))
-    (hd : ringKrullDim (MRing ι O ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞))
-    (hd' : ringKrullDim (MRing ι O' ⧸ J.map (MvPolynomial.map (algebraMap O O'))) <
+    (hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞))
+    (hd' : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O' ι ⧸ J.map (MvPolynomial.map (algebraMap O O'))) <
       ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞)) (hm : C ϖ ∈ J) :
     NN (J.map (MvPolynomial.map (algebraMap O O'))) bs = e * NN J bs := by
   have := local_of hϖ hϖ' he h
   have hmax : (Ideal.span {ϖ}).IsMaximal := hϖ.maximalIdeal_eq ▸ IsLocalRing.maximalIdeal.isMaximal O
-  have h1 : (C ϖ' ^ e : MRing ι O') ∈ J.map (MvPolynomial.map (algebraMap O O')) := by
+  have h1 : (C ϖ' ^ e : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O' ι) ∈ J.map (MvPolynomial.map (algebraMap O O')) := by
     have h2 := Ideal.mul_mem_left _ (C (↑u⁻¹ : O'))
       (Ideal.mem_map_of_mem (MvPolynomial.map (algebraMap O O')) hm)
     rwa [map_C, h, ← C_mul, Units.inv_mul_cancel_left, C_pow] at h2
@@ -76,10 +77,10 @@ theorem bc_vert (hϖ : Irreducible ϖ) (hϖ' : Irreducible ϖ') (he : 0 < e)
   rfl
 
 theorem bc_all (hϖ : Irreducible ϖ) (hϖ' : Irreducible ϖ') (he : 0 < e)
-    (h : algebraMap O O' ϖ = u * ϖ' ^ e) {d : ℕ} (bs : Fin d → K → ℤ) (J : Ideal (MRing ι O)) :
+    (h : algebraMap O O' ϖ = u * ϖ' ^ e) {d : ℕ} (bs : Fin d → K → ℤ) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
     IsMultiHomogIdeal J → IsMultiHomogIdeal (J.map (MvPolynomial.map (algebraMap O O'))) →
-    ringKrullDim (MRing ι O ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
-    ringKrullDim (MRing ι O' ⧸ J.map (MvPolynomial.map (algebraMap O O'))) <
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O' ι ⧸ J.map (MvPolynomial.map (algebraMap O O'))) <
       ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
     NN (J.map (MvPolynomial.map (algebraMap O O'))) bs = e * NN J bs := by
   have := flat_of hϖ hϖ' h
@@ -87,7 +88,7 @@ theorem bc_all (hϖ : Irreducible ϖ) (hϖ' : Irreducible ϖ') (he : 0 < e)
   | hgt J ih =>
     intro hJ hJ' hd hd'
     have hcol := map_colon (O' := O') J (C ϖ)
-    have hC : IsMultiHomog (MvPolynomial.map (algebraMap O O') (C ϖ : MRing ι O)) 0 := by
+    have hC : IsMultiHomog (MvPolynomial.map (algebraMap O O') (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) 0 := by
       rw [map_C]; exact homog_C _
     by_cases hc : J.colon {C ϖ} = J
     · rw [hc] at hcol
@@ -95,7 +96,7 @@ theorem bc_all (hϖ : Irreducible ϖ) (hϖ' : Irreducible ϖ') (he : 0 < e)
         NN_nzd hϖ' hJ' hd' _ (mem_of_mem he h) hcol bs, mul_zero]
     · have hsup : Ideal.map (MvPolynomial.map (algebraMap O O')) (J ⊔ Ideal.span {C ϖ}) =
           Ideal.map (MvPolynomial.map (algebraMap O O')) J ⊔
-            Ideal.span {MvPolynomial.map (algebraMap O O') (C ϖ : MRing ι O)} := by
+            Ideal.span {MvPolynomial.map (algebraMap O O') (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} := by
         rw [Ideal.map_sup, Ideal.map_span, Set.image_singleton]
       have h1 := ih (J.colon {C ϖ}) (lt_of_le_of_ne (le_colon J _) (Ne.symm hc))
         (ColonMultiHomog.full O K ι J _ 0 hJ (homog_C ϖ))
@@ -111,8 +112,8 @@ theorem bc_all (hϖ : Irreducible ϖ) (hϖ' : Irreducible ϖ') (he : 0 < e)
       rw [NN_add hϖ' hJ' hd' hC bs, NN_add hϖ hJ hd (homog_C ϖ) bs, hcol, ← hsup, h1, h2, mul_add]
 
 theorem bc_div (hϖ : Irreducible ϖ) (hϖ' : Irreducible ϖ') (he : 0 < e)
-    (h : algebraMap O O' ϖ = u * ϖ' ^ e) {d : ℕ} (P : Ideal (MRing ι O)) (hP : IsModelOver P d)
-    (hP' : IsModelOver (P.map (MvPolynomial.map (algebraMap O O'))) d) (a : K → ℕ) (f : MRing ι O)
+    (h : algebraMap O O' ϖ = u * ϖ' ^ e) {d : ℕ} (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (hP : IsModelOver P d)
+    (hP' : IsModelOver (P.map (MvPolynomial.map (algebraMap O O'))) d) (a : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
     (hf : IsMultiHomog f a) (hfP : f ∉ P) (bs : Fin d → K → ℤ) :
     NN (P.map (MvPolynomial.map (algebraMap O O')) ⊔
       Ideal.span {MvPolynomial.map (algebraMap O O') f}) bs = e * NN (P ⊔ Ideal.span {f}) bs := by
@@ -147,7 +148,7 @@ open AlgebraicGeometry CategoryTheory NumberField MvPolynomial ReciprocityTheory
 open GroundTheory.Heights₂.Heights.NumbersDVR (pointIdeal segreVec IsFlagFrame IsFlagPair SameGenericFibre IsModelOver divCycle)
 open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.Bundles (mseg fnField)
 
-theorem BaseChangeColon.isModelOver_ramified_base_change : ∀ (O O' : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CommRing O'] [IsDomain O'] [IsDiscreteValuationRing O'] [Algebra O O'] (ϖ : O) (ϖ' : O') (u : O'ˣ) (e : ℕ), Irreducible ϖ → Irreducible ϖ' → 0 < e → algebraMap O O' ϖ = u * ϖ' ^ e → ∀ (K : Type) [Fintype K] [DecidableEq K] (J : K → Type) [∀ k, Fintype (J k)] (P : Ideal (MvPolynomial (Σ k, J k) O)) (d : ℕ), IsModelOver P d → IsModelOver (P.map (MvPolynomial.map (algebraMap O O'))) d → ∀ (a : K → ℕ) (f : MvPolynomial (Σ k, J k) O), GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog f a → f ∉ P → ∀ l : List (K → ℤ), l.length = d → cycList (divCycle (P.map (MvPolynomial.map (algebraMap O O'))) (MvPolynomial.map (algebraMap O O') f)) l = e * cycList (divCycle P f) l := by
+theorem BaseChangeColon.isModelOver_ramified_base_change : ∀ (O O' : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CommRing O'] [IsDomain O'] [IsDiscreteValuationRing O'] [Algebra O O'] (ϖ : O) (ϖ' : O') (u : O'ˣ) (e : ℕ), Irreducible ϖ → Irreducible ϖ' → 0 < e → algebraMap O O' ϖ = u * ϖ' ^ e → ∀ (K : Type) [Fintype K] [DecidableEq K] (J : K → Type) [∀ k, Fintype (J k)] (P : Ideal (MvPolynomial (Σ k, J k) O)) (d : ℕ), IsModelOver P d → IsModelOver (P.map (MvPolynomial.map (algebraMap O O'))) d → ∀ (a : K → ℕ) (f : MvPolynomial (Σ k, J k) O), GroundTheory.Heights₂.Heights.NumbersDVR.IsMultiHomog f a → f ∉ P → ∀ l : List (K → ℤ), l.length = d → cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P.map (MvPolynomial.map (algebraMap O O'))) (MvPolynomial.map (algebraMap O O') f)) W : ℤ))) l = e * cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))) l := by
   intro O O' _ _ _ _ _ _ _ ϖ ϖ' u e hϖ hϖ' he h K _ _ J _ P d hP hP' a f hf hfP l hl
   subst hl
   exact BaseChangeColon.BC.bc_div hϖ hϖ' he h P hP hP' a f hf hfP l.get

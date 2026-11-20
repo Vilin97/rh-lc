@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagConeAlg
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PAdjoinTrdegAdd
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPairConeLinesIndep
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -58,7 +59,7 @@ theorem SegreFlagClosureTrdeg.proof (halg : SegreFlagConeAlg.Statement) : SegreF
   have hOΩ : Function.Injective (algebraMap O Ω) := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
-    have hmem : a ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := by
+    have hmem : a ∈ (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
       rw [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply, ha,
         map_zero]
     rw [hV.noTorsion] at hmem
@@ -68,7 +69,7 @@ theorem SegreFlagClosureTrdeg.proof (halg : SegreFlagConeAlg.Statement) : SegreF
       MvPolynomial.algebraMap_eq]
     exact (C_injective _ _).comp ((algebraMap Ω Φ).injective.comp hOΩ)
 
-  have hZ : Algebra.trdeg O (MRing (bundleIdx (bundleIdx ι M) M') O ⧸ pointIdeal O z) =
+  have hZ : Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M') ⧸ pointIdeal O z) =
       Algebra.trdeg O (Algebra.adjoin O (Set.range gZ)) := by
     have e1 := (Ideal.quotientKerEquivRange (pointConeMap O z)).trdeg_eq
     have e2 : (pointConeMap O z).range = Algebra.adjoin O (Set.range gZ) := aeval_range _
@@ -84,7 +85,7 @@ theorem SegreFlagClosureTrdeg.proof (halg : SegreFlagConeAlg.Statement) : SegreF
     apply MvPolynomial.algHom_ext
     intro q
     simp [j, gV, pointConeMap, MvPolynomial.algebraMap_apply]
-  have hV' : Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) = Algebra.trdeg O (Algebra.adjoin O (Set.range gV)) := by
+  have hV' : Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) = Algebra.trdeg O (Algebra.adjoin O (Set.range gV)) := by
     have e1 := (Ideal.quotientKerEquivRange (pointConeMap O y)).trdeg_eq
     have e2 := ((pointConeMap O y).range.equivMapOfInjective j hw).trdeg_eq
     rw [← AlgHom.range_comp, hjc, aeval_range] at e2

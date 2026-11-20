@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocLocal
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocQuot
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -15,29 +16,29 @@ theorem DegZeroLocLocal.proof (h : DegZeroLocQuot.Statement.{u}) : DegZeroLocLoc
   intro F _ K _ _ ι _ P hP W hW hPW
   have := hP.isPrime
   have hWp : W.IsPrime := hW.isPrime
-  have hne : ∀ g : MRing ι F, g ∉ P →
-      algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P g) ≠ 0 :=
+  have hne : ∀ g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, g ∉ P →
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P g) ≠ 0 :=
     fun g hg => by
       rw [Ne, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
       exact hg
-  have hrep : ∀ x : degZeroLoc P {W}, ∃ (b : K → ℕ) (f g : MRing ι F), IsMultiHomog f b ∧
+  have hrep : ∀ x : degZeroLoc P {W}, ∃ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f b ∧
       IsMultiHomog g b ∧ g ∉ P ∧ g ∉ W ∧
-      (x : FractionRing (MRing ι F ⧸ P)) =
-        algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P f) /
-          algebraMap (MRing ι F ⧸ P) _ (Ideal.Quotient.mk P g) := fun x => by
+      (x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) =
+        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P f) /
+          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _ (Ideal.Quotient.mk P g) := fun x => by
     obtain ⟨b, f, g, hf, hg, hgP, hgW, hx⟩ := h F K ι P {W}
       (fun W' hW' => by rw [Set.mem_singleton_iff.mp hW']; exact hWp) x x.2
     exact ⟨b, f, g, hf, hg, hgP, hgW W (Set.mem_singleton W), hx⟩
 
-  have hnon : ∀ (x : degZeroLoc P {W}) (f g : MRing ι F), g ∉ W → f ∈ W →
-      (x : FractionRing (MRing ι F ⧸ P)) =
-        algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P f) /
-          algebraMap (MRing ι F ⧸ P) _ (Ideal.Quotient.mk P g) → ¬ IsUnit x := by
+  have hnon : ∀ (x : degZeroLoc P {W}) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), g ∉ W → f ∈ W →
+      (x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) =
+        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P f) /
+          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _ (Ideal.Quotient.mk P g) → ¬ IsUnit x := by
     intro x f g hgW hfW hx hu
     obtain ⟨y, hy⟩ := hu.exists_right_inv
     obtain ⟨b', f', g', -, -, hg'P, hg'W, hy'⟩ := hrep y
     have hgP : g ∉ P := fun hg => hgW (hPW hg)
-    have h1 : ((x * y : degZeroLoc P {W}) : FractionRing (MRing ι F ⧸ P)) = 1 := by
+    have h1 : ((x * y : degZeroLoc P {W}) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) = 1 := by
       rw [hy]; rfl
     rw [Subalgebra.coe_mul, hx, hy', div_mul_div_comm,
       div_eq_one_iff_eq (mul_ne_zero (hne g hgP) (hne g' hg'P)), ← map_mul, ← map_mul,
@@ -49,11 +50,11 @@ theorem DegZeroLocLocal.proof (h : DegZeroLocQuot.Statement.{u}) : DegZeroLocLoc
     rcases hWp.mem_or_mem h3 with h4 | h4
     exacts [hgW h4, hg'W h4]
 
-  have hunit : ∀ (x : degZeroLoc P {W}) (b : K → ℕ) (f g : MRing ι F), IsMultiHomog f b →
+  have hunit : ∀ (x : degZeroLoc P {W}) (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f b →
       IsMultiHomog g b → g ∉ P → f ∉ W →
-      (x : FractionRing (MRing ι F ⧸ P)) =
-        algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P f) /
-          algebraMap (MRing ι F ⧸ P) _ (Ideal.Quotient.mk P g) → IsUnit x := by
+      (x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) =
+        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P f) /
+          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _ (Ideal.Quotient.mk P g) → IsUnit x := by
     intro x b f g hf hg hgP hfW hx
     have hfP : f ∉ P := fun h' => hfW (hPW h')
     have hmem := div_mem_degZeroLoc P {W} hg hf hfP

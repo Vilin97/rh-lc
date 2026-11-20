@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PConeTrdegF
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPointIdealMultiProj
 import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
 import ReciprocityTheory.CommutativeAlgebra.PolynomialHeights.HeightAddRingKrullDimQuotientMvPolynomialField
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 noncomputable section
 
@@ -36,7 +37,7 @@ theorem trdeg_eq_of_finite (A : IntermediateField k Ω) [FiniteDimensional A Ω]
   rw [← trdeg_add_eq k A (A := Ω), trdeg_eq_zero (R := A) (A := Ω), add_zero]
 
 theorem krull_pointIdeal (y : (Σ b, ι b) → Ω) (d : ℕ) (h : IsPt k y d) [(pointIdeal k y).IsPrime] :
-    ringKrullDim (MRing ι k ⧸ pointIdeal k y) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ pointIdeal k y) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) := by
   obtain ⟨hnz, hfin, htr⟩ := h
   have hcone := ConeTrdegFnField.proof k Ω (algebraMap k Ω).injective K ι y hnz
   have hset : ((IndefiniteRowSideFullHecke.NumbersDVR.Bundles.fnField k y : Subfield Ω) : Set Ω) = ((fnField k y : IntermediateField k Ω) : Set Ω) := by
@@ -49,8 +50,8 @@ theorem krull_pointIdeal (y : (Σ b, ι b) → Ω) (d : ℕ) (h : IsPt k y d) [(
     rw [this]
     rfl
   haveI : FiniteDimensional (fnField k y) Ω := hfin
-  have htr' : Algebra.trdeg k (MRing ι k ⧸ pointIdeal k y) = ((d + Fintype.card K : ℕ) : Cardinal) := by
-    have e : Algebra.trdeg k (MRing ι k ⧸ pointIdeal k y) = Algebra.trdeg k (Algebra.adjoin k ((IndefiniteRowSideFullHecke.NumbersDVR.Bundles.fnField k y : Subfield Ω) : Set Ω)) + (Fintype.card K : Cardinal) := hcone
+  have htr' : Algebra.trdeg k (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ pointIdeal k y) = ((d + Fintype.card K : ℕ) : Cardinal) := by
+    have e : Algebra.trdeg k (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ pointIdeal k y) = Algebra.trdeg k (Algebra.adjoin k ((IndefiniteRowSideFullHecke.NumbersDVR.Bundles.fnField k y : Subfield Ω) : Set Ω)) + (Fintype.card K : Cardinal) := hcone
     rw [e, hadj, trdeg_eq_of_finite k (fnField k y), htr]
     push_cast
     rfl

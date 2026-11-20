@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PIntNumPoint
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialMultAt
 import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Bridge
@@ -16,7 +17,7 @@ namespace GeoNum
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 variable (p : ℕ) [Fact p.Prime]
 
-abbrev red : MRing ι ℤ →+* MRing ι (ZMod p) := MvPolynomial.map (Int.castRingHom (ZMod p))
+abbrev red : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι →+* MRing ι (ZMod p) := MvPolynomial.map (Int.castRingHom (ZMod p))
 
 theorem red_surjective : Function.Surjective (red (ι := ι) p) :=
   MvPolynomial.map_surjective _ ZMod.intCast_surjective
@@ -29,12 +30,12 @@ theorem ker_le_comap (J' : Ideal (MRing ι (ZMod p))) :
   rw [RingHom.ker_eq_comap_bot]
   exact Ideal.comap_mono bot_le
 
-theorem comap_map_eq {J : Ideal (MRing ι ℤ)} (hJ : RingHom.ker (red (ι := ι) p) ≤ J) :
+theorem comap_map_eq {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)} (hJ : RingHom.ker (red (ι := ι) p) ≤ J) :
     (J.map (red p)).comap (red p) = J := by
   rw [Ideal.comap_map_of_surjective _ (red_surjective p), ← RingHom.ker_eq_comap_bot,
     sup_eq_left.mpr hJ]
 
-theorem comap_sup_span (Q : Ideal (MRing ι (ZMod p))) (T : Set (MRing ι ℤ)) :
+theorem comap_sup_span (Q : Ideal (MRing ι (ZMod p))) (T : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) :
     Q.comap (red p) ⊔ Ideal.span T = (Q ⊔ Ideal.span (red p '' T)).comap (red p) := by
   have h : Q ⊔ Ideal.span (red p '' T) = (Q.comap (red p) ⊔ Ideal.span T).map (red p) := by
     rw [Ideal.map_sup, Ideal.map_comap_of_surjective _ (red_surjective p), Ideal.map_span]
@@ -45,12 +46,12 @@ theorem isRelevant_comap_iff (Q : Ideal (MRing ι (ZMod p))) :
   simp only [Geo.IsRelevant, IsRelevant, Ideal.mem_comap, red, map_X]
 
 def quotEquiv (J' : Ideal (MRing ι (ZMod p))) :
-    (MRing ι ℤ ⧸ J'.comap (red p)) ≃+* (MRing ι (ZMod p) ⧸ J') :=
+    (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ J'.comap (red p)) ≃+* (MRing ι (ZMod p) ⧸ J') :=
   (Ideal.quotEquivOfEq (by rw [← RingHom.comap_ker, Ideal.mk_ker])).trans
     (RingHom.quotientKerEquivOfSurjective (f := (Ideal.Quotient.mk J').comp (red p))
       (Ideal.Quotient.mk_surjective.comp (red_surjective p)))
 
-theorem quotEquiv_mk (J' : Ideal (MRing ι (ZMod p))) (x : MRing ι ℤ) :
+theorem quotEquiv_mk (J' : Ideal (MRing ι (ZMod p))) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) :
     quotEquiv p J' (Ideal.Quotient.mk _ x) = Ideal.Quotient.mk J' (red p x) :=
   rfl
 
@@ -65,9 +66,9 @@ theorem multAt_comap (J' W' : Ideal (MRing ι (ZMod p))) [W'.IsPrime] :
   rw [quotEquiv_mk, quotEquiv_mk, map_mul, map_mul]
 
 theorem length_toNat_comap (J' : Ideal (MRing ι (ZMod p))) :
-    (Module.length ℤ (MRing ι ℤ ⧸ J'.comap (red p))).toNat =
+    (Module.length ℤ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ J'.comap (red p))).toNat =
       Module.finrank (ZMod p) (MRing ι (ZMod p) ⧸ J') := by
-  have e1 : Module.length ℤ (MRing ι ℤ ⧸ J'.comap (red p)) =
+  have e1 : Module.length ℤ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι ⧸ J'.comap (red p)) =
       Module.length ℤ (MRing ι (ZMod p) ⧸ J') := by
     convert ((quotEquiv p J').toAddEquiv.toIntLinearEquiv).length_eq
   have e2 : Module.length ℤ (MRing ι (ZMod p) ⧸ J') =
@@ -77,10 +78,10 @@ theorem length_toNat_comap (J' : Ideal (MRing ι (ZMod p))) :
   rw [e1, e2, Module.length_eq_rank]
   rfl
 
-theorem cycEval_divCycle_eq (Q : Ideal (MRing ι (ZMod p))) (s : MRing ι ℤ)
-    (N : Ideal (MRing ι (ZMod p)) → ℤ) (g : Ideal (MRing ι ℤ) → ℤ)
-    (h : ∀ W', divCycle Q (red p s) W' ≠ 0 → N W' = g (W'.comap (red p))) :
-    cycEval N (divCycle Q (red p s)) =
+theorem cycEval_divCycle_eq (Q : Ideal (MRing ι (ZMod p))) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)
+    (N : Ideal (MRing ι (ZMod p)) → ℤ) (g : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) → ℤ)
+    (h : ∀ W', ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (red p s)) W' : ℤ) ≠ 0 → N W' = g (W'.comap (red p))) :
+    cycEval N ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (red p s)) W : ℤ))) =
       ∑ᶠ W ∈ Geo.divSupp (Q.comap (red p)) s,
         (Geo.multAt (Q.comap (red p) ⊔ Ideal.span {s}) W : ℤ) * g W := by
   classical
@@ -106,19 +107,19 @@ theorem cycEval_divCycle_eq (Q : Ideal (MRing ι (ZMod p))) (s : MRing ι ℤ)
   rw [← hsupp _ {W' | W' ∈ (Q ⊔ Ideal.span {red p s}).minimalPrimes ∧ IsRelevant W'}]
   · refine finsum_mem_congr rfl fun W' hW' => ?_
     have : W'.IsPrime := hW'.1.1.1
-    have hd : divCycle Q (red p s) W' =
+    have hd : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (red p s)) W' : ℤ) =
         ((NumbersDVR.multAt (Q ⊔ Ideal.span {red p s}) W').toNat : ℤ) := by
-      unfold divCycle
+      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
       exact dif_pos hW'
     rw [multAt_eq_toNat, multAt_comap, ← hd]
-    by_cases h0 : divCycle Q (red p s) W' = 0
+    by_cases h0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (red p s)) W' : ℤ) = 0
     · rw [h0, zero_mul, zero_mul]
     · rw [h W' h0]
   · intro W' hW'
     by_contra hT
     apply hW'
-    show divCycle Q (red p s) W' * N W' = 0
-    unfold divCycle
+    show ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (red p s)) W' : ℤ) * N W' = 0
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
     rw [dif_neg (show ¬ (_ ∧ _) from hT), zero_mul]
 
 theorem intNum_eq_geoNum_comap (n : ℕ) : ∀ Q : Ideal (MRing ι (ZMod p)), IsMultiProjPrime Q →
@@ -139,7 +140,7 @@ theorem intNum_eq_geoNum_comap (n : ℕ) : ∀ Q : Ideal (MRing ι (ZMod p)), Is
     simp only [Geo.geoNum]
     rw [dif_pos hrel, ReciprocityTheory.ChartRestriction.G.AI.I1.ptDeg, ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal,
       comap_sup_span, ← Set.range_comp]
-    have hf : (red p ∘ fun k => (X ⟨k, (hrel k).choose⟩ : MRing ι ℤ) - 1) =
+    have hf : (red p ∘ fun k => (X ⟨k, (hrel k).choose⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) - 1) =
         fun k => (X ⟨k, (hrel k).choose⟩ : MRing ι (ZMod p)) - 1 := by
       funext k
       simp [red]
@@ -194,7 +195,7 @@ theorem intNum_eq_geoNum_comap (n : ℕ) : ∀ Q : Ideal (MRing ι (ZMod p)), Is
       have hc := CutRegular.full (ZMod p) K ι Q hQ n hdim (Pi.single k 1) _ hX (hi k) (Fin.init a)
       rw [e] at hc
       rw [hc]
-      have hXr : red p (X ⟨k, (hrel k).choose⟩ : MRing ι ℤ) = X ⟨k, (hrel k).choose⟩ := map_X _ _
+      have hXr : red p (X ⟨k, (hrel k).choose⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) = X ⟨k, (hrel k).choose⟩ := map_X _ _
       have := cycEval_divCycle_eq p Q (X ⟨k, (hrel k).choose⟩)
         (fun W => intNum (ZMod p) W (Fin.init a)) (fun W => Geo.geoNum n W (Fin.init a))
         (fun W' hW' => by

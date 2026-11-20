@@ -3,6 +3,7 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.A
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MixedFieldContraction.GenericFibreKerTarget
 import GroundTheory.HeightsAndTheta.Heights.Intersections.ProjLineRankTwoPushforwardHypotheses
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.IsConeAnalyticSubset
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -194,14 +195,12 @@ structure ComponentData where
   Bd : Finset (Ideal (MRing ι))
   bd_comp : ∀ B ∈ Bd, IsArithVar B (Fintype.card Ψ * j * (N - j)) ∧ P ≤ B
 
-  bdEq : Ideal (MRing ι) → MRing ι
-  bdDeg : Ideal (MRing ι) → K → ℕ
+  bdEq : Ideal (MRing ι) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver bdDeg ι : Ideal (MRing ι) → K → ℕ
   bdEq_spec : ∀ B ∈ Bd, IsMultiHomog (bdEq B) (bdDeg B) ∧ bdEq B ∉ P ∧ bdEq B ∈ B
 
   N1 : ℕ
   t : ℕ
-  what₂ : Ψ → Fin t → Fin N1 → MRing ι
-  rowDeg : Ψ → K → ℕ
+  what₂ : Ψ → Fin t → Fin N1 → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver rowDeg ι : Ψ → K → ℕ
   quot : ∀ τ, IsQuotRows P (what₂ τ) (rowDeg τ) N
   twist : Ψ → K → ℤ
 
@@ -243,9 +242,7 @@ structure ComponentData where
   S : Finset ℕ
   S_prime : ∀ p ∈ S, p.Prime
 
-  latNum : ℕ → Ψ → Fin N → MRing ι
-  latDen : ℕ → Ψ → Fin N → MRing ι
-  latFl : ℕ → Ψ → Fin N → HermLine ι
+  latNum : ℕ → Ψ → Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver latDen ι : ℕ → Ψ → Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver latFl ι : ℕ → Ψ → Fin N → HermLine ι
 
   cuspNorm : ℕ → Cone ι → ℝ
 

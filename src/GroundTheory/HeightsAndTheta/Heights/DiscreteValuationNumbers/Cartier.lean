@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -67,9 +68,9 @@ section Divisors
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem divCycle_eq_of_mul_sub_mem {P : Ideal (MRing ι R)} {f g u v : MRing ι R}
-    {W : Ideal (MRing ι R)} (hu : u ∉ W) (hv : v ∉ W) (h : u * f - v * g ∈ P) :
-    divCycle P f W = divCycle P g W := by
+theorem divCycle_eq_of_mul_sub_mem {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {f g u v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
+    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hu : u ∉ W) (hv : v ∉ W) (h : u * f - v * g ∈ P) :
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) := by
   have h1 : ∀ x ∈ P ⊔ Ideal.span {f}, u * x ∈ P ⊔ Ideal.span {g} := by
     intro x hx
     obtain ⟨p, hp, r, hr, rfl⟩ := Submodule.mem_sup.mp hx
@@ -86,7 +87,7 @@ theorem divCycle_eq_of_mul_sub_mem {P : Ideal (MRing ι R)} {f g u v : MRing ι 
     rw [e]
     exact Submodule.add_mem_sup (P.sub_mem (P.mul_mem_left _ hp) (P.mul_mem_left _ h))
       (Ideal.mem_span_singleton'.mpr ⟨c * u, rfl⟩)
-  unfold divCycle
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   by_cases hf : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W
   · have hg : W ∈ (P ⊔ Ideal.span {g}).minimalPrimes ∧ IsRelevant W :=
       ⟨mem_minimalPrimes_of_mul_mem hu hv h1 h2 hf.1, hf.2⟩
@@ -98,9 +99,9 @@ theorem divCycle_eq_of_mul_sub_mem {P : Ideal (MRing ι R)} {f g u v : MRing ι 
       hf ⟨mem_minimalPrimes_of_mul_mem hv hu h2 h1 hg.1, hg.2⟩
     rw [dif_neg hf, dif_neg hg]
 
-theorem le_and_isRelevant_of_divCycle_ne_zero {P : Ideal (MRing ι R)} {f : MRing ι R}
-    {W : Ideal (MRing ι R)} (h : divCycle P f W ≠ 0) : W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
-  unfold divCycle at h
+theorem le_and_isRelevant_of_divCycle_ne_zero {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
+    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0) : W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
   split_ifs at h with hW
   · exact ⟨hW.1.1.1, le_sup_left.trans hW.1.1.2, hW.2⟩
   · exact absurd rfl h
@@ -114,13 +115,13 @@ variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 omit [IsDomain O] [IsDiscreteValuationRing O] in
 
-theorem IsVerticalDivisor.of_unit_off_special {P : Ideal (MRing ι O)} {ϖ : O} {b : K → ℤ}
-    {f g : MRing ι O}
+theorem IsVerticalDivisor.of_unit_off_special {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {ϖ : O} {b : K → ℤ}
+    {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
     (degrees : ∃ bf bg : K → ℕ, IsMultiHomog f bf ∧ IsMultiHomog g bg ∧
       (fun k => (bf k : ℤ) - bg k) = b)
     (hf : f ∉ P) (hg : g ∉ P)
-    (hunit : ∀ W : Ideal (MRing ι O), W.IsPrime → P ≤ W → IsRelevant W →
-      (C ϖ : MRing ι O) ∉ W → ∃ u v : MRing ι O, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ P) :
+    (hunit : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), W.IsPrime → P ≤ W → IsRelevant W →
+      (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W → ∃ u v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ P) :
     IsVerticalDivisor P ϖ b f g where
   degrees := degrees
   num_not_mem := hf
@@ -130,8 +131,8 @@ theorem IsVerticalDivisor.of_unit_off_special {P : Ideal (MRing ι O)} {ϖ : O} 
     intro W hW
     by_contra hϖ
     have hsupp : W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
-      by_cases h1 : divCycle P f W = 0
-      · have h2 : divCycle P g W ≠ 0 := by
+      by_cases h1 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = 0
+      · have h2 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) ≠ 0 := by
           intro h2; apply hW; unfold ratDiv; rw [h1, h2, sub_zero]
         exact le_and_isRelevant_of_divCycle_ne_zero h2
       · exact le_and_isRelevant_of_divCycle_ne_zero h1
@@ -159,7 +160,7 @@ def blowUpParam (ϖ : O) : (Σ k : Fin 2, TwoByTwo k) → MvPolynomial (Fin 4) O
 
 def blowUpWeight : Fin 4 → Fin 2 → ℕ := ![0, 0, Pi.single 0 1, Pi.single 1 1]
 
-def blowUpIdeal (ϖ : O) : Ideal (MRing TwoByTwo O) := RingHom.ker (aeval (blowUpParam ϖ))
+def blowUpIdeal (ϖ : O) : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O TwoByTwo) := RingHom.ker (aeval (blowUpParam ϖ))
 
 end BlowUp
 
@@ -181,7 +182,7 @@ def nodalParam (ϖ : O) : (Σ k : Fin 2, TwoByThree k) → MvPolynomial (Fin 3) 
 
 def nodalWeight : Fin 3 → Fin 2 → ℕ := ![0, Pi.single 0 1, Pi.single 1 1]
 
-def nodalIdeal (ϖ : O) : Ideal (MRing TwoByThree O) := RingHom.ker (aeval (nodalParam ϖ))
+def nodalIdeal (ϖ : O) : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O TwoByThree) := RingHom.ker (aeval (nodalParam ϖ))
 
 def nodeParam : (Σ k : Fin 2, TwoByThree k) → MvPolynomial (Fin 3) O :=
   fun v => ![![0, 0, X 1], ![0, 0, -X 2]] v.1 v.2

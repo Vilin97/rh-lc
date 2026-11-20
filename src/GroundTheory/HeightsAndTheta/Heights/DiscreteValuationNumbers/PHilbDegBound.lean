@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -18,7 +19,7 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {F : Type u} [
 
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
-theorem isHomogeneous_of_isMultiHomogIdeal {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdeal I) :
+theorem isHomogeneous_of_isMultiHomogIdeal {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsMultiHomogIdeal I) :
     I.IsHomogeneous (weightedHomogeneousSubmodule F (blockWeight ι)) := by
   classical
   have e : I = Ideal.span
@@ -36,8 +37,8 @@ theorem isHomogeneous_of_isMultiHomogIdeal {I : Ideal (MRing ι F)} (hI : IsMult
   obtain ⟨f, -, b, rfl⟩ := hx
   exact ⟨b, weightedHomogeneousComponent_isWeightedHomogeneous b f⟩
 
-theorem isMultiHomogIdeal_sup_span {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdeal I)
-    {s : MRing ι F} {c : K → ℕ} (hs : IsMultiHomog s c) :
+theorem isMultiHomogIdeal_sup_span {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsMultiHomogIdeal I)
+    {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {c : K → ℕ} (hs : IsMultiHomog s c) :
     IsMultiHomogIdeal (I ⊔ Ideal.span {s}) := by
   classical
   have h2 : (Ideal.span {s}).IsHomogeneous (weightedHomogeneousSubmodule F (blockWeight ι)) :=
@@ -104,7 +105,7 @@ theorem HilbDegBound.proof (h1 : HilbFnVanishBlock.Statement.{u}) (h2 : HilbFnCu
     (h7 : DegLTOfUnitSteps.Statement) : HilbDegBound.Statement.{u} := by
   intro F _ K _ _ ι _ n
 
-  have irr : ∀ (n : ℕ) (Q : Ideal (MRing ι F)), ¬ IsRelevant Q → DegLT (hilbFn Q) n := by
+  have irr : ∀ (n : ℕ) (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), ¬ IsRelevant Q → DegLT (hilbFn Q) n := by
     intro n Q hrel
     unfold IsRelevant at hrel
     push Not at hrel
@@ -127,32 +128,32 @@ theorem HilbDegBound.proof (h1 : HilbFnVanishBlock.Statement.{u}) (h2 : HilbFnCu
     by_cases hrel : IsRelevant Q
     swap
     · exact irr _ Q hrel
-    have hdimle : ringKrullDim (MRing ι F ⧸ Q) ≤ ((n + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+    have hdimle : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) ≤ ((n + Fintype.card K : ℕ) : WithBot ℕ∞) := by
       have e : n + 1 + Fintype.card K = n + Fintype.card K + 1 := by omega
       rw [e] at hdim
       exact le_natCast_of_lt_natCast_succ hdim
     apply h7 K n
     intro k
     obtain ⟨i, hi⟩ := hrel k
-    have hx : IsMultiHomog (X ⟨k, i⟩ : MRing ι F) (Pi.single k 1) := isWeightedHomogeneous_X _ _ _
-    have hnzd : ∀ y, (X ⟨k, i⟩ : MRing ι F) * y ∈ Q → y ∈ Q :=
+    have hx : IsMultiHomog (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (Pi.single k 1) := isWeightedHomogeneous_X _ _ _
+    have hnzd : ∀ y, (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) * y ∈ Q → y ∈ Q :=
       fun y hy => (hQ.mem_or_mem hy).resolve_left hi
     have hcut := h2 F K ι Q (X ⟨k, i⟩) (Pi.single k 1) hQh hx hnzd
-    have hJ : IsMultiHomogIdeal (Q ⊔ Ideal.span {(X ⟨k, i⟩ : MRing ι F)}) :=
+    have hJ : IsMultiHomogIdeal (Q ⊔ Ideal.span {(X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}) :=
       isMultiHomogIdeal_sup_span hQh hx
     have hs : (fun j => ((Pi.single k 1 : K → ℕ) j : ℤ)) = (Pi.single k 1 : K → ℤ) := by
       funext j
       by_cases h : j = k <;> simp [h]
     have heq : diffStep (Pi.single k 1) (hilbFn Q) =
-        hilbFn (Q ⊔ Ideal.span {(X ⟨k, i⟩ : MRing ι F)}) := by
+        hilbFn (Q ⊔ Ideal.span {(X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}) := by
       funext m
       rw [hcut m, hs]
       rfl
     rw [heq]
     obtain ⟨l, hl1, hl2, -⟩ := h3 F K ι _ hJ
-    obtain ⟨G, hG⟩ : ∃ G : Ideal (MRing ι F) × (K → ℕ) → (K → ℤ) → ℤ,
+    obtain ⟨G, hG⟩ : ∃ G : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) × (K → ℕ) → (K → ℤ) → ℤ,
         G = fun p => shiftFn (fun j => (p.2 j : ℤ)) (hilbFn p.1) := ⟨_, rfl⟩
-    have hfun : hilbFn (Q ⊔ Ideal.span {(X ⟨k, i⟩ : MRing ι F)}) = fun m =>
+    have hfun : hilbFn (Q ⊔ Ideal.span {(X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}) = fun m =>
         (l.map fun p => G p m).sum := by
       funext m
       rw [hl2 m, hG]
@@ -170,7 +171,7 @@ theorem HilbDegBound.proof (h1 : HilbFnVanishBlock.Statement.{u}) (h2 : HilbFnCu
       exact hp3 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _))
     have := hQ
     have := hp1
-    have hd := h4 (MRing ι F) Q p.1 hlt
+    have hd := h4 (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) Q p.1 hlt
     exact lt_of_add_one_le_natCast (hd.trans hdimle)
 
 end

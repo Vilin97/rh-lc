@@ -2,13 +2,14 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartSheetCompare
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreSheetFormCompare
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreSheetFormCompare
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
 
 namespace GroundTheory.Heights₂.Heights
 
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm pot segre)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine pot segre)
 open ComplexSets Matrix Filter Topology
 
 namespace SegreChartSheetComparison

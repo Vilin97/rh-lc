@@ -9,6 +9,7 @@ import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PDivSuppHorizontalA
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LowerBoundConditional
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.HeightMul
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.MahlerMul
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -18,7 +19,7 @@ noncomputable section
 namespace RecQOfRecursion
 
 open MvPolynomial NumberField
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar IsHorizontal divSupp multAt geoNum charOf arInt)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk IsHorizontal divSupp multAt geoNum charOf arInt)
 
 variable {n : ℕ}
 
@@ -107,7 +108,7 @@ theorem step (hRec : ChowHeightRecursionRat.Statement) (hSec : ChowFormSection.S
                                 (IndefiniteRowSideFullHecke.ArithBezout.vertPart P e (IndefiniteRowSideFullHecke.ArithBezout.linForm u) -
                                   arInt P (IndefiniteRowSideFullHecke.ArithBezout.linForm u) (IndefiniteRowSideFullHecke.ArithBezout.hermLine S hS)
                                     (fun _ : Fin e => IndefiniteRowSideFullHecke.ArithBezout.hermLine S hS)) ∧
-      IsChowFormCycle (divCycle (ObjectsChow.genericIdeal P) fun j => (u j : ℚ)) e
+      IsChowFormCycle (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (ObjectsChow.genericIdeal P) fun) j : ℤ) => (u j : ℚ)) e
         (specFirst f fun j => (u j : ℚ)) := by
   have hprime := VerticalPartGauss.isProjPrime_genericIdeal hP
   have hfA := VerticalPartGauss.isChowForm_genericIdeal hP hf
@@ -137,7 +138,7 @@ theorem horizontal (hMul : ChowHeightMul.Statement) (S : Matrix (Fin n) (Fin n) 
     (hg : ∀ W ∈ divSupp P (IndefiniteRowSideFullHecke.ArithBezout.linForm u), IsHorizontal W →
       ReciprocityTheory.ChartRestriction.G.Geo.IsChowForm (Int.castRingHom ℂ) (IndefiniteRowSideFullHecke.ArithBezout.finIdeal W) e (d W)
         (map (Rat.castHom ℂ) (g W)))
-    (hcyc : IsChowFormCycle (divCycle (ObjectsChow.genericIdeal P) fun j => (u j : ℚ)) (e + 1)
+    (hcyc : IsChowFormCycle (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (ObjectsChow.genericIdeal P) fun) j : ℤ) => (u j : ℚ)) (e + 1)
       (specFirst f fun j => (u j : ℚ))) :
     chowHt (archData S hS hconj) (e + 1) δ (specFirst f fun j => (u j : ℚ)) =
       ∑ᶠ W ∈ divSupp P (IndefiniteRowSideFullHecke.ArithBezout.linForm u),

@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PfContractedHypothes
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.HomFracDegZeroEqFunField
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.AddBlockVarEquivFst
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsRename
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -67,7 +68,7 @@ theorem splitVarEquiv_fst (v : Σ s, splitCoord j ι' s) :
     (splitVarEquiv j ι' v).1 = splitBlockEquiv j v.1 := by
   rcases v with ⟨k | l, i⟩ <;> rfl
 
-theorem contractBlocks_splitPrime {F : Type u} [Field F] (P' : Ideal (MRing ι' F)) :
+theorem contractBlocks_splitPrime {F : Type u} [Field F] (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) :
     IndefiniteRowSideFullHecke.FieldNumbers.contractBlocks (fun l : blockCompl j => ι' l.1) (splitPrime j P') =
       contractPrime j P' := by
   ext p
@@ -91,8 +92,8 @@ theorem pullDeg_split (b : K → ℤ) :
     rfl
 
 theorem relDim_splitPrime {F : Type u} [Field F] [Fintype K] [Fintype K'] [Fintype (blockCompl j)]
-    (P' : Ideal (MRing ι' F)) : relDim (splitPrime j P') = relDim P' := by
-  have e : MRing (splitCoord j ι') F ⧸ splitPrime j P' ≃+* MRing ι' F ⧸ P' :=
+    (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) : relDim (splitPrime j P') = relDim P' := by
+  have e : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (splitCoord j ι') ⧸ splitPrime j P' ≃+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P' :=
     Ideal.quotientEquiv _ _ (renameEquiv F (splitVarEquiv j ι')).toRingEquiv
       (Ideal.map_comap_of_surjective _ (renameEquiv F (splitVarEquiv j ι')).surjective P').symm
   unfold relDim
@@ -102,7 +103,7 @@ end Split
 
 theorem contract_funField_le (h₁ : RenameMultiHomog.Statement.{u}) {F : Type u} [Field F]
     {K K' : Type} [DecidableEq K] [DecidableEq K'] (j : K ↪ K') {ι' : K' → Type}
-    (P' : Ideal (MRing ι' F)) [P'.IsPrime] :
+    (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime] :
     (homFracDegZero (contractPrime j P')).map (contractFracMap j P') ≤ homFracDegZero P' := by
   unfold homFracDegZero
   rw [IntermediateField.adjoin_map, IntermediateField.adjoin_le_iff]

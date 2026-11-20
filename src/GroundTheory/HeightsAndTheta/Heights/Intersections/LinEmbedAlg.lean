@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.Intersections.LinEmbedSt
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.CurvePt
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.MemMinimalPrimesOfMemDivSuppDivSupp
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialMultAt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -313,8 +314,8 @@ theorem mem_divSupp_comap_iff (V W : Ideal (MRingOver F ι)) (f : MRingOver F ι
     (comap_injective hA).mem_set_image]
 
 theorem divCycle_comap (V : Ideal (MRingOver F ι)) (f : MRingOver F ι') :
-    divCycle (V.comap (blockLinSubst e A).toRingHom) f =
-      Finsupp.mapDomain (Ideal.comap (blockLinSubst e A).toRingHom) (divCycle V (blockLinSubst e A f)) := by
+    (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (V.comap (blockLinSubst e A).toRingHom) f) W : ℤ)) =
+      Finsupp.mapDomain (Ideal.comap (blockLinSubst e A).toRingHom) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V (blockLinSubst e A f)) W : ℤ))) := by
   ext W'
   by_cases hW : W' ∈ Set.range (Ideal.comap (blockLinSubst e A).toRingHom)
   · obtain ⟨W, rfl⟩ := hW

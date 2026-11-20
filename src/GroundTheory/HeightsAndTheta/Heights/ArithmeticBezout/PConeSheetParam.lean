@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsConeSheet
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsConeSheetCover
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsConeProjHyperplaneNull
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeB
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -10,7 +11,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial MeasureTheory Matrix Filter Topology Set
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar IsGoodProj IsSheet fibre segre mcPts
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk IsGoodProj IsSheet fibre segre mcPts
   IsMultiHomogIdeal mcPts_smul)
 
 section OneBlock

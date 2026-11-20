@@ -5,6 +5,7 @@ import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.WeightedHomogene
 import GroundTheory.HeightsAndTheta.Heights.HeightComparison.GeoNum
 import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.CycDim
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Targets
@@ -20,7 +21,7 @@ section Generic
 open NumbersDVR
 
 theorem FibreDegreeSum.intNum_eq_cycEval (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι ℤ)) (e : ℕ) (a : Fin e → K → ℤ) (p : ℕ)
+    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (e : ℕ) (a : Fin e → K → ℤ) (p : ℕ)
     [Fact p.Prime] (hP : ReciprocityTheory.ChartRestriction.G.Geo.IsArithVar P (e + 1)) :
     intNum ℚ (P.map (MvPolynomial.map (Int.castRingHom ℚ))) a =
       NumbersDVR.cycEval (fun W ↦ intNum (ZMod p) (W.map (MvPolynomial.map (Int.castRingHom (ZMod p)))) a)
@@ -28,10 +29,10 @@ theorem FibreDegreeSum.intNum_eq_cycEval (K : Type) [Fintype K] [DecidableEq K] 
   classical
   have hp : p.Prime := Fact.out
   have hPprime : P.IsPrime := hP.2.1.1
-  have hhor : ∀ r : ℤ, (C r : MRing ι ℤ) ∈ P → r = 0 := by
+  have hhor : ∀ r : ℤ, (C r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ P → r = 0 := by
     intro r hr
-    have hr' : r ∈ P.comap (C : ℤ →+* MRing ι ℤ) := hr
-    rw [show P.comap (C : ℤ →+* MRing ι ℤ) = ⊥ from hP.2.2.1] at hr'
+    have hr' : r ∈ P.comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) := hr
+    rw [show P.comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) = ⊥ from hP.2.2.1] at hr'
     exact (Ideal.mem_bot).mp hr'
   have hpZ : Prime (p : ℤ) := Nat.prime_iff_prime_int.mp hp
   set 𝔭 : Ideal ℤ := Ideal.span {(p : ℤ)} with h𝔭def
@@ -50,19 +51,19 @@ theorem FibreDegreeSum.intNum_eq_cycEval (K : Type) [Fintype K] [DecidableEq K] 
     rw [Ideal.map_span, Set.image_singleton]
     simp [ϖ]
   have hϖ : Irreducible ϖ := (IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).mpr hmax
-  let M : Submonoid (MRing ι ℤ) := 𝔭.primeCompl.map (C (σ := Σ k, ι k))
-  let φ := algebraMap (MRing ι ℤ) (MRing ι O)
-  let P' : Ideal (MRing ι O) := P.map φ
+  let M : Submonoid (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) := 𝔭.primeCompl.map (C (σ := Σ k, ι k))
+  let φ := algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
+  let P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := P.map φ
 
-  have hPdisj : Disjoint (M : Set (MRing ι ℤ)) P := by
+  have hPdisj : Disjoint (M : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) P := by
     rw [Set.disjoint_left]
     rintro _ ⟨r, hr, rfl⟩ hrP
     have h0 := hhor r hrP
     rw [h0] at hr
     exact hr 𝔭.zero_mem
-  have hP'prime : P'.IsPrime := IsLocalization.isPrime_of_isPrime_disjoint M (MRing ι O) P hPprime hPdisj
+  have hP'prime : P'.IsPrime := IsLocalization.isPrime_of_isPrime_disjoint M (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P hPprime hPdisj
   have hP'comap : P'.comap φ = P :=
-    IsLocalization.under_map_of_isPrime_disjoint M (MRing ι O) hPprime hPdisj
+    IsLocalization.under_map_of_isPrime_disjoint M (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) hPprime hPdisj
   have hmp : IsMultiProjPrime P' :=
     { isPrime := hP'prime
       multiHomog := WeightedDegree.isMultiHomogIdeal_map 𝔭.primeCompl
@@ -73,10 +74,10 @@ theorem FibreDegreeSum.intNum_eq_cycEval (K : Type) [Fintype K] [DecidableEq K] 
         have h' : φ (X ⟨k, i⟩) ∈ P' := by
           rw [show φ (X ⟨k, i⟩) = X ⟨k, i⟩ from map_X _ _]
           exact h
-        have h'' : (X ⟨k, i⟩ : MRing ι ℤ) ∈ P'.comap φ := h'
+        have h'' : (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ P'.comap φ := h'
         rw [hP'comap] at h''
         exact h'' }
-  have hnt : P'.comap (C : O →+* MRing ι O) = ⊥ := by
+  have hnt : P'.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = ⊥ := by
     rw [eq_bot_iff]
     intro x hx
     rw [Ideal.mem_comap] at hx
@@ -86,12 +87,12 @@ theorem FibreDegreeSum.intNum_eq_cycEval (K : Type) [Fintype K] [DecidableEq K] 
     have hmem : φ (C m) ∈ P' := by
       rw [show φ (C m) = C (algebraMap ℤ O m) from map_C _ _, ← hms, map_mul]
       exact P'.mul_mem_right _ hx
-    have hmem' : (C m : MRing ι ℤ) ∈ P'.comap φ := hmem
+    have hmem' : (C m : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ P'.comap φ := hmem
     rw [hP'comap] at hmem'
     have hm0 : m = 0 := hhor m hmem'
     rw [hm0, map_zero] at hms
     exact ((IsLocalization.map_units O s).mul_left_eq_zero).mp hms
-  have hdimle : ringKrullDim (MRing ι O ⧸ P') ≤ ((e + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) :=
+  have hdimle : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P') ≤ ((e + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) :=
     (WeightedDegree.ringKrullDim_quotient_map_le 𝔭.primeCompl P).trans_eq hP.2.2.2
 
   have key := ConservationOfNumberLE.proof.{0} IntNumAssoc.full SpecialCycleEval.full
@@ -123,7 +124,7 @@ theorem FibreDegreeSum.intNum_eq_cycEval (K : Type) [Fintype K] [DecidableEq K] 
       exact Ideal.subset_span rfl)
   let : Algebra (ZMod p) (IsLocalRing.ResidueField O) :=
     (ZMod.castHom (dvd_refl p) (IsLocalRing.ResidueField O)).toAlgebra
-  have hspec : ∀ W : Ideal (MRing ι ℤ), vNum (W.map φ) a =
+  have hspec : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι), vNum (W.map φ) a =
       intNum (ZMod p) (W.map (MvPolynomial.map (Int.castRingHom (ZMod p)))) a := by
     intro W
     have hcomp : specialIdeal (W.map φ) = (W.map (MvPolynomial.map (Int.castRingHom (ZMod p)))).map
@@ -139,22 +140,22 @@ theorem FibreDegreeSum.intNum_eq_cycEval (K : Type) [Fintype K] [DecidableEq K] 
     rw [hcomp]
     exact (FieldNumbers.IntNumBaseChange.intersectionNumber_baseChange.1 (ZMod p) (IsLocalRing.ResidueField O) K ι _).2 e a
 
-  have hWdisj : ∀ W ∈ (P ⊔ Ideal.span {(C (p : ℤ) : MRing ι ℤ)}).minimalPrimes,
-      Disjoint (M : Set (MRing ι ℤ)) W := by
+  have hWdisj : ∀ W ∈ (P ⊔ Ideal.span {(C (p : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)}).minimalPrimes,
+      Disjoint (M : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) W := by
     intro W hW
     have : W.IsPrime := hW.1.1
     rw [Set.disjoint_left]
     rintro _ ⟨r, hr, rfl⟩ hrW
-    have hle : 𝔭 ≤ W.comap (C : ℤ →+* MRing ι ℤ) := by
+    have hle : 𝔭 ≤ W.comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) := by
       rw [h𝔭def, Ideal.span_le, Set.singleton_subset_iff]
       exact hW.1.2 (Ideal.mem_sup_right (Ideal.subset_span rfl))
-    have heq := h𝔭max.eq_of_le (Ideal.comap_isPrime (C : ℤ →+* MRing ι ℤ) W).ne_top hle
-    have hr' : r ∈ W.comap (C : ℤ →+* MRing ι ℤ) := hrW
+    have heq := h𝔭max.eq_of_le (Ideal.comap_isPrime (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) W).ne_top hle
+    have hr' : r ∈ W.comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) := hrW
     rw [← heq] at hr'
     exact hr hr'
   have hmain := WeightedDegree.cycEval_divCycle_map (R' := O) 𝔭.primeCompl P (C (p : ℤ)) hWdisj
-    (fun W' : Ideal (MRing ι O) ↦ vNum W' a)
-  have hCp : (C ϖ : MRing ι O) = φ (C (p : ℤ)) := by
+    (fun W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ↦ vNum W' a)
+  have hCp : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = φ (C (p : ℤ)) := by
     rw [show φ (C (p : ℤ)) = C (algebraMap ℤ O (p : ℤ)) from map_C _ _]
     simp [ϖ]
   calc intNum ℚ (P.map (MvPolynomial.map (Int.castRingHom ℚ))) a = gNum P' a := hgen.symm

@@ -8,6 +8,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVocabDivCy
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsVerticalDivOfIsVerticalDivisorAlt
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumUnique
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.ExistsUniqueStatement
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -46,11 +47,11 @@ theorem existsUnique_iff (hN : Statement.{u}) :
 
 omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
-theorem ringKrullDim_eq_of_relDim (V : Ideal (MRing ι F)) (n : ℕ)
+theorem ringKrullDim_eq_of_relDim (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (n : ℕ)
     (h : FieldNumbers.relDim V = (n : WithBot (WithTop ℤ))) :
-    ringKrullDim (MRing ι F ⧸ V) = ((n + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) = ((n + Fintype.card K : ℕ) : WithBot ℕ∞) := by
   unfold FieldNumbers.relDim at h
-  generalize ringKrullDim (MRing ι F ⧸ V) = d at h ⊢
+  generalize ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) = d at h ⊢
   induction d using WithBot.recBotCoe with
   | bot => exact absurd h (by simp)
   | coe e =>

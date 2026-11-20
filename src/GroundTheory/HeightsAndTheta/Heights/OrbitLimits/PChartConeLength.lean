@@ -6,6 +6,7 @@ import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PLocalMultComap
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PFundCycleBaseChange
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PPrimeComplexRadical
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -13,7 +14,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights.Targets
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsMultiHomog IsMultiHomogIdeal divSuppArith)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiHomogIdeal IsMultiHomog divSuppArith)
 open GroundTheory.Heights₂.Heights (localMult localMult_map_of_flat segreChartIdeal segreChartComponents
   mem_segreChartComponents)
 

@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpOrderLe
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -87,16 +88,16 @@ section BlowUp
 
 variable {K : Type*} {ι : K → Type} {J : Type} {R : Type*} [CommRing R]
 
-theorem aeval_blowUpSubst_newVar (P : Ideal (MRing ι R)) (u : J → MRing ι R) (k : J) :
-    aeval (blowUpSubst P u) (newVar k : MRing (extIdx ι J) R) = Polynomial.C (Ideal.Quotient.mk P (u k)) * Polynomial.X := by
+theorem aeval_blowUpSubst_newVar (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (k : J) :
+    aeval (blowUpSubst P u) (newVar k : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) = Polynomial.C (Ideal.Quotient.mk P (u k)) * Polynomial.X := by
   simp [newVar, blowUpSubst]
 
-theorem liftForm_mem_blowUpOf_iff (P : Ideal (MRing ι R)) (u : J → MRing ι R) (p : MRing ι R) :
+theorem liftForm_mem_blowUpOf_iff (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
     liftForm p ∈ blowUpOf P u ↔ p ∈ P := by
   rw [blowUpOf, RingHom.mem_ker, aeval_blowUpSubst_liftForm, Polynomial.C_eq_zero,
     Ideal.Quotient.eq_zero_iff_mem]
 
-theorem liftForm_mul_newVar_sub_mem (P : Ideal (MRing ι R)) (u : J → MRing ι R) (j k : J) :
+theorem liftForm_mul_newVar_sub_mem (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (j k : J) :
     liftForm (u j) * newVar k - liftForm (u k) * newVar j ∈ blowUpOf P u := by
   rw [blowUpOf, RingHom.mem_ker, map_sub, map_mul, map_mul, aeval_blowUpSubst_liftForm,
     aeval_blowUpSubst_liftForm, aeval_blowUpSubst_newVar, aeval_blowUpSubst_newVar]
@@ -112,9 +113,9 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
   have hQ : (blowUpOf P u).IsPrime := RingHom.ker_isPrime _
   have hQG' : (blowUpOf P u) ≤ G' := le_sup_left.trans hG'.1.2
 
-  let g : (MRing ι R ⧸ P) →+* (MRing (extIdx ι J) R ⧸ (blowUpOf P u)) :=
+  let g : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) →+* (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ (blowUpOf P u)) :=
     Ideal.Quotient.lift P ((Ideal.Quotient.mk (blowUpOf P u)).comp
-      (liftForm (J := J) : MRing ι R →ₐ[R] MRing (extIdx ι J) R).toRingHom)
+      (liftForm (J := J) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →ₐ[R] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)).toRingHom)
       (fun p hp => Ideal.Quotient.eq_zero_iff_mem.mpr ((liftForm_mem_blowUpOf_iff P u p).mpr hp))
   have hg : ∀ p, g (Ideal.Quotient.mk P p) = Ideal.Quotient.mk (blowUpOf P u) (liftForm p) := fun p => rfl
   have hg_inj : Function.Injective g := by
@@ -130,7 +131,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
     change p ∈ G₀.comap (Ideal.Quotient.mk P) ↔ liftForm p ∈ W₀.comap (Ideal.Quotient.mk (blowUpOf P u))
     rw [hG₀, hW₀]
     rfl
-  let ρ : (MRing (extIdx ι J) R ⧸ (blowUpOf P u)) →+* Polynomial (MRing ι R ⧸ P) :=
+  let ρ : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ (blowUpOf P u)) →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) :=
     Ideal.Quotient.lift (blowUpOf P u) (aeval (blowUpSubst P u)).toRingHom (fun a ha => RingHom.mem_ker.mp ha)
   have hρ : ∀ F, ρ (Ideal.Quotient.mk (blowUpOf P u) F) = aeval (blowUpSubst P u) F := fun F => rfl
   have hρg : ρ.comp g = Polynomial.C := by
@@ -140,11 +141,11 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
   let F := Localization.localRingHom G₀ W₀ g hcomap
   have hF : ∀ a, F (algebraMap _ (Localization.AtPrime G₀) a) =
       algebraMap _ (Localization.AtPrime W₀) (g a) := fun a => Localization.localRingHom_to_map _ _ _ _ _
-  have hB_inj : Function.Injective (algebraMap (MRing (extIdx ι J) R ⧸ (blowUpOf P u)) (Localization.AtPrime W₀)) :=
+  have hB_inj : Function.Injective (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ (blowUpOf P u)) (Localization.AtPrime W₀)) :=
     IsLocalization.injective (Localization.AtPrime W₀) W₀.primeCompl_le_nonZeroDivisors
-  have hA_inj : Function.Injective (algebraMap (MRing ι R ⧸ P) (Localization.AtPrime G₀)) :=
+  have hA_inj : Function.Injective (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (Localization.AtPrime G₀)) :=
     IsLocalization.injective (Localization.AtPrime G₀) G₀.primeCompl_le_nonZeroDivisors
-  let ιA := (algebraMap (MRing (extIdx ι J) R ⧸ (blowUpOf P u)) (Localization.AtPrime W₀)).comp g
+  let ιA := (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ (blowUpOf P u)) (Localization.AtPrime W₀)).comp g
   have hιA : Function.Injective ιA := hB_inj.comp hg_inj
   have hF_inj : Function.Injective F := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
@@ -156,7 +157,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
     rw [ha]
     exact IsLocalization.mk'_zero _
 
-  obtain ⟨j, hYj⟩ : ∃ j : J, (newVar j : MRing (extIdx ι J) R) ∉ G' := hrel none
+  obtain ⟨j, hYj⟩ : ∃ j : J, (newVar j : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ∉ G' := hrel none
   have huj : u j ∉ P := by
     intro h
     apply hYj
@@ -169,7 +170,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
     rw [← hW₀]
     exact h
   let sj : W₀.primeCompl := ⟨_, hsj⟩
-  let w := algebraMap (MRing (extIdx ι J) R ⧸ (blowUpOf P u)) (Localization.AtPrime W₀) (Ideal.Quotient.mk (blowUpOf P u) (newVar j))
+  let w := algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ (blowUpOf P u)) (Localization.AtPrime W₀) (Ideal.Quotient.mk (blowUpOf P u) (newVar j))
   have hw0 : w ≠ 0 := by
     intro h
     apply hYj
@@ -178,7 +179,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
     exact hB_inj (by rw [map_zero]; exact h)
   let e : J → Localization.AtPrime W₀ := fun k => IsLocalization.mk' _ (Ideal.Quotient.mk (blowUpOf P u) (newVar k)) sj
   have he : ∀ k, e k * w =
-      algebraMap (MRing (extIdx ι J) R ⧸ (blowUpOf P u)) (Localization.AtPrime W₀) (Ideal.Quotient.mk (blowUpOf P u) (newVar k)) :=
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ (blowUpOf P u)) (Localization.AtPrime W₀) (Ideal.Quotient.mk (blowUpOf P u) (newVar k)) :=
     fun k => IsLocalization.mk'_spec _ _ sj
   let C := Subring.closure (Set.range F ∪ Set.range e)
   have hFC : ∀ a, F a ∈ C := fun a => Subring.subset_closure (Or.inl ⟨a, rfl⟩)
@@ -186,7 +187,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
   let f : Localization.AtPrime G₀ →+* C := F.codRestrict C hFC
   have hf : ∀ a, (f a : Localization.AtPrime W₀) = F a := fun a => rfl
 
-  have hden : ∀ d ∈ C, ∃ l : MRing ι R ⧸ P, l ≠ 0 ∧ ∃ b, ιA l * d = ιA b := by
+  have hden : ∀ d ∈ C, ∃ l : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P, l ≠ 0 ∧ ∃ b, ιA l * d = ιA b := by
     intro d hd
     induction hd using Subring.closure_induction with
     | mem d hd =>
@@ -224,7 +225,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
       rw [map_mul, map_mul, ← e₁, ← e₂]
       ring
 
-  have hpoly : ∀ p : Polynomial C, ∃ l : MRing ι R ⧸ P, l ≠ 0 ∧ ∃ q : Polynomial (MRing ι R ⧸ P),
+  have hpoly : ∀ p : Polynomial C, ∃ l : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P, l ≠ 0 ∧ ∃ q : Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P),
       Polynomial.C (ιA l) * p.map C.subtype = q.map ιA := by
     intro p
     induction p using Polynomial.induction_on' with
@@ -241,7 +242,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
       rw [Polynomial.map_monomial, Polynomial.map_monomial, Polynomial.C_mul_monomial]
       exact congrArg _ e₁
 
-  have hu_nzd : Ideal.Quotient.mk P (u j) ∈ nonZeroDivisors (MRing ι R ⧸ P) :=
+  have hu_nzd : Ideal.Quotient.mk P (u j) ∈ nonZeroDivisors (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) :=
     mem_nonZeroDivisors_of_ne_zero (fun h => huj (Ideal.Quotient.eq_zero_iff_mem.mp h))
   have hinj : Function.Injective (Polynomial.eval₂RingHom C.subtype w) := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
@@ -267,7 +268,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
     exact Polynomial.map_injective _ C.subtype_injective (by rw [h4, Polynomial.map_zero])
 
   let φ := Polynomial.eval₂RingHom C.subtype w
-  have hB : ∀ z, ∃ a : Polynomial C, φ a = algebraMap (MRing (extIdx ι J) R ⧸ (blowUpOf P u)) (Localization.AtPrime W₀) z := by
+  have hB : ∀ z, ∃ a : Polynomial C, φ a = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ (blowUpOf P u)) (Localization.AtPrime W₀) z := by
     intro z
     obtain ⟨G, rfl⟩ := Ideal.Quotient.mk_surjective z
     induction G using MvPolynomial.induction_on with
@@ -308,7 +309,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
   have hxG : liftForm x ∈ G' := hG.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self x))
   let c₀ : C := f (algebraMap _ _ (Ideal.Quotient.mk P x))
   have hc₀ : (c₀ : Localization.AtPrime W₀) =
-      algebraMap (MRing (extIdx ι J) R ⧸ (blowUpOf P u)) (Localization.AtPrime W₀) (Ideal.Quotient.mk (blowUpOf P u) (liftForm x)) := by
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ (blowUpOf P u)) (Localization.AtPrime W₀) (Ideal.Quotient.mk (blowUpOf P u) (liftForm x)) := by
     simp only [c₀, hf, hF, hg]
   have hc₀ne : (c₀ : Localization.AtPrime W₀) ≠ 0 := by
     rw [hc₀]

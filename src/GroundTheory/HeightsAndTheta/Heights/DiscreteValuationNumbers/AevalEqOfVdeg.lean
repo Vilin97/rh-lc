@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBisBis
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagClosureModel
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -21,7 +22,7 @@ theorem le_weight_block {κ : Type} [DecidableEq κ] {τ : κ → Type} (c : (Σ
 theorem aeval_eq_of_vdeg {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} [CommRing O] {M M' : ℕ}
     {Φ : Type} [Field Φ] [Algebra O Φ] {z z' : (Σ o, bundleIdx (bundleIdx ι M) M' o) → Φ}
     (h : ∀ (k : K) (i : ι k), z ⟨some (some k), i⟩ = z' ⟨some (some k), i⟩)
-    {G : MRing (bundleIdx (bundleIdx ι M) M') O} {β : K → ℕ} (hG : IsMultiHomog G (GenericProjClosureDivisor.vdeg β)) :
+    {G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')} {β : K → ℕ} (hG : IsMultiHomog G (GenericProjClosureDivisor.vdeg β)) :
     aeval z G = aeval z' G := by
   rw [aeval_def, aeval_def]
   apply eval₂_congr
@@ -92,7 +93,7 @@ theorem SegreFlagDegreeZero.proof (hModel : SegreFlagClosureModel.Statement) : S
     (TwistedDualGensSpan.proof O Ω K ι y N E B' a₀' M' φ' hφ' c hyc) (by omega) hkN.le
   have hϖΩ : algebraMap O Ω ϖ ≠ 0 := by
     intro h0
-    have hy : ϖ ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := by
+    have hy : ϖ ∈ (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
       rw [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply, h0,
         map_zero]
     rw [hV.noTorsion] at hy
@@ -102,7 +103,7 @@ theorem SegreFlagDegreeZero.proof (hModel : SegreFlagClosureModel.Statement) : S
     TwistedDualGensExpress.proof O ϖ Ω K ι y N E B B' hB a₀ a₀' M M' φ φ' hφ hφ' c hyc m
   obtain ⟨bG, bH, G, hG, hdeg, hval⟩ :=
     express_forms (M := M) (M' := M') y w φ φ' (flagCoord w e t (k + 1)) c hyc ϖ φ (φ' m) a₀ a₀' n r hr hx
-  obtain ⟨H, hHdef⟩ : ∃ H : MRing (bundleIdx (bundleIdx ι M) M') O, H = C (ϖ ^ n) * chartMonoZ O M M' c bH :=
+  obtain ⟨H, hHdef⟩ : ∃ H : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'), H = C (ϖ ^ n) * chartMonoZ O M M' c bH :=
     ⟨_, rfl⟩
   rw [← hHdef] at hval
   have hHhom : IsMultiHomog H (vdeg bH) := by
@@ -114,7 +115,7 @@ theorem SegreFlagDegreeZero.proof (hModel : SegreFlagClosureModel.Statement) : S
   obtain ⟨y₀, hy₀⟩ : ∃ y₀ : (Σ o, bundleIdx (bundleIdx ι M) M' o) → Ω, ∀ (κ : K) (i : ι κ),
       y₀ ⟨some (some κ), i⟩ = y ⟨κ, i⟩ := ⟨pairProjCoord y w φ φ' (0 : Fin N → Ω), fun κ i => by
         simp [pairProjCoord, projCoord]⟩
-  have hV' : ∀ {β : K → ℕ} {F : MRing (bundleIdx (bundleIdx ι M) M') O}, IsMultiHomog F (vdeg β) →
+  have hV' : ∀ {β : K → ℕ} {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')}, IsMultiHomog F (vdeg β) →
       ∀ u : Fin N → Φ, aeval (pairProjCoord y w φ φ' u) F = algebraMap Ω Φ (aeval y₀ F) := by
     intro β F hF u
     rw [← MvPolynomial.aeval_algebraMap_apply]

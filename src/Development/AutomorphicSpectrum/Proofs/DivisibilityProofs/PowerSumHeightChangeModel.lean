@@ -12,13 +12,14 @@ import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.RootModelGeomet
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.RootPowerSumMixedExpansionStatement
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.PowerSumTermDiscreteValuationStatement
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.IsometricFamilyIntersectionEqStatement
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num GlobalTheory.CompanionTheory.Ar.Top GroundTheory.Heights₂.Heights.ModelLeaves
 open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar IsHorizontal mcPts mCoordIdeal IsIntersectionFamily IsIntersectionSystem IntersectionSystem ptsIntegral geoNum charOf recR arInt ChartBundle chartRing)
 
 namespace GlobalTheory.CompanionTheory.Ar.Num.Prop6Model
 
 theorem arNum_mixDiff {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
-    (I : Ideal (MRing ι ℤ) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (P : Ideal (MRing ι ℤ)) {σ : Type}
+    (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) {σ : Type}
     (A A' : σ → HermLine ι) (F : MvPolynomial σ ℝ) :
     arNum I P (Sum.elim A A') (mixDiff F) = arNum I P A F - arNum I P A' F := by
   obtain ⟨hadd, hsmul, -, -, hren⟩ := arNum_linear_arList_symm.1 K ι I P (σ ⊕ σ) (Sum.elim A A')

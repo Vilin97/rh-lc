@@ -1,6 +1,7 @@
 import Mathlib
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.SwapLoc
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ExistsUnique
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -207,8 +208,7 @@ theorem mem_divSupp_map_iff (V W : Ideal (MRingOver F ι)) (f : MRingOver F ι) 
   exact and_congr h1 (isRelevant_map_iff e σ hσ W)
 
 theorem divCycle_map_apply (V W : Ideal (MRingOver F ι)) (f : MRingOver F ι) :
-    divCycle (V.map (ren (F := F) σ : MRingOver F ι →+* MRingOver F ι')) (ren σ f)
-        (W.map (ren (F := F) σ : MRingOver F ι →+* MRingOver F ι')) = divCycle V f W := by
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (V.map (ren (F := F) σ : MRingOver F ι →+* MRingOver F ι')) (ren σ f)) (W.map (ren (F := F) σ : MRingOver F ι →+* MRingOver F ι')) : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) := by
   classical
   simp only [divCycle, Finsupp.ofSupportFinite_coe]
   by_cases hW : W ∈ divSupp V f
@@ -326,9 +326,7 @@ theorem isFieldIntersection_pull {I' : IFamily F ι'} (hI' : IsFieldIntersection
     rw [snoc_comp, this, ratDiv_map e σ hσ, cycEval_map]
     rfl
 
-end MRing
-
-end ExistsUniqueRelabel
+end ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ExistsUniqueRelabel end
 
 universe u v w v' w'
 

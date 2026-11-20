@@ -3,6 +3,7 @@ import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.IsLatticeF
 import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.BundleChernComparison
 import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChernClassOnFlagPairStatement
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial GlobalTheory.CompanionTheory.Ar.Num GroundTheory.Heights₂.Heights.NumbersDVR
 open ReciprocityTheory.ChartRestriction.G.Geo (ChartBundle chartRing)
 open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.Bundles (mseg mcIdeal chartMon joinCoord bcCoord pullDeg restrictChart fnField ck rootNum SameGeneric LatLE IsPull IsPullBC)
@@ -36,7 +37,7 @@ theorem sum_allOne (q : ℕ) (F : (Fin q →₀ ℕ) → ℤ) :
 
 theorem classNum_perm {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} [CommRing O] [IsDomain O]
     [IsDiscreteValuationRing O] {σ : Type} (cls : σ → K → ℤ) (H : MvPolynomial σ ℤ)
-    {Q Q' : List (K → ℤ)} (h : Q.Perm Q') (W : Ideal (MRing ι O)) :
+    {Q Q' : List (K → ℤ)} (h : Q.Perm Q') (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
     classNum cls H Q W = classNum cls H Q' W := by
   unfold classNum
   refine Finset.sum_congr rfl fun μ _ => ?_
@@ -74,7 +75,7 @@ theorem key (hC : GroundTheory.Heights₂.Heights.NumbersDVR.ChernClassOnFlagPai
       _ Q.get _ (isHomogeneous_allOne _ _ (by omega)) a ha
     rw [sum_allOne Q.length
       (fun μ => cycEval (fun W => classNum T.x (psum (Fin N) ℤ (k - 1)) (classList Q.get μ) W)
-        (divCycle (pointIdeal O x) (C a)))] at h3
+        ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O x) (C a)) W : ℤ))))] at h3
     simp only [classNum_perm _ _ (classList_allOne Q)] at h3
     unfold laNum
     exact congrArg _ h3

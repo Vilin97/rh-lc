@@ -7,6 +7,7 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersecti
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.GenericComplexPoint
 import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.Birational
 import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsTwiceDifferentiableAt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 noncomputable section
 
@@ -287,9 +288,9 @@ def VertClose (P : Ideal (MRing ι)) (T : Finset ℕ) (α : ℕ → ℝ) (A B : 
   ∃ (f g : MRing ι) (df dg : K → ℕ), IsMultiHomog f df ∧ IsMultiHomog g dg ∧ f ∉ P ∧ g ∉ P ∧
     (∀ k, (df k : ℤ) - dg k = A.a k - B.a k) ∧
     (∀ z ∈ mcPts P, ‖eval z (map (Int.castRingHom ℂ) f)‖ * B.h z = ‖eval z (map (Int.castRingHom ℂ) g)‖ * A.h z) ∧
-    (∀ W, charOf W ∉ T → divCycle P f W = divCycle P g W) ∧
+    (∀ W, charOf W ∉ T → ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)) ∧
     ∀ W, charOf W ∈ T →
-      |(divCycle P f W : ℝ) - divCycle P g W| ≤ α (charOf W) * divCycle P (C (charOf W : ℤ)) W
+      |(((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) : ℝ) - ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)| ≤ α (charOf W) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (charOf W : ℤ))) W : ℤ)
 
 theorem VertClose.symm {P : Ideal (MRing ι)} {T : Finset ℕ} {α : ℕ → ℝ} {A B : HermLine ι}
     (h : VertClose P T α A B) : VertClose P T α B A := by

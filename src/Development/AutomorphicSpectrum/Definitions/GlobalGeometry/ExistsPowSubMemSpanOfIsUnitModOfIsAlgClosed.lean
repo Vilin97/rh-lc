@@ -1,5 +1,6 @@
 import Mathlib
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ArithmeticHilbertSamuelLowerBound
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 noncomputable section
 
@@ -37,9 +38,7 @@ def meanEmb (t : (F →+* ℂ) → ℝ) : ℝ := (∑ σ : F →+* ℂ, t σ) / 
 structure FlatHerm (y : (Σ k, ι k) → Ω) (φ : F →+* Ω) (A : HermLine ι) where
   M : ℕ
   M_pos : 0 < M
-  f : MRing ι
-  g : MRing ι
-  df : K → ℕ
+  f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver g ι : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver df ι : K → ℕ
   dg : K → ℕ
   hf : IsMultiHomog f df
   hg : IsMultiHomog g dg

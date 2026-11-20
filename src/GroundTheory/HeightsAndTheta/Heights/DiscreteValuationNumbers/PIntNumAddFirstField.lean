@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -44,7 +45,7 @@ theorem IntNumAddFirst.proof (h1 : FieldNumbers.IntNumAdd.Statement.{u})
       have hc : ((n + 1 : ℕ) : WithBot (WithTop ℤ)) = (((n + 1 : ℕ) : ℤ) : WithTop ℤ) := by
         rfl
       unfold relDim
-      generalize ringKrullDim (MRing ι F ⧸ G) = x at hdim ⊢
+      generalize ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ G) = x at hdim ⊢
       induction x using WithBot.recBotCoe with
       | bot => exact Or.inr (WithBot.bot_lt_coe _)
       | coe d =>

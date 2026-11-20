@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomo
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsComponentDim
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsGenericDimGe
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -61,18 +62,18 @@ theorem FibreVarieties.proof
   ·
     intro W hW
     have hW0 := hW
-    unfold divCycle at hW
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
     split_ifs at hW with h
     · obtain ⟨hWmin, hWrel⟩ := h
       have hWp : W.IsPrime := hWmin.1.1
-      have hϖW : (C ϖ : MRing ι O) ∈ W := hWmin.1.2 (Ideal.mem_sup_right (Ideal.subset_span rfl))
+      have hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := hWmin.1.2 (Ideal.mem_sup_right (Ideal.subset_span rfl))
       obtain ⟨hsp, -, hrel, -⟩ := hCorr O ϖ hϖ K ι P W hWp hϖW
-      have hJ : IsMultiHomogIdeal (P ⊔ Ideal.span {(C ϖ : MRing ι O)}) :=
+      have hJ : IsMultiHomogIdeal (P ⊔ Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}) :=
         hSup O K ι P (C ϖ) 0 hP.multiProj.multiHomog (isWeightedHomogeneous_C _ _)
       have hWh : IsMultiHomogIdeal W := hMin O K ι _ W hJ hWmin
-      have hϖP : (C ϖ : MRing ι O) ∉ P := by
+      have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
         intro hmem
-        have : ϖ ∈ P.comap (C : O →+* MRing ι O) := hmem
+        have : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := hmem
         rw [hP.noTorsion, Ideal.mem_bot] at this
         exact hϖ.ne_zero this
       refine ⟨⟨hsp, hSpecHomog O K ι W hWh, hrel.mp hWrel⟩, ?_⟩

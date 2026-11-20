@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundleChartSection
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundleSectionFormsTools
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PProjIdealFormValue
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -181,7 +182,7 @@ theorem chartMono_mul (c : ∀ k, ι k) (α α' : K → ℕ) :
 
 theorem chartMono_pow_dvd (c : ∀ k, ι k) (δ : K → ℕ) (D : ℕ) :
     chartMono (F := F) M c δ ^ D ∣
-      (∏ k, (X ⟨some k, c k⟩ : MRing (bundleIdx ι M) F)) ^ (D * ∑ k, δ k) := by
+      (∏ k, (X ⟨some k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M))) ^ (D * ∑ k, δ k) := by
   rw [chartMono, ← Finset.prod_pow, ← Finset.prod_pow]
   refine Finset.prod_dvd_prod_of_dvd _ _ fun k _ => ?_
   rw [← pow_mul]
@@ -193,7 +194,7 @@ theorem chartMono_pow_dvd (c : ∀ k, ι k) (δ : K → ℕ) (D : ℕ) :
 theorem chartRing_forms (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) (c : ∀ k, ι k) (hc : segreVec y c ≠ 0) {u : Ω}
     (hu : u ∈ chartRing F (segreVec y) c) :
-    ∃ (n : ℕ) (U : MRing (bundleIdx ι M) F), IsMultiHomog U (liftNat fun _ => n) ∧
+    ∃ (n : ℕ) (U : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)), IsMultiHomog U (liftNat fun _ => n) ∧
       eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ t) U =
         algebraMap Ω Φ (u * segreVec y c ^ n) := by
   have hlift : ∀ n n' : ℕ, liftNat (K := K) (fun _ => n + n') = liftNat (fun _ => n) + liftNat (fun _ => n') := by
@@ -238,7 +239,7 @@ theorem chartRing_forms (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E
 theorem chartRing_forms_fin (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) (c : ∀ k, ι k) (hc : segreVec y c ≠ 0) {L : ℕ}
     {u : Fin L → Ω} (hu : ∀ l, u l ∈ chartRing F (segreVec y) c) :
-    ∃ (n : ℕ) (U : Fin L → MRing (bundleIdx ι M) F), (∀ l, IsMultiHomog (U l) (liftNat fun _ => n)) ∧
+    ∃ (n : ℕ) (U : Fin L → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)), (∀ l, IsMultiHomog (U l) (liftNat fun _ => n)) ∧
       ∀ l, eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ t) (U l) =
         algebraMap Ω Φ (u l * segreVec y c ^ n) := by
   have h := fun l => chartRing_forms (M := M) y w φ t c hc (hu l)
@@ -256,7 +257,7 @@ theorem chartRing_forms_fin (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) 
     rw [Finset.prod_pow, mul_assoc, ← segreVec, ← pow_add, Nat.add_sub_cancel' hle]
 
 theorem eval_eq_zero_of_mem_projIdeal (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
-    (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) {f : MRing (bundleIdx ι M) F}
+    (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)}
     (hf : f ∈ projIdeal F y w φ t) :
     eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ t) f = 0 := by
   have h : (MvPolynomial.eval (fun _ : Option K => (1 : Φ))).comp
@@ -276,7 +277,7 @@ section New
 variable {M N : ℕ} {E : Type} [AddCommGroup E] [Module Ω E] {Φ : Type} [Field Φ] [Algebra Ω Φ]
 
 theorem component_mem_projIdeal (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
-    (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) {q : MRing (bundleIdx ι M) F}
+    (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) {q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)}
     (hq : q ∈ projIdeal F y w φ t) (d : Option K → ℕ) :
     weightedHomogeneousComponent (blockWeight (bundleIdx ι M)) d q ∈ projIdeal F y w φ t := by
   classical
@@ -296,7 +297,7 @@ theorem component_mem_projIdeal (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin
 
 theorem eval_trunc_eq_zero (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) {t : Fin N → Φ} (ht : AlgebraicIndependent Ω t) (i : ℕ)
-    {q : MRing (bundleIdx ι M) F} (hq : q ∈ projIdeal F y w φ (truncCoord t i)) (τ : Fin N → Φ) :
+    {q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)} (hq : q ∈ projIdeal F y w φ (truncCoord t i)) (τ : Fin N → Φ) :
     eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ (truncCoord τ i)) q = 0 := by
   classical
   let G : (Σ o, bundleIdx ι M o) → MvPolynomial (Fin N) Ω := fun p =>
@@ -326,9 +327,9 @@ theorem eval_trunc_eq_zero (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) �
 def substDeg (e d : Option K → ℕ) : Option K → ℕ :=
   fun o => Option.elim o 0 (fun k => d (some k)) + d none * e o
 
-theorem bind₁_isMultiHomog (g : (Σ o, bundleIdx ι M o) → MRing (bundleIdx ι M) F) (e : Option K → ℕ)
+theorem bind₁_isMultiHomog (g : (Σ o, bundleIdx ι M o) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) (e : Option K → ℕ)
     (hs : ∀ k (p : ι k), g ⟨some k, p⟩ = X ⟨some k, p⟩) (hn : ∀ l, IsMultiHomog (g ⟨none, l⟩) e)
-    {q : MRing (bundleIdx ι M) F} {d : Option K → ℕ} (hq : IsMultiHomog q d) :
+    {q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)} {d : Option K → ℕ} (hq : IsMultiHomog q d) :
     IsMultiHomog (bind₁ g q) (substDeg e d) := by
   let Λ : (Option K → ℕ) →+ (Option K → ℕ) :=
     { toFun := substDeg e
@@ -361,7 +362,7 @@ theorem bind₁_isMultiHomog (g : (Σ o, bundleIdx ι M o) → MRing (bundleIdx 
   rw [hΛ]
   exact this
 
-theorem bind₁_scale (u : MRing (bundleIdx ι M) F) {q : MRing (bundleIdx ι M) F} {d : Option K → ℕ}
+theorem bind₁_scale (u : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) {q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)} {d : Option K → ℕ}
     (hq : IsMultiHomog q d) :
     bind₁ (fun v => u ^ blockWeight (bundleIdx ι M) v none * X v) q = u ^ d none * q := by
   conv_lhs => rw [← q.support_sum_monomial_coeff]
@@ -392,7 +393,7 @@ theorem bind₁_sub_mem {σ R : Type*} [CommRing R] (I : Ideal (MvPolynomial σ 
         (bind₁ g' p - bind₁ g p) * g' v + bind₁ g p * (g' v - g v) by ring]
     exact I.add_mem (I.mul_mem_right _ hp) (I.mul_mem_left _ (h v))
 
-theorem isMultiHomog_sub {f g : MRing (bundleIdx ι M) F} {d : Option K → ℕ} (hf : IsMultiHomog f d)
+theorem isMultiHomog_sub {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)} {d : Option K → ℕ} (hf : IsMultiHomog f d)
     (hg : IsMultiHomog g d) : IsMultiHomog (f - g) d :=
   (mem_weightedHomogeneousSubmodule F _ _ _).mp (Submodule.sub_mem _
     ((mem_weightedHomogeneousSubmodule F _ _ _).mpr hf) ((mem_weightedHomogeneousSubmodule F _ _ _).mpr hg))
@@ -407,7 +408,7 @@ theorem exists_section_form (y : (Σ k, ι k) → Ω) (B : ChartBundle F (segreV
     (w : Module.Basis (Fin N) Ω E) (b : Fin N → K → ℤ) (hfl : IsFlagFrame y B w b) (a : K → ℤ)
     (φ : Fin M → Module.Dual Ω E) (hφ : IsTwistedDualGens y B a φ) (t : Fin N → Φ) (i : Fin N)
     (c : ∀ k, ι k) (hsc : segreVec y c ≠ 0) :
-    ∃ (dl : Option K → ℕ) (β : K → ℕ) (f : MRing (bundleIdx ι M) F), IsMultiHomog f dl ∧
+    ∃ (dl : Option K → ℕ) (β : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)), IsMultiHomog f dl ∧
       (fun o => (dl o : ℤ) - liftNat β o) = zetaDeg + liftDeg (b i - a) ∧
       eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ (truncCoord t ((i : ℕ) + 1))) f =
         t i * eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω))
@@ -453,7 +454,7 @@ theorem exists_section_form (y : (Σ k, ι k) → Ω) (B : ChartBundle F (segreV
     have h4 := neg_abs_le (b i k)
     simp only [Pi.add_apply, Pi.neg_apply, α, β]
     omega
-  let f : MRing (bundleIdx ι M) F := ∑ l, U l * chartMono M c α * X ⟨none, l⟩
+  let f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) := ∑ l, U l * chartMono M c α * X ⟨none, l⟩
   have hg : eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ (truncCoord t ((i : ℕ) + 1)))
       (chartMono M c β) = algebraMap Ω Φ (∏ k, y ⟨k, c k⟩ ^ β k) := eval_chartMono y w φ _ c β
   have hf : eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ (truncCoord t ((i : ℕ) + 1))) f

@@ -120,8 +120,8 @@ def DiagDivStatement {x : ι → Ω} (B : ChartBundle ℤ x 2 E) (e : Module.Bas
       ∀ (n : ℕ) (g h : MRing (wwIdx ι ν κ)), IsMultiHomog g (wwDeg n 1) →
         IsMultiHomog h (wwDeg (n + 3) 0) → h ∉ wwIdeal x δ e φ (a 0) (a 1) →
         aeval (wwCoord x δ e φ (a 0) (a 1)) g = diagSec a * aeval (wwCoord x δ e φ (a 0) (a 1)) h →
-          toZCycle (divCycle (wwIdeal x δ e φ (a 0) (a 1)) g) -
-              toZCycle (divCycle (wwIdeal x δ e φ (a 0) (a 1)) h) =
+          toZCycle ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (wwIdeal x δ e φ (a 0) (a 1)) g) W : ℤ))) -
+              toZCycle ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (wwIdeal x δ e φ (a 0) (a 1)) h) W : ℤ))) =
             Finsupp.single (wwIdeal x δ e φ (a 0) (a 0)) 1
 
 end Models
@@ -179,8 +179,8 @@ def DiagPullStatement {Ω : Type*} [Field Ω] {E : Type*} [AddCommGroup E] [Modu
     (φ : κ → E →ₗ[Ω] Ω) : Prop :=
   ∀ a₀ : Φ,
     (∀ (s : MRing (yyIdx ι ν κ)) (d : YBlk → ℕ), IsMultiHomog s d →
-      divCycle (wwIdeal x δ e φ a₀ a₀) (rename (yyEmb 0) s) =
-        divCycle (wwIdeal x δ e φ a₀ a₀) (rename (yyEmb 1) s)) ∧
+      (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (wwIdeal x δ e φ a₀ a₀) (rename (yyEmb 0) s)) W : ℤ)) =
+        (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (wwIdeal x δ e φ a₀ a₀) (rename (yyEmb 1) s)) W : ℤ))) ∧
     (∀ (A : HermLine (yyIdx ι ν κ)) (A₀ A₁ : HermLine (wwIdx ι ν κ)), IsHermPull 0 A A₀ →
       IsHermPull 1 A A₁ → ∀ z ∈ mcPts (wwIdeal x δ e φ a₀ a₀), ∃ c : ℂ, c ≠ 0 ∧
         (∀ k : κ, z ⟨.line1, k⟩ = c * z ⟨.line0, k⟩) ∧ A₁.h z = ‖c‖ ^ A.a .line * A₀.h z) ∧

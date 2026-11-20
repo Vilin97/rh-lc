@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BlowUpPushHypothesesExample
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -14,7 +15,7 @@ variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type} {R : Type*} [
 
 theorem powMonomial_isMultiHomog (e : K → ℕ) (i : ∀ k, ι k) :
     IsMultiHomog (powMonomial (R := R) e i) e := by
-  have h := IsWeightedHomogeneous.prod (R := R) Finset.univ (fun k => (X ⟨k, i k⟩ : MRing ι R) ^ e k)
+  have h := IsWeightedHomogeneous.prod (R := R) Finset.univ (fun k => (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ^ e k)
     (fun k => e k • blockWeight ι ⟨k, i k⟩) (fun k _ => (isWeightedHomogeneous_X R _ _).pow (e k))
   have key : (∑ k, e k • blockWeight ι ⟨k, i k⟩) = e := by
     funext k'
@@ -24,12 +25,12 @@ theorem powMonomial_isMultiHomog (e : K → ℕ) (i : ∀ k, ι k) :
 
 omit [Fintype K] [DecidableEq K] in
 
-theorem liftForm_C_eq {J : Type} (a : R) : liftForm (ι := ι) (J := J) (C a : MRing ι R) = C a := by
+theorem liftForm_C_eq {J : Type} (a : R) : liftForm (ι := ι) (J := J) (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) = C a := by
   simp [liftForm]
 
 omit [Fintype K] [DecidableEq K] in
 
-theorem cycEval_congr_on_support {n n' : Ideal (MRing ι R) → ℤ} (Z : Ideal (MRing ι R) → ℤ)
+theorem cycEval_congr_on_support {n n' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ)
     (h : ∀ W, Z W ≠ 0 → n W = n' W) : cycEval n Z = cycEval n' Z := by
   unfold cycEval
   refine finsum_congr fun W => ?_
@@ -40,8 +41,8 @@ theorem cycEval_congr_on_support {n n' : Ideal (MRing ι R) → ℤ} (Z : Ideal 
 omit [Fintype K] [DecidableEq K] in
 open Classical in
 
-theorem cycEval_ite (p : Ideal (MRing ι R) → Prop) (A B : Ideal (MRing ι R) → ℤ)
-    (Z : Ideal (MRing ι R) → ℤ) (hZ : (Function.support Z).Finite) :
+theorem cycEval_ite (p : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → Prop) (A B : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ)
+    (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) (hZ : (Function.support Z).Finite) :
     cycEval (fun W => if p W then A W else B W) Z =
       cycEval (fun W => if p W then A W else 0) Z + cycEval (fun W => if p W then 0 else B W) Z := by
   unfold cycEval
@@ -86,8 +87,8 @@ theorem BlowUpInvariance.proof (hvert : BlowUpVerticalPush.Statement.{u})
     rw [vecCons_liftMDeg]
     exact hdiv O ϖ hϖ K ι _ P (d + 1) hP b f g hD.1 _ _ hN ⟨some none, hfm⟩ _
 
-  have hinv : ∀ W : Ideal (MRing ι O), W.IsPrime → P ≤ W → IsRelevant W → (C ϖ : MRing ι O) ∉ W →
-      ∃ j, ∀ j', ∃ v w : MRing ι O, v ∉ W ∧
+  have hinv : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), W.IsPrime → P ≤ W → IsRelevant W → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W →
+      ∃ j, ∀ j', ∃ v w : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, v ∉ W ∧
         v * blowUpGens s g f m e j' - w * blowUpGens s g f m e j ∈ P := by
     intro W hW hPW hrel hϖW
     choose i hi using hrel
@@ -119,11 +120,11 @@ theorem BlowUpInvariance.proof (hvert : BlowUpVerticalPush.Statement.{u})
     exact Fin.cases rfl (fun i => rfl) i
   rw [← htrans (fun W => cycEval (fun G => vNum G L) (ratDiv W f g))]
   refine cycEval_congr_on_support _ fun W hW => ?_
-  by_cases hϖ' : (C ϖ : MRing (extIdx ι (BlowUpIdx ι)) O) ∈ W
+  by_cases hϖ' : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∈ W
   · simp only [if_pos hϖ']
   rw [if_neg hϖ', if_neg hϖ']
   obtain ⟨hWs, hWeq⟩ := hpt W hW hϖ'
-  have hϖW : (C ϖ : MRing ι O) ∉ W.comap (liftForm (ι := ι) (J := BlowUpIdx ι) (R := O)) := by
+  have hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W.comap (liftForm (ι := ι) (J := BlowUpIdx ι) (R := O)) := by
     rwa [Ideal.mem_comap, liftForm_C_eq]
   generalize W.comap (liftForm (ι := ι) (J := BlowUpIdx ι) (R := O)) = V at hWs hWeq hϖW ⊢
   have hWm := hcomp O ϖ hϖ K ι P d hP c s hs hsP _ hWs hϖW

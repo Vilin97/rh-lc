@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.AnalyticResolutionHypothesesProjectiveLine
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeN
 import ReciprocityTheory.AnalyticForms.PotentialTheory.LocDens
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -17,7 +18,7 @@ section Lemmas
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem eval_tsmul_of_isMultiHomog {s : MRing ι ℂ} {a : K → ℕ} (hs : IsMultiHomog s a)
+theorem eval_tsmul_of_isMultiHomog {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι} {a : K → ℕ} (hs : IsMultiHomog s a)
     (c : K → ℂ) (z : MCone ι) :
     eval (tsmul c z) s = (∏ k, c k ^ a k) * eval z s := by
   rw [eval_eq', eval_eq', Finset.mul_sum]
@@ -40,7 +41,7 @@ theorem eval_tsmul_of_isMultiHomog {s : MRing ι ℂ} {a : K → ℕ} (hs : IsMu
   rw [hprod]
   ring
 
-theorem secNorm_tsmul {P : Ideal (MRing ι ℂ)} {A : HLine ι} {s : MRing ι ℂ} (hs : IsFormSec P A s)
+theorem secNorm_tsmul {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} {A : HLine ι} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι} (hs : IsFormSec P A s)
     {c : K → ℂ} (hc : ∀ k, c k ≠ 0) (z : MCone ι) :
     secNorm A s (tsmul c z) = secNorm A s z := by
   obtain ⟨a, ha, hsa, -⟩ := hs
@@ -64,7 +65,7 @@ theorem abs_log_div_le' {a b : ℝ} (ha : 0 ≤ a) (hb : 0 < b) :
 
 namespace Res
 
-variable {P : Ideal (MRing ι ℂ)} {e : ℕ} (R : Res ι P e)
+variable {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} {e : ℕ} (R : Res ι P e)
 
 theorem isGoodAtlas : R.R.IsGoodAtlas R.atlas := R.R.exists_atlas.choose_spec
 

@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsP
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsAdjoinTrdegAdd
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsPairConeLinesIndep
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsPairConeAlg
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -28,7 +29,7 @@ theorem PairBundleTrdeg.proof (hadd : AdjoinTrdegAdd.Statement) (hind : PairCone
   have hOΩ : Function.Injective (algebraMap O Ω) := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
-    have hmem : a ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := by
+    have hmem : a ∈ (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
       rw [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply, ha,
         map_zero]
     rw [hV.noTorsion] at hmem
@@ -38,7 +39,7 @@ theorem PairBundleTrdeg.proof (hadd : AdjoinTrdegAdd.Statement) (hind : PairCone
       MvPolynomial.algebraMap_eq]
     exact (C_injective _ _).comp ((algebraMap Ω Φ).injective.comp hOΩ)
 
-  have hZ : Algebra.trdeg O (MRing (bundleIdx (bundleIdx ι M) M') O ⧸ pointIdeal O (pairProjCoord y e φ φ' t)) =
+  have hZ : Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M') ⧸ pointIdeal O (pairProjCoord y e φ φ' t)) =
       Algebra.trdeg O (Algebra.adjoin O (Set.range gZ)) := by
     have e1 := (Ideal.quotientKerEquivRange (pointConeMap O (pairProjCoord y e φ φ' t))).trdeg_eq
     have e2 : (pointConeMap O (pairProjCoord y e φ φ' t)).range = Algebra.adjoin O (Set.range gZ) :=
@@ -55,7 +56,7 @@ theorem PairBundleTrdeg.proof (hadd : AdjoinTrdegAdd.Statement) (hind : PairCone
     apply MvPolynomial.algHom_ext
     intro q
     simp [j, gV, pointConeMap, MvPolynomial.algebraMap_apply]
-  have hV' : Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) = Algebra.trdeg O (Algebra.adjoin O (Set.range gV)) := by
+  have hV' : Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) = Algebra.trdeg O (Algebra.adjoin O (Set.range gV)) := by
     have e1 := (Ideal.quotientKerEquivRange (pointConeMap O y)).trdeg_eq
     have e2 := ((pointConeMap O y).range.equivMapOfInjective j hw).trdeg_eq
     rw [← AlgHom.range_comp, hjc, aeval_range] at e2

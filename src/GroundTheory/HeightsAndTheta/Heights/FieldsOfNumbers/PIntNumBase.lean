@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PGradedFinite
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -16,7 +17,7 @@ section Point
 variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
   [∀ k, Fintype (ι k)]
 
-def blockMonomial (i : ∀ k, ι k) (m : K → ℕ) : MRing ι F :=
+def blockMonomial (i : ∀ k, ι k) (m : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι :=
   ∏ k, X ⟨k, i k⟩ ^ m k
 
 omit [∀ k, Fintype (ι k)] in
@@ -24,7 +25,7 @@ omit [∀ k, Fintype (ι k)] in
 theorem blockMonomial_isMultiHomog (i : ∀ k, ι k) (m : K → ℕ) :
     IsMultiHomog (blockMonomial (F := F) i m) m := by
   have h := IsWeightedHomogeneous.prod (R := F) (w := blockWeight ι) Finset.univ
-    (fun k => (X ⟨k, i k⟩ : MRing ι F) ^ m k) (fun k => m k • blockWeight ι ⟨k, i k⟩)
+    (fun k => (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ m k) (fun k => m k • blockWeight ι ⟨k, i k⟩)
     (fun k _ => (isWeightedHomogeneous_X F (blockWeight ι) ⟨k, i k⟩).pow (m k))
   have hm : (∑ k, m k • blockWeight ι ⟨k, i k⟩) = m := by
     funext k'
@@ -40,8 +41,8 @@ theorem blockMonomial_add (i : ∀ k, ι k) (m n : K → ℕ) :
 
 omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
-theorem blockMonomial_mk_ne_zero (P : Ideal (MRing ι F)) [P.IsPrime] (i : ∀ k, ι k)
-    (hi : ∀ k, (X ⟨k, i k⟩ : MRing ι F) ∉ P) (m : K → ℕ) :
+theorem blockMonomial_mk_ne_zero (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] (i : ∀ k, ι k)
+    (hi : ∀ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P) (m : K → ℕ) :
     Ideal.Quotient.mk P (blockMonomial i m) ≠ 0 := by
   unfold blockMonomial
   rw [map_prod, Finset.prod_ne_zero_iff]
@@ -64,7 +65,7 @@ theorem IntNumBase.proof (h1 : MixedDiffConst.Statement.{u}) : IntNumBase.Statem
   set c := intNum F P (n := 0) ![] with hc
   obtain ⟨M0, hM0⟩ := Filter.eventually_atTop.mp hev
   choose i hi using hP.relevant
-  set A := MRing ι F ⧸ P
+  set A := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P
   set L := FractionRing A
   let xm : (K → ℕ) → L := fun m => algebraMap A L (Ideal.Quotient.mk P (blockMonomial i m))
   have hxm : ∀ m, xm m ≠ 0 := fun m => by
@@ -81,7 +82,7 @@ theorem IntNumBase.proof (h1 : MixedDiffConst.Statement.{u}) : IntNumBase.Statem
     rw [hφ, hφ, div_left_inj' (hxm m)] at hab
     exact IsFractionRing.injective A L hab
   let U : (K → ℕ) → Submodule F L := fun m => (gradedPiece P m).map (φ m)
-  have memU : ∀ m y, y ∈ U m ↔ ∃ f : MRing ι F, IsMultiHomog f m ∧
+  have memU : ∀ m y, y ∈ U m ↔ ∃ f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog f m ∧
       y = algebraMap A L (Ideal.Quotient.mk P f) / xm m := fun m y => by
     simp only [U, gradedPiece, Submodule.mem_map, hφ]
     constructor

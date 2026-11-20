@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -25,17 +26,17 @@ attribute [local instance] MvPolynomial.algebraMvPolynomial
 theorem GenericFibProps.proof : GenericFibProps.Statement := by
   intro O _ _ _ K _ _ ι _ P hP hT
   set φ := algebraMap O (FractionRing O) with hφ
-  let M : Submonoid (MRing ι O) := (nonZeroDivisors O).map (C (σ := Σ k, ι k))
+  let M : Submonoid (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := (nonZeroDivisors O).map (C (σ := Σ k, ι k))
   have : IsLocalization M (MRing ι (FractionRing O)) :=
     MvPolynomial.isLocalization (nonZeroDivisors O) (FractionRing O)
-  have hmap : algebraMap (MRing ι O) (MRing ι (FractionRing O)) = MvPolynomial.map φ := rfl
-  have hdisj : Disjoint (M : Set (MRing ι O)) P := by
+  have hmap : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (MRing ι (FractionRing O)) = MvPolynomial.map φ := rfl
+  have hdisj : Disjoint (M : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) P := by
     rw [Set.disjoint_left]
     rintro _ ⟨m, hm, rfl⟩ hmP
-    have : m ∈ P.comap (C : O →+* MRing ι O) := hmP
+    have : m ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := hmP
     rw [hT, Ideal.mem_bot] at this
     exact nonZeroDivisors.ne_zero hm this
-  have hgen : genFib P = Ideal.map (algebraMap (MRing ι O) (MRing ι (FractionRing O))) P := rfl
+  have hgen : genFib P = Ideal.map (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (MRing ι (FractionRing O))) P := rfl
   have hprime : (genFib P).IsPrime :=
     hgen ▸ IsLocalization.isPrime_of_isPrime_disjoint M _ P hP.isPrime hdisj
   have hunder : (genFib P).comap (MvPolynomial.map φ) = P :=

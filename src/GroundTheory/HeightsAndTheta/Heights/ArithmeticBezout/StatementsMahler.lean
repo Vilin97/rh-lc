@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.MahlerSectionBasic
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ContinuousHermNormGroup
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -155,7 +156,7 @@ def CycleSectionData.Statement : Prop :=
 
 def DivCyclePrime.Statement : Prop :=
   ∀ (n : ℕ) (W : Ideal (MvPolynomial (Fin n) ℂ)) (u : Fin n → ℂ),
-    IsProjPrime W → ∀ W' ∈ (divCycle W u).support, IsProjPrime W'
+    IsProjPrime W → ∀ W' ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) W : ℤ))).support, IsProjPrime W'
 
 def SpecFirstHomog.Statement : Prop :=
   ∀ (n k δ : ℕ) (f : MvPolynomial (Fin (k + 1) × Fin n) ℂ) (u : Fin n → ℂ),
@@ -163,12 +164,12 @@ def SpecFirstHomog.Statement : Prop :=
 
 def SupportCycleSection.Statement : Prop :=
   ∀ (n : ℕ) (Z : ProjCycle ℂ n) (u : Fin n → ℂ),
-    (∀ W ∈ Z.support, (divCycle W u).support ⊆ (cycleSection Z u).support) ∧
-      ∀ W' ∈ (cycleSection Z u).support, ∃ W ∈ Z.support, W' ∈ (divCycle W u).support
+    (∀ W ∈ Z.support, ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) W : ℤ))).support ⊆ (cycleSection Z u).support) ∧
+      ∀ W' ∈ (cycleSection Z u).support, ∃ W ∈ Z.support, W' ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) W : ℤ))).support
 
 def CycleIntegralSection.Statement : Prop :=
   ∀ (n : ℕ) (h : HermNorm n) (Z : ProjCycle ℂ n) (u : Fin n → ℂ) (e : ℕ) (g : (Fin n → ℂ) → ℝ),
-    cycleIntegral h (cycleSection Z u) e g = ∑ W ∈ Z.support, (Z W : ℝ) * cycleIntegral h (divCycle W u) e g
+    cycleIntegral h (cycleSection Z u) e g = ∑ W ∈ Z.support, (Z W : ℝ) * cycleIntegral h ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) W : ℤ))) e g
 
 def ChowFormAssoc.Statement : Prop :=
   ∀ (F : Type) [Field F] (n k : ℕ) (I : Ideal (MvPolynomial (Fin n) F))
@@ -203,8 +204,8 @@ def SpecFirstSwapMahler.Statement : Prop :=
 
 def ProperSymm.Statement : Prop :=
   ∀ (n : ℕ) (W : Ideal (MvPolynomial (Fin n) ℂ)) (u u' : Fin n → ℂ),
-    IsProjPrime W → linForm u ∉ W → linForm u' ∉ W → IsAdmissible (divCycle W u) u' →
-      IsAdmissible (divCycle W u') u
+    IsProjPrime W → linForm u ∉ W → linForm u' ∉ W → IsAdmissible ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) W : ℤ))) u' →
+      IsAdmissible ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))) u
 
 def ProperSymmCycle.Statement : Prop :=
   ∀ (n : ℕ) (Z : ProjCycle ℂ n) (u u' : Fin n → ℂ),
@@ -298,7 +299,7 @@ theorem cycleSection_line (u : Fin 2 → ℂ) :
   simp [cycleSection]
 
 theorem line_proper (a b : Fin 2) (hab : a ≠ b) :
-    IsAdmissible (divCycle (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) (coord a)) (coord b) := by
+    IsAdmissible ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) (coord a)) W : ℤ))) (coord b) := by
   intro W' hW' hXb
   rw [linForm_coord] at hXb
   have hmem : W' ∈ relComps ((⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) ⊔ Ideal.span {linForm (coord a)}) := by
@@ -335,7 +336,7 @@ theorem line_pair :
 theorem line_prime_pair :
     IsProjPrime (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) ∧ linForm (coord 0) ∉ (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) ∧
       linForm (coord 1) ∉ (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) ∧
-      IsAdmissible (divCycle (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) (coord 0)) (coord 1) := by
+      IsAdmissible ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) (coord 0)) W : ℤ))) (coord 1) := by
   refine ⟨LineChowForm.isProjPrime_line, ?_, ?_, line_proper 0 1 (by decide)⟩ <;>
   · rw [linForm_coord, Ideal.mem_bot]; exact X_ne_zero _
 
@@ -357,7 +358,7 @@ theorem ProperSymm.hypotheses_inhabited :
     IsProjPrime (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) ∧
       linForm (MahlerInhabit.coord 0) ∉ (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) ∧
       linForm (MahlerInhabit.coord 1) ∉ (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) ∧
-      IsAdmissible (divCycle (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) (MahlerInhabit.coord 0)) (MahlerInhabit.coord 1) :=
+      IsAdmissible ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (⊥ : Ideal (MvPolynomial (Fin 2) ℂ)) (MahlerInhabit.coord 0)) W : ℤ))) (MahlerInhabit.coord 1) :=
   MahlerInhabit.line_prime_pair
 
 theorem AdmissibleAE.hypotheses_inhabited :

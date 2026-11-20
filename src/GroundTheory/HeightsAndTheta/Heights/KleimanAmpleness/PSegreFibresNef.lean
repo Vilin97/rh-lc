@@ -5,12 +5,13 @@ import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailBis
 import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailTer
 import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailAlt
 import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsSideSide
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization
 
 open MvPolynomial
-open GroundTheory.Heights₂.Heights.NumbersDVR (MRing IsMultiProjPrime intNum)
+open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver intNum IsMultiProjPrime)
 open GroundTheory.Heights₂.Heights.FieldNumbers (relDim)
 open ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH (mIdealOver)
 

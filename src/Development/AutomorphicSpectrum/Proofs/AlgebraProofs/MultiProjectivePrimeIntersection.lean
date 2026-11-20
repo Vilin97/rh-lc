@@ -8,6 +8,7 @@ import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.FlagMinor
 import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.PluckerCoord
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBundles
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.SameGenericSymm
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial GlobalTheory.CompanionTheory.Ar.Num GroundTheory.Heights₂.Heights.NumbersDVR
 open ReciprocityTheory.ChartRestriction.G.Geo (ChartBundle chartRing)
 open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.Bundles (mseg mcIdeal chartMon joinCoord bcCoord pullDeg liftVar fnField ck rootNum SameGeneric LatLE IsPull IsPullBC IsSubQuot QuotIso IsFrobPres FlagModel modelDeg)
@@ -19,7 +20,7 @@ noncomputable section
 
 theorem rename_liftVar_mem_pointIdeal {R Ω : Type*} [CommRing R] [Field Ω] [Algebra R Ω]
     {K K' : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {ι' : K' → Type}
-    (x : (Σ k, ι k) → Ω) (z : (Σ k, ι' k) → Ω) {f : MRing ι R} (hf : f ∈ pointIdeal R x) :
+    (x : (Σ k, ι k) → Ω) (z : (Σ k, ι' k) → Ω) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hf : f ∈ pointIdeal R x) :
     rename (liftVar ι') f ∈ pointIdeal R (joinCoord x z) := by
   have key : ((rename (Sum.inl : K → K ⊕ K') : MvPolynomial K Ω →ₐ[Ω] _).restrictScalars R).comp
       (pointConeMap R x) =
@@ -58,9 +59,9 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 theorem vNumL_eq_zero_of_dim_le {ϖ : O} (hϖ : Irreducible ϖ)
     {K' : Type} [Fintype K'] [DecidableEq K'] {ι' : K' → Type} [∀ o, Fintype (ι' o)]
-    {W : Ideal (MRing ι' O)} (hW : IsMultiProjPrime W) (hϖW : (C ϖ : MRing ι' O) ∈ W)
+    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι')} (hW : IsMultiProjPrime W) (hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι') ∈ W)
     {K : Type} [Fintype K] [DecidableEq K] (j : K ↪ K') {n : ℕ}
-    (hdim : ringKrullDim (MRing ι' O ⧸ W) ≤ ((n + Fintype.card K' : ℕ) : WithBot ℕ∞))
+    (hdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι' ⧸ W) ≤ ((n + Fintype.card K' : ℕ) : WithBot ℕ∞))
     (hcon : GroundTheory.Heights₂.Heights.FieldNumbers.relDim
       (GroundTheory.Heights₂.Heights.FieldNumbers.contractPrime j (specialIdeal W)) <
         ((n : ℕ) : WithBot (WithTop ℤ)))
@@ -97,7 +98,7 @@ theorem vNumL_eq_zero_of_dim_le {ϖ : O} (hϖ : Irreducible ϖ)
 theorem specialIdeal_le_contract {Ω : Type} [Field Ω] [Algebra O Ω]
     {K K' : Type} [Fintype K] [DecidableEq K] [DecidableEq K'] {ι : K → Type} [∀ k, Fintype (ι k)]
     {ι' : K' → Type} (x : (Σ k, ι k) → Ω) (z : (Σ k, ι' k) → Ω)
-    {W : Ideal (MRing (Sum.elim ι ι') O)} (hW : pointIdeal O (joinCoord x z) ≤ W) :
+    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ι'))} (hW : pointIdeal O (joinCoord x z) ≤ W) :
     specialIdeal (pointIdeal O x) ≤
       (GroundTheory.Heights₂.Heights.FieldNumbers.contractPrime (Function.Embedding.inl : K ↪ K ⊕ K')
         (specialIdeal W) : Ideal (MRing ι (IsLocalRing.ResidueField O))) := by
@@ -110,7 +111,7 @@ theorem relDim_contract_lt {Ω : Type} [Field Ω] [Algebra O Ω] {ϖ : O} (hϖ :
     {K K' : Type} [Fintype K] [DecidableEq K] [DecidableEq K'] {ι : K → Type} [∀ k, Fintype (ι k)]
     {ι' : K' → Type} (x : (Σ k, ι k) → Ω) (z : (Σ k, ι' k) → Ω) {d n : ℕ} (hdn : d < n)
     (hV : IsModelOver (pointIdeal O x) d)
-    {W : Ideal (MRing (Sum.elim ι ι') O)} (hW : pointIdeal O (joinCoord x z) ≤ W) :
+    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ι'))} (hW : pointIdeal O (joinCoord x z) ≤ W) :
     GroundTheory.Heights₂.Heights.FieldNumbers.relDim
       (GroundTheory.Heights₂.Heights.FieldNumbers.contractPrime (Function.Embedding.inl : K ↪ K ⊕ K')
         (specialIdeal W)) < ((n : ℕ) : WithBot (WithTop ℤ)) := by
@@ -123,7 +124,7 @@ end GlobalTheory.CompanionTheory.Ar.Num.Contract
 
 namespace GlobalTheory.CompanionTheory.Ar.Num
 
-theorem vNumL_pull_eq_zero_of_contracted : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (Ω : Type) [Field Ω] [Algebra O Ω] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (x : (Σ k, ι k) → Ω) (ϖ : O), Irreducible ϖ → ∀ d r : ℕ, 0 < r → IsModelOver (pointIdeal O x) d → ∀ (K' : Type) [Fintype K'] [DecidableEq K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)] (z : (Σ k, ι' k) → Ω) (W : Ideal (MRing (Sum.elim ι ι') O)), IsMultiProjPrime W → pointIdeal O (joinCoord x z) ≤ W → (C ϖ : MRing (Sum.elim ι ι') O) ∈ W → ∀ l : List (K → ℤ), l.length = d + r → ringKrullDim (MRing (Sum.elim ι ι') O ⧸ W) ≤ ((d + r + Fintype.card (K ⊕ K') : ℕ) : WithBot ℕ∞) → vNumL W (l.map (pullDeg (K' := K'))) = 0 := by
+theorem vNumL_pull_eq_zero_of_contracted : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (Ω : Type) [Field Ω] [Algebra O Ω] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (x : (Σ k, ι k) → Ω) (ϖ : O), Irreducible ϖ → ∀ d r : ℕ, 0 < r → IsModelOver (pointIdeal O x) d → ∀ (K' : Type) [Fintype K'] [DecidableEq K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)] (z : (Σ k, ι' k) → Ω) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ι'))), IsMultiProjPrime W → pointIdeal O (joinCoord x z) ≤ W → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ι')) ∈ W → ∀ l : List (K → ℤ), l.length = d + r → ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ι') ⧸ W) ≤ ((d + r + Fintype.card (K ⊕ K') : ℕ) : WithBot ℕ∞) → vNumL W (l.map (pullDeg (K' := K'))) = 0 := by
   intro O _ _ _ Ω _ _ K _ _ ι _ x ϖ hϖ d r hr hV K' _ _ ι' _ z W hW hPW hϖW l hl hdim
   refine Contract.vNumL_eq_zero_of_dim_le hϖ hW hϖW (Function.Embedding.inl : K ↪ K ⊕ K')
     (n := d + r) hdim (Contract.relDim_contract_lt hϖ x z (by omega) hV hPW)

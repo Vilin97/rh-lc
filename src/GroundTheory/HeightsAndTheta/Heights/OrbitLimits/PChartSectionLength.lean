@@ -7,12 +7,13 @@ import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LengthLocalizedModu
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PComplexMinimalPrimesContract
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PPrimeComplexRadical
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Targets
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing multAt divSuppArith)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver divSuppArith multAt)
 open GroundTheory.Heights₂.Heights (localMult localMult_map_of_flat map_eq_maximalIdeal_of_isRadical)
 
 attribute [local instance] MvPolynomial.algebraMvPolynomial

@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSectionHyperplaneAvoid
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -36,7 +37,7 @@ theorem formSpace_ne_top {n : ℕ} {I : Ideal (MvPolynomial (Fin n) ℂ)} (hI : 
   rwa [this] at h
 
 theorem isRelevant_of_mem_support {n : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ)} {u : Fin n → ℂ}
-    {W : Ideal (MvPolynomial (Fin n) ℂ)} (hW : W ∈ (divCycle J u).support) : IsRelevant W := by
+    {W : Ideal (MvPolynomial (Fin n) ℂ)} (hW : W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ))).support) : IsRelevant W := by
   rw [Finsupp.mem_support_iff] at hW
   simp only [divCycle, fundCycle, Finsupp.onFinset_apply] at hW
   by_contra h
@@ -44,7 +45,7 @@ theorem isRelevant_of_mem_support {n : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ
 
 theorem proof : SectionHyperplaneAvoid.Statement := by
   intro n J u hJ
-  let p : Option (divCycle J u).support → Submodule ℂ (Fin n → ℂ) :=
+  let p : Option ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ))).support → Submodule ℂ (Fin n → ℂ) :=
     fun o => o.elim (formSpace J) (fun W => formSpace W.1)
   have hp : ∀ o, p o ≠ ⊤ := by
     rintro (_ | ⟨W, hW⟩)

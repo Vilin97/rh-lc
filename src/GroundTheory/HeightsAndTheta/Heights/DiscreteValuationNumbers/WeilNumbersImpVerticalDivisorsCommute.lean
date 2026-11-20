@@ -11,6 +11,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIde
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumSymm
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PExistsForm
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDivCycleSupport
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -26,7 +27,7 @@ namespace VerticalDivisorsCommuting
 def CartierStatement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-      (P : Ideal (MRing ι O)) (n : ℕ) (b b' : K → ℤ) (f g f' g' : MRing ι O)
+      (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (n : ℕ) (b b' : K → ℤ) (f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
       (L : Fin n → K → ℤ) (Iκ : ReciprocityTheory.ChartRestriction.G.AI.I1.IFamily (IsLocalRing.ResidueField O) ι),
       IndefiniteRowSideFullHecke.NumbersDVR.IsModelOver P (n + 1) → IsVerticalDivisor P ϖ b f g →
       IsVerticalDivisor P ϖ b' f' g' → ReciprocityTheory.ChartRestriction.G.AI.I1.IsFieldIntersection Iκ →
@@ -37,7 +38,7 @@ def CartierStatement : Prop :=
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem intNum_snoc {F : Type u} [Field F] (V : Ideal (MRing ι F)) {n : ℕ} (L : Fin n → K → ℤ)
+theorem intNum_snoc {F : Type u} [Field F] (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {n : ℕ} (L : Fin n → K → ℤ)
     (b : K → ℤ) :
     intNum F V (Fin.snoc (α := fun _ => K → ℤ) L b) = intNum F V (Matrix.vecCons b L) := by
   rw [← CutByFormField.vecCons_comp_finRotate]
@@ -45,12 +46,12 @@ theorem intNum_snoc {F : Type u} [Field F] (V : Ideal (MRing ι F)) {n : ℕ} (L
 
 variable {O : Type u} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-theorem vNum_snoc (W : Ideal (MRing ι O)) {n : ℕ} (L : Fin n → K → ℤ) (b : K → ℤ) :
+theorem vNum_snoc (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {n : ℕ} (L : Fin n → K → ℤ) (b : K → ℤ) :
     vNum W (Fin.snoc (α := fun _ => K → ℤ) L b) = vNum W (Matrix.vecCons b L) :=
   intNum_snoc _ L b
 
 theorem redEval_divO (J : Ideal (MRing ι (IsLocalRing.ResidueField O)) → ℤ)
-    (P : Ideal (MRing ι O)) (f g : MRing ι O) :
+    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :
     IndefiniteRowSideFullHecke.NumbersDVR.redEval J (IndefiniteRowSideFullHecke.NumbersDVR.divO P f g) =
       cycEval (fun W => J (specialIdeal W)) (ratDiv P f g) := by
   rw [Objects.redEval_eq_cycEval]
@@ -59,12 +60,12 @@ theorem redEval_divO (J : Ideal (MRing ι (IsLocalRing.ResidueField O)) → ℤ)
   exact Objects.divO_eq_ratDiv P f g W
 
 theorem isProjVarF_specialIdeal (hDim : ComponentDim.Statement.{u}) {ϖ : O} (hϖ : Irreducible ϖ)
-    {P : Ideal (MRing ι O)} {d : ℕ} (hP : IsModelOver P d) {a : K → ℕ} {f : MRing ι O}
-    (hf : IsMultiHomog f a) (hfP : f ∉ P) {W : Ideal (MRing ι O)} (hW : divCycle P f W ≠ 0)
-    (hϖW : (C ϖ : MRing ι O) ∈ W) : ReciprocityTheory.ChartRestriction.G.AI.I1.IsProjVarF (specialIdeal W) d := by
+    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {d : ℕ} (hP : IsModelOver P d) {a : K → ℕ} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+    (hf : IsMultiHomog f a) (hfP : f ∉ P) {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0)
+    (hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W) : ReciprocityTheory.ChartRestriction.G.AI.I1.IsProjVarF (specialIdeal W) d := by
   have hmin : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W := by
     by_contra h
-    exact hW (by unfold divCycle; rw [dif_neg h])
+    exact hW (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dif_neg h])
   have hWp : W.IsPrime := hmin.1.1.1
   have hWh : IsMultiHomogIdeal W :=
     (Objects.isMultiHomogIdeal_iff W).mpr
@@ -80,8 +81,8 @@ theorem isProjVarF_specialIdeal (hDim : ComponentDim.Statement.{u}) {ϖ : O} (h�
 
 theorem cycEval_family (hBase : FieldNumbers.IntNumBase.Statement.{u})
     (hCut : FieldNumbers.CutRational.Statement.{u}) (hDim : ComponentDim.Statement.{u}) {ϖ : O}
-    (hϖ : Irreducible ϖ) {P : Ideal (MRing ι O)} {n : ℕ} (hP : IsModelOver P (n + 1)) {b : K → ℤ}
-    {f g : MRing ι O} (hD : IsVerticalDivisor P ϖ b f g)
+    (hϖ : Irreducible ϖ) {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {n : ℕ} (hP : IsModelOver P (n + 1)) {b : K → ℤ}
+    {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hD : IsVerticalDivisor P ϖ b f g)
     (Iκ : ReciprocityTheory.ChartRestriction.G.AI.I1.IFamily (IsLocalRing.ResidueField O) ι)
     (hI : ReciprocityTheory.ChartRestriction.G.AI.I1.IsFieldIntersection Iκ) (M : Fin (n + 1) → K → ℤ) :
     cycEval (fun W => Iκ (specialIdeal W) (n + 1) M) (ratDiv P f g) =
@@ -93,8 +94,8 @@ theorem cycEval_family (hBase : FieldNumbers.IntNumBase.Statement.{u})
   · have hϖW := hD.vertical W h0
     obtain ⟨α, β, hα, hβ, -⟩ := hD.degrees
     have hV : ReciprocityTheory.ChartRestriction.G.AI.I1.IsProjVarF (specialIdeal W) (n + 1) := by
-      by_cases hf : divCycle P f W = 0
-      · have hg : divCycle P g W ≠ 0 := fun hg => h0 (by rw [ratDiv, hf, hg, sub_zero])
+      by_cases hf : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = 0
+      · have hg : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) ≠ 0 := fun hg => h0 (by rw [ratDiv, hf, hg, sub_zero])
         exact isProjVarF_specialIdeal hDim hϖ hP hβ hD.den_not_mem hg hϖW
       · exact isProjVarF_specialIdeal hDim hϖ hP hα hD.num_not_mem hf hϖW
     dsimp only

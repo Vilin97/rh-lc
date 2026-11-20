@@ -1,5 +1,6 @@
 import Mathlib
 import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsBaseChart
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial MeasureTheory Filter Topology Matrix ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
 open scoped ComplexOrder Classical
 open GlobalTheory.CompanionTheory.Ar.PB.WSq GlobalTheory.CompanionTheory.Ar.PB.WMan
@@ -19,7 +20,7 @@ def lineρ (z : LPt) : Fin 1 → ℂ := fun _ => z ⟨(), 1⟩ / z ⟨(), 0⟩
 @[simp] theorem lineφ_one (w : Fin 1 → ℂ) : lineφ w ⟨(), 1⟩ = w 0 := rfl
 
 theorem lineφ_mem (w : Fin 1 → ℂ) :
-    lineφ w ∈ mcPts (⊥ : Ideal (MRing fun _ : Unit => Fin 2)) := by
+    lineφ w ∈ mcPts (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver _ fun : Unit => Fin 2)) := by
   refine ⟨fun k => ⟨0, by cases k; simp⟩, fun f hf => ?_⟩
   have : f = 0 := by simpa using hf
   simp [this]
@@ -94,13 +95,13 @@ theorem line_immersion (w : Fin 1 → ℂ) (p : (k : Unit) → Fin 2)
   rw [← this, ← h2]
   exact congrArg _ hab
 
-def lineChart : OrbitChart (⊥ : Ideal (MRing fun _ : Unit => Fin 2)) 1 where
+def lineChart : OrbitChart (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver _ fun : Unit => Fin 2)) 1 where
   D := Set.univ
   isOpen_D := isOpen_univ
   φ := lineφ
   holo := lineφ_analytic
   mem w _ := lineφ_mem w
-  O := {z | z ∈ mcPts (⊥ : Ideal (MRing fun _ : Unit => Fin 2)) ∧ z ⟨(), 0⟩ ≠ 0}
+  O := {z | z ∈ mcPts (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver _ fun : Unit => Fin 2)) ∧ z ⟨(), 0⟩ ≠ 0}
   O_open := by
     refine ⟨{z | z ⟨(), 0⟩ ≠ 0}, isOpen_ne_fun (continuous_apply _) continuous_const, ?_⟩
     ext z

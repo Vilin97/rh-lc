@@ -3,6 +3,7 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.Kle
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.Bundle
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsExamples
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -12,7 +13,7 @@ namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2
 open MvPolynomial
 open ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH (mIdealOver chartRingOver secOver secMOver GeneratesOver cechHc cechZc
   quotPart cechMap IsMGraded)
-open GroundTheory.Heights₂.Heights.NumbersDVR (MRing intNum IsMultiProjPrime specialIdeal genFib IsModelOver)
+open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiProjPrime intNum specialIdeal genFib IsModelOver)
 open GroundTheory.Heights₂.Heights.FieldNumbers (relDim resDeg)
 open ReciprocityTheory.ChartRestriction.G.Geo (MRingOver)
 
@@ -180,8 +181,8 @@ section Numbers
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-def IsNefIdeal (F : Type) [Field F] (P : Ideal (MRing ι F)) (β : K → ℤ) : Prop :=
-  ∀ W : Ideal (MRing ι F), IsMultiProjPrime W → P ≤ W → relDim W = ((1 : ℕ) : WithBot (WithTop ℤ)) →
+def IsNefIdeal (F : Type) [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (β : K → ℤ) : Prop :=
+  ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiProjPrime W → P ≤ W → relDim W = ((1 : ℕ) : WithBot (WithTop ℤ)) →
     0 ≤ intNum F W ![β]
 
 def IsNef (F : Type) [Field F] {Ω : Type*} [Field Ω] [Algebra F Ω] (y : (Σ k, ι k) → Ω)
@@ -372,7 +373,7 @@ def NefProductNonneg.Statement : Prop :=
 
 def NefGeneric.Statement : Prop :=
   ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (K : Type) [Fintype K]
-    [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)) (d : ℕ)
+    [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ)
     (β : K → ℤ),
     IsModelOver P d → IsNefIdeal (IsLocalRing.ResidueField O) (specialIdeal P) β →
     IsNefIdeal (FractionRing O) (genFib P) β
@@ -446,7 +447,7 @@ theorem isNef_zero {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀
   rw [(GroundTheory.Heights₂.Heights.FieldNumbers.IntNumZeroSlot.full F K ι W).1 1 ![0] 0 rfl]
 
 theorem isNefIdeal_zero {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)) : IsNefIdeal F P (0 : K → ℤ) := by
+    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : IsNefIdeal F P (0 : K → ℤ) := by
   intro W _ _ _
   rw [(GroundTheory.Heights₂.Heights.FieldNumbers.IntNumZeroSlot.full F K ι W).1 1 ![0] 0 rfl]
 

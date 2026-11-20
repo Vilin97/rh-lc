@@ -8,6 +8,7 @@ import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PGoodChartZeroSet
 import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartHomogenise
 import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartDehomog
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.KleimanNefness.AlgDim
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -15,7 +16,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsArithVar mcPts segre)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver mcPts IsArithVar segre)
 
 namespace GoodChartDim
 

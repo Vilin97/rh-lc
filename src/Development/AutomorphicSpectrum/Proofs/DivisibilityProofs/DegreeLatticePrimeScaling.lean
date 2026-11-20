@@ -5,6 +5,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Cartier
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterNamed
 import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.HeckeSectionsIsotropicCommutatorPairingPower
 import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.IsCompactUnitaryPointsAtPlaceFstMemCompact
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num GlobalTheory.CompanionTheory.Ar.Top GroundTheory.Heights₂.Heights.ModelLeaves
 open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar IsHorizontal mcPts mCoordIdeal IsIntersectionFamily IsIntersectionSystem IntersectionSystem ptsIntegral geoNum charOf recR arInt ChartBundle chartRing)
 open NumberField
@@ -17,12 +18,12 @@ section LineVert
 
 variable {K : Type} [DecidableEq K] {ι : K → Type} {Ω : Type} [Field Ω]
 
-def lineVertMono [Fintype K] (c : ∀ k, ι k) (e : K → ℕ) : MRing ι ℤ := ∏ k, X ⟨k, c k⟩ ^ e k
+def lineVertMono [Fintype K] (c : ∀ k, ι k) (e : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι := ∏ k, X ⟨k, c k⟩ ^ e k
 
 theorem lineVertMono_homog [Fintype K] (c : ∀ k, ι k) (e : K → ℕ) :
     IsMultiHomog (lineVertMono c e) e := by
   have h := IsWeightedHomogeneous.prod (R := ℤ) (w := blockWeight ι) Finset.univ
-    (fun k => (X ⟨k, c k⟩ : MRing ι ℤ) ^ e k) (fun k => e k • (Pi.single k 1 : K → ℕ))
+    (fun k => (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ^ e k) (fun k => e k • (Pi.single k 1 : K → ℕ))
     (fun k _ => (isWeightedHomogeneous_X ℤ (blockWeight ι) ⟨k, c k⟩).pow (e k))
   have he : ∑ k, e k • (Pi.single k 1 : K → ℕ) = e := by
     funext j
@@ -51,11 +52,11 @@ theorem lineVert_prod_weight [Fintype K] (m : (Σ k, ι k) →₀ ℕ) :
       simp [blockWeight, Pi.single_apply, hk]
     · simp
 
-theorem lineVert_cone_homog [Fintype K] (y : (Σ k, ι k) → Ω) {h : MRing ι ℤ} {b : K → ℕ}
+theorem lineVert_cone_homog [Fintype K] (y : (Σ k, ι k) → Ω) {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι} {b : K → ℕ}
     (hh : IsMultiHomog h b) :
     pointConeMap ℤ y h = C (aeval y h) * ∏ k, X k ^ b k := by
   have key : ∀ m ∈ h.support, pointConeMap ℤ y (monomial m (AddMonoidAlgebra.coeff h m)) =
-      C (aeval y (monomial m (AddMonoidAlgebra.coeff h m) : MRing ι ℤ)) * ∏ k, X k ^ b k := by
+      C (aeval y (monomial m (AddMonoidAlgebra.coeff h m) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) * ∏ k, X k ^ b k := by
     intro m hm
     have hw : Finsupp.weight (blockWeight ι) m = b := hh (mem_support_iff.mp hm)
     rw [pointConeMap, aeval_monomial, aeval_monomial, ← hw, ← lineVert_prod_weight]
@@ -68,21 +69,21 @@ theorem lineVert_cone_homog [Fintype K] (y : (Σ k, ι k) → Ω) {h : MRing ι 
         conv_lhs => rw [h.as_sum]
         set_option synthInstance.maxHeartbeats 100000 in
           rw [map_sum]
-    _ = ∑ m ∈ h.support, C (aeval y (monomial m (AddMonoidAlgebra.coeff h m) : MRing ι ℤ)) * ∏ k, X k ^ b k :=
+    _ = ∑ m ∈ h.support, C (aeval y (monomial m (AddMonoidAlgebra.coeff h m) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) * ∏ k, X k ^ b k :=
         Finset.sum_congr rfl key
     _ = C (aeval y h) * ∏ k, X k ^ b k := by
         conv_rhs => rw [h.as_sum]
         set_option synthInstance.maxHeartbeats 100000 in
           rw [map_sum, map_sum, Finset.sum_mul]
 
-theorem lineVert_mem_of_homog [Fintype K] (y : (Σ k, ι k) → Ω) {h : MRing ι ℤ} {b : K → ℕ}
+theorem lineVert_mem_of_homog [Fintype K] (y : (Σ k, ι k) → Ω) {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι} {b : K → ℕ}
     (hh : IsMultiHomog h b) (h0 : aeval y h = 0) : h ∈ pointIdeal ℤ y := by
   rw [pointIdeal, RingHom.mem_ker, lineVert_cone_homog y hh, h0]
   simp
 
 theorem lineVert_chart_form [Fintype K] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k)
     (hc : segreVec y c ≠ 0) {a : Ω} (ha : a ∈ chartRing ℤ (segreVec y) c) :
-    ∃ (r : ℕ) (G : MRing ι ℤ), IsMultiHomog G (fun _ => r) ∧
+    ∃ (r : ℕ) (G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι), IsMultiHomog G (fun _ => r) ∧
       a * segreVec y c ^ r = aeval y G := by
   rw [chartRing] at ha
   induction ha using Algebra.adjoin_induction with
@@ -121,10 +122,10 @@ theorem lineVert_chart_pair [Fintype K] (y : (Σ k, ι k) → Ω) (m : ℕ) (b b
     (hs : s ≠ 0) (c : ∀ k, ι k) (hc : segreVec y c ≠ 0)
     (h1 : ∀ t ∈ degLat ℤ y b c, ∃ n : ℕ, ∃ t' ∈ degLat ℤ y b' c, (m : Ω) ^ n * t = s * t')
     (h2 : ∀ t' ∈ degLat ℤ y b' c, ∃ n : ℕ, ∃ t ∈ degLat ℤ y b c, (m : Ω) ^ n * (s * t') = t) :
-    ∃ (U V : MRing ι ℤ) (dU dV : K → ℕ), IsMultiHomog U dU ∧ IsMultiHomog V dV ∧
+    ∃ (U V : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) (dU dV : K → ℕ), IsMultiHomog U dU ∧ IsMultiHomog V dV ∧
       (∀ k, (dV k : ℤ) - dU k = b k - b' k) ∧ s * aeval y U = aeval y V ∧
-      ∀ W : Ideal (MRing ι ℤ), W.IsPrime → pointIdeal ℤ y ≤ W → (∀ k, (X ⟨k, c k⟩ : MRing ι ℤ) ∉ W) →
-        (C (m : ℤ) : MRing ι ℤ) ∉ W → U ∉ W ∧ V ∉ W := by
+      ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι), W.IsPrime → pointIdeal ℤ y ≤ W → (∀ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∉ W) →
+        (C (m : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∉ W → U ∉ W ∧ V ∉ W := by
   have hy : ∀ k, y ⟨k, c k⟩ ≠ 0 := fun k => Finset.prod_ne_zero_iff.mp hc k (Finset.mem_univ k)
   have hZ : ∀ e : K → ℤ, (∏ k, y ⟨k, c k⟩ ^ e k) ≠ 0 := fun e =>
     Finset.prod_ne_zero_iff.mpr fun k _ => zpow_ne_zero _ (hy k)
@@ -178,7 +179,7 @@ theorem lineVert_chart_pair [Fintype K] (y : (Σ k, ι k) → Ω) (m : ℕ) (b b
       intro d hd
       obtain ⟨k, -, hk⟩ := Ideal.IsPrime.prod_mem_iff.mp hd
       exact hX k (hW.mem_of_pow_mem _ hk)
-    have hmpow : ∀ j : ℕ, (C ((m : ℤ) ^ j) : MRing ι ℤ) ∉ W := by
+    have hmpow : ∀ j : ℕ, (C ((m : ℤ) ^ j) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∉ W := by
       intro j hj
       rw [map_pow] at hj
       exact hm (hW.mem_of_pow_mem _ hj)
@@ -211,16 +212,16 @@ theorem lineVert_chart_pair [Fintype K] (y : (Σ k, ι k) → Ω) (m : ℕ) (b b
 
 end LineVert
 
-theorem lineVert_of_eq_off : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] (y : (Σ k, ι k) → Ω), IsMultiProjPrime (pointIdeal ℤ y) → ∀ (S : Finset Nat.Primes) (b b' : K → ℤ) (s : Ω), s ≠ 0 → (∀ c, segreVec y c ≠ 0 → (∀ t ∈ degLat ℤ y b c, ∃ n : ℕ, ∃ t' ∈ degLat ℤ y b' c, ((∏ p ∈ S, (p : ℕ) : ℕ) : Ω) ^ n * t = s * t') ∧ ∀ t' ∈ degLat ℤ y b' c, ∃ n : ℕ, ∃ t ∈ degLat ℤ y b c, ((∏ p ∈ S, (p : ℕ) : ℕ) : Ω) ^ n * (s * t') = t) → IsHorizontal (pointIdeal ℤ y) → ∃ f g : MRing ι ℤ, (⟨fun _ => b, fun _ => b', fun _ => f, fun _ => g⟩ : LocPair ι ℤ Unit).IsVertOff (pointIdeal ℤ y) S ∧ aeval y f = s * aeval y g := by
+theorem lineVert_of_eq_off : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] (y : (Σ k, ι k) → Ω), IsMultiProjPrime (pointIdeal ℤ y) → ∀ (S : Finset Nat.Primes) (b b' : K → ℤ) (s : Ω), s ≠ 0 → (∀ c, segreVec y c ≠ 0 → (∀ t ∈ degLat ℤ y b c, ∃ n : ℕ, ∃ t' ∈ degLat ℤ y b' c, ((∏ p ∈ S, (p : ℕ) : ℕ) : Ω) ^ n * t = s * t') ∧ ∀ t' ∈ degLat ℤ y b' c, ∃ n : ℕ, ∃ t ∈ degLat ℤ y b c, ((∏ p ∈ S, (p : ℕ) : ℕ) : Ω) ^ n * (s * t') = t) → IsHorizontal (pointIdeal ℤ y) → ∃ f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι, (⟨fun _ => b, fun _ => b', fun _ => f, fun _ => g⟩ : LocPair ι ℤ Unit).IsVertOff (pointIdeal ℤ y) S ∧ aeval y f = s * aeval y g := by
   intro K _ _ ι _ Ω _ y hP S b b' s hs hch hhor
   set m : ℕ := ∏ p ∈ S, (p : ℕ) with hm
   have hm0 : m ≠ 0 := Finset.prod_ne_zero_iff.mpr fun p _ => p.2.ne_zero
-  have hmP : (C (m : ℤ) : MRing ι ℤ) ∉ pointIdeal ℤ y := by
+  have hmP : (C (m : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∉ pointIdeal ℤ y := by
     intro h
-    have h' : (m : ℤ) ∈ (pointIdeal ℤ y).comap (C : ℤ →+* MRing ι ℤ) := h
-    rw [show (pointIdeal ℤ y).comap (C : ℤ →+* MRing ι ℤ) = ⊥ from hhor, Ideal.mem_bot] at h'
+    have h' : (m : ℤ) ∈ (pointIdeal ℤ y).comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) := h
+    rw [show (pointIdeal ℤ y).comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) = ⊥ from hhor, Ideal.mem_bot] at h'
     exact hm0 (by exact_mod_cast h')
-  have hseg : ∀ c : ∀ k, ι k, (∀ k, (X ⟨k, c k⟩ : MRing ι ℤ) ∉ pointIdeal ℤ y) →
+  have hseg : ∀ c : ∀ k, ι k, (∀ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∉ pointIdeal ℤ y) →
       segreVec y c ≠ 0 := by
     intro c hc
     refine Finset.prod_ne_zero_iff.mpr fun k _ h0 => hc k ?_
@@ -236,10 +237,10 @@ theorem lineVert_of_eq_off : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K 
     exact hd₀ k
   · intro W hWp hPW hWr hWS
     choose c hc using hWr
-    have hcP : ∀ k, (X ⟨k, c k⟩ : MRing ι ℤ) ∉ pointIdeal ℤ y := fun k h => hc k (hPW h)
-    have hmW : (C (m : ℤ) : MRing ι ℤ) ∉ W := by
+    have hcP : ∀ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∉ pointIdeal ℤ y := fun k h => hc k (hPW h)
+    have hmW : (C (m : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∉ W := by
       intro h
-      have h' : (∏ p ∈ S, (C (((p : ℕ) : ℤ)) : MRing ι ℤ)) ∈ W := by
+      have h' : (∏ p ∈ S, (C (((p : ℕ) : ℤ)) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) ∈ W := by
         rw [← map_prod]
         convert h using 2
         rw [hm]

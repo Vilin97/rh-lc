@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers.ContractRelevant
@@ -9,8 +10,8 @@ open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR
 noncomputable section
 
 theorem isRelevant_iff {R : Type*} [CommRing R] {K : Type*} {ι : K → Type*}
-    (I : Ideal (MRing ι R)) :
-    IsRelevant I ↔ ∀ k, ∃ v : Σ k, ι k, v.1 = k ∧ (X v : MRing ι R) ∉ I := by
+    (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
+    IsRelevant I ↔ ∀ k, ∃ v : Σ k, ι k, v.1 = k ∧ (X v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∉ I := by
   constructor
   · intro h k
     obtain ⟨i, hi⟩ := h k
@@ -71,7 +72,7 @@ include hgj in
 
 theorem isMultiProjPrime_comap_rename (hj : Function.Injective j) (hg : Function.Injective g)
     (hsurj : ∀ w : Σ k, ι' k, w.1 ∈ Set.range j → ∃ v, g v = w) {R : Type*} [CommRing R]
-    {P : Ideal (MRing ι' R)} (hP : IsMultiProjPrime P) :
+    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι')} (hP : IsMultiProjPrime P) :
     IsMultiProjPrime (P.comap (rename (R := R) g)) where
   isPrime := haveI := hP.isPrime; Ideal.comap_isPrime _ _
   multiHomog f hf b := by

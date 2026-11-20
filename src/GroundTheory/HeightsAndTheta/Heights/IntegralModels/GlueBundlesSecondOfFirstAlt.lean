@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.IntegralModels.Statements
 import GroundTheory.HeightsAndTheta.Heights.IntegralModels.IsIsoPullbackObjUnitToUnit
 import GroundTheory.HeightsAndTheta.Heights.IntegralModels.PSectionNef
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Model
@@ -11,7 +12,7 @@ open GroundTheory.Heights₂.Heights.NumbersDVR
 theorem SectionNef.glueBundles_second_of_first (h : _root_.GroundTheory.Heights₂.Heights.Model.SectionNef.Statement) :
     SectionNef.Statement := by
   intro κ _ _ ι _ F _ P hP hd a ha
-  have hs : ∃ s : MRing ι F, IsMultiHomog s a ∧ s ∉ P := by
+  have hs : ∃ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog s a ∧ s ∉ P := by
     rcases ha with h1 | h2
     · exact h1
     · exact h2 P hP le_rfl

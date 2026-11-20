@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -18,14 +19,14 @@ theorem ker_map_residue_eq_span {O : Type u} [CommRing O] [IsDomain O] [IsDiscre
 
 theorem SpecialIdealCorresp.proof : SpecialIdealCorresp.Statement := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P W hW hϖW
-  obtain ⟨π, hπ⟩ : ∃ π : MRing ι O →+* MRing ι (IsLocalRing.ResidueField O),
+  obtain ⟨π, hπ⟩ : ∃ π : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* MRing ι (IsLocalRing.ResidueField O),
       π = MvPolynomial.map (IsLocalRing.residue O) := ⟨_, rfl⟩
-  have hsp : ∀ V : Ideal (MRing ι O), specialIdeal V = V.map π := fun V => by rw [hπ]; rfl
+  have hsp : ∀ V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), specialIdeal V = V.map π := fun V => by rw [hπ]; rfl
   have hsurj : Function.Surjective π := hπ ▸ MvPolynomial.map_surjective _ IsLocalRing.residue_surjective
   have hker : RingHom.ker π = Ideal.span {C ϖ} := hπ ▸ ker_map_residue_eq_span hϖ
-  have hle : ∀ {V : Ideal (MRing ι O)}, (C ϖ : MRing ι O) ∈ V → RingHom.ker π ≤ V := fun h => by
+  have hle : ∀ {V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}, (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ V → RingHom.ker π ≤ V := fun h => by
     rw [hker, Ideal.span_le, Set.singleton_subset_iff]; exact h
-  have hcm : ∀ {V : Ideal (MRing ι O)}, (C ϖ : MRing ι O) ∈ V → (V.map π).comap π = V := fun h => by
+  have hcm : ∀ {V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}, (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ V → (V.map π).comap π = V := fun h => by
     rw [Ideal.comap_map_of_surjective' π hsurj, sup_eq_left.mpr (hle h)]
   simp only [hsp]
   refine ⟨Ideal.map_isPrime_of_surjective hsurj (hle hϖW), ?_, ?_, ?_⟩
@@ -37,7 +38,7 @@ theorem SpecialIdealCorresp.proof : SpecialIdealCorresp.Statement := by
       rwa [Ideal.map_comap_of_surjective π hsurj]
     · intro h
       exact ⟨_, h, hcm hϖW⟩
-  · have hX : ∀ v, (X v : MRing ι O) ∈ W ↔ (X v : MRing ι (IsLocalRing.ResidueField O)) ∈ W.map π :=
+  · have hX : ∀ v, (X v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W ↔ (X v : MRing ι (IsLocalRing.ResidueField O)) ∈ W.map π :=
       fun v => by
         conv_lhs => rw [← hcm hϖW]
         rw [Ideal.mem_comap, hπ, MvPolynomial.map_X]

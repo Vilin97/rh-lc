@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LocCycle
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMinimalPrimeMultiHomog
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSupSpanMultiHomog
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PColonMultiHomog
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -12,7 +13,7 @@ open MvPolynomial
 universe u
 
 theorem IsMultiHomogIdeal.sup {K : Type*} [DecidableEq K] {ι : K → Type*} {R : Type*} [CommRing R]
-    {I J : Ideal (MRing ι R)} (hI : IsMultiHomogIdeal I) (hJ : IsMultiHomogIdeal J) :
+    {I J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hI : IsMultiHomogIdeal I) (hJ : IsMultiHomogIdeal J) :
     IsMultiHomogIdeal (I ⊔ J) := by
   intro f hf b
   obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.mp hf
@@ -22,10 +23,10 @@ theorem IsMultiHomogIdeal.sup {K : Type*} [DecidableEq K] {ι : K → Type*} {R 
 theorem RightTermSupport.proof : RightTermSupport.Statement.{u} := by
   intro O _ _ _ ϖ K _ _ ι _ P hP b f g hD c s hs hH W U hU
   by_contra hne
-  have hW : divCycle P s W ≠ 0 := left_ne_zero_of_mul hne
+  have hW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) ≠ 0 := left_ne_zero_of_mul hne
   have hWU : idealCycle (W ⊔ divisorIdeal P f g) U ≠ 0 := right_ne_zero_of_mul hne
   have hWm : W ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧ IsRelevant W := by
-    unfold divCycle at hW
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
     split_ifs at hW with h
     · exact h
     · exact absurd rfl hW
@@ -48,7 +49,7 @@ theorem RightTermSupport.proof : RightTermSupport.Statement.{u} := by
     MinimalPrimeMultiHomog.proof O K ι _ U (hWmh.sup hDm) hUm.1
   apply hU
   refine ⟨hUp, hUmh, hUm.2, ?_, hPW.trans hWU'⟩
-  by_cases hϖW : (C ϖ : MRing ι O) ∈ W
+  by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W
   · exact hWU' hϖW
   by_contra hϖU
   have hV := hH W hW hϖW

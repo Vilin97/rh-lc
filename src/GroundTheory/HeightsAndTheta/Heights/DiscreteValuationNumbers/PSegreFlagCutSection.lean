@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsS
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBisBis
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagCutTools
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.RelevantMinimalOfDivCycleNeZero
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -28,15 +29,15 @@ theorem SegreFlagCutSection.proof (hModel : SegreFlagClosureModel.Statement)
   obtain ⟨f₃, g₃, hD₃, hv₃, hk₃⟩ := hD0 O ϖ hϖ Ω K ι y d hV N E B B' hB w w' x x' f g hfl M M' a₀ a₀' φ φ' hφ hφ'
     Φ e t ht k hk
 
-  let bad : MRing (bundleIdx (bundleIdx ι M) M') O → Set (Ideal (MRing (bundleIdx (bundleIdx ι M) M') O)) :=
+  let bad : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M') → Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))) :=
     fun z => {Q | Q ∈ (I ⊔ Ideal.span {z}).minimalPrimes ∧ IsRelevant Q ∧
-      (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∉ Q}
+      (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∉ Q}
   let T := bad f₃ ∪ bad g₃ ∪ ⋃ i, bad (liftPairForm M M' (a i))
   have hbfin : ∀ z, (bad z).Finite := fun z =>
     (Ideal.finite_minimalPrimes_of_isNoetherianRing _ (I ⊔ Ideal.span {z})).subset fun Q hQ => hQ.1
   have hTfin : T.Finite := ((hbfin _).union (hbfin _)).union (Set.finite_iUnion fun i => hbfin _)
   have hbad : ∀ z, ∀ Q ∈ bad z, Q.IsPrime ∧ IsRelevant Q ∧ I ≤ Q ∧
-      (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∉ Q :=
+      (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∉ Q :=
     fun z Q hQ => ⟨hQ.1.1.1, hQ.2.1, le_sup_left.trans hQ.1.1.2, hQ.2.2⟩
   obtain ⟨cs, ch, s, h, hs, hh, hdeg, hsI, hhI, hval, havoid⟩ :=
     hForms O ϖ hϖ Ω K ι y d hV N E B B' hB w w' x x' f g hfl M M' a₀ a₀' φ φ' hφ hφ' Φ e t ht k hk
@@ -51,9 +52,9 @@ theorem SegreFlagCutSection.proof (hModel : SegreFlagClosureModel.Statement)
     cs ch s h hs hh hdeg hsI hhI hval
   refine ⟨cs, ch, s, h, f₃, g₃, hs, hh, hdeg, hsI, hhI, hval, hdiv, hD₃, hv₃, hk₃, ?_⟩
   intro H hH hϖH
-  by_cases hh0 : divCycle I h H = 0
+  by_cases hh0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I h) H : ℤ) = 0
   ·
-    have hs0 : divCycle I s H ≠ 0 := hH.resolve_right (not_not.2 hh0)
+    have hs0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I s) H : ℤ) ≠ 0 := hH.resolve_right (not_not.2 hh0)
     have hne : ratDiv I s h H ≠ 0 := by
       unfold ratDiv
       rw [hh0, sub_zero]

@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsDiagR
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterFS
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -146,7 +147,7 @@ def cycTerm (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → 
 
 theorem cycR_eq_finsum (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (P : Ideal (MRing ι)) {n : ℕ}
     (L : Fin n → HermLine ι) (s : MRing ι) :
-    cycR I P L s = ∑ᶠ W, (divCycle P s W : ℝ) * cycTerm I L W := by
+    cycR I P L s = ∑ᶠ W, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) : ℝ) * cycTerm I L W := by
   classical
   unfold cycR cycTerm
   rw [finsum_mem_def]
@@ -157,27 +158,27 @@ theorem cycR_eq_finsum (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLi
 
 theorem cycR_sub_eq (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (P : Ideal (MRing ι)) {n : ℕ}
     (L : Fin n → HermLine ι) (f g : MRing ι) (W₀ : Ideal (MRing ι))
-    (hdiv : T.toZCycle (divCycle P f) - T.toZCycle (divCycle P g) = Finsupp.single W₀ 1)
+    (hdiv : T.toZCycle ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))) - T.toZCycle ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ))) = Finsupp.single W₀ 1)
     (hW₀ : IsHorizontal W₀) : cycR I P L f - cycR I P L g = I W₀ n L := by
   rw [cycR_eq_finsum, cycR_eq_finsum, ← finsum_sub_distrib]
-  · have hW : ∀ W, (divCycle P f W : ℝ) - divCycle P g W = ((Finsupp.single W₀ (1 : ℤ) W : ℤ) : ℝ) := by
+  · have hW : ∀ W, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) : ℝ) - ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) = ((Finsupp.single W₀ (1 : ℤ) W : ℤ) : ℝ) := by
       intro W
       have := congrArg (fun z => z W) hdiv
       simp only [Finsupp.coe_sub, Pi.sub_apply, T.toZCycle, Finsupp.mapRange_apply] at this
       rw [← this]
       push_cast
       ring
-    have e : ∀ W, (divCycle P f W : ℝ) * cycTerm I L W - divCycle P g W * cycTerm I L W =
+    have e : ∀ W, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) : ℝ) * cycTerm I L W - ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) * cycTerm I L W =
         ((Finsupp.single W₀ (1 : ℤ) W : ℤ) : ℝ) * cycTerm I L W := fun W => by
       rw [← hW W]; ring
     simp only [e]
     rw [finsum_eq_single _ W₀ (fun W hW => by simp [Ne.symm hW])]
     simp [cycTerm, hW₀]
-  · exact (divCycle P f).hasFiniteSupport.subset fun W hW h0 => hW (by simp [h0])
-  · exact (divCycle P g).hasFiniteSupport.subset fun W hW h0 => hW (by simp [h0])
+  · exact ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))).hasFiniteSupport.subset fun W hW h0 => hW (by simp [h0])
+  · exact ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ))).hasFiniteSupport.subset fun W hW h0 => hW (by simp [h0])
 
 theorem mem_divSupp_of_divCycle_ne_zero {P : Ideal (MRing ι)} {s : MRing ι} {W : Ideal (MRing ι)}
-    (h : divCycle P s W ≠ 0) : W ∈ divSupp P s := by
+    (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) ≠ 0) : W ∈ divSupp P s := by
   classical
   by_contra hW
   exact h (by simp [divCycle, Finsupp.ofSupportFinite_coe, hW])

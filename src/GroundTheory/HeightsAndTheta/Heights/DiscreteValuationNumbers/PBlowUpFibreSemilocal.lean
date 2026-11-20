@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpFibreSemilocalCut
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyDimensionInequality
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -42,22 +43,22 @@ theorem BlowUpFibreSemilocal.proof (ha : HomLocRingLocal.Statement.{u})
   have hgQ : liftForm (J := J) g ∉ Q := fun hm => hgW (by rw [← hQW]; exact hm)
   have hxbl : liftForm (J := J) x ∉ blowUpOf P u := liftForm_not_mem_blowUpOf hxP
   have : (blowUpOf P u).IsPrime := RingHom.ker_isPrime _
-  have hz' : algebraMap (MRing (extIdx ι J) O ⧸ blowUpOf P u)
-        (FractionRing (MRing (extIdx ι J) O ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm x)) /
-      algebraMap (MRing (extIdx ι J) O ⧸ blowUpOf P u)
-        (FractionRing (MRing (extIdx ι J) O ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm g)) ∈
+  have hz' : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)
+        (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm x)) /
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)
+        (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm g)) ∈
       homLocRing (blowUpOf P u) Q :=
     Subring.subset_closure ⟨liftMDeg c, _, _, hxl, hgl, hgQ, rfl⟩
   obtain ⟨φ, hφ⟩ := hiso O K ι J P u Q hblQ
 
   have hlen : Module.length (homLocRing (blowUpOf P u) Q)
       (homLocRing (blowUpOf P u) Q ⧸ Ideal.span {(⟨_, hz'⟩ : homLocRing (blowUpOf P u) Q)}) =
-        ((divCycle (blowUpOf P u) (liftForm x) Q).toNat : ℕ∞) := by
-    have hinj := IsFractionRing.injective (MRing (extIdx ι J) O ⧸ blowUpOf P u)
-      (FractionRing (MRing (extIdx ι J) O ⧸ blowUpOf P u))
-    have hne : ∀ y : MRing (extIdx ι J) O, y ∉ blowUpOf P u →
-        algebraMap (MRing (extIdx ι J) O ⧸ blowUpOf P u)
-          (FractionRing (MRing (extIdx ι J) O ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ y) ≠ 0 := by
+        ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm x)) Q : ℤ)).toNat : ℕ∞) := by
+    have hinj := IsFractionRing.injective (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)
+      (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u))
+    have hne : ∀ y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J), y ∉ blowUpOf P u →
+        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)
+          (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ y) ≠ 0 := by
       intro y hy
       rw [Ne, map_eq_zero_iff _ hinj, Ideal.Quotient.eq_zero_iff_mem]
       exact hy
@@ -70,9 +71,9 @@ theorem BlowUpFibreSemilocal.proof (ha : HomLocRingLocal.Statement.{u})
       (liftForm x) hxl hxbl Q hQmin hQrel
     have hn : IsNoetherianRing (homLocRing (blowUpOf P u) Q) := hloc'.2.1
     have hd : ringKrullDim (homLocRing (blowUpOf P u) Q) = 1 := hloc'.2.2
-    have hdivQ : divCycle (blowUpOf P u) (liftForm x) Q =
+    have hdivQ : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm x)) Q : ℤ) =
         ((multAt (blowUpOf P u ⊔ Ideal.span {liftForm x}) Q).toNat : ℤ) := by
-      unfold divCycle
+      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
       rw [dif_pos ⟨hQmin, hQrel⟩]
     have : Ring.KrullDimLE 1 (homLocRing (blowUpOf P u) Q) := by
       rw [Ring.krullDimLE_iff, hd]

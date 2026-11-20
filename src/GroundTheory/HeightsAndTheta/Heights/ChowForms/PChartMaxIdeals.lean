@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsChartMax
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PProperSymm
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LowerBoundConditional
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -111,7 +112,7 @@ theorem ChartMaxIdeals.proof (h₁ : ConeDimOfChowForm.Statement) (h₂ : ConeDi
   have hpt : specFirst f t ∉ p := by rw [hp, Ideal.mem_span_singleton]; exact hqt
   have : Module.Finite (Localization.AtPrime p) (ChartLoc I t e p) := h₇ F n e I f t p hI hf hpt
   have : Algebra.IsIntegral (Localization.AtPrime p) (ChartLoc I t e p) := Algebra.IsIntegral.of_finite _ _
-  have hsupp : ∀ W, W ∈ (divCycle I u).support ↔
+  have hsupp : ∀ W, W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support ↔
       W ∈ relComps (I ⊔ Ideal.span {linForm u}) ∧ localMult (I ⊔ Ideal.span {linForm u}) W ≠ 0 := by
     intro W
     rw [Finsupp.mem_support_iff, divCycle, fundCycle, Finsupp.onFinset_apply]
@@ -152,7 +153,7 @@ theorem ChartMaxIdeals.proof (h₁ : ConeDimOfChowForm.Statement) (h₂ : ConeDi
     · rw [hmaxO]; exact IsLocalRing.maximalIdeal.isMaximal _
     · rw [comap_chartX_map hIW t, hker]
 
-  have hmem : ∀ W ∈ {W | W ∈ (divCycle I u).support ∧ Ideal.span {q} = incIdeal W e},
+  have hmem : ∀ W ∈ {W | W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support ∧ Ideal.span {q} = incIdeal W e},
       IsProjPrime W ∧ linForm t ∉ W ∧ I ≤ W ∧ linForm u ∈ W ∧ incIdeal W e = p := by
     rintro W ⟨hWs, hWq⟩
     obtain ⟨hrel, -⟩ := (hsupp W).mp hWs

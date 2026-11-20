@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.CycDim
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -17,8 +18,8 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
 
 omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
-theorem relDim_of_ringKrullDim_eq (I : Ideal (MRing ι F)) (d : ℕ)
-    (h : ringKrullDim (MRing ι F ⧸ I) = (d : WithBot ℕ∞)) :
+theorem relDim_of_ringKrullDim_eq (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (d : ℕ)
+    (h : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = (d : WithBot ℕ∞)) :
     relDim I = (((d : ℤ) - Fintype.card K : ℤ) : WithBot (WithTop ℤ)) := by
   unfold relDim
   rw [h]
@@ -33,9 +34,9 @@ theorem relDim_map_injective :
     have h' : (a : ℤ) - Fintype.card K = (b : ℤ) - Fintype.card K := h
     omega)
 
-theorem isMultiProjPrime_relDim_zero_of_divCycle_ne_zero {P : Ideal (MRing ι F)}
-    (hP : IsMultiProjPrime P) (hdim : relDim P = 1) {b : K → ℕ} {f : MRing ι F}
-    (hf : IsMultiHomog f b) (hfP : f ∉ P) {W : Ideal (MRing ι F)} (hW : divCycle P f W ≠ 0) :
+theorem isMultiProjPrime_relDim_zero_of_divCycle_ne_zero {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}
+    (hP : IsMultiProjPrime P) (hdim : relDim P = 1) {b : K → ℕ} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
+    (hf : IsMultiHomog f b) (hfP : f ∉ P) {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0) :
     IsMultiProjPrime W ∧ relDim W = 0 := by
   have h : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W := by
     by_contra h
@@ -46,7 +47,7 @@ theorem isMultiProjPrime_relDim_zero_of_divCycle_ne_zero {P : Ideal (MRing ι F)
       ((Bridge.isMultiHomogIdeal_iff P).mp hP.multiHomog) ((Bridge.isMultiHomog_iff f b).mp hf) hmin)
   refine ⟨⟨hmin.1.1, hWh, hrel⟩, ?_⟩
   have := hP.isPrime
-  have hPd : ringKrullDim (MRing ι F ⧸ P) = ((Fintype.card K + 1 : ℕ) : WithBot ℕ∞) := by
+  have hPd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) = ((Fintype.card K + 1 : ℕ) : WithBot ℕ∞) := by
     apply relDim_map_injective (K := K)
     change relDim P = _
     rw [hdim]
@@ -55,7 +56,7 @@ theorem isMultiProjPrime_relDim_zero_of_divCycle_ne_zero {P : Ideal (MRing ι F)
     have e : (((Fintype.card K + 1 : ℕ) : ℤ) - Fintype.card K : ℤ) = 1 := by push_cast; ring
     rw [e]
     rfl
-  have key : ringKrullDim (MRing ι F ⧸ W) + 1 = ringKrullDim (MRing ι F ⧸ P) :=
+  have key : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) + 1 = ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) :=
     ReciprocityTheory.ChartRestriction.G.AI.I1.cyc_dim_quot_minimal_add_one hfP hmin (fun h => by
       rw [hPd] at h
       exact ENat.natCast_ne_top _ (WithBot.coe_injective h))
@@ -80,7 +81,7 @@ theorem DivPrincipalDegree.proof (h₁ : CutRational.Statement.{u}) (h₂ : IntN
   by_cases hW : ratDiv P f g W = 0
   · rw [hW, zero_mul, zero_mul]
   · congr 1
-    have hfg : divCycle P f W ≠ 0 ∨ divCycle P g W ≠ 0 := by
+    have hfg : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0 ∨ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) ≠ 0 := by
       by_contra h
       push Not at h
       exact hW (by rw [ratDiv, h.1, h.2, sub_zero])

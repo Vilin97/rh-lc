@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsPointIdealMultiProj
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -24,13 +25,13 @@ theorem coneMap_monomial_isWeightedHomogeneous (z : (Σ k, ι k) → L) (d : (Σ
   refine IsWeightedHomogeneous.prod _ _ _ fun p _ => ?_
   exact ((isWeightedHomogeneous_X (R := L) (coneWeight K) p.1).C_mul (z p)).pow (d p)
 
-theorem coneMap_component (z : (Σ k, ι k) → L) (b : K → ℕ) (f : MRing ι F) :
+theorem coneMap_component (z : (Σ k, ι k) → L) (b : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
     weightedHomogeneousComponent (coneWeight K) b (pointConeMap F z f) =
       pointConeMap F z (weightedHomogeneousComponent (blockWeight ι) b f) := by
   induction f using MvPolynomial.induction_on' with
   | monomial d a =>
     have h1 := coneMap_monomial_isWeightedHomogeneous (K := K) (F := F) z d a
-    have h2 : IsWeightedHomogeneous (blockWeight ι) (monomial d a : MRing ι F)
+    have h2 : IsWeightedHomogeneous (blockWeight ι) (monomial d a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)
         (Finsupp.weight (blockWeight ι) d) := isWeightedHomogeneous_monomial _ _ _ rfl
     by_cases h : b = Finsupp.weight (blockWeight ι) d
     · subst h

@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsFibreNonempty
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocalRing
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDegZeroLocQuot
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -37,8 +38,8 @@ theorem FibreNonempty.proof (h1 : SemilocalFiniteRank.Statement.{u})
       rfl
     refine ⟨⟨_, div_mem_degZeroLoc P' (fibrePrimes j P' W) hg hf hfP
       (fun W' hW' => (hnone W' hW').elim)⟩, ?_⟩
-    have hne : ∀ a : MRing ι' F, a ∉ P' →
-        algebraMap (MRing ι' F ⧸ P') (FractionRing (MRing ι' F ⧸ P')) (Ideal.Quotient.mk P' a) ≠ 0 :=
+    have hne : ∀ a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι', a ∉ P' →
+        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P')) (Ideal.Quotient.mk P' a) ≠ 0 :=
       fun a ha => by
         rw [Ne, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
         exact ha
@@ -51,7 +52,7 @@ theorem FibreNonempty.proof (h1 : SemilocalFiniteRank.Statement.{u})
       (degZeroLoc P' (fibrePrimes j P' W))) := by
     intro x y hxy
     have := congrArg (fun z : degZeroLoc P' (fibrePrimes j P' W) =>
-      (z : FractionRing (MRing ι' F ⧸ P'))) hxy
+      (z : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P'))) hxy
     simp only [degZeroLoc.algebraMap_contract_coe] at this
     exact Subtype.ext ((contractFracMap j P').toRingHom.injective this)
   have : Algebra.IsIntegral (degZeroLoc (contractPrime j P') {W})

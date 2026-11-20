@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -25,10 +26,10 @@ theorem TautologicalCase.proof (h3 : IntNumAddFirst.Statement.{u}) (h5 : Minimal
     (h10 : DimStrictDrop.Statement.{u}) : TautologicalCase.Statement.{u} := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP b f g hD cf cg hf hg hb L
 
-  have hfin : ∀ x : MRing ι O, (Function.support (divCycle P x)).Finite := fun x =>
+  have hfin : ∀ x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, (Function.support ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ)))).Finite := fun x =>
     (Ideal.finite_minimalPrimes_of_isNoetherianRing _ (P ⊔ Ideal.span {x})).subset fun W hW => by
       by_contra hmin
-      exact hW (by unfold divCycle; rw [dif_neg]; exact fun h => hmin h.1)
+      exact hW (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dif_neg]; exact fun h => hmin h.1)
   have hZfin : (Function.support (ratDiv P f g)).Finite :=
     ((hfin f).union (hfin g)).subset fun W hW => by
       by_contra h
@@ -36,16 +37,16 @@ theorem TautologicalCase.proof (h3 : IntNumAddFirst.Statement.{u}) (h5 : Minimal
       exact hW (by simp [ratDiv, h.1, h.2])
   have hPmh : IsMultiHomogIdeal P := hP.multiProj.multiHomog
   have : P.IsPrime := hP.multiProj.isPrime
-  have hϖP : (C ϖ : MRing ι O) ∉ P := by
+  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
     intro h
-    have h' : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
+    have h' : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
     rw [hP.noTorsion, Ideal.mem_bot] at h'
     exact hϖ.ne_zero h'
 
-  have hmh : ∀ (x : MRing ι O) (e : K → ℕ), IsMultiHomog x e → ∀ W, divCycle P x W ≠ 0 →
+  have hmh : ∀ (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (e : K → ℕ), IsMultiHomog x e → ∀ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) ≠ 0 →
       IsMultiHomogIdeal W ∧ W.IsPrime ∧ P ≤ W := by
     intro x e he W hW
-    unfold divCycle at hW
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
     split_ifs at hW with hW'
     · exact ⟨h5 O K ι _ W (h6 O K ι P x e hPmh he) hW'.1, hW'.1.1.1, le_sup_left.trans hW'.1.1.2⟩
     · exact absurd rfl hW
@@ -53,12 +54,12 @@ theorem TautologicalCase.proof (h3 : IntNumAddFirst.Statement.{u}) (h5 : Minimal
   have hadd : ∀ W, ratDiv P f g W ≠ 0 → vNum W (Matrix.vecCons b L) =
       vNum W (Matrix.vecCons (fun k => (cf k : ℤ)) L) - vNum W (Matrix.vecCons (fun k => (cg k : ℤ)) L) := by
     intro W hW
-    have hϖW : (C ϖ : MRing ι O) ∈ W := hD.vertical W hW
+    have hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := hD.vertical W hW
     obtain ⟨hWm, hWp, hPW⟩ : IsMultiHomogIdeal W ∧ W.IsPrime ∧ P ≤ W := by
-      by_cases hWf : divCycle P f W = 0
+      by_cases hWf : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = 0
       · exact hmh g cg hg W fun hWg => hW (by simp [ratDiv, hWf, hWg])
       · exact hmh f cf hf W hWf
-    have hdrop := h10 (MRing ι O) P W (lt_of_le_of_ne hPW fun e => hϖP (e ▸ hϖW))
+    have hdrop := h10 (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P W (lt_of_le_of_ne hPW fun e => hϖP (e ▸ hϖW))
     rw [hP.dim, show d + 1 + 1 + Fintype.card K = d + 2 + Fintype.card K by omega] at hdrop
     have hdim : ringKrullDim (MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal W) <
         ((d + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) := by

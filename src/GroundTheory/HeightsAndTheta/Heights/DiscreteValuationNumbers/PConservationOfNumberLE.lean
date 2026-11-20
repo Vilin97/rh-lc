@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -27,39 +28,39 @@ private theorem lt_of_add_one_le_natCast {a : WithBot ℕ∞} {n : ℕ} (h : a +
 
 private theorem special_dim_add_one_le {O : Type u} [CommRing O] [IsDomain O]
     [IsDiscreteValuationRing O] {ϖ : O} (hϖ : Irreducible ϖ) {K : Type} {ι : K → Type}
-    (P : Ideal (MRing ι O)) [P.IsPrime] (hnt : P.comap (C : O →+* MRing ι O) = ⊥) :
+    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) [P.IsPrime] (hnt : P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = ⊥) :
     ringKrullDim (MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal P) + 1 ≤
-      ringKrullDim (MRing ι O ⧸ P) := by
-  set φ : MRing ι O →+* MRing ι (IsLocalRing.ResidueField O) :=
+      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) := by
+  set φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* MRing ι (IsLocalRing.ResidueField O) :=
     MvPolynomial.map (IsLocalRing.residue O) with hφdef
   have hφ : Function.Surjective φ := MvPolynomial.map_surjective _ Ideal.Quotient.mk_surjective
-  have hker : RingHom.ker φ = Ideal.span {(C ϖ : MRing ι O)} := by
+  have hker : RingHom.ker φ = Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} := by
     rw [hφdef, MvPolynomial.ker_map, IsLocalRing.ker_residue, hϖ.maximalIdeal_eq, Ideal.map_span,
       Set.image_singleton]
 
-  set g : MRing ι O →+* MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal P :=
+  set g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal P :=
     (Ideal.Quotient.mk (specialIdeal P)).comp φ with hgdef
   have hg : Function.Surjective g := Ideal.Quotient.mk_surjective.comp hφ
-  have hkg : RingHom.ker g = P ⊔ Ideal.span {(C ϖ : MRing ι O)} := by
+  have hkg : RingHom.ker g = P ⊔ Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} := by
     rw [hgdef, ← RingHom.comap_ker, Ideal.mk_ker, specialIdeal, ← hφdef,
       Ideal.comap_map_of_surjective _ hφ, ← RingHom.ker_eq_comap_bot, hker]
-  have e1 : MRing ι O ⧸ (P ⊔ Ideal.span {(C ϖ : MRing ι O)}) ≃+*
+  have e1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ (P ⊔ Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}) ≃+*
       MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal P :=
     (Ideal.quotEquivOfEq hkg.symm).trans (RingHom.quotientKerEquivOfSurjective hg)
 
-  set r : MRing ι O ⧸ P := Ideal.Quotient.mk P (C ϖ) with hrdef
-  have hspan : (Ideal.span {(C ϖ : MRing ι O)}).map (Ideal.Quotient.mk P) = Ideal.span {r} := by
+  set r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P := Ideal.Quotient.mk P (C ϖ) with hrdef
+  have hspan : (Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}).map (Ideal.Quotient.mk P) = Ideal.span {r} := by
     rw [Ideal.map_span, Set.image_singleton]
-  have e2 : (MRing ι O ⧸ P) ⧸ Ideal.span {r} ≃+* MRing ι O ⧸ (P ⊔ Ideal.span {(C ϖ : MRing ι O)}) :=
+  have e2 : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) ⧸ Ideal.span {r} ≃+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ (P ⊔ Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}) :=
     (Ideal.quotEquivOfEq hspan.symm).trans (DoubleQuot.quotQuotEquivQuotSup P _)
 
   have hr0 : r ≠ 0 := by
     intro h0
     rw [hrdef, Ideal.Quotient.eq_zero_iff_mem] at h0
-    have hmem : ϖ ∈ P.comap (C : O →+* MRing ι O) := h0
+    have hmem : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h0
     rw [hnt, Ideal.mem_bot] at hmem
     exact hϖ.ne_zero hmem
-  have hr : r ∈ nonZeroDivisors (MRing ι O ⧸ P) := mem_nonZeroDivisors_of_ne_zero hr0
+  have hr : r ∈ nonZeroDivisors (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) := mem_nonZeroDivisors_of_ne_zero hr0
   have hle := ringKrullDim_quotient_succ_le_of_nonZeroDivisor hr
   rwa [ringKrullDim_eq_of_ringEquiv e2, ringKrullDim_eq_of_ringEquiv e1] at hle
 
@@ -70,9 +71,9 @@ theorem ConservationOfNumberLE.proof (h1 : IntNumAssoc.Statement.{u})
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP hnt hdim a
 
   have hPprime : P.IsPrime := hP.isPrime
-  have hϖP : (C ϖ : MRing ι O) ∉ P := by
+  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
     intro h
-    have hmem : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
+    have hmem : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
     rw [hnt, Ideal.mem_bot] at hmem
     exact hϖ.ne_zero hmem
   have htors : ∀ x, C ϖ * x ∈ P → x ∈ P := fun x hx =>

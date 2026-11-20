@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -14,28 +15,28 @@ section Objects
 
 variable {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
 
-def relDim [Fintype K] (I : Ideal (MRing ι F)) : WithBot (WithTop ℤ) :=
+def relDim [Fintype K] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : WithBot (WithTop ℤ) :=
   WithBot.map (fun d : ℕ∞ => WithTop.map (fun e : ℕ => (e : ℤ) - Fintype.card K) d)
-    (ringKrullDim (MRing ι F ⧸ I))
+    (ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I))
 
 def EventuallyPoly (h : (K → ℤ) → ℤ) (p : MvPolynomial K ℚ) : Prop :=
   ∀ᶠ m in Filter.atTop, (h m : ℚ) = MvPolynomial.eval (fun k => (m k : ℚ)) p
 
-def homFracDegZero (P : Ideal (MRing ι F)) [P.IsPrime] :
-    IntermediateField F (FractionRing (MRing ι F ⧸ P)) :=
-  IntermediateField.adjoin F {x | ∃ (b : K → ℕ) (f g : MRing ι F), IsMultiHomog f b ∧
+def homFracDegZero (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] :
+    IntermediateField F (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) :=
+  IntermediateField.adjoin F {x | ∃ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f b ∧
     IsMultiHomog g b ∧ g ∉ P ∧
-    x = algebraMap (MRing ι F ⧸ P) _ (Ideal.Quotient.mk P f) /
-      algebraMap (MRing ι F ⧸ P) _ (Ideal.Quotient.mk P g)}
+    x = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _ (Ideal.Quotient.mk P f) /
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _ (Ideal.Quotient.mk P g)}
 
 open Classical in
 
-def resDeg (P : Ideal (MRing ι F)) : ℕ :=
+def resDeg (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : ℕ :=
   if h : P.IsPrime then haveI := h; Module.finrank F (homFracDegZero P) else 0
 
 open Classical in
 
-def topCycle [Fintype K] (I : Ideal (MRing ι F)) (n : ℕ) (W : Ideal (MRing ι F)) : ℤ :=
+def topCycle [Fintype K] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (n : ℕ) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : ℤ :=
   if h : W ∈ I.minimalPrimes ∧ IsRelevant W ∧ relDim W = n then
     haveI : W.IsPrime := h.1.1.1
     ((multAt I W).toNat : ℤ)
@@ -53,29 +54,29 @@ def blockIncl (j : K ↪ K') (ι' : K' → Type*) : (Σ k, ι' (j k)) → (Σ k'
 def pullDeg (j : K ↪ K') (b : K → ℤ) : K' → ℤ :=
   Function.extend j b 0
 
-def contractPrime (j : K ↪ K') {ι' : K' → Type*} (P' : Ideal (MRing ι' F)) :
-    Ideal (MRing (fun k => ι' (j k)) F) :=
+def contractPrime (j : K ↪ K') {ι' : K' → Type*} (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) :
+    Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))) :=
   P'.comap (rename (blockIncl j ι'))
 
-instance contractPrime.isPrime (j : K ↪ K') {ι' : K' → Type*} (P' : Ideal (MRing ι' F))
+instance contractPrime.isPrime (j : K ↪ K') {ι' : K' → Type*} (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι'))
     [P'.IsPrime] : (contractPrime j P').IsPrime :=
   Ideal.comap_isPrime _ _
 
-def contractQuot (j : K ↪ K') {ι' : K' → Type*} (P' : Ideal (MRing ι' F)) :
-    (MRing (fun k => ι' (j k)) F ⧸ contractPrime j P') →ₐ[F] (MRing ι' F ⧸ P') :=
+def contractQuot (j : K ↪ K') {ι' : K' → Type*} (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) :
+    (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)) ⧸ contractPrime j P') →ₐ[F] (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') :=
   Ideal.quotientMapₐ P' (rename (blockIncl j ι')) le_rfl
 
-def contractFracMap (j : K ↪ K') {ι' : K' → Type*} (P' : Ideal (MRing ι' F)) [P'.IsPrime] :
-    FractionRing (MRing (fun k => ι' (j k)) F ⧸ contractPrime j P') →ₐ[F]
-      FractionRing (MRing ι' F ⧸ P') :=
+def contractFracMap (j : K ↪ K') {ι' : K' → Type*} (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime] :
+    FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)) ⧸ contractPrime j P') →ₐ[F]
+      FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') :=
   IsFractionRing.liftAlgHom
-    (g := (IsScalarTower.toAlgHom F (MRing ι' F ⧸ P') (FractionRing (MRing ι' F ⧸ P'))).comp
+    (g := (IsScalarTower.toAlgHom F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P'))).comp
       (contractQuot j P'))
-    ((IsFractionRing.injective (MRing ι' F ⧸ P') (FractionRing (MRing ι' F ⧸ P'))).comp
+    ((IsFractionRing.injective (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P'))).comp
       (Ideal.quotientMap_injective))
 
 def relDeg [DecidableEq K] [DecidableEq K'] (j : K ↪ K') {ι' : K' → Type*}
-    (P' : Ideal (MRing ι' F)) [P'.IsPrime] : ℕ :=
+    (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime] : ℕ :=
   IntermediateField.relfinrank ((homFracDegZero (contractPrime j P')).map (contractFracMap j P'))
     (homFracDegZero P')
 
@@ -95,8 +96,8 @@ instance addBlock.nonempty (ι : K → Type) [∀ k, Nonempty (ι k)] (N : ℕ) 
 def addBlockIncl (ι : K → Type) (N : ℕ) : (Σ k, ι k) → (Σ o, addBlock ι N o) :=
   fun v => ⟨some v.1, v.2⟩
 
-def addBlockPrime {ι : K → Type} (N : ℕ) (P : Ideal (MRing ι F)) :
-    Ideal (MRing (addBlock ι N) F) :=
+def addBlockPrime {ι : K → Type} (N : ℕ) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) :
+    Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (addBlock ι N)) :=
   P.map (rename (addBlockIncl ι N))
 
 def newBlockDeg : Option K → ℤ :=
@@ -106,14 +107,14 @@ end Blocks
 
 def GradedFinite.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)) (m : K → ℕ),
+    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : K → ℕ),
     FiniteDimensional F (gradedPiece I m) ∧
       hilbFn I (fun k => (m k : ℤ)) = Module.finrank F (gradedPiece I m)
 
 def HilbExactDivide.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I →
-    ∀ (c : K → ℕ) (s : MRing ι F), IsMultiHomog s c → ∀ m : K → ℤ,
+    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I →
+    ∀ (c : K → ℕ) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog s c → ∀ m : K → ℤ,
       hilbFn I m - hilbFn (I.colon (Ideal.span {s})) (m - fun k => (c k : ℤ)) =
         hilbFn (I ⊔ Ideal.span {s}) m
 
@@ -125,19 +126,19 @@ def PolyOfDiffs.Statement : Prop :=
 
 def HilbEventuallyPoly.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I →
+    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I →
     ∃ p : MvPolynomial K ℚ, EventuallyPoly (hilbFn I) p
 
 def HilbDegreeBound.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I →
+    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I →
     (IsRelevant I → ∀ p : MvPolynomial K ℚ, EventuallyPoly (hilbFn I) p → p ≠ 0 →
         (p.totalDegree : WithBot (WithTop ℤ)) ≤ relDim I) ∧
       (¬ IsRelevant I → ∀ᶠ m in Filter.atTop, hilbFn I m = 0)
 
 def MixedDiffConst.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I → IsRelevant I →
+    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I → IsRelevant I →
     ∀ n : ℕ, relDim I = n →
       (∀ bs : Fin n → K → ℤ, ∀ᶠ m in Filter.atTop, mixedDiff bs (hilbFn I) m = intNum F I bs) ∧
       (∀ r : ℕ, n < r → ∀ bs : Fin r → K → ℤ,
@@ -145,25 +146,25 @@ def MixedDiffConst.Statement : Prop :=
 
 def IntNumSymm.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)) (n : ℕ) (bs : Fin n → K → ℤ)
+    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (n : ℕ) (bs : Fin n → K → ℤ)
     (σ : Equiv.Perm (Fin n)), intNum F I (bs ∘ σ) = intNum F I bs
 
 def IntNumAdd.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I → IsRelevant I →
+    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I → IsRelevant I →
     ∀ n : ℕ, relDim I = n → ∀ (bs : Fin n → K → ℤ) (i : Fin n) (b b' : K → ℤ),
       intNum F I (Function.update bs i (b + b')) =
         intNum F I (Function.update bs i b) + intNum F I (Function.update bs i b')
 
 def IntNumZeroSlot.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)),
+    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)),
     (∀ (n : ℕ) (bs : Fin n → K → ℤ) (i : Fin n), bs i = 0 → intNum F I bs = 0) ∧
       (IsMultiHomogIdeal I → ∀ (n : ℕ) (bs : Fin n → K → ℤ), relDim I < n → intNum F I bs = 0)
 
 def IntNumBase.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)) (hP : IsMultiProjPrime P), relDim P = 0 →
+    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hP : IsMultiProjPrime P), relDim P = 0 →
     haveI := hP.isPrime
     FiniteDimensional F (homFracDegZero P) ∧
       intNum F P (n := 0) ![] = Module.finrank F (homFracDegZero P)
@@ -172,8 +173,8 @@ open Classical in
 
 def PrimeFiltration.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I →
-    ∃ (r : ℕ) (Q : Fin r → Ideal (MRing ι F)) (c : Fin r → K → ℕ),
+    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I →
+    ∃ (r : ℕ) (Q : Fin r → Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (c : Fin r → K → ℕ),
       (∀ j, (Q j).IsPrime ∧ IsMultiHomogIdeal (Q j) ∧ I ≤ Q j) ∧
       (∀ᶠ m in Filter.atTop, hilbFn I m = ∑ j, hilbFn (Q j) (m - fun k => (c j k : ℤ))) ∧
       (∀ W (hW : W ∈ I.minimalPrimes), IsRelevant W → relDim W = relDim I →
@@ -184,74 +185,74 @@ def PrimeFiltration.Statement : Prop :=
 
 def MultEqualsCoeff.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I → IsRelevant I →
+    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I → IsRelevant I →
     ∀ n : ℕ, relDim I = n → ∀ bs : Fin n → K → ℤ,
       intNum F I bs = cycEval (fun W => intNum F W bs) (topCycle I n)
 
 def CutRegular.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)), IsMultiProjPrime P →
-    ∀ n : ℕ, relDim P = (n + 1 : ℕ) → ∀ (c : K → ℕ) (s : MRing ι F), IsMultiHomog s c → s ∉ P →
+    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P →
+    ∀ n : ℕ, relDim P = (n + 1 : ℕ) → ∀ (c : K → ℕ) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog s c → s ∉ P →
     ∀ bs : Fin n → K → ℤ,
       intNum F P (Fin.snoc (α := fun _ => K → ℤ) bs (fun k => (c k : ℤ))) =
-        cycEval (fun W => intNum F W bs) (divCycle P s)
+        cycEval (fun W => intNum F W bs) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ)))
 
 def CutRational.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)), IsMultiProjPrime P →
-    ∀ n : ℕ, relDim P = (n + 1 : ℕ) → ∀ (bf bg : K → ℕ) (f g : MRing ι F),
+    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P →
+    ∀ n : ℕ, relDim P = (n + 1 : ℕ) → ∀ (bf bg : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι),
     IsMultiHomog f bf → IsMultiHomog g bg → f ∉ P → g ∉ P → ∀ bs : Fin n → K → ℤ,
       intNum F P (Fin.snoc (α := fun _ => K → ℤ) bs (fun k => (bf k : ℤ) - bg k)) =
         cycEval (fun W => intNum F W bs) (ratDiv P f g)
 
 def DivPrincipalDegree.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)), IsMultiProjPrime P → relDim P = 1 →
-    ∀ (b : K → ℕ) (f g : MRing ι F), IsMultiHomog f b → IsMultiHomog g b → f ∉ P → g ∉ P →
+    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P → relDim P = 1 →
+    ∀ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f b → IsMultiHomog g b → f ∉ P → g ∉ P →
       cycEval (fun x => (resDeg x : ℤ)) (ratDiv P f g) = 0
 
 def ExistsForm.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)), IsMultiProjPrime P → ∀ b : K → ℤ,
-    ∃ (bf bg : K → ℕ) (f g : MRing ι F), IsMultiHomog f bf ∧ IsMultiHomog g bg ∧ f ∉ P ∧
+    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P → ∀ b : K → ℤ,
+    ∃ (bf bg : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f bf ∧ IsMultiHomog g bg ∧ f ∉ P ∧
       g ∉ P ∧ (fun k => (bf k : ℤ) - bg k) = b
 
 structure IsIntersectionTheory {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*}
-    (F : Type*) [Field F] (N : Ideal (MRing ι F) → (n : ℕ) → (Fin n → K → ℤ) → ℤ) : Prop where
-  base : ∀ P : Ideal (MRing ι F), IsMultiProjPrime P → relDim P = 0 → N P 0 ![] = resDeg P
-  cut : ∀ (P : Ideal (MRing ι F)) (n : ℕ), IsMultiProjPrime P → relDim P = (n + 1 : ℕ) →
-    ∀ (bf bg : K → ℕ) (f g : MRing ι F), IsMultiHomog f bf → IsMultiHomog g bg → f ∉ P → g ∉ P →
+    (F : Type*) [Field F] (N : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) → (n : ℕ) → (Fin n → K → ℤ) → ℤ) : Prop where
+  base : ∀ P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiProjPrime P → relDim P = 0 → N P 0 ![] = resDeg P
+  cut : ∀ (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (n : ℕ), IsMultiProjPrime P → relDim P = (n + 1 : ℕ) →
+    ∀ (bf bg : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f bf → IsMultiHomog g bg → f ∉ P → g ∉ P →
     ∀ bs : Fin n → K → ℤ,
       N P (n + 1) (Fin.snoc (α := fun _ => K → ℤ) bs (fun k => (bf k : ℤ) - bg k)) =
         cycEval (fun W => N W n bs) (ratDiv P f g)
 
 def IntNumUnique.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (N : Ideal (MRing ι F) → (n : ℕ) → (Fin n → K → ℤ) → ℤ),
-    IsIntersectionTheory F N → ∀ P : Ideal (MRing ι F), IsMultiProjPrime P →
+    [∀ k, Fintype (ι k)] (N : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) → (n : ℕ) → (Fin n → K → ℤ) → ℤ),
+    IsIntersectionTheory F N → ∀ P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiProjPrime P →
     ∀ n : ℕ, relDim P = n → ∀ bs : Fin n → K → ℤ, N P n bs = intNum F P bs
 
 def IntNumBaseChange.Statement : Prop :=
   (∀ (F : Type u) [Field F] (F' : Type v) [Field F'] [Algebra F F'] (K : Type) [Fintype K]
-    [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)),
+    [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)),
     (∀ m, hilbFn (I.map (MvPolynomial.map (algebraMap F F'))) m = hilbFn I m) ∧
       ∀ (n : ℕ) (bs : Fin n → K → ℤ),
         intNum F' (I.map (MvPolynomial.map (algebraMap F F'))) bs = intNum F I bs) ∧
   (∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)), IsMultiProjPrime P →
+    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P →
     IsMultiProjPrime (P.map (MvPolynomial.map (algebraMap F (RatFunc F)))))
 
 def ProjectionFormulaContracted.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K K' : Type) [Fintype K] [DecidableEq K] [Fintype K']
     [DecidableEq K'] (j : K ↪ K') (ι' : K' → Type) [∀ k, Fintype (ι' k)]
-    (P' : Ideal (MRing ι' F)), IsMultiProjPrime P' → ∀ n : ℕ, relDim P' = n →
+    (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')), IsMultiProjPrime P' → ∀ n : ℕ, relDim P' = n →
     relDim (contractPrime j P') < n → ∀ bs : Fin n → K → ℤ,
       intNum F P' (fun i => pullDeg j (bs i)) = 0
 
 def ProjectionFormulaDegree.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K K' : Type) [Fintype K] [DecidableEq K] [Fintype K']
     [DecidableEq K'] (j : K ↪ K') (ι' : K' → Type) [∀ k, Fintype (ι' k)]
-    (P' : Ideal (MRing ι' F)) (hP' : IsMultiProjPrime P'), ∀ n : ℕ, relDim P' = n →
+    (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) (hP' : IsMultiProjPrime P'), ∀ n : ℕ, relDim P' = n →
     relDim (contractPrime j P') = n → ∀ bs : Fin n → K → ℤ,
       haveI := hP'.isPrime
       (homFracDegZero (contractPrime j P')).map (contractFracMap j P') ≤ homFracDegZero P' ∧
@@ -260,7 +261,7 @@ def ProjectionFormulaDegree.Statement : Prop :=
 
 def ProductWithProjectiveSpace.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)), IsMultiProjPrime P →
+    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P →
     ∀ e N r m : ℕ, relDim P = e → r + m = e + N → ∀ cs : Fin r → K → ℤ,
       intNum F (addBlockPrime N P)
           (Fin.append (fun _ : Fin m => (newBlockDeg : Option K → ℤ))

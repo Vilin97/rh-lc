@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StatementsCurrent
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -62,7 +63,7 @@ def FormIntLelong.Statement : Prop :=
     IsProjPrime W → (∃ g : MvPolynomial (Fin (e + 2) × Fin n) ℂ, IsChowForm W (e + 2) g) →
     linForm u' ∉ W → 0 < δ →
       Tendsto (fun ε => formInt h W e (fsLogReg h u δ) (fsLogReg h u' ε)) (𝓝[>] 0)
-        (𝓝 (cycleIntegral h (divCycle W u') e (fsLogReg h u δ) -
+        (𝓝 (cycleIntegral h ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))) e (fsLogReg h u δ) -
           coneIntegral h W (e + 1) (fsLogReg h u δ)))
 
 def RegConeLimit.Statement : Prop :=

@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ProjectiveSpaceIncrementHyp
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.WeightedHomogeneousSubmoduleBlockWeightIntEqRing
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HilbertSamuel
@@ -214,7 +215,7 @@ theorem MultigradedFiltration.equiv_mp :
   obtain ⟨n, N, x, c, q, hN0, hNl, hj, -⟩ :=
     hA F K ι M ℳ ((isMultigraded_iff_isMultigrading ℳ).mp hℳ)
   have hNspan : ∀ (k : ℕ) (hk : k < n + 1),
-      N ⟨k, hk⟩ = Submodule.span (MRing ι F) (x '' {i | i.val < k}) := by
+      N ⟨k, hk⟩ = Submodule.span (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (x '' {i | i.val < k}) := by
     intro k
     induction k with
     | zero =>
@@ -251,8 +252,8 @@ theorem MultigradedFiltration.equiv_mpr :
   intro hB F _ K _ _ ι _ M _ _ _ _ _ piece hpiece
   obtain ⟨n, x, c, q, hx, hq, hspan, hann⟩ :=
     hB F K ι M piece ((isMultigraded_iff_isMultigrading piece).mpr hpiece) inferInstance
-  let N : Fin (n + 1) → Submodule (MRing ι F) M := fun k =>
-    Submodule.span (MRing ι F) (x '' {i | i.val < k.val})
+  let N : Fin (n + 1) → Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M := fun k =>
+    Submodule.span (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (x '' {i | i.val < k.val})
   have hN0 : N 0 = ⊥ := by simp [N]
   have hNl : N (Fin.last n) = ⊤ := by
     simp only [N, Fin.val_last]
@@ -260,11 +261,11 @@ theorem MultigradedFiltration.equiv_mpr :
     congr 2
     ext i
     simp
-  have hsucc : ∀ j : Fin n, N j.succ = N j.castSucc ⊔ Submodule.span (MRing ι F) {x j} := by
+  have hsucc : ∀ j : Fin n, N j.succ = N j.castSucc ⊔ Submodule.span (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) {x j} := by
     intro j
     simp only [N, Fin.val_succ, Fin.val_castSucc]
     exact span_image_val_lt_succ x j
-  have hann' : ∀ j (s : MRing ι F), s • x j ∈ N j.castSucc ↔ s ∈ q j := fun j s => hann j s
+  have hann' : ∀ j (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), s • x j ∈ N j.castSucc ↔ s ∈ q j := fun j s => hann j s
   refine ⟨n, N, x, c, q, hN0, hNl, fun j => ⟨hx j, hsucc j, (hq j).1, (hq j).2, hann' j⟩, ?_⟩
   intro W hW
   have : W.IsPrime := hW.1.1

@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -48,20 +49,20 @@ theorem lexRelabel_injective (e : K ≃ Fin (Fintype.card K)) : Function.Injecti
 variable [DecidableEq K] [DecidableEq (Lex (Fin (Fintype.card K) → ℕ))]
 
 theorem isHomogeneous_lex_of_isMultiHomogIdeal (e : K ≃ Fin (Fintype.card K))
-    {I : Ideal (MRing ι R)} (hI : IsMultiHomogIdeal I) :
+    {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hI : IsMultiHomogIdeal I) :
     letI := weightedGradedAlgebra R (fun v => lexRelabel e (blockWeight ι v))
     I.IsHomogeneous (weightedHomogeneousSubmodule R (fun v => lexRelabel e (blockWeight ι v))) := by
   letI := weightedGradedAlgebra R (fun v => lexRelabel e (blockWeight ι v))
   intro i r hr
   change ((weightedDecomposition R (fun v => lexRelabel e (blockWeight ι v))).decompose' r i :
-    MRing ι R) ∈ I
+    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∈ I
   rw [weightedDecomposition.decompose'_apply]
   obtain ⟨b, rfl⟩ := lexRelabel_surjective e i
   rw [weightedHomogeneousComponent_comp_addMonoidHom _ (lexRelabel_injective e)]
   exact hI r hr b
 
 theorem isMultiHomogIdeal_of_isHomogeneous_lex (e : K ≃ Fin (Fintype.card K))
-    {I : Ideal (MRing ι R)}
+    {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)}
     (hI : letI := weightedGradedAlgebra R (fun v => lexRelabel e (blockWeight ι v))
       I.IsHomogeneous (weightedHomogeneousSubmodule R (fun v => lexRelabel e (blockWeight ι v)))) :
     IsMultiHomogIdeal I := by

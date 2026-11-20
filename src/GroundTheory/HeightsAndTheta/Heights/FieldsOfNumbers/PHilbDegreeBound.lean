@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegreeBound
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -17,7 +18,7 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {F : Type u} [
 
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
-theorem isHomogeneous_of_isMultiHomogIdeal {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdeal I) :
+theorem isHomogeneous_of_isMultiHomogIdeal {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsMultiHomogIdeal I) :
     I.IsHomogeneous (weightedHomogeneousSubmodule F (blockWeight ι)) := by
   classical
   have e : I = Ideal.span
@@ -35,8 +36,8 @@ theorem isHomogeneous_of_isMultiHomogIdeal {I : Ideal (MRing ι F)} (hI : IsMult
   obtain ⟨f, -, b, rfl⟩ := hx
   exact ⟨b, weightedHomogeneousComponent_isWeightedHomogeneous b f⟩
 
-theorem isMultiHomogIdeal_sup_span {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdeal I)
-    {s : MRing ι F} {c : K → ℕ} (hs : IsMultiHomog s c) :
+theorem isMultiHomogIdeal_sup_span {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsMultiHomogIdeal I)
+    {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {c : K → ℕ} (hs : IsMultiHomog s c) :
     IsMultiHomogIdeal (I ⊔ Ideal.span {s}) := by
   classical
   have h2 : (Ideal.span {s}).IsHomogeneous (weightedHomogeneousSubmodule F (blockWeight ι)) :=
@@ -47,7 +48,7 @@ theorem isMultiHomogIdeal_sup_span {I : Ideal (MRing ι F)} (hI : IsMultiHomogId
 
 omit [Fintype K] [DecidableEq K] in
 
-theorem colon_span_eq_of_isPrime {P : Ideal (MRing ι F)} (hP : P.IsPrime) {s : MRing ι F}
+theorem colon_span_eq_of_isPrime {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hP : P.IsPrime) {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
     (hs : s ∉ P) : P.colon (Ideal.span {s}) = P := by
   ext x
   rw [Ideal.mem_colon_span_singleton]
@@ -55,9 +56,9 @@ theorem colon_span_eq_of_isPrime {P : Ideal (MRing ι F)} (hP : P.IsPrime) {s : 
 
 omit [Fintype K] [DecidableEq K] in
 
-theorem ringKrullDim_sup_span_add_one_le {P : Ideal (MRing ι F)} [P.IsPrime] {s : MRing ι F}
+theorem ringKrullDim_sup_span_add_one_le {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [P.IsPrime] {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
     (hs : s ∉ P) :
-    ringKrullDim (MRing ι F ⧸ (P ⊔ Ideal.span {s})) + 1 ≤ ringKrullDim (MRing ι F ⧸ P) := by
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ (P ⊔ Ideal.span {s})) + 1 ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) := by
   refine ringKrullDim_succ_le_of_surjective (Ideal.Quotient.factor le_sup_left)
     (Ideal.Quotient.factor_surjective le_sup_left) (r := Ideal.Quotient.mk P s) ?_ ?_
   · exact mem_nonZeroDivisors_of_ne_zero (by rwa [Ne, Ideal.Quotient.eq_zero_iff_mem])
@@ -88,17 +89,17 @@ theorem totalDegree_add_card_le_ringKrullDim (h1 : HilbEventuallyPoly.Statement.
     (hD : RelevantPrimeDimGe.Statement.{u})
     (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
     [∀ k, Fintype (ι k)] (n : ℕ) :
-    ∀ I : Ideal (MRing ι F), IsMultiHomogIdeal I → ringKrullDim (MRing ι F ⧸ I) < n →
+    ∀ I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomogIdeal I → ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) < n →
       ∀ p : MvPolynomial K ℚ, EventuallyPoly (hilbFn I) p → p ≠ 0 →
-      ((p.totalDegree + Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (MRing ι F ⧸ I) := by
+      ((p.totalDegree + Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) := by
   induction n with
   | zero =>
     intro I _ hlt p hp hp0
     exfalso
-    have hsub : Subsingleton (MRing ι F ⧸ I) := by
+    have hsub : Subsingleton (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) := by
       by_contra hn
       rw [not_subsingleton_iff_nontrivial] at hn
-      have h0 := ringKrullDim_nonneg_of_nontrivial (R := MRing ι F ⧸ I)
+      have h0 := ringKrullDim_nonneg_of_nontrivial (R := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I)
       exact absurd hlt (not_lt.mpr (by simpa using h0))
     have hz : ∀ m, hilbFn I m = 0 := by
       intro m
@@ -109,10 +110,10 @@ theorem totalDegree_add_card_le_ringKrullDim (h1 : HilbEventuallyPoly.Statement.
     have : EventuallyPoly (hilbFn I) 0 := Filter.Eventually.of_forall fun m => by simp [hz]
     exact hp0 (hU K _ p 0 hp this)
   | succ n ih =>
-    have prime : ∀ P : Ideal (MRing ι F), P.IsPrime → IsMultiHomogIdeal P →
-        ringKrullDim (MRing ι F ⧸ P) < (n + 1 : ℕ) → ∀ p : MvPolynomial K ℚ,
+    have prime : ∀ P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), P.IsPrime → IsMultiHomogIdeal P →
+        ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) < (n + 1 : ℕ) → ∀ p : MvPolynomial K ℚ,
         EventuallyPoly (hilbFn P) p → p ≠ 0 →
-        ((p.totalDegree + Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (MRing ι F ⧸ P) := by
+        ((p.totalDegree + Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) := by
       intro P hPp hPh hlt p hp hp0
       by_cases hrel : IsRelevant P
       swap
@@ -121,8 +122,8 @@ theorem totalDegree_add_card_le_ringKrullDim (h1 : HilbEventuallyPoly.Statement.
         exact hp0 (hU K _ p 0 hp this)
       have hge := hD F K ι P ⟨hPp, hPh, hrel⟩
       choose i hi using hrel
-      obtain ⟨N, hN⟩ : ∃ N : ℕ, ringKrullDim (MRing ι F ⧸ P) = N := by
-        generalize ringKrullDim (MRing ι F ⧸ P) = x at hge hlt
+      obtain ⟨N, hN⟩ : ∃ N : ℕ, ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) = N := by
+        generalize ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) = x at hge hlt
         induction x using WithBot.recBotCoe with
         | bot => exact absurd hge (not_le.mpr (WithBot.bot_lt_coe _))
         | coe a =>
@@ -133,7 +134,7 @@ theorem totalDegree_add_card_le_ringKrullDim (h1 : HilbEventuallyPoly.Statement.
       have hdiff : ∀ k, ∃ q : MvPolynomial K ℚ, (q = 0 ∨ q.totalDegree < N - Fintype.card K) ∧
           EventuallyPoly (diffStep (Pi.single k 1) (hilbFn P)) q := by
         intro k
-        have hs : IsMultiHomog (X ⟨k, i k⟩ : MRing ι F) (Pi.single k 1) :=
+        have hs : IsMultiHomog (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (Pi.single k 1) :=
           isWeightedHomogeneous_X _ _ _
         have hJ := isMultiHomogIdeal_sup_span hPh hs
         obtain ⟨q, hq⟩ := h1 F K ι _ hJ
@@ -183,10 +184,10 @@ theorem totalDegree_add_card_le_ringKrullDim (h1 : HilbEventuallyPoly.Statement.
       exact Finset.sum_congr rfl fun j _ => hm j
     have hpq := hU K _ p _ hp hsumP
     have hDQ : ∀ j, q j ≠ 0 → (((q j).totalDegree + Fintype.card K : ℕ) : WithBot ℕ∞) ≤
-        ringKrullDim (MRing ι F ⧸ I) := by
+        ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) := by
       intro j hj
       have hpj0 : pj j ≠ 0 := fun h => hj (hq0 j h)
-      have hle : ringKrullDim (MRing ι F ⧸ Q j) ≤ ringKrullDim (MRing ι F ⧸ I) :=
+      have hle : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q j) ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) :=
         ringKrullDim_le_of_surjective (Ideal.Quotient.factor (hQ j).2.2)
           (Ideal.Quotient.factor_surjective _)
       have hb := prime (Q j) (hQ j).1 (hQ j).2.1 (hle.trans_lt hlt) (pj j) (hpj j) hpj0
@@ -219,7 +220,7 @@ theorem HilbDegreeBound.proof (h1 : HilbEventuallyPoly.Statement.{u})
   refine ⟨fun _ p hp hp0 => ?_, fun hrel => hZ F K ι I hrel⟩
   have key := fun n => totalDegree_add_card_le_ringKrullDim h1 h2 h3 h4 hU hS hZ hD F K ι n I hI
   unfold relDim
-  generalize hx : ringKrullDim (MRing ι F ⧸ I) = x at key
+  generalize hx : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = x at key
   induction x using WithBot.recBotCoe with
   | bot =>
     have := key 0 (WithBot.bot_lt_coe _) p hp hp0

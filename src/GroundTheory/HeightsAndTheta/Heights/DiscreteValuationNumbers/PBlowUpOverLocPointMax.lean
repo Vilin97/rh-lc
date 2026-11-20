@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsB
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PHomLocRingIsLocal
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PHomLocRingMem
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -50,10 +51,10 @@ theorem BlowUpOverLocPointMax.proof (hfin : BlowUpOverLocFinite.Statement.{u})
       have hfW' : liftForm (J := J) f ∈ W' := by rw [← hW'W] at hfW; exact hfW
       have hlf := isMultiHomog_liftForm (J := J) hf
       have hlg := isMultiHomog_liftForm (J := J) hg
-      have hz' : algebraMap (MRing (extIdx ι J) O ⧸ blowUpOf P u)
-            (FractionRing (MRing (extIdx ι J) O ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm f)) /
-          algebraMap (MRing (extIdx ι J) O ⧸ blowUpOf P u)
-            (FractionRing (MRing (extIdx ι J) O ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm g)) ∈
+      have hz' : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)
+            (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm f)) /
+          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)
+            (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm g)) ∈
           homLocRing (blowUpOf P u) W' :=
         Subring.subset_closure ⟨liftMDeg b, _, _, hlf, hlg, hgW', rfl⟩
       have hnu : ¬ IsUnit (⟨_, hz'⟩ : homLocRing (blowUpOf P u) W') :=

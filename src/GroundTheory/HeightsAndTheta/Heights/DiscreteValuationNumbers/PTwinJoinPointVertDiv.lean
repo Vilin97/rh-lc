@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerE
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVerticalDivisorJoinPullback
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsVerticalDivOfIsVerticalDivisorAlt
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -39,9 +40,9 @@ theorem rename_weightedHomogeneousComponent [DecidableEq K] [DecidableEq K'] {R 
         (rename (liftVar ι') h) := by
   induction h using MvPolynomial.induction_on' with
   | monomial d r =>
-    have hm : IsMultiHomog (monomial d r : MRing ι R) (Finsupp.weight (blockWeight ι) d) :=
+    have hm : IsMultiHomog (monomial d r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (Finsupp.weight (blockWeight ι) d) :=
       isWeightedHomogeneous_monomial _ _ _ rfl
-    have hj : IsMultiHomog (rename (liftVar ι') (monomial d r : MRing ι R))
+    have hj : IsMultiHomog (rename (liftVar ι') (monomial d r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))
         (Sum.elim (Finsupp.weight (blockWeight ι) d) 0) := isMultiHomog_joinForm hm
     by_cases hb : b = Finsupp.weight (blockWeight ι) d
     · subst hb

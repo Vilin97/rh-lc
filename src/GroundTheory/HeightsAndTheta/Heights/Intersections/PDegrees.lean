@@ -9,6 +9,7 @@ import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRedF
 import ReciprocityTheory.AnalyticForms.PotentialTheory.Stokes
 import ReciprocityTheory.AnalyticForms.PotentialTheory.PLCurveA
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -16,7 +17,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter
 
 open MvPolynomial
-open GroundTheory.Heights₂.Heights.NumbersDVR (MRing IsMultiHomog IsMultiProjPrime divCycle intNum cycEval)
+open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiProjPrime IsMultiHomog (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle intNum cycEval) W : ℤ)))
 open GroundTheory.Heights₂.Heights.FieldNumbers (CutRegular.full IntNumSymm.full IntNumAdd.full IntNumBase.full
   homFracDegZero)
 
@@ -24,7 +25,7 @@ set_option linter.unusedSectionVars false
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem zInt_cons_const (P : Ideal (MRing ι ℂ)) (e : ℕ) (c : ℝ) (φ : Fin e → MCone ι → ℝ)
+theorem zInt_cons_const (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) (e : ℕ) (c : ℝ) (φ : Fin e → MCone ι → ℝ)
     (g : MCone ι → ℝ) : zInt P (e + 1) (Fin.cons (fun _ => c) φ) g = 0 := by
   unfold zInt
   split_ifs with h
@@ -35,17 +36,17 @@ theorem zInt_cons_const (P : Ideal (MRing ι ℂ)) (e : ℕ) (c : ℝ) (φ : Fin
     cases i using Fin.cases <;> rfl
   · rfl
 
-theorem zPts_anti {P W : Ideal (MRing ι ℂ)} (h : P ≤ W) {z : MCone ι} (hz : z ∈ zPts W) :
+theorem zPts_anti {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (h : P ≤ W) {z : MCone ι} (hz : z ∈ zPts W) :
     z ∈ zPts P :=
   ⟨hz.1, fun f hf => hz.2 f (h hf)⟩
 
-theorem isSmoothMetric_mono {P W : Ideal (MRing ι ℂ)} (h : P ≤ W) {L : HLine ι}
+theorem isSmoothMetric_mono {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (h : P ≤ W) {L : HLine ι}
     (hL : IsSmoothMetric P L) : IsSmoothMetric W L := by
   intro z hz
   obtain ⟨U, hU, G, hG, hGU⟩ := hL z (zPts_anti h hz)
   exact ⟨U, hU, G, hG, fun w hw => hGU w ⟨hw.1, zPts_anti h hw.2⟩⟩
 
-theorem isSmoothMetric_tensor {P : Ideal (MRing ι ℂ)} {A B : HLine ι} (hA : IsSmoothMetric P A)
+theorem isSmoothMetric_tensor {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} {A B : HLine ι} (hA : IsSmoothMetric P A)
     (hB : IsSmoothMetric P B) :
     IsSmoothMetric P (ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor A B) := by
   intro z hz
@@ -59,7 +60,7 @@ theorem isSmoothMetric_tensor {P : Ideal (MRing ι ℂ)} {A B : HLine ι} (hA : 
     ← hHV w ⟨hw.1.2, hw.2⟩]
   rfl
 
-theorem isSmoothFn_one (P : Ideal (MRing ι ℂ)) : IsSmoothFn P (fun _ => (1 : ℝ)) :=
+theorem isSmoothFn_one (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) : IsSmoothFn P (fun _ => (1 : ℝ)) :=
   ⟨fun _ _ _ _ => rfl, fun _ _ => ⟨Set.univ, Filter.univ_mem, fun _ => 1, contDiffOn_const,
     fun _ _ => rfl⟩⟩
 
@@ -74,10 +75,10 @@ theorem cons_comp_finRotate {n : ℕ} (c : K → ℤ) (bs : Fin n → K → ℤ)
       Fin.snoc_castSucc]
 
 theorem degrees_step (hPL1 : PoincareLelongAlt.Statement) (hRes : ResExists.Statement) {e : ℕ}
-    (ih : ∀ (W : Ideal (MRing ι ℂ)) (L : Fin e → HLine ι), IsProjVar W e →
+    (ih : ∀ (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) (L : Fin e → HLine ι), IsProjVar W e →
       (∀ j, IsSmoothMetric W (L j)) →
       zInt W e (fun j => logH (L j)) (fun _ => 1) = (intNum ℂ W (fun j => (L j).a) : ℝ))
-    {P : Ideal (MRing ι ℂ)} (hP : IsProjVar P (e + 1)) (L : Fin e → HLine ι)
+    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hP : IsProjVar P (e + 1)) (L : Fin e → HLine ι)
     (hL : ∀ j, IsSmoothMetric P (L j)) (E : HLine ι) (c : K → ℕ) (hEc : ∀ k, E.a k = c k)
     (hE : IsSmoothMetric P E) :
     zInt P (e + 1) (Fin.cons (logH E) fun j => logH (L j)) (fun _ => 1) =
@@ -89,15 +90,15 @@ theorem degrees_step (hPL1 : PoincareLelongAlt.Statement) (hRes : ResExists.Stat
   rw [zInt_cons_const] at h1
   have hfin : (comps P s).Finite :=
     (Ideal.finite_minimalPrimes_of_isNoetherianRing _ (P ⊔ Ideal.span {s})).subset fun W h => h.1
-  have hsupp : Function.support (fun W => divCycle P s W * intNum ℂ W fun j => (L j).a) ⊆
-      (hfin.toFinset : Set (Ideal (MRing ι ℂ))) := by
+  have hsupp : Function.support (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) * intNum ℂ W fun j => (L j).a) ⊆
+      (hfin.toFinset : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι))) := by
     intro W hW
     rw [Set.Finite.coe_toFinset]
     by_contra h
     exact hW (by simp only [divCycle, dif_neg (show ¬ (W ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧
       GroundTheory.Heights₂.Heights.NumbersDVR.IsRelevant W) from h), zero_mul])
-  have hsum : (∑ᶠ W ∈ comps P s, (divCycle P s W : ℝ) * zInt W e (fun j => logH (L j)) (fun _ => 1)) =
-      ((cycEval (fun W => intNum ℂ W fun j => (L j).a) (divCycle P s) : ℤ) : ℝ) := by
+  have hsum : (∑ᶠ W ∈ comps P s, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) : ℝ) * zInt W e (fun j => logH (L j)) (fun _ => 1)) =
+      ((cycEval (fun W => intNum ℂ W fun j => (L j).a) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))) : ℤ) : ℝ) := by
     rw [finsum_mem_eq_finite_toFinset_sum _ hfin, cycEval, finsum_eq_sum_of_support_subset _ hsupp]
     push_cast
     refine Finset.sum_congr rfl fun W hWm => ?_
@@ -112,7 +113,7 @@ theorem degrees_step (hPL1 : PoincareLelongAlt.Statement) (hRes : ResExists.Stat
   linarith
 
 theorem degrees_of (hPL1 : PoincareLelongAlt.Statement) (hRes : ResExists.Statement) (hPt : ZIntPoint.Statement) (e : ℕ) :
-    ∀ (P : Ideal (MRing ι ℂ)) (L : Fin e → HLine ι), IsProjVar P e → (∀ j, IsSmoothMetric P (L j)) →
+    ∀ (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) (L : Fin e → HLine ι), IsProjVar P e → (∀ j, IsSmoothMetric P (L j)) →
       zInt P e (fun j => logH (L j)) (fun _ => 1) = (intNum ℂ P (fun j => (L j).a) : ℝ) := by
   induction e with
   | zero =>
@@ -140,7 +141,7 @@ theorem degrees_of (hPL1 : PoincareLelongAlt.Statement) (hRes : ResExists.Statem
       funext j
       cases j using Fin.cases <;> rfl
     rw [hlog, hdeg]
-    have ih' : ∀ (W : Ideal (MRing ι ℂ)) (L : Fin e → HLine ι), IsProjVar W e →
+    have ih' : ∀ (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) (L : Fin e → HLine ι), IsProjVar W e →
         (∀ j, IsSmoothMetric W (L j)) →
         zInt W e (fun j => logH (L j)) (fun _ => 1) = (intNum ℂ W (fun j => (L j).a) : ℝ) := ih
     let b : K → ℕ := fun k => (-(A.a k)).toNat

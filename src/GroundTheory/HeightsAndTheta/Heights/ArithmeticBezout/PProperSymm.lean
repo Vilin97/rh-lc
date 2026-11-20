@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsMahler
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -42,7 +43,7 @@ theorem ProperSymm.proof : ProperSymm.Statement := by
   have hrel' : IsRelevant W' := by
     obtain ⟨j, hj⟩ := hrel''
     exact ⟨j, fun h => hj (hW'le h)⟩
-  have hsupp : W' ∈ (divCycle W u).support := by
+  have hsupp : W' ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) W : ℤ))).support := by
     rw [Finsupp.mem_support_iff]
     simp only [divCycle, fundCycle, Finsupp.onFinset_apply]
     rw [if_pos ⟨hW', hrel'⟩]

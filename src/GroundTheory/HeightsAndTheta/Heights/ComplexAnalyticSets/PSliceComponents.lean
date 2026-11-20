@@ -6,6 +6,7 @@ import GroundTheory.HeightsAndTheta.Heights.ChowForms.PMinimalPrimeHomog
 import GroundTheory.HeightsAndTheta.Heights.ChowForms.PLocalMultOrd
 import GroundTheory.HeightsAndTheta.Heights.ChowForms.PDehomogOrd
 import GroundTheory.HeightsAndTheta.Heights.ChowForms.POrdPolynomialLocalization
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -76,7 +77,7 @@ theorem isPrime_sup {W : Ideal (MvPolynomial (Fin n) F)} {t : Fin n → F} (hW :
   exact sub_mem (Ideal.mem_sup_left hGW) (Ideal.mem_sup_right hGg)
 
 theorem mem_support_divCycle {J W : Ideal (MvPolynomial (Fin n) F)} {u : Fin n → F} :
-    W ∈ (divCycle J u).support ↔
+    W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ))).support ↔
       W ∈ relComps (J ⊔ Ideal.span {linForm u}) ∧ localMult (J ⊔ Ideal.span {linForm u}) W ≠ 0 := by
   classical
   simp only [divCycle, fundCycle, Finsupp.mem_support_iff, Finsupp.onFinset_apply]
@@ -84,7 +85,7 @@ theorem mem_support_divCycle {J W : Ideal (MvPolynomial (Fin n) F)} {u : Fin n �
 
 theorem divCycle_apply {J W : Ideal (MvPolynomial (Fin n) F)} {u : Fin n → F}
     (h : W ∈ relComps (J ⊔ Ideal.span {linForm u})) :
-    divCycle J u W = localMult (J ⊔ Ideal.span {linForm u}) W := by
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ) = localMult (J ⊔ Ideal.span {linForm u}) W := by
   classical
   simp only [divCycle, fundCycle, Finsupp.onFinset_apply]
   rw [if_pos h]
@@ -103,8 +104,8 @@ theorem localMult_ne_zero {A : Type} [CommRing A] [IsNoetherianRing A] {J W : Id
   exact (IsLocalization.AtPrime.isUnit_to_map_iff _ _ _).mp e hx
 
 theorem mem_support_iff {J W : Ideal (MvPolynomial (Fin n) F)} {u ℓ : Fin n → F}
-    (hℓ : ∀ W ∈ (divCycle J u).support, linForm ℓ ∉ W) :
-    W ∈ (divCycle J u).support ↔ W ∈ (J ⊔ Ideal.span {linForm u}).minimalPrimes ∧ linForm ℓ ∉ W := by
+    (hℓ : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ))).support, linForm ℓ ∉ W) :
+    W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ))).support ↔ W ∈ (J ⊔ Ideal.span {linForm u}).minimalPrimes ∧ linForm ℓ ∉ W := by
   refine ⟨fun h => ⟨(mem_support_divCycle.mp h).1.1, hℓ W h⟩, fun ⟨hm, hW⟩ => ?_⟩
   refine mem_support_divCycle.mpr ⟨⟨hm, ?_⟩, localMult_ne_zero hm⟩
   by_contra hr
@@ -130,7 +131,7 @@ theorem SliceComponents.proof : SliceComponents.Statement := by
     obtain ⟨V, hV, hℓV, hVQ, hVmax⟩ :=
       ChartHomogenise.proof ℂ n Q ℓ hQ (hKQ (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)))
     exact ⟨V, hV, hℓV, hVQ, hVmax K hK (le_sup_left.trans hKQ)⟩
-  have hmin : ∀ W ∈ (divCycle J u).support, W ⊔ L ∈ (K ⊔ L).minimalPrimes := fun W hW => by
+  have hmin : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ))).support, W ⊔ L ∈ (K ⊔ L).minimalPrimes := fun W hW => by
     obtain ⟨hWm, hℓW⟩ := (hsupp W).mp hW
     have := hWm.1.1
     refine ⟨⟨isPrime_sup hWm.1.1 (hhom W hWm) hℓW, sup_le_sup_right hWm.1.2 _⟩, fun Q ⟨hQ, hKQ⟩ hQW => ?_⟩
@@ -152,7 +153,7 @@ theorem SliceComponents.proof : SliceComponents.Statement := by
     obtain ⟨V, hV, hℓV, hVQ, hKV⟩ := hchart Q hQ.1.1 hQ.1.2
     have := hV.isPrime
     obtain ⟨W, hWm, hWV⟩ := Ideal.exists_minimalPrimes_le hKV
-    have hW : W ∈ (divCycle J u).support := (hsupp W).mpr ⟨hWm, fun h => hℓV (hWV h)⟩
+    have hW : W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ))).support := (hsupp W).mpr ⟨hWm, fun h => hℓV (hWV h)⟩
     have hle : W ⊔ L ≤ Q := hVQ ▸ sup_le_sup_right hWV _
     exact ⟨W, hW, le_antisymm hle (hQ.2 (hmin W hW).1 hle)⟩
   · obtain ⟨hWm, hℓW⟩ := (hsupp W).mp hW

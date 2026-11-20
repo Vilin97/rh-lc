@@ -6,6 +6,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBisR
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwinDivDiffExpansion
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.InhabitTer
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyBridgeFull
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -29,7 +30,7 @@ def Common.Statement : Prop :=
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E] (B B' : ChartBundle O (segreVec y) N E),
       SameGenericFibre ϖ B B' →
     ∀ (w w' v v' : Module.Basis (Fin N) Ω E) (x x' u u' : Fin N → K → ℤ)
-      (f g f₂ g₂ : Fin N → MRing ι O),
+      (f g f₂ g₂ : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       IsFlagPair ϖ y B B' w w' x x' f g → IsFlagPair ϖ y B B' v v' u u' f₂ g₂ →
     ∀ (m : ℕ) (G : MvPolynomial (Fin N) ℤ), G.IsHomogeneous m → G.IsSymmetric →
     ∀ Q : List (K → ℤ), Q.length + m = d + 1 →
@@ -48,9 +49,9 @@ theorem isMultiHomog_one {R : Type*} [CommRing R] {K : Type} {ι : K → Type} [
   simp
 
 theorem isVertDiv_one {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {K : Type}
-    [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {P : Ideal (MRing ι O)} (hP : P.IsPrime)
+    [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hP : P.IsPrime)
     (b : K → ℤ) : IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsVertDiv O P (b - b) 1 1 := by
-  have h1 : ∀ W : Ideal (MRing ι O), W.IsPrime → (1 : MRing ι O) ∉ W :=
+  have h1 : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), W.IsPrime → (1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W :=
     fun W hW h => hW.ne_top ((Ideal.eq_top_iff_one W).mpr h)
   refine ⟨⟨fun _ => 0, fun _ => 0, isMultiHomog_one, isMultiHomog_one, fun k => by simp⟩,
     h1 P hP, h1 P hP, fun W hW _ _ => ⟨1, 1, ⟨_, isMultiHomog_one⟩, ⟨_, isMultiHomog_one⟩,

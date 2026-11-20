@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.InhabitTer
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -19,13 +20,13 @@ variable {K : Type} [DecidableEq K] {ι : K → Type}
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 theorem classNum_perm {σ : Type*} (cls : σ → K → ℤ) (H : MvPolynomial σ ℤ) {L₁ L₂ : List (K → ℤ)}
-    (h : L₁.Perm L₂) (W : Ideal (MRing ι O)) : classNum cls H L₁ W = classNum cls H L₂ W := by
+    (h : L₁.Perm L₂) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) : classNum cls H L₁ W = classNum cls H L₂ W := by
   unfold classNum
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [FlagTypings.vNumL_perm W (h.append_left _)]
 
 theorem classNum_rename {σ τ : Type*} (e : σ → τ) (he : Function.Injective e) (cls : τ → K → ℤ)
-    (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
+    (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
     classNum cls (rename e H) Q W = classNum (cls ∘ e) H Q W := by
   classical
   unfold classNum
@@ -38,7 +39,7 @@ theorem classNum_rename {σ τ : Type*} (e : σ → τ) (he : Function.Injective
   rw [← Finsupp.toMultiset_map, Multiset.map_map]
 
 theorem classNum_eq_sum_of_subset {σ : Type*} (cls : σ → K → ℤ) (H : MvPolynomial σ ℤ)
-    (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) {S : Finset (σ →₀ ℕ)} (hS : H.support ⊆ S) :
+    (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {S : Finset (σ →₀ ℕ)} (hS : H.support ⊆ S) :
     classNum cls H Q W = ∑ μ ∈ S, H.coeff μ * vNumL W (classList cls μ ++ Q) :=
   Finset.sum_subset hS fun μ _ hμ => by
     rw [mem_support_iff, not_not] at hμ
@@ -67,7 +68,7 @@ theorem classList_sum_single {σ : Type*} (cls : σ → K → ℤ) {r : ℕ} (a 
   rfl
 
 theorem classNum_mul_monomial {σ : Type*} [DecidableEq σ] (cls : σ → K → ℤ) (A : MvPolynomial σ ℤ)
-    (t : σ →₀ ℕ) (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
+    (t : σ →₀ ℕ) (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
     classNum cls (A * monomial t 1) Q W = classNum cls A (classList cls t ++ Q) W := by
   have hsub : (A * monomial t 1).support ⊆ A.support.image (· + t) := by
     intro ν hν
@@ -228,7 +229,7 @@ theorem proof : plainPairNumber.Statement.{u} := by
   rw [BundleExamples.pairNum_eq P d _ _ _ _ hH]
   unfold pairNum
   have hr : ratDiv P 1 1 = fun _ => 0 := funext fun W => sub_self _
-  have hz : ∀ n : Ideal (MRing ι O) → ℤ, cycEval n (fun _ => 0) = 0 := by
+  have hz : ∀ n : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ, cycEval n (fun _ => 0) = 0 := by
     intro n
     simp [cycEval]
   rw [Fin.sum_univ_add]

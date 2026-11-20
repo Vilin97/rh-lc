@@ -3,6 +3,7 @@ import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.BundleCher
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagIndependence
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwinPairNumJoinLeft
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.FlagFramePointDimensionStatement
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num
 
@@ -10,7 +11,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Num.ZTop
 
 theorem isFibreComp_variety {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {ϖ : O}
     (hϖ : Irreducible ϖ) {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
-    {P : Ideal (MRing ι O)} {d : ℕ} (hP : IsModelOver P d) {W : Ideal (MRing ι O)} (hW : IsFibreComp P W) :
+    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {d : ℕ} (hP : IsModelOver P d) {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hW : IsFibreComp P W) :
     IsMultiProjPrime (specialIdeal W) ∧
       ringKrullDim (MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal W) =
         ((d + Fintype.card K : ℕ) : WithBot ℕ∞) := by
@@ -23,7 +24,7 @@ theorem isFibreComp_variety {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValu
 
 theorem cast_classNum {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} [CommRing O] [IsDomain O]
     [IsDiscreteValuationRing O] {σ : Type} (cls : σ → K → ℤ) (H : MvPolynomial σ ℤ) (Q : List (K → ℤ))
-    (W : Ideal (MRing ι O)) :
+    (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
     ((classNum cls H Q W : ℤ) : ℝ) =
       genNum (IsLocalRing.ResidueField O) (specialIdeal W) cls (MvPolynomial.map (Int.castRingHom ℝ) H) Q := by
   unfold classNum genNum
@@ -36,7 +37,7 @@ theorem cast_classNum {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} [C
 theorem powerSumsVanish_of_trivFlagAt :
     NumericalSegre.Statement → ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O),
       Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-      (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P d → ∀ (N : ℕ) (x : Fin N → K → ℤ),
+      (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P d → ∀ (N : ℕ) (x : Fin N → K → ℤ),
       (∀ W, IsFibreComp P W → TrivFlagAt W x) → PowerSumsVanish P d x := by
   intro hS O _ _ _ ϖ hϖ K _ _ ι _ P d hP N x hx W hW k hk Q hQ
   obtain ⟨Ω, _, _, y, w, hy, hflag⟩ := hx W hW

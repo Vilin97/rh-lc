@@ -8,6 +8,7 @@ import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLoc
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocLocalize
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsSemilocalResidueLength
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PPFContracted
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -80,7 +81,7 @@ theorem SemilocalMaxIdeals.proof (h1 : FibreFinite.Statement.{u}) (h2 : FibreRel
       intro x hx
       have hnu : ¬ IsUnit x := fun hu => hM.ne_top (M.eq_top_of_isUnit_mem hx hu)
       have : ¬ ∀ W' ∈ fibrePrimes j P' W, ∃ y ∈ degZeroLoc P' {W'},
-          (x : FractionRing (MRing ι' F ⧸ P')) * y = 1 := by
+          (x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P')) * y = 1 := by
         rw [← h4 F K' ι' P' hP' _ hne h𝒲 x x.2]
         rintro ⟨y, hy, hxy⟩
         exact hnu (IsUnit.of_mul_eq_one ⟨y, hy⟩ (Subtype.ext hxy))

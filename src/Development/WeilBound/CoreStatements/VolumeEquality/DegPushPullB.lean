@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDivPushForward
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PContractRelDimLe
 import GroundTheory.HeightsAndTheta.Heights.SemipositiveHeights.NumericalSegre
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 noncomputable section
 
@@ -16,7 +17,7 @@ section
 variable {k : Type} [Field k] {Ω : Type} [Field Ω] [Algebra k Ω] {K : Type} {ι : K → Type} {K' : Type} {ι' : K' → Type}
 
 theorem aeval_scale [Fintype K] [DecidableEq K] {L : Type} [CommRing L] [Algebra k L] (s : K → L) (w : (Σ b, ι b) → L)
-    {f : MRing ι k} {b : K → ℕ} (hf : IsMultiHomog f b) :
+    {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι} {b : K → ℕ} (hf : IsMultiHomog f b) :
     aeval (fun p => s p.1 * w p) f = (∏ x, s x ^ b x) * aeval w f := by
   have key : ∀ m ∈ f.support, (m.prod fun p e => s p.1 ^ e) = ∏ x, s x ^ b x := by
     intro m hm
@@ -44,8 +45,8 @@ theorem aeval_scale [Fintype K] [DecidableEq K] {L : Type} [CommRing L] [Algebra
   ring
 
 theorem pointIdeal_comp (y : (Σ b, ι' b) → Ω) (κ : K → K') (hκ : Function.Injective κ) (v : (Σ b, ι b) → Σ b, ι' b)
-    (hv : ∀ p, (v p).1 = κ p.1) : pointIdeal k (y ∘ v) = (pointIdeal k y).comap (rename v : MRing ι k →ₐ[k] MRing ι' k) := by
-  have key : ∀ f : MRing ι k, pointConeMap k y (rename v f) = rename κ (pointConeMap k (y ∘ v) f) := by
+    (hv : ∀ p, (v p).1 = κ p.1) : pointIdeal k (y ∘ v) = (pointIdeal k y).comap (rename v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι →ₐ[k] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι') := by
+  have key : ∀ f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι, pointConeMap k y (rename v f) = rename κ (pointConeMap k (y ∘ v) f) := by
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [pointConeMap]
@@ -56,7 +57,7 @@ theorem pointIdeal_comp (y : (Σ b, ι' b) → Ω) (κ : K → K') (hκ : Functi
       simp [pointConeMap, hv]
   ext f
   simp only [pointIdeal, Ideal.mem_comap, RingHom.mem_ker]
-  rw [show (rename v : MRing ι k →ₐ[k] MRing ι' k) f = rename v f from rfl, key]
+  rw [show (rename v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι →ₐ[k] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι') f = rename v f from rfl, key]
   constructor
   · intro h
     rw [h, map_zero]
@@ -65,14 +66,14 @@ theorem pointIdeal_comp (y : (Σ b, ι' b) → Ω) (κ : K → K') (hκ : Functi
     rw [h, map_zero]
 
 private theorem aeval_div_mem_fnField_of_multiHomog {k : Type} [Field k] {Ω : Type} [Field Ω] [Algebra k Ω] {K : Type} {ι : K → Type}
-    [Fintype K] [DecidableEq K] (z : (Σ b, ι b) → Ω) (hz : ∀ b, ∃ i, z ⟨b, i⟩ ≠ 0) {f g : MRing ι k} {b : K → ℕ}
+    [Fintype K] [DecidableEq K] (z : (Σ b, ι b) → Ω) (hz : ∀ b, ∃ i, z ⟨b, i⟩ ≠ 0) {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι} {b : K → ℕ}
     (hf : IsMultiHomog f b) (hg : IsMultiHomog g b) : aeval z f / aeval z g ∈ fnField k z := by
   choose i hi using hz
   let s : K → Ω := fun x => z ⟨x, i x⟩
   let w : (Σ b, ι b) → Ω := fun p => z p / s p.1
   have hwmem : ∀ p, w p ∈ fnField k z := fun p =>
     IntermediateField.subset_adjoin _ _ ⟨p, ⟨p.1, i p.1⟩, rfl, rfl⟩
-  have hmem : ∀ h : MRing ι k, aeval w h ∈ fnField k z := by
+  have hmem : ∀ h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι, aeval w h ∈ fnField k z := by
     intro h
     induction h using MvPolynomial.induction_on with
     | C a =>
@@ -89,25 +90,25 @@ private theorem aeval_div_mem_fnField_of_multiHomog {k : Type} [Field k] {Ω : T
     have := hi p.1
     simp only [s, w]
     field_simp
-  have e : ∀ h : MRing ι k, IsMultiHomog h b → aeval z h = (∏ x, s x ^ b x) * aeval w h := by
+  have e : ∀ h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι, IsMultiHomog h b → aeval z h = (∏ x, s x ^ b x) * aeval w h := by
     intro h hh
     rw [← aeval_scale s w hh, hzw]
   have hP : (∏ x, s x ^ b x) ≠ 0 := Finset.prod_ne_zero_iff.mpr fun x _ => pow_ne_zero _ (hi x)
   rw [e f hf, e g hg, mul_div_mul_left _ _ hP]
   exact div_mem (hmem f) (hmem g)
 
-theorem map_homFrac [Fintype K] [DecidableEq K] {L : Type} [Field L] [Algebra k L] (P : Ideal (MRing ι k)) [P.IsPrime]
-    (φ : FractionRing (MRing ι k ⧸ P) →ₐ[k] L) (c : Ω →ₐ[k] L) (t : K → L) (z : (Σ b, ι b) → Ω)
+theorem map_homFrac [Fintype K] [DecidableEq K] {L : Type} [Field L] [Algebra k L] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι)) [P.IsPrime]
+    (φ : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ P) →ₐ[k] L) (c : Ω →ₐ[k] L) (t : K → L) (z : (Σ b, ι b) → Ω)
     (hz : ∀ b, ∃ i, z ⟨b, i⟩ ≠ 0) (ht : ∀ b, t b ≠ 0)
-    (hφ : ∀ p, φ (algebraMap (MRing ι k ⧸ P) _ (Ideal.Quotient.mk P (X p))) = c (z p) * t p.1) :
+    (hφ : ∀ p, φ (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ P) _ (Ideal.Quotient.mk P (X p))) = c (z p) * t p.1) :
     (homFracDegZero P).map φ = (fnField k z).map c := by
-  let Ψ : MRing ι k →ₐ[k] L := φ.comp ((IsScalarTower.toAlgHom k (MRing ι k ⧸ P)
-    (FractionRing (MRing ι k ⧸ P))).comp (Ideal.Quotient.mkₐ k P))
+  let Ψ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι →ₐ[k] L := φ.comp ((IsScalarTower.toAlgHom k (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ P)
+    (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ P))).comp (Ideal.Quotient.mkₐ k P))
   have hΨX : ∀ p, Ψ (X p) = t p.1 * c (z p) := by
     intro p
     rw [mul_comm]
     exact hφ p
-  have hΨ : ∀ {f : MRing ι k} {b : K → ℕ}, IsMultiHomog f b → Ψ f = (∏ x, t x ^ b x) * c (aeval z f) := by
+  have hΨ : ∀ {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι} {b : K → ℕ}, IsMultiHomog f b → Ψ f = (∏ x, t x ^ b x) * c (aeval z f) := by
     intro f b hf
     rw [MvPolynomial.aeval_unique Ψ]
     have hfun : (⇑Ψ ∘ X) = fun p => t p.1 * c (z p) := funext hΨX
@@ -137,8 +138,8 @@ theorem map_homFrac [Fintype K] [DecidableEq K] {L : Type} [Field L] [Algebra k 
           simp [Ψ, Ideal.Quotient.eq_zero_iff_mem.mpr hm]
         rw [hΨX] at h0
         exact mul_ne_zero (ht q.1) ((map_ne_zero c).mpr hq) h0
-      refine ⟨algebraMap _ (FractionRing (MRing ι k ⧸ P)) (Ideal.Quotient.mk P (X p)) /
-        algebraMap _ (FractionRing (MRing ι k ⧸ P)) (Ideal.Quotient.mk P (X q)), ?_, ?_⟩
+      refine ⟨algebraMap _ (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ P)) (Ideal.Quotient.mk P (X p)) /
+        algebraMap _ (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ P)) (Ideal.Quotient.mk P (X q)), ?_, ?_⟩
       · apply IntermediateField.subset_adjoin
         refine ⟨Pi.single q.1 1, X p, X q, ?_, ?_, hXq, rfl⟩
         · have h1 := isWeightedHomogeneous_X k (blockWeight ι) p
@@ -163,11 +164,11 @@ theorem relDeg_pointIdeal [Fintype K] [DecidableEq K] [Fintype K'] [DecidableEq 
   let P' := pointIdeal k y
   let M := MvPolynomial K' Ω
   let L := FractionRing M
-  let q : (MRing ι' k ⧸ P') →ₐ[k] M := Ideal.kerLiftAlg (pointConeMap k y)
+  let q : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι' ⧸ P') →ₐ[k] M := Ideal.kerLiftAlg (pointConeMap k y)
   have hq : Function.Injective q := Ideal.kerLiftAlg_injective _
-  let g : (MRing ι' k ⧸ P') →ₐ[k] L := (IsScalarTower.toAlgHom k M L).comp q
+  let g : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι' ⧸ P') →ₐ[k] L := (IsScalarTower.toAlgHom k M L).comp q
   have hg : Function.Injective g := (IsFractionRing.injective M L).comp hq
-  let φ : FractionRing (MRing ι' k ⧸ P') →ₐ[k] L := IsFractionRing.liftAlgHom hg
+  let φ : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι' ⧸ P') →ₐ[k] L := IsFractionRing.liftAlgHom hg
   let c : Ω →ₐ[k] L := (IsScalarTower.toAlgHom k M L).comp (IsScalarTower.toAlgHom k Ω M)
   let t : K' → L := fun b => algebraMap M L (X b)
   have ht : ∀ b, t b ≠ 0 := by
@@ -176,7 +177,7 @@ theorem relDeg_pointIdeal [Fintype K] [DecidableEq K] [Fintype K'] [DecidableEq 
     apply IsFractionRing.injective M L
     rw [map_zero]
     exact h
-  have hφ : ∀ p, φ (algebraMap (MRing ι' k ⧸ P') _ (Ideal.Quotient.mk P' (X p))) = c (y p) * t p.1 := by
+  have hφ : ∀ p, φ (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι' ⧸ P') _ (Ideal.Quotient.mk P' (X p))) = c (y p) * t p.1 := by
     intro p
     simp only [φ, IsFractionRing.liftAlgHom_apply, IsFractionRing.lift_algebraMap]
     show algebraMap M L (q (Ideal.Quotient.mk P' (X p))) = _
@@ -185,16 +186,16 @@ theorem relDeg_pointIdeal [Fintype K] [DecidableEq K] [Fintype K'] [DecidableEq 
     rfl
   have h1 := map_homFrac P' φ c t y hy ht hφ
   let φ₂ := φ.comp (contractFracMap j P')
-  have hφ₂ : ∀ p, φ₂ (algebraMap _ (FractionRing (MRing (fun b => ι' (j b)) k ⧸ contractPrime j P'))
+  have hφ₂ : ∀ p, φ₂ (algebraMap _ (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k (fun b => ι' (j b)) ⧸ contractPrime j P'))
       (Ideal.Quotient.mk (contractPrime j P') (X p))) = c ((y ∘ blockIncl j ι') p) * (t ∘ j) p.1 := by
     intro p
     have hc : contractQuot j P' (Ideal.Quotient.mk (contractPrime j P') (X p)) =
         Ideal.Quotient.mk P' (X (blockIncl j ι' p)) := by
       show Ideal.Quotient.mk P' (rename (blockIncl j ι') (X p)) = _
       rw [rename_X]
-    have hcf : contractFracMap j P' (algebraMap _ (FractionRing (MRing (fun b => ι' (j b)) k ⧸ contractPrime j P'))
+    have hcf : contractFracMap j P' (algebraMap _ (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k (fun b => ι' (j b)) ⧸ contractPrime j P'))
         (Ideal.Quotient.mk (contractPrime j P') (X p))) =
-        algebraMap _ (FractionRing (MRing ι' k ⧸ P')) (contractQuot j P' (Ideal.Quotient.mk (contractPrime j P') (X p))) := by
+        algebraMap _ (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι' ⧸ P')) (contractQuot j P' (Ideal.Quotient.mk (contractPrime j P') (X p))) := by
       unfold contractFracMap
       erw [IsFractionRing.liftAlgHom_apply, IsFractionRing.lift_algebraMap]
       rfl
@@ -248,7 +249,7 @@ theorem numPull : NumPull := by
       exact fnField_comp_le (z ∘ τ) id τ.symm (fun q => congrArg Sigma.fst (τ.apply_symm_apply q))
   have hinum : inum k (y ∘ v) a = inum k z a := by
     have hP : pointIdeal k (z ∘ τ) =
-        (pointIdeal k z).comap (rename τ : MRing ι k →ₐ[k] MRing (fun b => ι' (j b)) k) :=
+        (pointIdeal k z).comap (rename τ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι →ₐ[k] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k (fun b => ι' (j b))) :=
       pointIdeal_comp z id Function.injective_id τ (fun p => rfl)
     rw [hyvz]
     unfold inum

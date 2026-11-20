@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -15,7 +16,7 @@ def projSpaceHilb (N : ℕ) (t : ℤ) : ℤ :=
 
 def HilbAddBlock.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)) (N : ℕ) (m : Option K → ℤ),
+    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (N : ℕ) (m : Option K → ℤ),
     hilbFn (addBlockPrime N I) m = hilbFn I (fun k => m (some k)) * projSpaceHilb N (m none)
 
 example : projSpaceHilb 1 2 = 3 ∧ projSpaceHilb 2 2 = 6 ∧ projSpaceHilb 2 (-1) = 0 := by

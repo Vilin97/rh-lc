@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -12,7 +13,7 @@ universe u
 
 theorem relDim_bot {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fintype (ι k)]
     {F : Type*} [Field F] :
-    relDim (⊥ : Ideal (MRing ι F)) =
+    relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) =
       (((Fintype.card (Σ k, ι k) : ℤ) - Fintype.card K : ℤ) : WithTop ℤ) := by
   unfold relDim
   rw [ringKrullDim_eq_of_ringEquiv (RingEquiv.quotientBot _),
@@ -23,7 +24,7 @@ theorem relDim_bot {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [�
 abbrev ProjIdx (N : ℕ) : Unit → Type := fun _ => Fin (N + 1)
 
 theorem relDim_projectiveSpace {F : Type*} [Field F] (N : ℕ) :
-    relDim (⊥ : Ideal (MRing (ProjIdx N) F)) = (N : WithBot (WithTop ℤ)) := by
+    relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N))) = (N : WithBot (WithTop ℤ)) := by
   rw [relDim_bot]
   simp [Fintype.card_sigma]
   rfl
@@ -53,10 +54,10 @@ theorem weight_projIdx (N : ℕ) (d : (Σ _ : Unit, ProjIdx N ()) →₀ ℕ) :
   simp [blockWeight]
 
 theorem finrank_gradedPiece_projectiveSpace (F : Type*) [Field F] (N a : ℕ) :
-    Module.finrank F (gradedPiece (⊥ : Ideal (MRing (ProjIdx N) F)) (fun _ => a)) =
+    Module.finrank F (gradedPiece (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N))) (fun _ => a)) =
       (a + N).choose N := by
   have hinj : Function.Injective
-      (Ideal.Quotient.mkₐ F (⊥ : Ideal (MRing (ProjIdx N) F))).toLinearMap := by
+      (Ideal.Quotient.mkₐ F (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N)))).toLinearMap := by
     intro x y h
     simpa [Ideal.Quotient.mkₐ_eq_mk, Ideal.Quotient.eq, sub_eq_zero] using h
   unfold gradedPiece
@@ -83,7 +84,7 @@ theorem finrank_gradedPiece_projectiveSpace (F : Type*) [Field F] (N a : ℕ) :
   rw [add_comm, Nat.choose_symm_add]
 
 theorem hilbFn_projectiveSpace (F : Type*) [Field F] (N : ℕ) (m : Unit → ℤ) :
-    hilbFn (⊥ : Ideal (MRing (ProjIdx N) F)) m = binomFn N (m ()) := by
+    hilbFn (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N))) m = binomFn N (m ()) := by
   unfold hilbFn binomFn
   by_cases hm : 0 ≤ m ()
   · rw [if_pos (fun k => hm), if_pos hm]
@@ -103,8 +104,8 @@ theorem foldr_diffStep_binomFn (j N : ℕ) :
     exact binomFn_sub N (m ())
 
 theorem intNum_projectiveSpace (F : Type*) [Field F] (N : ℕ) :
-    intNum F (⊥ : Ideal (MRing (ProjIdx N) F)) (fun _ : Fin N => (1 : Unit → ℤ)) = 1 := by
-  have hh : hilbFn (⊥ : Ideal (MRing (ProjIdx N) F)) = fun m => binomFn (0 + N) (m ()) := by
+    intNum F (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N))) (fun _ : Fin N => (1 : Unit → ℤ)) = 1 := by
+  have hh : hilbFn (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N))) = fun m => binomFn (0 + N) (m ()) := by
     funext m
     rw [zero_add, hilbFn_projectiveSpace]
   unfold intNum mixedDiff
@@ -128,29 +129,29 @@ theorem blockIncl_injective {K K' : Type*} (j : K ↪ K') (ι' : K' → Type*) :
   rw [eq_of_heq h2]
 
 theorem contractPrime_bot {K K' : Type*} {F : Type*} [Field F] (j : K ↪ K') (ι' : K' → Type*) :
-    contractPrime j (⊥ : Ideal (MRing ι' F)) = ⊥ :=
+    contractPrime j (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) = ⊥ :=
   Ideal.comap_bot_of_injective _ (rename_injective _ (blockIncl_injective j ι'))
 
 theorem addBlockPrime_bot {K : Type*} {F : Type*} [Field F] (ι : K → Type) (N : ℕ) :
-    addBlockPrime N (⊥ : Ideal (MRing ι F)) = ⊥ :=
+    addBlockPrime N (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) = ⊥ :=
   Ideal.map_bot
 
 theorem isMultiHomogIdeal_bot_projectiveSpace (N : ℕ) :
-    IsMultiHomogIdeal (⊥ : Ideal (MRing (ProjIdx N) ℚ)) :=
+    IsMultiHomogIdeal (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx N))) :=
   isMultiProjPrime_bot.multiHomog
 
 theorem coordinate_isMultiHomog (N : ℕ) (i : Fin (N + 1)) :
-    IsMultiHomog (X ⟨(), i⟩ : MRing (ProjIdx N) ℚ) (blockWeight (ProjIdx N) ⟨(), 0⟩) :=
+    IsMultiHomog (X ⟨(), i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx N)) (blockWeight (ProjIdx N) ⟨(), 0⟩) :=
   isWeightedHomogeneous_X _ _ _
 
 theorem coordinate_not_mem_bot (N : ℕ) (i : Fin (N + 1)) :
-    (X ⟨(), i⟩ : MRing (ProjIdx N) ℚ) ∉ (⊥ : Ideal (MRing (ProjIdx N) ℚ)) := by
+    (X ⟨(), i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx N)) ∉ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx N))) := by
   rw [Ideal.mem_bot]
   exact X_ne_zero _
 
 theorem HilbExactDivide.hypotheses_example :
-    IsMultiHomogIdeal (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) ∧
-      IsMultiHomog (X ⟨(), 0⟩ : MRing (ProjIdx 1) ℚ) (blockWeight (ProjIdx 1) ⟨(), 0⟩) :=
+    IsMultiHomogIdeal (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) ∧
+      IsMultiHomog (X ⟨(), 0⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)) (blockWeight (ProjIdx 1) ⟨(), 0⟩) :=
   ⟨isMultiHomogIdeal_bot_projectiveSpace 1, coordinate_isMultiHomog 1 0⟩
 
 theorem PolyOfDiffs.hypotheses_example :
@@ -161,7 +162,7 @@ theorem PolyOfDiffs.hypotheses_example :
   simp [diffStep]
 
 theorem eventuallyPoly_projectiveLine :
-    EventuallyPoly (hilbFn (⊥ : Ideal (MRing (ProjIdx 1) ℚ))) (X () + 1) :=
+    EventuallyPoly (hilbFn (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)))) (X () + 1) :=
   (Filter.eventually_ge_atTop 0).mono fun m hm => by
     have ht : (0 : ℤ) ≤ m () := hm ()
     rw [hilbFn_projectiveSpace, binomFn, if_pos ht, Nat.choose_one_right]
@@ -172,66 +173,66 @@ theorem eventuallyPoly_projectiveLine :
     rw [e']
 
 theorem HilbDegreeBound.hypotheses_example :
-    IsMultiHomogIdeal (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) ∧
-      IsRelevant (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) ∧
-      EventuallyPoly (hilbFn (⊥ : Ideal (MRing (ProjIdx 1) ℚ))) (X () + 1) ∧
+    IsMultiHomogIdeal (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) ∧
+      IsRelevant (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) ∧
+      EventuallyPoly (hilbFn (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)))) (X () + 1) ∧
       (X () + 1 : MvPolynomial Unit ℚ) ≠ 0 := by
   refine ⟨isMultiHomogIdeal_bot_projectiveSpace 1, isMultiProjPrime_bot.relevant,
     eventuallyPoly_projectiveLine, fun h => ?_⟩
   simpa using congrArg (MvPolynomial.eval fun _ => (0 : ℚ)) h
 
 theorem MixedDiffConst.hypotheses_example :
-    IsMultiHomogIdeal (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) ∧
-      IsRelevant (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) ∧
-      relDim (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) = (1 : ℕ) :=
+    IsMultiHomogIdeal (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) ∧
+      IsRelevant (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) ∧
+      relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) = (1 : ℕ) :=
   ⟨isMultiHomogIdeal_bot_projectiveSpace 1, isMultiProjPrime_bot.relevant,
     relDim_projectiveSpace 1⟩
 
 theorem IntNumZeroSlot.hypotheses_example :
-    IsMultiHomogIdeal (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) ∧
-      relDim (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) < (2 : ℕ) := by
+    IsMultiHomogIdeal (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) ∧
+      relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) < (2 : ℕ) := by
   refine ⟨isMultiHomogIdeal_bot_projectiveSpace 1, ?_⟩
   rw [relDim_projectiveSpace]
   show (((1 : ℤ) : WithTop ℤ) : WithBot (WithTop ℤ)) < (((2 : ℤ) : WithTop ℤ) : WithBot (WithTop ℤ))
   exact WithBot.coe_lt_coe.mpr (WithTop.coe_lt_coe.mpr (by norm_num))
 
 theorem IntNumBase.hypotheses_example :
-    IsMultiProjPrime (⊥ : Ideal (MRing (ProjIdx 0) ℚ)) ∧
-      relDim (⊥ : Ideal (MRing (ProjIdx 0) ℚ)) = 0 := by
+    IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 0))) ∧
+      relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 0))) = 0 := by
   refine ⟨isMultiProjPrime_bot, ?_⟩
   rw [relDim_projectiveSpace]
   rfl
 
 theorem CutRegular.hypotheses_example :
-    IsMultiProjPrime (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) ∧
-      relDim (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) = ((0 + 1 : ℕ)) ∧
-      IsMultiHomog (X ⟨(), 0⟩ : MRing (ProjIdx 1) ℚ) (blockWeight (ProjIdx 1) ⟨(), 0⟩) ∧
-      (X ⟨(), 0⟩ : MRing (ProjIdx 1) ℚ) ∉ (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) :=
+    IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) ∧
+      relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) = ((0 + 1 : ℕ)) ∧
+      IsMultiHomog (X ⟨(), 0⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)) (blockWeight (ProjIdx 1) ⟨(), 0⟩) ∧
+      (X ⟨(), 0⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)) ∉ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) :=
   ⟨isMultiProjPrime_bot, relDim_projectiveSpace 1, coordinate_isMultiHomog 1 0,
     coordinate_not_mem_bot 1 0⟩
 
 theorem CutRational.hypotheses_example :
-    IsMultiProjPrime (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) ∧
-      relDim (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) = 1 ∧
-      IsMultiHomog (X ⟨(), 0⟩ : MRing (ProjIdx 1) ℚ) (blockWeight (ProjIdx 1) ⟨(), 0⟩) ∧
-      IsMultiHomog (X ⟨(), 1⟩ : MRing (ProjIdx 1) ℚ) (blockWeight (ProjIdx 1) ⟨(), 0⟩) ∧
-      (X ⟨(), 0⟩ : MRing (ProjIdx 1) ℚ) ∉ (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) ∧
-      (X ⟨(), 1⟩ : MRing (ProjIdx 1) ℚ) ∉ (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) := by
+    IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) ∧
+      relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) = 1 ∧
+      IsMultiHomog (X ⟨(), 0⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)) (blockWeight (ProjIdx 1) ⟨(), 0⟩) ∧
+      IsMultiHomog (X ⟨(), 1⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)) (blockWeight (ProjIdx 1) ⟨(), 0⟩) ∧
+      (X ⟨(), 0⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)) ∉ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) ∧
+      (X ⟨(), 1⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)) ∉ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) := by
   refine ⟨isMultiProjPrime_bot, ?_, coordinate_isMultiHomog 1 0, coordinate_isMultiHomog 1 1,
     coordinate_not_mem_bot 1 0, coordinate_not_mem_bot 1 1⟩
   rw [relDim_projectiveSpace]
   rfl
 
 theorem IntNumBaseChange.hypotheses_example :
-    IsMultiProjPrime (⊥ : Ideal (MRing (ProjIdx 1) ℚ)) ∧
+    IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) ∧
       (algebraMap ℚ (RatFunc ℚ)) 1 = 1 :=
   ⟨isMultiProjPrime_bot, map_one _⟩
 
 theorem ProjectionFormulaContracted.hypotheses_example :
-    IsMultiProjPrime (⊥ : Ideal (MRing (addBlock (ProjIdx 0) 1) ℚ)) ∧
-      relDim (⊥ : Ideal (MRing (addBlock (ProjIdx 0) 1) ℚ)) = (1 : ℕ) ∧
+    IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (addBlock (ProjIdx 0) 1))) ∧
+      relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (addBlock (ProjIdx 0) 1))) = (1 : ℕ) ∧
       relDim (contractPrime Function.Embedding.some
-        (⊥ : Ideal (MRing (addBlock (ProjIdx 0) 1) ℚ))) < (1 : ℕ) := by
+        (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (addBlock (ProjIdx 0) 1)))) < (1 : ℕ) := by
   refine ⟨isMultiProjPrime_bot, ?_, ?_⟩
   · rw [relDim_bot]
     rfl
@@ -240,10 +241,10 @@ theorem ProjectionFormulaContracted.hypotheses_example :
     exact WithBot.coe_lt_coe.mpr (WithTop.coe_lt_coe.mpr (by norm_num))
 
 theorem ProjectionFormulaDegree.hypotheses_example :
-    IsMultiProjPrime (⊥ : Ideal (MRing (addBlock (ProjIdx 1) 0) ℚ)) ∧
-      relDim (⊥ : Ideal (MRing (addBlock (ProjIdx 1) 0) ℚ)) = (1 : ℕ) ∧
+    IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (addBlock (ProjIdx 1) 0))) ∧
+      relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (addBlock (ProjIdx 1) 0))) = (1 : ℕ) ∧
       relDim (contractPrime Function.Embedding.some
-        (⊥ : Ideal (MRing (addBlock (ProjIdx 1) 0) ℚ))) = (1 : ℕ) := by
+        (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (addBlock (ProjIdx 1) 0)))) = (1 : ℕ) := by
   refine ⟨isMultiProjPrime_bot, ?_, ?_⟩
   · rw [relDim_bot]
     rfl
@@ -251,11 +252,11 @@ theorem ProjectionFormulaDegree.hypotheses_example :
     rfl
 
 theorem ProductWithProjectiveSpace.hypotheses_example :
-    IsMultiProjPrime (⊥ : Ideal (MRing (ProjIdx 0) ℚ)) ∧
-      relDim (⊥ : Ideal (MRing (ProjIdx 0) ℚ)) = (0 : ℕ) ∧ 0 + 1 = 0 + 1 :=
+    IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 0))) ∧
+      relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 0))) = (0 : ℕ) ∧ 0 + 1 = 0 + 1 :=
   ⟨isMultiProjPrime_bot, relDim_projectiveSpace 0, rfl⟩
 
-theorem eq_monomial_of_isMultiHomog_point {F : Type*} [Field F] (f : MRing (ProjIdx 0) F)
+theorem eq_monomial_of_isMultiHomog_point {F : Type*} [Field F] (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx 0))
     (b : Unit → ℕ) (hf : IsMultiHomog f b) :
     f = monomial (Finsupp.single ⟨(), 0⟩ (b ())) (AddMonoidAlgebra.coeff f (Finsupp.single ⟨(), 0⟩ (b ()))) := by
   ext d
@@ -275,10 +276,10 @@ theorem eq_monomial_of_isMultiHomog_point {F : Type*} [Field F] (f : MRing (Proj
       exact absurd (by rw [Fin.fin_one_eq_zero j]) hj
     exact h hd.symm
 
-theorem resDeg_point (F : Type*) [Field F] : resDeg (⊥ : Ideal (MRing (ProjIdx 0) F)) = 1 := by
+theorem resDeg_point (F : Type*) [Field F] : resDeg (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx 0))) = 1 := by
   unfold resDeg
   rw [dif_pos Ideal.isPrime_bot]
-  have hle : homFracDegZero (⊥ : Ideal (MRing (ProjIdx 0) F)) = ⊥ := by
+  have hle : homFracDegZero (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx 0))) = ⊥ := by
     refine le_antisymm ?_ bot_le
     unfold homFracDegZero
     rw [IntermediateField.adjoin_le_iff]
@@ -296,8 +297,8 @@ theorem resDeg_point (F : Type*) [Field F] : resDeg (⊥ : Ideal (MRing (ProjIdx
       apply hgP
       rw [eg, C_0, zero_mul]
       exact Ideal.zero_mem _
-    have hY : algebraMap (MRing (ProjIdx 0) F ⧸ (⊥ : Ideal (MRing (ProjIdx 0) F)))
-        (FractionRing (MRing (ProjIdx 0) F ⧸ (⊥ : Ideal (MRing (ProjIdx 0) F))))
+    have hY : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx 0) ⧸ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx 0))))
+        (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx 0) ⧸ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx 0)))))
         (Ideal.Quotient.mk _ (X v ^ n)) ≠ 0 := by
       rw [Ne, map_eq_zero_iff _ (IsFractionRing.injective _ _), Ideal.Quotient.eq_zero_iff_mem,
         Ideal.mem_bot]

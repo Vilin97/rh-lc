@@ -15,6 +15,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsFieldIntersectionExample
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -31,9 +32,9 @@ theorem verticalComponentFibre : VerticalComponentFibre.Statement :=
     MinimalPrimeMultiHomog.full SpecialQuotDim.full ComponentDim.proof)
 
 theorem pairNum_fieldNum {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-    {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)) (d : ℕ)
+    {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ)
     (hP : IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsModelOver O P d) (I : IFamily (IsLocalRing.ResidueField O) ι)
-    (hI : IsFieldIntersection I) {r : ℕ} (y y' : Fin r → K → ℤ) (f g : Fin r → MRing ι O)
+    (hI : IsFieldIntersection I) {r : ℕ} (y y' : Fin r → K → ℤ) (f g : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
     (hv : ∀ l, IsVertDiv O P (y l - y' l) (f l) (g l)) (G : MvPolynomial (Fin r) ℤ) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.pairNum O I P d y y' f g G =
       IndefiniteRowSideFullHecke.NumbersDVR.Bundles.pairNum O (fun V _ L => intNum (IsLocalRing.ResidueField O) V L) P d
@@ -47,7 +48,7 @@ theorem pairNum_fieldNum {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuati
   unfold IndefiniteRowSideFullHecke.NumbersDVR.Bundles.vEval
   refine Finsupp.sum_congr fun W hW => ?_
   have hW' : IndefiniteRowSideFullHecke.NumbersDVR.Bundles.ratCyc O P (f l) (g l) W ≠ 0 := Finsupp.mem_support_iff.mp hW
-  have hvert : (C ϖ : MRing ι O) ∈ W := hdiv.vertical W (by rwa [← BundleExamples.ratCyc_eq])
+  have hvert : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := hdiv.vertical W (by rwa [← BundleExamples.ratCyc_eq])
   obtain ⟨bf, bg, hf, hg, -⟩ := hdiv.degrees
   have hor : ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (f l) W ≠ 0 ∨ ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (g l) W ≠ 0 := by
     by_contra hc
@@ -125,7 +126,7 @@ theorem assocDeg_comp (b : K ⊕ K' → ℤ) :
   funext k
   rcases k with (k | k) | k <;> rfl
 
-theorem rename_assocVar {R : Type} [CommRing R] (f : MRing (Sum.elim ι ι') R) :
+theorem rename_assocVar {R : Type} [CommRing R] (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (Sum.elim ι ι')) :
     rename (assocVar ι₂) f = rename (assocSigma ι ι' ι₂) (joinForm (ι' := ι₂) f) := by
   rw [joinForm, rename_rename]
   refine congrArg (fun φ => rename φ f) ?_

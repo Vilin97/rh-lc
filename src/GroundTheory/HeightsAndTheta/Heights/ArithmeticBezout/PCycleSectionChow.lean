@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsMahler
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -22,9 +23,9 @@ theorem CycleSectionChow.proof (h1 : ChowFormSection.Statement) (h2 : ChowFormCy
     (h3 : ChowFormCycleSmul.Statement) : CycleSectionChow.Statement := by
   intro n e Z f u hprime hf hadm
   obtain ⟨c, hc, g, hg, rfl⟩ := hf
-  have hW : ∀ W ∈ Z.support, IsChowFormCycle (divCycle W u) e (specFirst (g W) u) :=
+  have hW : ∀ W ∈ Z.support, IsChowFormCycle ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) W : ℤ))) e (specFirst (g W) u) :=
     fun W hW' => h1 ℂ n e W (g W) u (hprime W hW') (hg W hW') (hadm W hW')
-  have key : ∀ s ⊆ Z.support, IsChowFormCycle (∑ W ∈ s, Z W • divCycle W u) e
+  have key : ∀ s ⊆ Z.support, IsChowFormCycle (∑ W ∈ s, Z W • (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) W : ℤ))) e
       (∏ W ∈ s, specFirst (g W) u ^ Z W) := by
     intro s
     induction s using Finset.induction_on with

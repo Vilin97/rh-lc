@@ -2,12 +2,13 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailAlt
 import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.IsWeightedHomogeneousAevalOfHom
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.IntNumRelabel
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization
 
 open MvPolynomial
-open GroundTheory.Heights₂.Heights.NumbersDVR (MRing IsMultiProjPrime intNum hilbFn mixedDiff diffStep
+open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver intNum IsMultiProjPrime hilbFn mixedDiff diffStep
   eventualValue)
 
 theorem mixedDiff_single {K : Type*} (b : K → ℤ) (h : (K → ℤ) → ℤ) (m : K → ℤ) :
@@ -85,7 +86,7 @@ theorem SegreLiftIntNum.proof : SegreLiftIntNum.Statement := by
     linarith
 
 example : intNum ℚ (segreLift (fun _ : Unit => Fin 2) ℚ ⊥) ![IndefiniteRowSideFullHecke.Kleiman2.pullDeg 1] =
-    intNum ℚ (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ)) ![1] :=
+    intNum ℚ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2))) ![1] :=
   SegreLiftIntNum.proof ℚ Unit (fun _ => Fin 2) ⊥ SegreLiftIntNum.hyps 1
 
 end GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization

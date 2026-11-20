@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsC
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PGenericProjClosureDim
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDvrConeDimTrdeg
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -81,7 +82,7 @@ theorem JoinTwoModels.proof (hC : ConeTrdegFnField.Statement) : JoinTwoModels.St
   have hinj : Function.Injective (algebraMap O Ω) := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
-    have hmem : a ∈ (pointIdeal O x).comap (C : O →+* MRing ι O) := by
+    have hmem : a ∈ (pointIdeal O x).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
       simp only [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C,
         MvPolynomial.algebraMap_apply, ha, map_zero]
     rw [hW.noTorsion] at hmem
@@ -89,7 +90,7 @@ theorem JoinTwoModels.proof (hC : ConeTrdegFnField.Statement) : JoinTwoModels.St
   rw [BundleExamples.mcIdeal_eq_pointIdeal, BundleExamples.isModelOver_iff]
   have hP := GenericProjClosureDim.isMultiProjPrime_pointIdeal (R := O) _ hy
   have hPC : (pointIdeal O (joinCoord x (joinCoord z₁ z₂))).comap
-      (C : O →+* MRing (Sum.elim ι (Sum.elim ι₁ ι₂)) O) = ⊥ := by
+      (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι (Sum.elim ι₁ ι₂))) = ⊥ := by
     rw [eq_bot_iff]
     intro a ha
     rw [← hW.noTorsion]

@@ -1,6 +1,7 @@
 import Mathlib
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.IsFieldIntersection
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.Bundle
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -103,8 +104,8 @@ def IsVertDiv (P : Ideal (MRingOver O ι)) (b : K → ℤ) (f g : MRingOver O ι
         u * f - v * g ∈ P
 
 def ratCyc (P : Ideal (MRingOver O ι)) (f g : MRingOver O ι) : Ideal (MRingOver O ι) →₀ ℤ :=
-  Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero (divCycle P f) -
-    Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero (divCycle P g)
+  Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))) -
+    Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)))
 
 def vEval (J : Ideal (MRingOver (kap O) ι) → ℤ) (Z : Ideal (MRingOver O ι) →₀ ℤ) : ℤ :=
   Z.sum fun G m => m * J (redIdeal O G)
@@ -264,7 +265,7 @@ def rootNum (x : (Σ k, ι k) → Ω) (d N : ℕ) {V : Type*} [AddCommGroup V] [
         (Fin.append (Classical.choice h).flag.deg fun l => pullDeg (K' := (Classical.choice h).K') (L l))
         (rename (Fin.castAdd q) G * rename (Fin.natAdd N) Q))
       (Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero
-        (divCycle (mcIdeal O (joinCoord x (Classical.choice h).z)) (MvPolynomial.C c)))
+        ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mcIdeal O (joinCoord x (Classical.choice h).z)) (MvPolynomial.C c)) W : ℤ))))
   else 0
 
 def IsSubQuot (x : (Σ k, ι k) → Ω) {N N₁ N₂ : ℕ} {V V₁ V₂ : Type*} [AddCommGroup V] [Module Ω V]

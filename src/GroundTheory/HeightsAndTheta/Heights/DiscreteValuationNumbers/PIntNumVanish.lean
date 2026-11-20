@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -19,7 +20,7 @@ theorem IntNumVanish.proof (h1 : HilbDegBound.Statement.{u})
     exact (h4 K (mixedDiff bs (hilbFn Q)) 0 0).1 (hdeg bs)
   rcases hcase with hirr | hdim
   ·
-    have hblock : ∃ k, ∀ i : ι k, (X ⟨k, i⟩ : MRing ι F) ∈ Q := by
+    have hblock : ∃ k, ∀ i : ι k, (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∈ Q := by
       by_contra hne
       exact hirr fun k => by_contra fun h => hne ⟨k, fun i => by_contra fun hi => h ⟨i, hi⟩⟩
     obtain ⟨k, hk⟩ := hblock

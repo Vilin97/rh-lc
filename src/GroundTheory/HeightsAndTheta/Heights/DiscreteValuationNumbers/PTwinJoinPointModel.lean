@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerMore
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PGenericProjClosureDim
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -79,8 +80,8 @@ theorem mem_pointIdeal_join_iff (y : (Σ k, ι k) → Ω)
     Polynomial.coe_mapRingHom, ← tgtEquiv_mcMap, map_eq_zero_iff _ (tgtEquiv K Ω).injective]
 
 theorem ringKrullDim_join [IsNoetherianRing O] (y : (Σ k, ι k) → Ω) :
-    ringKrullDim (MRing (Sum.elim ι ptIdx) O ⧸ pointIdeal O (joinCoord y (ptCoord (Ω := Ω)))) =
-      ringKrullDim (MRing ι O ⧸ pointIdeal O y) + 1 := by
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ptIdx) ⧸ pointIdeal O (joinCoord y (ptCoord (Ω := Ω)))) =
+      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) + 1 := by
   let J := RingHom.ker (Polynomial.mapRingHom (mcMap O y : MvPolynomial (Σ k, ι k) O →+* MvPolynomial K Ω))
   let Φ : MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) O →+* Polynomial (MvPolynomial (Σ k, ι k) O) ⧸ J :=
     (Ideal.Quotient.mk J).comp (srcEquiv (K := K) (ι := ι) O).toRingEquiv.toRingHom
@@ -90,15 +91,15 @@ theorem ringKrullDim_join [IsNoetherianRing O] (y : (Σ k, ι k) → Ω) :
     rw [mem_pointIdeal_join_iff, RingHom.mem_ker (f := Φ)]
     change _ ↔ Ideal.Quotient.mk J (srcEquiv O p) = 0
     rw [Ideal.Quotient.eq_zero_iff_mem]
-  have hJ : J = (pointIdeal O y).map (Polynomial.C : MRing ι O →+* Polynomial (MRing ι O)) := by
+  have hJ : J = (pointIdeal O y).map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) := by
     simp only [J]
     rw [Polynomial.ker_mapRingHom]
     rfl
-  have hq : ringKrullDim (MRing (Sum.elim ι ptIdx) O ⧸ RingHom.ker Φ) =
+  have hq : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ptIdx) ⧸ RingHom.ker Φ) =
       ringKrullDim (Polynomial (MvPolynomial (Σ k, ι k) O) ⧸ J) :=
     ringKrullDim_eq_of_ringEquiv (RingHom.quotientKerEquivOfSurjective hΦ)
-  have hp : ringKrullDim (Polynomial (MRing ι O ⧸ pointIdeal O y)) =
-      ringKrullDim (Polynomial (MRing ι O) ⧸ (pointIdeal O y).map (Polynomial.C : MRing ι O →+* _)) :=
+  have hp : ringKrullDim (Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y)) =
+      ringKrullDim (Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ⧸ (pointIdeal O y).map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* _)) :=
     ringKrullDim_eq_of_ringEquiv (Ideal.polynomialQuotientEquivQuotientPolynomial (pointIdeal O y))
   rw [hker, hq, hJ, ← hp, Polynomial.ringKrullDim_of_isNoetherianRing]
 

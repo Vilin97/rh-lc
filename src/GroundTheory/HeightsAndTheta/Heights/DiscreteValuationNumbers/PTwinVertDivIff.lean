@@ -6,6 +6,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMinimalPri
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PCutByForm
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PRepresentative
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.MemMinimalPrimesOfDivCycleNeZero
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -63,7 +64,7 @@ section Forms
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 variable {R : Type*} [CommRing R]
 
-theorem component_mul_form_add {u f : MRing ι R} {α : K → ℕ} (hf : IsMultiHomog f α) (γ : K → ℕ) :
+theorem component_mul_form_add {u f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {α : K → ℕ} (hf : IsMultiHomog f α) (γ : K → ℕ) :
     weightedHomogeneousComponent (blockWeight ι) (γ + α) (u * f) =
       weightedHomogeneousComponent (blockWeight ι) γ u * f := by
   letI := weightedGradedAlgebra R (blockWeight ι)
@@ -71,14 +72,14 @@ theorem component_mul_form_add {u f : MRing ι R} {α : K → ℕ} (hf : IsMulti
     (mem_weightedHomogeneousSubmodule _ _ _ _).mpr hf
   have h := DirectSum.coe_decompose_mul_add_of_right_mem
     (weightedHomogeneousSubmodule R (blockWeight ι)) (a := u) (i := γ) hmem
-  have key : ∀ (x : MRing ι R) (m : K → ℕ),
-      (DirectSum.decompose (weightedHomogeneousSubmodule R (blockWeight ι)) x m : MRing ι R) =
+  have key : ∀ (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (m : K → ℕ),
+      (DirectSum.decompose (weightedHomogeneousSubmodule R (blockWeight ι)) x m : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) =
         weightedHomogeneousComponent (blockWeight ι) m x :=
     fun x m => weightedDecomposition.decompose'_apply R (blockWeight ι) x m
   rw [key, key] at h
   exact h
 
-theorem component_mul_form_of_le {v g : MRing ι R} {β : K → ℕ} (hg : IsMultiHomog g β) {n : K → ℕ}
+theorem component_mul_form_of_le {v g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {β : K → ℕ} (hg : IsMultiHomog g β) {n : K → ℕ}
     (hn : β ≤ n) :
     weightedHomogeneousComponent (blockWeight ι) n (v * g) =
       weightedHomogeneousComponent (blockWeight ι) (n - β) v * g := by
@@ -86,7 +87,7 @@ theorem component_mul_form_of_le {v g : MRing ι R} {β : K → ℕ} (hg : IsMul
   rw [add_comm β γ, add_tsub_cancel_right]
   exact component_mul_form_add hg γ
 
-theorem component_mul_form_of_not_le {v g : MRing ι R} {β : K → ℕ} (hg : IsMultiHomog g β)
+theorem component_mul_form_of_not_le {v g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {β : K → ℕ} (hg : IsMultiHomog g β)
     {n : K → ℕ} (hn : ¬ β ≤ n) :
     weightedHomogeneousComponent (blockWeight ι) n (v * g) = 0 := by
   letI := weightedGradedAlgebra R (blockWeight ι)
@@ -97,10 +98,10 @@ theorem component_mul_form_of_not_le {v g : MRing ι R} {β : K → ℕ} (hg : I
   rw [← h]
   exact (weightedDecomposition.decompose'_apply R (blockWeight ι) (v * g) n).symm
 
-theorem exists_multiHomog_core {W : Ideal (MRing ι R)} (hW : W.IsPrime) :
-    ∃ W' : Ideal (MRing ι R), W'.IsPrime ∧ IsMultiHomogIdeal W' ∧ W' ≤ W ∧
-      (∀ J : Ideal (MRing ι R), IsMultiHomogIdeal J → J ≤ W → J ≤ W') ∧
-      (∀ (x : MRing ι R) (γ : K → ℕ), IsMultiHomog x γ → x ∈ W → x ∈ W') := by
+theorem exists_multiHomog_core {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hW : W.IsPrime) :
+    ∃ W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι), W'.IsPrime ∧ IsMultiHomogIdeal W' ∧ W' ≤ W ∧
+      (∀ J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι), IsMultiHomogIdeal J → J ≤ W → J ≤ W') ∧
+      (∀ (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (γ : K → ℕ), IsMultiHomog x γ → x ∈ W → x ∈ W') := by
   let e : K ≃ Fin (Fintype.card K) := Fintype.equivFin K
   letI : DecidableEq (Lex (Fin (Fintype.card K) → ℕ)) := LinearOrder.toDecidableEq
   letI := weightedGradedAlgebra R (fun v => lexRelabel e (blockWeight ι v))
@@ -124,12 +125,12 @@ section Divisor
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem divCycle_eq_of_unit_mul_sub_mem {P W : Ideal (MRing ι R)} (hW : W.IsPrime) {f g u v : MRing ι R}
-    (hu : u ∉ W) (hv : v ∉ W) (h : u * f - v * g ∈ P) : divCycle P f W = divCycle P g W := by
+theorem divCycle_eq_of_unit_mul_sub_mem {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hW : W.IsPrime) {f g u v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
+    (hu : u ∉ W) (hv : v ∉ W) (h : u * f - v * g ∈ P) : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) := by
   have h' : v * g - u * f ∈ P := by
     have := P.neg_mem h
     rwa [neg_sub] at this
-  have claim : ∀ W' : Ideal (MRing ι R), W'.IsPrime → W' ≤ W →
+  have claim : ∀ W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι), W'.IsPrime → W' ≤ W →
       (P ⊔ Ideal.span {f} ≤ W' ↔ P ⊔ Ideal.span {g} ≤ W') := by
     intro W' hW' hle
     simp only [sup_le_iff, Ideal.span_singleton_le_iff_mem]
@@ -160,7 +161,7 @@ theorem divCycle_eq_of_unit_mul_sub_mem {P W : Ideal (MRing ι R)} (hW : W.IsPri
         (fun x hx => Ideal.mem_inf.mpr ⟨Ideal.mul_mem_left _ _ hx, mul_mem_sup_span_of_sub_mem h hx⟩),
       length_localizedQuot_eq_of_mul_le inf_le_right hv
         (fun x hx => Ideal.mem_inf.mpr ⟨mul_mem_sup_span_of_sub_mem h' hx, Ideal.mul_mem_left _ _ hx⟩)]
-  unfold divCycle
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   by_cases hc : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W
   · have hc' : W ∈ (P ⊔ Ideal.span {g}).minimalPrimes ∧ IsRelevant W := ⟨hmin.1 hc.1, hc.2⟩
     rw [dif_pos hc, dif_pos hc']
@@ -180,9 +181,9 @@ theorem VerticalDivisorCharacterisation.proof : VerticalDivisorCharacterisation.
     refine ⟨⟨α, β, hα, hβ, funext hb⟩, hfP, hgP, ?_, ?_⟩
     · intro W hW
       by_contra hϖW
-      have key : ∀ (x : MRing ι O) (c : K → ℕ), IsMultiHomog x c →
+      have key : ∀ (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (c : K → ℕ), IsMultiHomog x c →
           W ∈ (P ⊔ Ideal.span {x}).minimalPrimes → IsRelevant W →
-          divCycle P f W = divCycle P g W := by
+          ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) := by
         intro x c hc hWm hWr
         have hWp : W.IsPrime := hWm.1.1
         have hWh : IsMultiHomogIdeal W := MinimalPrimeMultiHomog.proof O K ι _ W
@@ -199,7 +200,7 @@ theorem VerticalDivisorCharacterisation.proof : VerticalDivisorCharacterisation.
       · exact key f α hα h1.1 h1.2
       by_cases h2 : W ∈ (P ⊔ Ideal.span {g}).minimalPrimes ∧ IsRelevant W
       · exact key g β hβ h2.1 h2.2
-      unfold divCycle
+      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
       rw [dif_neg h1, dif_neg h2]
     · intro W hWp hPW hWr hϖW
       obtain ⟨W', hW'p, hW'h, hW'W, hW'max, hW'form⟩ := exists_multiHomog_core hWp
@@ -207,7 +208,7 @@ theorem VerticalDivisorCharacterisation.proof : VerticalDivisorCharacterisation.
       have hW'r : IsRelevant W' := fun k =>
         let ⟨i, hi⟩ := hWr k
         ⟨i, fun h => hi (hW'W h)⟩
-      have hcomap : W'.comap (C : O →+* MRing ι O) = ⊥ :=
+      have hcomap : W'.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = ⊥ :=
         eq_bot_iff.mpr ((Ideal.comap_mono hW'W).trans (haveI := hWp; comap_C_eq_bot_of_not_mem hϖ W hϖW).le)
       obtain ⟨u, v, ⟨γ, hγ⟩, ⟨δ, hδ⟩, hu, hv, huv⟩ := hQ W'
         ((BundleExamples.isMultiProjPrime_iff O W').mpr ⟨hW'p, hW'h, hW'r⟩) hPW' hcomap
@@ -218,9 +219,9 @@ theorem VerticalDivisorCharacterisation.proof : VerticalDivisorCharacterisation.
       fun k => congrFun hb k⟩, hfP, hgP, ?_⟩
     intro Q hQ hPQ hQO
     have hQ' : IsMultiProjPrime Q := (BundleExamples.isMultiProjPrime_iff O Q).mp hQ
-    have hϖQ : (C ϖ : MRing ι O) ∉ Q := by
+    have hϖQ : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ Q := by
       intro h
-      have h' : ϖ ∈ Q.comap (C : O →+* MRing ι O) := h
+      have h' : ϖ ∈ Q.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
       rw [hQO, Ideal.mem_bot] at h'
       exact hϖ.ne_zero h'
     obtain ⟨u, v, hu, hv, huv⟩ := hunit Q hQ'.isPrime hPQ hQ'.relevant hϖQ

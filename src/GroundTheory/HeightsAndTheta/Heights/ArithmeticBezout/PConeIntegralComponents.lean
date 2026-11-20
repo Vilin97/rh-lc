@@ -6,6 +6,7 @@ import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PComplexFibreCycle
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeLogBound
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PGenericFibreDim
 import GroundTheory.HeightsAndTheta.Heights.ChowForms.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -13,7 +14,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial MeasureTheory
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk)
 
 namespace ConeIntegralComponents
 

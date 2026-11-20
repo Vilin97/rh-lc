@@ -7,6 +7,7 @@ import Development.AutomorphicSpectrum.Proofs.MetricProofs.IntersectionVerticalP
 import Development.WeilBound.CoreStatements.PluriharmonicCharts.XSqDiag
 import GroundTheory.HeightsAndTheta.Heights.Intersections.PRFormula
 import GroundTheory.HeightsAndTheta.Heights.Intersections.PZeroSetNull
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial MeasureTheory Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
 
 namespace PositivityTheory.Xgp.sq_R
@@ -115,7 +116,7 @@ theorem PositivityTheory.Xgp.t_sq_R : Inputs → ∀ (II : IntersectionSystem), 
   have hsLL : IsSmoothHerm LL := GroundTheory.Heights₂.Heights.Inter.DiagRAux.isSmoothHerm_halfInvLine hs0 hs1 _ hdeg
   have hrat : IsRatSectionOn Q.PW LL Q.g Q.h :=
     ⟨_, _, Q.g_deg, Q.h_deg, Q.g_nmem, Q.h_nmem, fun k => rfl⟩
-  have hdiv : ReciprocityTheory.ChartRestriction.G.AI.T.toZCycle (divCycle Q.PW Q.g) - ReciprocityTheory.ChartRestriction.G.AI.T.toZCycle (divCycle Q.PW Q.h) =
+  have hdiv : ReciprocityTheory.ChartRestriction.G.AI.T.toZCycle ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q.PW Q.g) W : ℤ))) - ReciprocityTheory.ChartRestriction.G.AI.T.toZCycle ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q.PW Q.h) W : ℤ))) =
       Finsupp.single Q.Δ 1 := by
     classical
     ext W

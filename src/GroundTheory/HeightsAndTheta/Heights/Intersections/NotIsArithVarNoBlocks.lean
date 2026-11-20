@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.IsSmoothMetricOfIsSmoothHerm
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -19,7 +20,7 @@ def IntBridge.Statement : Prop :=
 
 def ResComps.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-    (P0 : Ideal (MRing ι ℚ)) (e : ℕ),
+    (P0 : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι)) (e : ℕ),
     IsProjVarQ P0 e → ∀ Z ∈ (extC P0).minimalPrimes, Nonempty (Res ι Z e)
 
 def DegreeGenericRes.Statement : Prop :=

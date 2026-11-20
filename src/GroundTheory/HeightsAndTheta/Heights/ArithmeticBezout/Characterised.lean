@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -28,8 +29,8 @@ def ChowHeightCharacterised.Statement : Prop :=
         (u : Fin n → 𝓞 K),
       IsProjPrime I → IsChowForm I (e + 1) f → IsMultiHomog δ f →
       linForm (fun j => (u j : K)) ∉ I →
-        J I = (∑ W ∈ (divCycle I fun j => (u j : K)).support,
-                ((divCycle I fun j => (u j : K)) W : ℝ) * J W) +
+        J I = (∑ W ∈ (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I fun) j : ℤ) => (u j : K)).support,
+                ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I fun) j : ℤ) => (u j : K)) W : ℝ) * J W) +
           (1 / Module.finrank ℚ K : ℝ) *
             (vertTerm I (e + 1) u -
               ∑ σ : K →+* ℂ, cycleIntegral (H.normAt σ) (fundCycle (I.map (MvPolynomial.map σ))) e

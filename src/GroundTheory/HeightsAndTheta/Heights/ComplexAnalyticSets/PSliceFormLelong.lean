@@ -8,6 +8,7 @@ import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceWeightMas
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PCutOffDominated
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PSliceImmersiveGeneral
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.SliceCut
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -49,7 +50,7 @@ theorem SliceFormLelong.proof (hI : SliceIdeal.Statement) (hC : SliceComponents.
   have hmem1 : ∀ K : Ideal (MvPolynomial (Fin n) ℂ), linForm ℓ - 1 ∈ K ⊔ Ideal.span {linForm ℓ - 1} :=
     fun _ => Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)
   have hac : ContinuousOn a {x | x ≠ 0} := hsa.continuousOn
-  have hmin : ∀ P ∈ (divCycle W u').support, P ⊔ Ideal.span {linForm ℓ - 1} ∈
+  have hmin : ∀ P ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).support, P ⊔ Ideal.span {linForm ℓ - 1} ∈
       (W ⊔ Ideal.span {linForm ℓ - 1} ⊔ Ideal.span {linForm u'}).minimalPrimes := fun P hP => by
     rw [← himg]
     exact Set.mem_image_of_mem _ (Finset.mem_coe.mpr hP)
@@ -57,7 +58,7 @@ theorem SliceFormLelong.proof (hI : SliceIdeal.Statement) (hC : SliceComponents.
   have hL := (tendsto_finsetSum _ fun P hP =>
     (SliceFormLelong.tendsto_varietyIntegral_sliceCutoff_mul h _ ℓ a hM (hmin P hP).1.1 (hmem1 P)
       (IndefiniteRowSideFullHecke.ComplexSets.dim_component_linForm hprime hdim (huJ u' hu) (hmin P hP)) ha hac).const_mul
-        ((divCycle W u' P : ℕ) : ℝ)).sub
+        ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') P : ℤ) : ℕ) : ℝ)).sub
     (SliceFormLelong.tendsto_varietyIntegral_sliceCutoff_mul h _ ℓ a hM hprime (hmem1 W) hdim ha hac)
 
   have hKk := fun k : ℕ => hK n e h W F u' ℓ (fun x => sliceCut h k x * a x) hW hF hu hℓ hℓP

@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsConeChart
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LocalMultRadical
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PRadicalBaseChange
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PGenericFibreIdeal
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -11,7 +12,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar ptsIntegral ptsIntegralAt pot)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk ptsIntegral ptsIntegralAt pot)
 
 theorem complexFibreIdeal_isRadical {n d : ℕ} {P : Ideal (MRing (PBlk n))} (hP : IsArithVar P d) :
     (complexFibreIdeal P).IsRadical := by

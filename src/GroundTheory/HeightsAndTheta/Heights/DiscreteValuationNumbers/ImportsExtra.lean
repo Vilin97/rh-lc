@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsLast
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ComapLiftFormConstChartPrimeExample
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -18,7 +19,7 @@ theorem ResidualContraction.proof (hle : BlowUpOrderLe.Statement.{u})
 
   have hG'supp : G' ∈ (blowUpOf P (blowUpGens s g f m e) ⊔ Ideal.span {liftForm s}).minimalPrimes ∧
       IsRelevant G' := by
-    by_contra h; unfold divCycle at hsG'; rw [dif_neg h] at hsG'; exact lt_irrefl _ hsG'
+    by_contra h; unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hsG'; rw [dif_neg h] at hsG'; exact lt_irrefl _ hsG'
 
   have hsP' : liftForm (J := BlowUpIdx ι) s ∉ blowUpOf P (blowUpGens s g f m e) := by
     rw [blowUpOf, RingHom.mem_ker, aeval_blowUpSubst_liftForm, Polynomial.C_eq_zero,

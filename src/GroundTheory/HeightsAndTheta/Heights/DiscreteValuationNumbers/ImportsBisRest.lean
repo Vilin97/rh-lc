@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.InstFintypeSumElim
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -16,7 +17,7 @@ def FlagPairCharacterisation.Statement : Prop :=
     (y : (Σ k, ι k) → Ω) (N : ℕ) (E : Type w) [AddCommGroup E] [Module Ω E]
     (B B' : ChartBundle O (segreVec y) N E) (ϖ : O), Irreducible ϖ →
     IsMultiProjPrime (pointIdeal O y) →
-    (∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O),
+    (∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       IsFlagPair ϖ y B B' w w' x x' f g ↔
         ∃ F : IndefiniteRowSideFullHecke.NumbersDVR.Bundles.FlagPair O y B B', F.gen = w ∧ F.gen' = w' ∧ F.deg = x ∧
           F.deg' = x' ∧ F.f = f ∧ F.g = g) ∧

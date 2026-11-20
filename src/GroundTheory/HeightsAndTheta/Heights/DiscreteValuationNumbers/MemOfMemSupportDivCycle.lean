@@ -1,6 +1,7 @@
 import Mathlib
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.IsFieldIntersection
 import GroundTheory.ArithmeticGeometry.IwasawaModules.SpanFinrankMaximalIdealLeTwo
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -72,13 +73,11 @@ def intCyc {R : Type*} [CommRing R] (Z : Ideal (MRingOver R ι) →₀ ℕ) : Id
   Finsupp.mapRange (fun m : ℕ => (m : ℤ)) Nat.cast_zero Z
 
 def specCyc (ϖ : O) (P : Ideal (MRingOver O ι)) : Ideal (MRingOver O ι) →₀ ℕ :=
-  divCycle P (C ϖ)
-
-def genFib (P : Ideal (MRingOver O ι)) : Ideal (MRingOver (FractionRing O) ι) :=
+  ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) def : ℤ) genFib (P : Ideal (MRingOver O ι)) : Ideal (MRingOver (FractionRing O) ι) :=
   P.map genMap
 
 def divO (P : Ideal (MRingOver O ι)) (f g : MRingOver O ι) : Ideal (MRingOver O ι) →₀ ℤ :=
-  intCyc (divCycle P f) - intCyc (divCycle P g)
+  intCyc ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))) - intCyc ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)))
 
 def redEval (J : Ideal (MRingOver (IsLocalRing.ResidueField O) ι) → ℤ)
     (Z : Ideal (MRingOver O ι) →₀ ℤ) : ℤ :=
@@ -110,10 +109,10 @@ def NumbersProjectionFormula.Statement : Prop :=
       (s : MRingOver O ι) (L : Fin n → K → ℤ) (Iκ : IFamily (IsLocalRing.ResidueField O) ι),
       IsModelOver P (n + 1) → IsVerticalDiv ϖ P b f g → IsRegSection P c s →
       IsFieldIntersection Iκ →
-      (∀ H ∈ (divCycle P s).support, C ϖ ∉ H → IsVerticalDiv ϖ H b f g) →
+      (∀ H ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).support, C ϖ ∉ H → IsVerticalDiv ϖ H b f g) →
       redEval (fun G => Iκ G (n + 1) (Fin.snoc (α := fun _ => K → ℤ) L (fun k => (c k : ℤ))))
           (divO P f g) =
-        (divCycle P s).sum fun H m =>
+        ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).sum fun H m =>
           if C ϖ ∈ H then (m : ℤ) * Iκ (H.map redMap) (n + 1) (Fin.snoc (α := fun _ => K → ℤ) L b)
           else (m : ℤ) * redEval (fun G => Iκ G n L) (divO H f g)
 
@@ -132,7 +131,7 @@ section Inhabitants
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
 theorem mem_of_mem_support_divCycle {R : Type*} [CommRing R] [IsNoetherianRing R]
-    {P W : Ideal (MRingOver R ι)} {s : MRingOver R ι} (h : W ∈ (divCycle P s).support) :
+    {P W : Ideal (MRingOver R ι)} {s : MRingOver R ι} (h : W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).support) :
     W.IsPrime ∧ s ∈ W := by
   classical
   have hW : W ∈ divSupp P s := by
@@ -146,7 +145,7 @@ variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 theorem mem_of_mem_support_divO {P W : Ideal (MRingOver O ι)} {f g : MRingOver O ι}
     (h : W ∈ (divO P f g).support) :
-    W ∈ (divCycle P f).support ∨ W ∈ (divCycle P g).support := by
+    W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))).support ∨ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ))).support := by
   classical
   rcases Finset.mem_union.mp (Finsupp.support_sub h) with h1 | h1
   · exact Or.inl (Finsupp.support_mapRange h1)

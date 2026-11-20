@@ -6,6 +6,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PComponentD
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTopDimMinimal
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDimStrictDrop
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyDimensionInequality
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -69,11 +70,11 @@ theorem ExceptionalContraction.proof (h₁ : BlowUpDecomposition.Statement.{u}) 
   obtain ⟨hG'p, hQG', hG'rel⟩ := le_and_isRelevant_of_divCycle_ne_zero hY₀.ne'
   obtain ⟨hGp, hPG, hGrel, -⟩ := comap_liftForm_facts hG'p hQG' hG'rel
 
-  have hlift : ∀ {p : MRing ι O}, p ∉ P → liftForm (J := BlowUpIdx ι) p ∉ Q :=
+  have hlift : ∀ {p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}, p ∉ P → liftForm (J := BlowUpIdx ι) p ∉ Q :=
     fun hp => liftForm_not_mem_blowUpOf hp
   have hfP : f ∉ P := hD.1.num_not_mem
   have hgP : g ∉ P := hD.1.den_not_mem
-  have hY₁Q : (newVar (some none) : MRing (extIdx ι (BlowUpIdx ι)) O) ∉ Q := hD₁.1.num_not_mem
+  have hY₁Q : (newVar (some none) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∉ Q := hD₁.1.num_not_mem
   have hmul := DivCycleMul.proof O (Option K) (extIdx ι (BlowUpIdx ι)) Q
   have hnm : ∀ {x y}, x ∉ Q → y ∉ Q → x * y ∉ Q := fun hx hy h => (hQp.mem_or_mem h).elim hx hy
   have e1 := congrFun (divCycle_congr_of_sub_mem (blowUp_relation P s g f m e)) G'
@@ -84,48 +85,48 @@ theorem ExceptionalContraction.proof (h₁ : BlowUpDecomposition.Statement.{u}) 
   unfold ratDiv at hE'
   rw [hmul _ _ hQp (hlift hgP) hY₁Q] at hE'
   simp only [Pi.add_apply] at hE'
-  have hspos : 0 < divCycle Q (liftForm s) G' := by linarith
+  have hspos : 0 < ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (liftForm s)) G' : ℤ) := by linarith
   have hsG' : liftForm (J := BlowUpIdx ι) s ∈ G' := form_mem_of_divCycle_ne_zero hspos.ne'
   have hsG : s ∈ G := hsG'
 
-  have hY₀G' : (newVar none : MRing (extIdx ι (BlowUpIdx ι)) O) ∈ G' :=
+  have hY₀G' : (newVar none : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∈ G' :=
     form_mem_of_divCycle_ne_zero hY₀.ne'
   obtain ⟨i, hi⟩ := powMonomial_not_mem hGp hGrel e
   have := hGp
   have := hG'p
-  let φ : MRing ι O ⧸ G →+* MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G' :=
-    Ideal.quotientMap G' (liftForm (J := BlowUpIdx ι) : MRing ι O →ₐ[O] _).toRingHom le_rfl
-  let _ : Algebra (MRing ι O ⧸ G) (MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G') := φ.toAlgebra
-  have hφ : ∀ p : MRing ι O, algebraMap (MRing ι O ⧸ G) (MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G')
+  let φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G' :=
+    Ideal.quotientMap G' (liftForm (J := BlowUpIdx ι) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →ₐ[O] _).toRingHom le_rfl
+  let _ : Algebra (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G') := φ.toAlgebra
+  have hφ : ∀ p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G')
       (Ideal.Quotient.mk G p) = Ideal.Quotient.mk G' (liftForm p) := fun p => Ideal.quotientMap_mk
-  have : IsScalarTower O (MRing ι O ⧸ G) (MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G') := by
-    refine IsScalarTower.of_algebraMap_eq (R := O) (S := MRing ι O ⧸ G)
-      (A := MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G') fun r => ?_
-    change Ideal.Quotient.mk G' (algebraMap O (MRing (extIdx ι (BlowUpIdx ι)) O) r) =
-      algebraMap (MRing ι O ⧸ G) _ (Ideal.Quotient.mk G (algebraMap O (MRing ι O) r))
+  have : IsScalarTower O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G') := by
+    refine IsScalarTower.of_algebraMap_eq (R := O) (S := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G)
+      (A := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G') fun r => ?_
+    change Ideal.Quotient.mk G' (algebraMap O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) r) =
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) _ (Ideal.Quotient.mk G (algebraMap O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) r))
     rw [hφ, MvPolynomial.algebraMap_eq, MvPolynomial.algebraMap_eq, liftForm_C]
-  have hinj : Function.Injective (algebraMap (MRing ι O ⧸ G) (MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G')) :=
+  have hinj : Function.Injective (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G')) :=
     Ideal.quotientMap_injective
-  have : Algebra.FiniteType O (MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G') :=
+  have : Algebra.FiniteType O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G') :=
     Algebra.FiniteType.of_surjective (Ideal.Quotient.mkₐ O G') (Ideal.Quotient.mkₐ_surjective O G')
-  have : Algebra.FiniteType (MRing ι O ⧸ G) (MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G') :=
+  have : Algebra.FiniteType (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G') :=
     Algebra.FiniteType.of_restrictScalars_finiteType O _ _
-  set y : MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G' := Ideal.Quotient.mk G' (newVar (some (some i))) with hy
-  set Cy := Algebra.adjoin (MRing ι O ⧸ G) ({y} : Set (MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G'))
+  set y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G' := Ideal.Quotient.mk G' (newVar (some (some i))) with hy
+  set Cy := Algebra.adjoin (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) ({y} : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G'))
   let _ : CommRing Cy := inferInstance
-  have hAalg : ∀ a : MRing ι O ⧸ G, IsAlgebraic Cy
-      (algebraMap (MRing ι O ⧸ G) (MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G') a) := fun a =>
+  have hAalg : ∀ a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G, IsAlgebraic Cy
+      (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G') a) := fun a =>
     isAlgebraic_algebraMap (⟨_, Subalgebra.algebraMap_mem Cy a⟩ : Cy)
   have hpi : Ideal.Quotient.mk G' (liftForm (J := BlowUpIdx ι) (powMonomial e i)) ≠ 0 := by
     rw [Ne, Ideal.Quotient.eq_zero_iff_mem]
     exact hi
-  have hX : ∀ v, IsAlgebraic Cy (Ideal.Quotient.mk G' (X v : MRing (extIdx ι (BlowUpIdx ι)) O)) := by
+  have hX : ∀ v, IsAlgebraic Cy (Ideal.Quotient.mk G' (X v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)))) := by
     rintro ⟨_ | k, j⟩
     · rcases j with _ | j'
       · change IsAlgebraic Cy (Ideal.Quotient.mk G' (newVar none))
         rw [Ideal.Quotient.eq_zero_iff_mem.mpr hY₀G']
         exact isAlgebraic_zero
-      · set c : MRing ι O := Option.elim j' m (fun i' => powMonomial e i') with hc
+      · set c : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι := Option.elim j' m (fun i' => powMonomial e i') with hc
         have hrel : newVar (some j') * liftForm (powMonomial e i) - newVar (some (some i)) * liftForm c ∈ Q :=
           mem_blowUpOf_of_sub (by
             rcases j' with _ | i' <;> simp only [blowUpGens, hc, Option.elim] <;>
@@ -133,7 +134,7 @@ theorem ExceptionalContraction.proof (h₁ : BlowUpDecomposition.Statement.{u}) 
         have hrel' := Ideal.Quotient.eq_zero_iff_mem.mpr (hQG' hrel)
         rw [map_sub, map_mul, map_mul] at hrel'
         let a' : Cy := ⟨_, Subalgebra.algebraMap_mem Cy (Ideal.Quotient.mk G (powMonomial e i))⟩
-        let z' : Cy := ⟨y * algebraMap (MRing ι O ⧸ G) _ (Ideal.Quotient.mk G c),
+        let z' : Cy := ⟨y * algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) _ (Ideal.Quotient.mk G c),
           Cy.mul_mem (Algebra.subset_adjoin rfl) (Subalgebra.algebraMap_mem Cy _)⟩
         refine ⟨Polynomial.C a' * Polynomial.X - Polynomial.C z', fun h0 => hpi ?_, ?_⟩
         · have h1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) h0
@@ -142,19 +143,19 @@ theorem ExceptionalContraction.proof (h₁ : BlowUpDecomposition.Statement.{u}) 
           have h2 := congrArg Subtype.val h1
           simpa [a', hφ] using h2
         · simp only [map_sub, map_mul, Polynomial.aeval_C, Polynomial.aeval_X]
-          change (algebraMap (MRing ι O ⧸ G) _ (Ideal.Quotient.mk G (powMonomial e i))) *
+          change (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) _ (Ideal.Quotient.mk G (powMonomial e i))) *
             Ideal.Quotient.mk G' (newVar (some j')) -
-            y * algebraMap (MRing ι O ⧸ G) _ (Ideal.Quotient.mk G c) = 0
+            y * algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) _ (Ideal.Quotient.mk G c) = 0
           rw [hφ, hφ, hy]
           linear_combination hrel'
     · rw [← liftForm_X (J := BlowUpIdx ι) (R := O) ⟨k, j⟩, ← hφ]
       exact hAalg _
-  have : Algebra.IsAlgebraic Cy (MRing (extIdx ι (BlowUpIdx ι)) O ⧸ G') := ⟨fun x => by
+  have : Algebra.IsAlgebraic Cy (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) ⧸ G') := ⟨fun x => by
     obtain ⟨t, rfl⟩ := Ideal.Quotient.mk_surjective x
     induction t using MvPolynomial.induction_on with
     | C r =>
-      have : Ideal.Quotient.mk G' (C r : MRing (extIdx ι (BlowUpIdx ι)) O) =
-          algebraMap (MRing ι O ⧸ G) _ (Ideal.Quotient.mk G (C r)) := by
+      have : Ideal.Quotient.mk G' (C r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) =
+          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) _ (Ideal.Quotient.mk G (C r)) := by
         rw [hφ, liftForm_C]
       rw [this]
       exact hAalg _
@@ -162,14 +163,14 @@ theorem ExceptionalContraction.proof (h₁ : BlowUpDecomposition.Statement.{u}) 
     | mul_X p v hp => rw [map_mul]; exact hp.mul (hX v)⟩
   have hdimB := ComponentDim.proof O ϖ hϖ (Option K) (extIdx ι (BlowUpIdx ι)) Q (d + 1) hQm
     (Pi.single none 1) (newVar none) (isWeightedHomogeneous_X _ _ _) hY₀Q G' hY₀.ne' hϖG'
-  have hdimA : ¬ ringKrullDim (MRing ι O ⧸ G) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+  have hdimA : ¬ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
     intro hlt
     have h := ringKrullDim_le_of_isAlgebraic_adjoin_singleton hinj y _ hlt
     rw [hdimB, Fintype.card_option] at h
     have h' : d + 1 + (Fintype.card K + 1) ≤ d + 1 + Fintype.card K := by exact_mod_cast h
     omega
 
-  have hsum : ringKrullDim (MRing ι O ⧸ (P ⊔ Ideal.span {s})) <
+  have hsum : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ (P ⊔ Ideal.span {s})) <
       ((d + 1 + Fintype.card K + 1 : ℕ) : WithBot ℕ∞) := by
     have := hPp
     have h := ringKrullDim_succ_le_of_surjective
@@ -180,7 +181,7 @@ theorem ExceptionalContraction.proof (h₁ : BlowUpDecomposition.Statement.{u}) 
           exact Ideal.mem_sup_right (Ideal.mem_span_singleton_self s))
     rw [hP.dim] at h
     exact lt_natCast_of_add_one_le_withBotENat (by convert h using 2; omega)
-  exact TopDimMinimal.proof DimStrictDrop.proof (MRing ι O) (P ⊔ Ideal.span {s}) G
+  exact TopDimMinimal.proof DimStrictDrop.proof (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (P ⊔ Ideal.span {s}) G
     (d + 1 + Fintype.card K) (sup_le hPG ((Ideal.span_singleton_le_iff_mem _).mpr hsG)) hsum hdimA
 
 end Proof

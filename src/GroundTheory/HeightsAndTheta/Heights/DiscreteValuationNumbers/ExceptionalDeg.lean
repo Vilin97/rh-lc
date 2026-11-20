@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -18,8 +19,8 @@ theorem BlowUpReduction.proof (hpieces : BlowUpDecomposition.Statement.{u})
     hpieces O ϖ hϖ K ι P d hP b f g hD c s hs hsP hsH e he m hm hmP hmH
   obtain ⟨hinvl, hinvr⟩ := hinv O ϖ hϖ K ι P d hP b f g hD c s hs hsP hsH e he m hm hmP hmH L
   set Q := blowUpOf P (blowUpGens s g f m e)
-  set Y₀ : MRing (extIdx ι (BlowUpIdx ι)) O := newVar none
-  set Y₁ : MRing (extIdx ι (BlowUpIdx ι)) O := newVar (some none)
+  set Y₀ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) := newVar none
+  set Y₁ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι)) := newVar (some none)
   have hQ : Q.IsPrime := hmodel.multiProj.isPrime
   have hfmQ := hE.1.num_not_mem
   have hgYQ := hE.1.den_not_mem

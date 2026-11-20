@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.Intersections.PGeoNumCut
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleMul
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVocabDivCycle
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRed
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -89,8 +90,8 @@ theorem isClosedPt_of_mem_divSupp {W : Ideal (ReciprocityTheory.ChartRestriction
   obtain ⟨U', hU'min, rfl⟩ := hUmin
   have : U'.IsPrime := hU'min.1.1
   have hU'rel : IsRelevant U' := (isRelevant_comap_iff p U').mp hUrel
-  have h0 : divCycle (W.map (red p)) (red p t) U' ≠ 0 := by
-    unfold divCycle
+  have h0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (W.map (red p)) (red p t)) U' : ℤ) ≠ 0 := by
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
     rw [dif_pos ⟨hU'min, hU'rel⟩]
     have hne_top := length_localizedQuot_ne_top _ U' hU'min
     have hne_zero : NumbersDVR.multAt (W.map (red p) ⊔ Ideal.span {red p t}) U' ≠ 0 := by

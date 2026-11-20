@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.MonotoneDoubleLi
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PDivCyclePrime
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PProperSymm
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChowFormSectionAlgClosed
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -17,25 +18,25 @@ theorem GreenFromLelong.proof (hS : FormIntSymm.Statement) (hP : FormIntPos.Stat
   obtain ⟨g, hgc⟩ := hg
 
   have comps : ∀ v v' : Fin n → ℂ, linForm v ∉ W →
-      (∀ W' ∈ (divCycle W v).support, linForm v' ∉ W') →
-      Tendsto (fun δ => cycleIntegral h (divCycle W v) e (fsLogReg h v' δ)) (𝓝[>] 0)
-        (𝓝 (cycleIntegral h (divCycle W v) e (fsLog h v'))) := by
+      (∀ W' ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W v) W : ℤ))).support, linForm v' ∉ W') →
+      Tendsto (fun δ => cycleIntegral h ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W v) W : ℤ))) e (fsLogReg h v' δ)) (𝓝[>] 0)
+        (𝓝 (cycleIntegral h ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W v) W : ℤ))) e (fsLog h v'))) := by
     intro v v' hv hv'
     obtain ⟨c, -, gW, hgW, -⟩ := hCh ℂ n (e + 1) W g v hW hgc hv
     unfold cycleIntegral
     refine tendsto_finsetSum _ fun W' hW' => ?_
     exact (hD n e h W' v' (DivCyclePrime.proof n W v hW W' hW') ⟨gW W', hgW W' hW'⟩
       (hv' W' hW')).const_mul _
-  have hadm' : ∀ W' ∈ (divCycle W u').support, linForm u ∉ W' :=
+  have hadm' : ∀ W' ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).support, linForm u ∉ W' :=
     ProperSymm.proof n W u u' hW hu hu' hadm
   have hg2 : ∃ g : MvPolynomial (Fin (e + 2) × Fin n) ℂ, IsChowForm W (e + 2) g := ⟨g, hgc⟩
   have hg1 : ∃ g : MvPolynomial (Fin (e + 1 + 1) × Fin n) ℂ, IsChowForm W (e + 1 + 1) g := ⟨g, hgc⟩
   refine (iterLim_eq_of_monotone
     (T := fun ε δ => formInt h W e (fsLogReg h u δ) (fsLogReg h u' ε) +
       coneIntegral h W (e + 1) (fsLogReg h u δ) + coneIntegral h W (e + 1) (fsLogReg h u' ε))
-    (A := fun δ => cycleIntegral h (divCycle W u') e (fsLogReg h u δ) +
+    (A := fun δ => cycleIntegral h ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))) e (fsLogReg h u δ) +
       coneIntegral h W (e + 1) (fsLog h u'))
-    (B := fun ε => cycleIntegral h (divCycle W u) e (fsLogReg h u' ε) +
+    (B := fun ε => cycleIntegral h ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) W : ℤ))) e (fsLogReg h u' ε) +
       coneIntegral h W (e + 1) (fsLog h u)) ?_ ?_ ?_ ?_ ?_ ?_).symm
   ·
     intro δ hδ ε hε ε' hεε'

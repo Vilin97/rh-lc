@@ -3,25 +3,26 @@ import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.LocalAtPla
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagIndependence
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CycNumIntAndComb
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.FinitePlacesModelFamilyStatement
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num GlobalTheory.CompanionTheory.Ar.Top GroundTheory.Heights₂.Heights.ModelLeaves
 open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar IsHorizontal mcPts mCoordIdeal IsIntersectionFamily IsIntersectionSystem IntersectionSystem ptsIntegral geoNum charOf recR arInt ChartBundle chartRing)
 
 namespace GlobalTheory.CompanionTheory.Ar.Num.PlacesFlagM3
 
 theorem divCycle_support_finite {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
-    {O : Type} [CommRing O] [IsNoetherianRing O] (P : Ideal (MRing ι O)) (f : MRing ι O) :
-    (Function.support (divCycle P f)).Finite := by
+    {O : Type} [CommRing O] [IsNoetherianRing O] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :
+    (Function.support ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ)))).Finite := by
   refine (Ideal.finite_minimalPrimes_of_isNoetherianRing _ (P ⊔ Ideal.span {f})).subset ?_
   intro W hW
   by_contra h
   apply hW
-  unfold divCycle
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   rw [dif_neg (fun h' => h h'.1)]
 
 theorem cycEval_ratDiv {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
-    {O : Type} [CommRing O] [IsNoetherianRing O] (n : Ideal (MRing ι O) → ℤ) (P : Ideal (MRing ι O))
-    (f g : MRing ι O) :
-    cycEval n (ratDiv P f g) = cycEval n (divCycle P f) - cycEval n (divCycle P g) := by
+    {O : Type} [CommRing O] [IsNoetherianRing O] (n : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))
+    (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :
+    cycEval n (ratDiv P f g) = cycEval n ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))) - cycEval n ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ))) := by
   unfold cycEval ratDiv
   simp only [sub_mul]
   refine finsum_sub_distrib ?_ ?_
@@ -33,10 +34,10 @@ section Numbers
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem ck_cast {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {r : ℕ}
-    (T : LocPair ι O (Fin r)) (P : Ideal (MRing ι O)) (k : ℕ) (Q : List (K → ℤ)) :
-    ((T.ck P k Q : ℤ) : ℝ) = ∑ i, (cycNum (divCycle P (T.f i)) (Sum.elim T.x T.x')
+    (T : LocPair ι O (Fin r)) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (k : ℕ) (Q : List (K → ℤ)) :
+    ((T.ck P k Q : ℤ) : ℝ) = ∑ i, (cycNum ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (T.f i)) W : ℤ))) (Sum.elim T.x T.x')
         (MvPolynomial.map (Int.castRingHom ℝ) (psumExpansion r k i)) Q -
-      cycNum (divCycle P (T.g i)) (Sum.elim T.x T.x')
+      cycNum ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (T.g i)) W : ℤ))) (Sum.elim T.x T.x')
         (MvPolynomial.map (Int.castRingHom ℝ) (psumExpansion r k i)) Q) := by
   have hint := fun Z hZ H =>
     (cycNum_int_and_comb O K ι (Fin r ⊕ Fin r) (Sum.elim T.x T.x') Q).1 Z hZ H
@@ -61,7 +62,7 @@ omit [∀ k, Fintype (ι k)] in
 
 theorem cycNum_transfer {O₀ : Type} [CommRing O₀] [IsDomain O₀] [IsDiscreteValuationRing O₀]
     {Λ : Type} [Fintype Λ] {O : Λ → Type} [∀ l, CommRing (O l)] [∀ l, IsDomain (O l)]
-    [∀ l, IsDiscreteValuationRing (O l)] (Z₀ : Ideal (MRing ι O₀) → ℤ)
+    [∀ l, IsDiscreteValuationRing (O l)] (Z₀ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O₀ ι) → ℤ)
     (Z : ∀ l, Ideal (MRing ι (O l)) → ℤ) (fd : Λ → ℕ) (D : ℕ)
     (h : ∀ L : List (K → ℤ), L.length = D → cycList Z₀ L = ∑ l, (fd l : ℤ) * cycList (Z l) L)
     {σ : Type} (cls : σ → K → ℤ) {H : MvPolynomial σ ℝ} {e : ℕ} (hH : H.IsHomogeneous e)
@@ -106,15 +107,15 @@ variable {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] {N : ℕ}
 
 theorem flag_m3_of_places {O₀ : Type} [CommRing O₀] [IsDomain O₀] [IsDiscreteValuationRing O₀]
     {Λ : Type} [Fintype Λ] {O : Λ → Type} [∀ l, CommRing (O l)] [∀ l, IsDomain (O l)]
-    [∀ l, IsDiscreteValuationRing (O l)] (P₀ : Ideal (MRing ι O₀)) (P : ∀ l, Ideal (MRing ι (O l)))
+    [∀ l, IsDiscreteValuationRing (O l)] (P₀ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O₀ ι)) (P : ∀ l, Ideal (MRing ι (O l)))
     (fd : Λ → ℕ) (D p j : ℕ) (φ : Equiv.Perm (Ψ ⊕ Ψ)) (T₀ : LocPair ι O₀ (Ψ × Fin N))
     (T : ∀ l, LocPair ι (O l) (Ψ × Fin N)) (hx : ∀ l, (T l).x = T₀.x) (hx' : ∀ l, (T l).x' = T₀.x')
-    (hf : ∀ i (L : List (K → ℤ)), L.length = D → cycList (divCycle P₀ (T₀.f i)) L =
-      ∑ l, (fd l : ℤ) * cycList (divCycle (P l) ((T l).f i)) L)
-    (hg : ∀ i (L : List (K → ℤ)), L.length = D → cycList (divCycle P₀ (T₀.g i)) L =
-      ∑ l, (fd l : ℤ) * cycList (divCycle (P l) ((T l).g i)) L)
-    (hp : ∀ L : List (K → ℤ), L.length = D → cycList (divCycle P₀ (C (p : O₀))) L =
-      ∑ l, (fd l : ℤ) * cycList (divCycle (P l) (C (p : O l))) L)
+    (hf : ∀ i (L : List (K → ℤ)), L.length = D → cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P₀ (T₀.f i)) W : ℤ))) L =
+      ∑ l, (fd l : ℤ) * cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P l) ((T l).f i)) W : ℤ))) L)
+    (hg : ∀ i (L : List (K → ℤ)), L.length = D → cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P₀ (T₀.g i)) W : ℤ))) L =
+      ∑ l, (fd l : ℤ) * cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P l) ((T l).g i)) W : ℤ))) L)
+    (hp : ∀ L : List (K → ℤ), L.length = D → cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P₀ (C (p : O₀))) W : ℤ))) L =
+      ∑ l, (fd l : ℤ) * cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P l) (C (p : O l))) W : ℤ))) L)
     (hloc : ∀ l, FlagChernComparison (P l) D p j φ (T l)) : FlagChernComparison P₀ D p j φ T₀ := by
   intro τ k hk Q hQ
   have hQ' : k - 1 + Q.length = D := by omega
@@ -123,7 +124,7 @@ theorem flag_m3_of_places {O₀ : Type} [CommRing O₀] [IsDomain O₀] [IsDiscr
   have hG : ∀ i, (MvPolynomial.map (Int.castRingHom ℝ)
       (psumExpansion N k i)).IsHomogeneous (k - 1) := fun i =>
     (isHomogeneous_psumExpansion N k i).map _
-  have hterm : ∀ l, cycNum (divCycle (P l) (C (p : O l))) T₀.x (bracket j φ p k τ) Q =
+  have hterm : ∀ l, cycNum ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P l) (C (p : O l))) W : ℤ))) T₀.x (bracket j φ p k τ) Q =
       (((((T l).comp fun i : Fin N => (τ, i)).ck (P l) k Q : ℤ)) : ℝ) := by
     intro l
     rw [hloc' l, hx l]

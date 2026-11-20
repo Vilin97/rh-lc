@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsSemipositiveOn
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman
@@ -420,7 +421,7 @@ theorem homogeneousComponent_mem_primeOf {f : Poly S N} (hf : f ∈ primeOf x) (
 
 open NumbersDVR in
 
-def oneBlock : MRing (fun _ : Unit => Fin (N + 1)) S →ₐ[S] Poly S N := rename fun v => v.2
+def oneBlock : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver S (fun _ : Unit => Fin (N + 1)) →ₐ[S] Poly S N := rename fun v => v.2
 
 def primeOfOne : Ideal (NumbersDVR.MRing (fun _ : Unit => Fin (N + 1)) S) :=
   (primeOf (S := S) x).comap (oneBlock (S := S) (N := N))

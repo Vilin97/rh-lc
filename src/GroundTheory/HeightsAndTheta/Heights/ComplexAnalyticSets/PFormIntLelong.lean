@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceFormLelon
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PSectionHyperplaneAvoid
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PDivCyclePrime
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChowFormSectionAlgClosed
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -23,8 +24,8 @@ theorem FormIntLelong.proof (hCP : ConeToProjective.Statement)
   have hWc := hCP n (e + 1) h W F ℓ (fsLogReg h u δ) hW hF hℓW ha0 ha1.continuousOn
 
   obtain ⟨c, -, gP, hgP, -⟩ := hCh ℂ n (e + 1) W F u' hW hF hu'
-  have hcyc : cycleIntegral h (divCycle W u') e (fsLogReg h u δ) =
-      ∑ P ∈ (divCycle W u').support, ((divCycle W u' P : ℕ) : ℝ) *
+  have hcyc : cycleIntegral h ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))) e (fsLogReg h u δ) =
+      ∑ P ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).support, ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') P : ℤ) : ℕ) : ℝ) *
         varInt (P ⊔ Ideal.span {linForm ℓ - 1}) e (fsLogReg h u δ)
           (fun _ x => Real.log (h.dualNorm x)) := by
     unfold cycleIntegral

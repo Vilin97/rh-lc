@@ -6,6 +6,7 @@ import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PPerturbSemipos
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBirationalModelExists
 import GroundTheory.HeightsAndTheta.Heights.Intersections.NotIsHorizontalOfDimOne
 import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.PConeTrdeg
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -173,19 +174,19 @@ theorem exists_chartForm {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (a : K
     ring
 
 theorem divCycle_apply_of_mem {P W : Ideal (MRing ι)} {s : MRing ι} (h : W ∈ divSupp P s) :
-    divCycle P s W = multAt (P ⊔ Ideal.span {s}) W := by
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = multAt (P ⊔ Ideal.span {s}) W := by
   classical
   simp only [divCycle, Finsupp.ofSupportFinite_coe]
   rw [if_pos h]
 
 theorem divCycle_apply_of_not_mem {P W : Ideal (MRing ι)} {s : MRing ι} (h : W ∉ divSupp P s) :
-    divCycle P s W = 0 := by
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0 := by
   classical
   simp only [divCycle, Finsupp.ofSupportFinite_coe]
   rw [if_neg h]
 
 theorem divCycle_congr {P : Ideal (MRing ι)} {a b : MRing ι}
-    (h : P ⊔ Ideal.span {a} = P ⊔ Ideal.span {b}) : divCycle P a = divCycle P b := by
+    (h : P ⊔ Ideal.span {a} = P ⊔ Ideal.span {b}) : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P a) W : ℤ)) = (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P b) W : ℤ)) := by
   have hS : divSupp P a = divSupp P b := by
     ext W
     simp only [divSupp, h]
@@ -207,7 +208,7 @@ theorem divCycle_le_of_chartLat {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω}
     {a : K → ℤ} {n : ℕ} {s : Ω} (hs : s ∈ chartLat y a n) (hs0 : s ≠ 0) {f g : MRing ι} {α β : K → ℕ}
     (hf : IsMultiHomog f α) (hg : IsMultiHomog g β) (hαβ : ∀ k, (α k : ℤ) = β k + n * a k)
     (hfg : aeval y f = s * aeval y g) (hg0 : aeval y g ≠ 0) :
-    divCycle (mCoordIdeal y) g ≤ divCycle (mCoordIdeal y) f := by
+    divCycle (mCoordIdeal y) g ≤ (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) f) W : ℤ)) := by
   classical
   rw [Finsupp.le_iff]
   intro W _
@@ -252,7 +253,7 @@ theorem divCycle_le_of_chartLat {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω}
     GroundTheory.Heights₂.Heights.Inter.divCycle_mul' hP (hnot g hg0) (hnot e' he0)] at key
   have hW' := congrArg (fun F : Ideal (MRing ι) →₀ ℕ => F W) key
   simp only [Finsupp.add_apply] at hW'
-  have hX0 : divCycle (mCoordIdeal y) X' W = 0 :=
+  have hX0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) X') W : ℤ) = 0 :=
     divCycle_apply_of_not_mem fun h => hXW (h.1.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)))
   omega
 

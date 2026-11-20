@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LeOfAddOneLeSucc
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -12,15 +13,15 @@ noncomputable section
 universe u
 
 theorem mem_minimalPrimes_of_divCycle_ne_zero {K : Type*} {ι : K → Type*} {R : Type*}
-    [CommRing R] {P : Ideal (MRing ι R)} {f : MRing ι R} {W : Ideal (MRing ι R)}
-    (h : divCycle P f W ≠ 0) : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W := by
-  unfold divCycle at h
+    [CommRing R] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)}
+    (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0) : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W := by
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
   split_ifs at h with hW
   · exact hW
   · exact absurd rfl h
 
-theorem ratDiv_one {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R] (P : Ideal (MRing ι R))
-    (f : MRing ι R) : ratDiv P f 1 = divCycle P f := by
+theorem ratDiv_one {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))
+    (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : ratDiv P f 1 = (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ)) := by
   funext W
   rw [ratDiv, divCycle_one, sub_zero]
 
@@ -39,14 +40,14 @@ theorem eventualValue_zero {K : Type*} : eventualValue (0 : (K → ℤ) → ℤ)
   · rfl
 
 theorem vNum_cons_zero {K : Type*} [DecidableEq K] {ι : K → Type*} {O : Type*} [CommRing O]
-    [IsDomain O] [IsDiscreteValuationRing O] (W : Ideal (MRing ι O)) {n : ℕ}
+    [IsDomain O] [IsDiscreteValuationRing O] (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {n : ℕ}
     (L : Fin n → K → ℤ) : vNum W (Matrix.vecCons 0 L) = 0 := by
   rw [vNum, intNum, mixedDiff_cons_zero, eventualValue_zero]
 
 theorem comap_C_eq_bot_of_not_mem {K : Type*} {ι : K → Type*} {O : Type*} [CommRing O]
     [IsDomain O] [IsDiscreteValuationRing O] {ϖ : O} (hϖ : Irreducible ϖ)
-    (H : Ideal (MRing ι O)) [hH : H.IsPrime] (hϖH : (C ϖ : MRing ι O) ∉ H) :
-    H.comap (C : O →+* MRing ι O) = ⊥ := by
+    (H : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) [hH : H.IsPrime] (hϖH : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H) :
+    H.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = ⊥ := by
   refine (Submodule.eq_bot_iff _).mpr fun a ha => ?_
   by_contra ha0
   obtain ⟨n, v, rfl⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible ha0 hϖ
@@ -70,7 +71,7 @@ theorem UniformiserCase.proof (h1 : ConservationOfNumberLE.Statement.{u})
     (h6 : SupSpanMultiHomog.Statement.{u}) (h7 : DimStrictDrop.Statement.{u})
     (h8 : CutByForm.Statement.{u}) : UniformiserCase.Statement.{u} := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP c s hs hsP L
-  have hdim : ringKrullDim (MRing ι O ⧸ P) = ((d + 1 + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) :=
+  have hdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) = ((d + 1 + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) :=
     hP.dim
   have := hP.multiProj.isPrime
 
@@ -96,11 +97,11 @@ theorem UniformiserCase.proof (h1 : ConservationOfNumberLE.Statement.{u})
 
   unfold cycEval
   refine finsum_congr fun W => ?_
-  by_cases hW : divCycle P s W = 0
+  by_cases hW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0
   · rw [hW, zero_mul, zero_mul]
   congr 1
   dsimp only
-  by_cases hϖW : (C ϖ : MRing ι O) ∈ W
+  by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W
   · rw [if_pos hϖW, if_pos hϖW, vNum_cons_zero]
   rw [if_neg hϖW, if_neg hϖW]
   obtain ⟨hWmin, hWrel⟩ := mem_minimalPrimes_of_divCycle_ne_zero hW
@@ -110,9 +111,9 @@ theorem UniformiserCase.proof (h1 : ConservationOfNumberLE.Statement.{u})
     h5 O K ι (P ⊔ Ideal.span {s}) W (h6 O K ι P s c hP.multiProj.multiHomog hs) hWmin
   have hlt : P < W := lt_of_le_of_ne hPW fun h => hsP (h ▸ hWmin.1.2
     (Ideal.mem_sup_right (Ideal.subset_span rfl)))
-  have hWdim : ringKrullDim (MRing ι O ⧸ W) ≤ ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+  have hWdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ W) ≤ ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
     refine withBot_le_of_add_one_le _ _ ?_
-    have := h7 (MRing ι O) P W hlt
+    have := h7 (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P W hlt
     rw [hdim] at this
     rwa [show d + 1 + 1 + Fintype.card K = d + 1 + Fintype.card K + 1 by omega] at this
   rw [ratDiv_one]

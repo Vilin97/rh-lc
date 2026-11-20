@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsC
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.CycDim
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSuppAB
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.WithBotEqOfLeOfAddOneLe
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -97,7 +98,7 @@ end PolynomialHeights
 theorem ComponentDim.proof : ComponentDim.Statement := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP a f hfa hfP W hW hϖW
   have hWmin : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes := by
-    unfold divCycle at hW
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
     split_ifs at hW with h
     · exact h.1
     · exact absurd rfl hW
@@ -123,12 +124,12 @@ theorem ComponentDim.proof : ComponentDim.Statement := by
   have : m.IsPrime := hm.isPrime
   have hmge := le_height_of_isMaximal_of_uniformiser_mem hϖ m hm (hWm hϖW)
   have hdimS := ringKrullDim_mvPolynomial_dvr (σ := Σ k, ι k) O
-  have hfin : FiniteRingKrullDim (MRing ι O) := by
+  have hfin : FiniteRingKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
     rw [finiteRingKrullDim_iff_ne_bot_and_top, hdimS]
     exact ⟨by rw [← WithBot.coe_natCast]; exact WithBot.coe_ne_bot, by
       rw [← WithBot.coe_natCast]
       exact ne_of_lt (WithBot.coe_lt_coe.mpr (ENat.natCast_lt_top _))⟩
-  have hmax : ∀ m' : Ideal (MRing ι O), m'.IsMaximal →
+  have hmax : ∀ m' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), m'.IsMaximal →
       m'.height ≤ ((Nat.card (Σ k, ι k) + 1 : ℕ) : ℕ∞) := by
     intro m' hm'
     have := Ideal.height_le_ringKrullDim_of_ne_top hm'.ne_top
@@ -162,10 +163,10 @@ theorem ComponentDim.proof : ComponentDim.Statement := by
   have hPdim' : d + 1 + Fintype.card K ≤ Nat.card (Σ k, ι k) + 1 - h0 := by exact_mod_cast hPdim
 
   have hlow := Ideal.height_le_ringKrullDim_of_ne_top
-    (DimF.isPrime_map_mk (A := MRing ι O) (q := W) (M := m) hWm).ne_top
+    (DimF.isPrime_map_mk (A := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (q := W) (M := m) hWm).ne_top
   rw [hb0] at hlow
   have hb' : d + Fintype.card K ≤ b0 := by omega
-  have hlow' : ((d + Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (MRing ι O ⧸ W) :=
+  have hlow' : ((d + Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ W) :=
     le_trans (by exact_mod_cast hb') hlow
   rw [hP.dim] at hup
   exact withBot_eq_of_le_of_add_one_le hlow' (by rw [show d + Fintype.card K + 1 = d + 1 + Fintype.card K by ring]; exact hup)

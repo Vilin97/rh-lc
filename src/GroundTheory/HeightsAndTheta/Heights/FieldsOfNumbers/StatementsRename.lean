@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -23,12 +24,12 @@ def splitVar (j : K ↪ K') (ι' : K' → Type) : (Σ s, splitCoord j ι' s) →
   | ⟨Sum.inl k, i⟩ => ⟨j k, i⟩
   | ⟨Sum.inr l, i⟩ => ⟨l.1, i⟩
 
-def splitPrime {F : Type u} [Field F] (j : K ↪ K') {ι' : K' → Type} (P' : Ideal (MRing ι' F)) :
-    Ideal (MRing (splitCoord j ι') F) :=
+def splitPrime {F : Type u} [Field F] (j : K ↪ K') {ι' : K' → Type} (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) :
+    Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (splitCoord j ι')) :=
   P'.comap (rename (splitVar j ι'))
 
 instance splitPrime.isPrime {F : Type u} [Field F] (j : K ↪ K') {ι' : K' → Type}
-    (P' : Ideal (MRing ι' F)) [P'.IsPrime] : (splitPrime j P').IsPrime :=
+    (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime] : (splitPrime j P').IsPrime :=
   Ideal.comap_isPrime _ _
 
 end Split
@@ -36,29 +37,29 @@ end Split
 def RenameMultiHomog.Statement : Prop :=
   ∀ (R : Type u) [CommRing R] (K K' : Type) [DecidableEq K] [DecidableEq K'] (j : K ↪ K')
     (ι : K → Type) (ι' : K' → Type) (g : (Σ k, ι k) → (Σ k', ι' k')), (∀ v, (g v).1 = j v.1) →
-    ∀ (f : MRing ι R) (d : K → ℕ), IsMultiHomog f d →
+    ∀ (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (d : K → ℕ), IsMultiHomog f d →
       IsMultiHomog (rename g f) (Function.extend j d 0)
 
 def RenameHilbFn.Statement : Prop :=
   ∀ (F : Type u) [Field F] (S K' : Type) [DecidableEq S] [DecidableEq K'] (κ : S → Type)
     (ι' : K' → Type) (E : S ≃ K') (σ : (Σ s, κ s) ≃ (Σ k', ι' k')), (∀ v, (σ v).1 = E v.1) →
-    ∀ (P : Ideal (MRing ι' F)) (m : S → ℤ),
+    ∀ (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) (m : S → ℤ),
       hilbFn (P.comap (rename σ)) m = hilbFn P (m ∘ E.symm)
 
 def RenameIntNum.Statement : Prop :=
   ∀ (F : Type u) [Field F] (S K' : Type) [DecidableEq S] [DecidableEq K'] (κ : S → Type)
     (ι' : K' → Type) (E : S ≃ K') (σ : (Σ s, κ s) ≃ (Σ k', ι' k')), (∀ v, (σ v).1 = E v.1) →
-    ∀ (P : Ideal (MRing ι' F)) (n : ℕ) (bs : Fin n → S → ℤ),
+    ∀ (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) (n : ℕ) (bs : Fin n → S → ℤ),
       intNum F (P.comap (rename σ)) bs = intNum F P (fun i => bs i ∘ E.symm)
 
 def RenameMultiProjPrime.Statement : Prop :=
   ∀ (R : Type u) [CommRing R] (S K' : Type) [DecidableEq S] [DecidableEq K'] (κ : S → Type)
     (ι' : K' → Type) (E : S ≃ K') (σ : (Σ s, κ s) ≃ (Σ k', ι' k')), (∀ v, (σ v).1 = E v.1) →
-    ∀ P : Ideal (MRing ι' R), IsMultiProjPrime P → IsMultiProjPrime (P.comap (rename σ))
+    ∀ P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι'), IsMultiProjPrime P → IsMultiProjPrime (P.comap (rename σ))
 
 def SplitRelDeg.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K K' : Type) [DecidableEq K] [DecidableEq K'] (j : K ↪ K')
-    (ι' : K' → Type) (P' : Ideal (MRing ι' F)) [P'.IsPrime],
+    (ι' : K' → Type) (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime],
       relDeg j P' = relDeg (Function.Embedding.inl : K ↪ K ⊕ blockCompl j) (splitPrime j P')
 
 abbrev swapVar : (Σ _ : Bool, Fin 2) ≃ (Σ _ : Bool, Fin 2) :=

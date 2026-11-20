@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegreDimGe
 import GroundTheory.ArithmeticGeometry.AbelianVarieties.JacobianSmoothness.RingKrullDimLeRingKrullDimQuotientAddOne
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -12,11 +13,11 @@ noncomputable section
 theorem SegreDimGe.proof : SegreDimGe.Statement := by
   intro F _ K _ _ _ ι _ q e hq hdim
   have := hq.isPrime
-  let π : MRing ι F →ₐ[F] MRing ι F ⧸ q := Ideal.Quotient.mkₐ F q
-  let φ : MRing (fun _ : Unit => ∀ k, ι k) F →ₐ[F] MRing ι F ⧸ q := π.comp (segreMap F)
-  let R' : Subalgebra F (MRing ι F ⧸ q) := φ.range
+  let π : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₐ[F] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q := Ideal.Quotient.mkₐ F q
+  let φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k) →ₐ[F] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q := π.comp (segreMap F)
+  let R' : Subalgebra F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) := φ.range
   choose i hi using hq.relevant
-  let x : K → MRing ι F ⧸ q := fun k => π (X ⟨k, i k⟩)
+  let x : K → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q := fun k => π (X ⟨k, i k⟩)
   have hx0 : ∀ k, x k ≠ 0 := fun k h =>
     hi k (Ideal.Quotient.eq_zero_iff_mem.mp (by simpa [x, π, Ideal.Quotient.mkₐ_eq_mk] using h))
 
@@ -29,8 +30,8 @@ theorem SegreDimGe.proof : SegreDimGe.Statement := by
     refine Finset.prod_congr rfl fun l hl => ?_
     rw [Function.update_of_ne (Finset.ne_of_mem_erase hl)]
   let k0 : K := Classical.arbitrary K
-  let s : Set (MRing ι F ⧸ q) := x '' ↑(Finset.univ.erase k0)
-  let B : Subalgebra R' (MRing ι F ⧸ q) := Algebra.adjoin R' s
+  let s : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) := x '' ↑(Finset.univ.erase k0)
+  let B : Subalgebra R' (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) := Algebra.adjoin R' s
   have hR'B : ∀ a ∈ R', IsAlgebraic B a := fun a ha =>
     isAlgebraic_algebraMap (⟨a, Subalgebra.algebraMap_mem B (⟨a, ha⟩ : R')⟩ : B)
   have hsB : ∀ l, l ≠ k0 → IsAlgebraic B (x l) := fun l hl =>
@@ -51,7 +52,7 @@ theorem SegreDimGe.proof : SegreDimGe.Statement := by
     · subst hl
       exact hgen _ hsB (i _)
     · exact hsB l hl
-  have hA : ∀ a : MRing ι F ⧸ q, IsAlgebraic B a := by
+  have hA : ∀ a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q, IsAlgebraic B a := by
     intro a
     obtain ⟨p, rfl⟩ := Ideal.Quotient.mkₐ_surjective F q a
     induction p using MvPolynomial.induction_on with
@@ -60,18 +61,18 @@ theorem SegreDimGe.proof : SegreDimGe.Statement := by
       exact hR'B _ (R'.algebraMap_mem c)
     | add p r hp hr => rw [map_add (f := _)]; exact hp.add hr
     | mul_X p v hp => rw [map_mul]; exact hp.mul (hgen v.1 (fun l _ => hall l) v.2)
-  have : Algebra.IsAlgebraic B (MRing ι F ⧸ q) := ⟨hA⟩
-  have htop : Algebra.trdeg R' (MRing ι F ⧸ q) ≤ #s := Algebra.IsAlgebraic.trdeg_le_cardinalMk R' s
+  have : Algebra.IsAlgebraic B (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) := ⟨hA⟩
+  have htop : Algebra.trdeg R' (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) ≤ #s := Algebra.IsAlgebraic.trdeg_le_cardinalMk R' s
   have hs : #s ≤ (Fintype.card K - 1 : ℕ) := by
     refine Cardinal.mk_image_le.trans ?_
     simp
   have : FaithfulSMul F R' :=
     (faithfulSMul_iff_algebraMap_injective F R').mpr (algebraMap F R').injective
-  have : FaithfulSMul R' (MRing ι F ⧸ q) :=
+  have : FaithfulSMul R' (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) :=
     ⟨fun {r₁ r₂} h => Subtype.ext (by simpa [Subalgebra.smul_def] using h 1)⟩
-  have htower := trdeg_add_eq (A := MRing ι F ⧸ q) F R'
+  have htower := trdeg_add_eq (A := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) F R'
 
-  let g : (MRing (fun _ : Unit => ∀ k, ι k) F ⧸ segrePrime F q) →ₐ[F] R' :=
+  let g : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k) ⧸ segrePrime F q) →ₐ[F] R' :=
     Ideal.Quotient.liftₐ (segrePrime F q) φ.rangeRestrict fun p hp => by
       apply Subtype.ext
       simpa [φ, π, segrePrime, Ideal.Quotient.mkₐ_eq_mk, Ideal.Quotient.eq_zero_iff_mem] using hp
@@ -80,9 +81,9 @@ theorem SegreDimGe.proof : SegreDimGe.Statement := by
     exact ⟨Ideal.Quotient.mk _ p, rfl⟩
   have hR'le := trdeg_le_of_surjective g hg
   obtain ⟨n, hn, htn⟩ := GroundTheory.Arith.Abelian.Jacobian.exists_ringKrullDim_eq_trdeg
-    (k := F) (A := MRing ι F ⧸ q)
+    (k := F) (A := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q)
   obtain ⟨m, hm, htm⟩ := GroundTheory.Arith.Abelian.Jacobian.exists_ringKrullDim_eq_trdeg
-    (k := F) (A := MRing (fun _ : Unit => ∀ k, ι k) F ⧸ segrePrime F q)
+    (k := F) (A := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k) ⧸ segrePrime F q)
   have hne : n = e + Fintype.card K := by
     rw [hn] at hdim
     exact_mod_cast hdim

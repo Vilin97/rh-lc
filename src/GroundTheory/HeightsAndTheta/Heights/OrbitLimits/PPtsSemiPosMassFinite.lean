@@ -5,6 +5,7 @@ import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartAbsIntegrabl
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreChartProjFinite
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreCoordGoodProj
 import GroundTheory.HeightsAndTheta.Heights.Intersections.PSheetHessPSD
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -13,7 +14,7 @@ namespace GroundTheory.Heights₂.Heights
 
 open MeasureTheory
 open scoped ComplexOrder
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar IsGoodProj pot sheetDensity fibre mcPts segre
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine IsArithVar IsGoodProj pot sheetDensity fibre mcPts segre
   maDensity cxHessian IsSheet)
 
 namespace PtsSemiPosMassFinite

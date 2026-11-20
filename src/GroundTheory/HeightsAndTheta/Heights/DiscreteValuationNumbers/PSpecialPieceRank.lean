@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -15,7 +16,7 @@ section Reduction
 variable {K : Type*} [DecidableEq K] {ι : K → Type*}
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-theorem map_residue_weightedHomogeneousComponent (m : K → ℕ) (f : MRing ι O) :
+theorem map_residue_weightedHomogeneousComponent (m : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :
     MvPolynomial.map (IsLocalRing.residue O) (weightedHomogeneousComponent (blockWeight ι) m f) =
       weightedHomogeneousComponent (blockWeight ι) m (MvPolynomial.map (IsLocalRing.residue O) f) := by
   classical
@@ -23,7 +24,7 @@ theorem map_residue_weightedHomogeneousComponent (m : K → ℕ) (f : MRing ι O
   simp only [coeff_map, coeff_weightedHomogeneousComponent]
   split_ifs <;> simp
 
-theorem map_residue_mem_weightedHomogeneousSubmodule {m : K → ℕ} {f : MRing ι O}
+theorem map_residue_mem_weightedHomogeneousSubmodule {m : K → ℕ} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
     (hf : f ∈ weightedHomogeneousSubmodule O (blockWeight ι) m) :
     MvPolynomial.map (IsLocalRing.residue O) f ∈
       weightedHomogeneousSubmodule (IsLocalRing.ResidueField O) (blockWeight ι) m := by
@@ -42,8 +43,8 @@ theorem exists_form_map_residue_eq {m : K → ℕ} {g : MRing ι (IsLocalRing.Re
   · rw [map_residue_weightedHomogeneousComponent]
     exact weightedHomogeneousComponent_eq_self ((mem_weightedHomogeneousSubmodule _ _ _ _).1 hg)
 
-theorem exists_eq_add_mul_of_map_residue_mem {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (MRing ι O)}
-    (hP : IsMultiHomogIdeal P) {m : K → ℕ} {f : MRing ι O}
+theorem exists_eq_add_mul_of_map_residue_mem {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}
+    (hP : IsMultiHomogIdeal P) {m : K → ℕ} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
     (hf : f ∈ weightedHomogeneousSubmodule O (blockWeight ι) m)
     (hfP : MvPolynomial.map (IsLocalRing.residue O) f ∈ specialIdeal P) :
     ∃ p ∈ P, ∃ g ∈ weightedHomogeneousSubmodule O (blockWeight ι) m, f = p + C ϖ * g := by
@@ -52,7 +53,7 @@ theorem exists_eq_add_mul_of_map_residue_mem {ϖ : O} (hϖ : Irreducible ϖ) {P 
     (MvPolynomial.map_surjective _ IsLocalRing.residue_surjective)).1 hfP
   have hpm : weightedHomogeneousComponent (blockWeight ι) m p ∈ P := hP p hp m
   have hker : f - weightedHomogeneousComponent (blockWeight ι) m p ∈
-      RingHom.ker (MvPolynomial.map (IsLocalRing.residue O) : MRing ι O →+* _) := by
+      RingHom.ker (MvPolynomial.map (IsLocalRing.residue O) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* _) := by
     rw [RingHom.mem_ker, map_sub, map_residue_weightedHomogeneousComponent, hpf,
       weightedHomogeneousComponent_eq_self ((mem_weightedHomogeneousSubmodule _ _ _ _).1
         (map_residue_mem_weightedHomogeneousSubmodule hf)), sub_self]
@@ -74,7 +75,7 @@ end Reduction
 theorem SpecialPieceRank.proof (h1 : GradedPieceFree.Statement.{u}) : SpecialPieceRank.Statement.{u} := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P hP htor m
   obtain ⟨hfree, hfin⟩ := h1 O ϖ hϖ K ι P htor m
-  let ρ : MRing ι O →ₐ[O] MRing ι (IsLocalRing.ResidueField O) :=
+  let ρ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →ₐ[O] MRing ι (IsLocalRing.ResidueField O) :=
     mapAlgHom (Algebra.ofId O (IsLocalRing.ResidueField O))
   have hρ : ∀ f, ρ f = MvPolynomial.map (IsLocalRing.residue O) f := fun f => rfl
   have hle : P ≤ (specialIdeal P).comap ρ := fun x hx => by
@@ -100,7 +101,7 @@ theorem SpecialPieceRank.proof (h1 : GradedPieceFree.Statement.{u}) : SpecialPie
     choose c hc using fun j => IsLocalRing.residue_surjective (g j)
     let y : gradedPieceR P m := ∑ j, c j • b j
     obtain ⟨f, hf, hfy⟩ := Submodule.mem_map.1 y.2
-    have hfy' : Ideal.Quotient.mk P f = (y : MRing ι O ⧸ P) := hfy
+    have hfy' : Ideal.Quotient.mk P f = (y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) := hfy
     have h0 : Ideal.Quotient.mk (specialIdeal P) (MvPolynomial.map (IsLocalRing.residue O) f) = 0 := by
       rw [← hT, hfy']
       have hg' := congrArg Subtype.val hg
@@ -144,7 +145,7 @@ theorem SpecialPieceRank.proof (h1 : GradedPieceFree.Statement.{u}) : SpecialPie
     apply Subtype.ext
     have hy := congrArg Subtype.val (b.sum_repr y)
     simp only [Submodule.coe_sum, Submodule.coe_smul] at hy ⊢
-    change _ = T (y : MRing ι O ⧸ P)
+    change _ = T (y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← hy, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_

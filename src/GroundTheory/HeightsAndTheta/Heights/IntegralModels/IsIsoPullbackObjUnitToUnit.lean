@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.ArithmeticGeometry.SchemeCohomology.InvertibleSheaf
 import GroundTheory.ArithmeticGeometry.SchemeCohomology.WeilDivisor
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Model
@@ -368,12 +369,12 @@ open GroundTheory.Heights₂.Heights.NumbersDVR in
 
 def SectionNef.Statement : Prop :=
   ∀ (κ : Type) [Fintype κ] [DecidableEq κ] (ι : κ → Type) [∀ k, Fintype (ι k)] (F : Type)
-    [Field F] (P : Ideal (MRing ι F)), IsMultiProjPrime P →
-    ringKrullDim (MRing ι F ⧸ P) = ((1 + Fintype.card κ : ℕ) : WithBot ℕ∞) →
+    [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P →
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) = ((1 + Fintype.card κ : ℕ) : WithBot ℕ∞) →
     ∀ a : κ → ℕ,
-      ((∃ s : MRing ι F, IsMultiHomog s a ∧ s ∉ P) ∨
-        (∀ W : Ideal (MRing ι F), IsMultiProjPrime W → P ≤ W →
-          ∃ s : MRing ι F, IsMultiHomog s a ∧ s ∉ W)) →
+      ((∃ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog s a ∧ s ∉ P) ∨
+        (∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiProjPrime W → P ≤ W →
+          ∃ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog s a ∧ s ∉ W)) →
       0 ≤ intNum F P ![fun k => (a k : ℤ)]
 
 def MertensUpper.Statement : Prop :=
@@ -476,12 +477,12 @@ theorem LatticesAgree.hyps :
 open GroundTheory.Heights₂.Heights.NumbersDVR MvPolynomial in
 
 theorem SectionNef.hyps :
-    IsMultiProjPrime (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ)) ∧
-    ringKrullDim (MRing (fun _ : Unit => Fin 2) ℚ ⧸ (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ))) =
+    IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2))) ∧
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2) ⧸ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2)))) =
       ((1 + Fintype.card Unit : ℕ) : WithBot ℕ∞) ∧
-    ((∃ s : MRing (fun _ : Unit => Fin 2) ℚ, IsMultiHomog s (fun _ => 1) ∧ s ∉ (⊥ : Ideal _)) ∨
-      (∀ W : Ideal (MRing (fun _ : Unit => Fin 2) ℚ), IsMultiProjPrime W → ⊥ ≤ W →
-        ∃ s : MRing (fun _ : Unit => Fin 2) ℚ, IsMultiHomog s (fun _ => 1) ∧ s ∉ W)) := by
+    ((∃ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2), IsMultiHomog s (fun _ => 1) ∧ s ∉ (⊥ : Ideal _)) ∨
+      (∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2)), IsMultiProjPrime W → ⊥ ≤ W →
+        ∃ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2), IsMultiHomog s (fun _ => 1) ∧ s ∉ W)) := by
   refine ⟨isMultiProjPrime_bot, ?_, Or.inl ⟨X ⟨(), 0⟩, ?_, ?_⟩⟩
   · rw [ringKrullDim_eq_of_ringEquiv (RingEquiv.quotientBot _),
       MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_isField

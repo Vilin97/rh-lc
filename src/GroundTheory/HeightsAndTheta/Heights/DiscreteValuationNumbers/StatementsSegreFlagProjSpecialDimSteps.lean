@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCutLiesOver
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCut
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -11,9 +12,9 @@ noncomputable section
 
 def PrimeDimLeTrdeg.Statement : Prop :=
   ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-    (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)),
-    P.IsPrime → P.comap (C : O →+* MRing ι O) = ⊥ →
-      ringKrullDim (MRing ι O ⧸ P) ≤ (((Algebra.trdeg O (MRing ι O ⧸ P)).toENat + 1 : ℕ∞) : WithBot ℕ∞)
+    (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)),
+    P.IsPrime → P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = ⊥ →
+      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) ≤ (((Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)).toENat + 1 : ℕ∞) : WithBot ℕ∞)
 
 def FlagProjTrdegLe.Statement : Prop :=
   ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
@@ -22,19 +23,19 @@ def FlagProjTrdegLe.Statement : Prop :=
       (y : (Σ k, ι k) → Ω) (d : ℕ), IsModelOver (pointIdeal O y) d →
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E]
       (B B' : ChartBundle O (segreVec y) N E), SameGenericFibre ϖ B B' →
-    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O),
+    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       IsFlagPair ϖ y B B' w w' x x' f g →
     ∀ (M M' : ℕ) (a₀ a₀' : K → ℤ) (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E),
       IsTwistedDualGens y B a₀ φ → IsTwistedDualGens y B' a₀' φ' →
     ∀ (Φ : Type) [Field Φ] [Algebra Ω Φ] [Algebra O Φ] [IsScalarTower O Ω Φ]
       (e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ), AlgebraicIndependent Ω t →
     ∀ k : ℕ, k < N →
-      Algebra.trdeg O (MRing (fun o => bundleIdx (bundleIdx ι M) M' (Function.Embedding.some o)) O ⧸
+      Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (fun o => bundleIdx (bundleIdx ι M) M' (Function.Embedding.some o)) ⧸
           pointIdeal O (flagProjPt Function.Embedding.some y w e φ φ' t k)) ≤
-        Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) + (k : Cardinal) ∧
-      Algebra.trdeg O (MRing (fun o => bundleIdx (bundleIdx ι M) M' (secondFactorBlocks o)) O ⧸
+        Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) + (k : Cardinal) ∧
+      Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (fun o => bundleIdx (bundleIdx ι M) M' (secondFactorBlocks o)) ⧸
           pointIdeal O (flagProjPt secondFactorBlocks y w e φ φ' t k)) ≤
-        Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) + (k : Cardinal)
+        Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) + (k : Cardinal)
 
 section Examples
 

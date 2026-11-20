@@ -16,8 +16,8 @@ def IsProjVarF (V : Ideal (MRingOver F ι)) (d : ℕ) : Prop :=
   IsMultiProjPrime V ∧ ringKrullDim (MRingOver F ι ⧸ V) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞)
 
 def ratDiv (V : Ideal (MRingOver F ι)) (f g : MRingOver F ι) : Ideal (MRingOver F ι) →₀ ℤ :=
-  Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero (divCycle V f) -
-    Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero (divCycle V g)
+  Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ))) -
+    Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V g) W : ℤ)))
 
 def IsRatSection (V : Ideal (MRingOver F ι)) (a : K → ℤ) (f g : MRingOver F ι) : Prop :=
   ∃ α β : K → ℕ, IsMultiHomog f α ∧ IsMultiHomog g β ∧ f ∉ V ∧ g ∉ V ∧

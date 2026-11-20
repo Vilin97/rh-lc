@@ -1,6 +1,7 @@
 import Mathlib
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.Bundle
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ArithmeticHilbertSamuelLowerBound
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -207,10 +208,7 @@ structure ComponentData (II : IntersectionSystem) (Ψ : Type) [Fintype Ψ] (K : 
 
   vdeg : ℕ → K → ℤ
 
-  vnum : ℕ → MRing ι
-
-  vden : ℕ → MRing ι
-  vertical : ∀ p ∈ S, IsVerticalDivisorAt (mCoordIdeal y) p (vdeg p) (vnum p) (vden p)
+  vnum : ℕ → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver vden ι : ℕ → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver vertical ι : ∀ p ∈ S, IsVerticalDivisorAt (mCoordIdeal y) p (vdeg p) (vnum p) (vden p)
 
   a' : K → ℤ
   a'_pos : ∀ k, 0 < a' k

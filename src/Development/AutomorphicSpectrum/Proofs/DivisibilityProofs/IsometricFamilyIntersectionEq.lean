@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsF
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.MassFormulaConjugationAction
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.IsometricVerticalIntersectionEqStatement
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.VerticalNumberLocalCycleStatement
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num GlobalTheory.CompanionTheory.Ar.Top GroundTheory.Heights₂.Heights.ModelLeaves
 open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar IsHorizontal mcPts mCoordIdeal IsIntersectionFamily IsIntersectionSystem IntersectionSystem ptsIntegral geoNum charOf recR arInt ChartBundle chartRing)
@@ -14,7 +15,7 @@ section Cyc
 
 variable {K : Type} [DecidableEq K] {ι : K → Type}
 
-theorem intNumL_perm (F : Type) [Field F] (V : Ideal (MRing ι F)) {l l' : List (K → ℤ)} (h : l.Perm l') :
+theorem intNumL_perm (F : Type) [Field F] (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {l l' : List (K → ℤ)} (h : l.Perm l') :
     intNumL F V l = intNumL F V l' := by
   haveI : LeftCommutative (diffStep : (K → ℤ) → ((K → ℤ) → ℤ) → (K → ℤ) → ℤ) := ⟨fun a b g => by
     funext m
@@ -26,7 +27,7 @@ theorem intNumL_perm (F : Type) [Field F] (V : Ideal (MRing ι F)) {l l' : List 
 
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-theorem cycList_perm (Z : Ideal (MRing ι O) → ℤ) {l l' : List (K → ℤ)} (h : l.Perm l') :
+theorem cycList_perm (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ) {l l' : List (K → ℤ)} (h : l.Perm l') :
     cycList Z l = cycList Z l' := by
   unfold cycList
   congr 1
@@ -35,9 +36,9 @@ theorem cycList_perm (Z : Ideal (MRing ι O) → ℤ) {l l' : List (K → ℤ)} 
 
 omit [DecidableEq K] in
 
-theorem divCycle_mul_finite {R : Type} [CommRing R] [IsNoetherianRing (MRing ι R)] (P : Ideal (MRing ι R))
-    (f : MRing ι R) (n : Ideal (MRing ι R) → ℤ) :
-    (Function.support fun W => divCycle P f W * n W).Finite := by
+theorem divCycle_mul_finite {R : Type} [CommRing R] [IsNoetherianRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))
+    (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (n : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) :
+    (Function.support fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) * n W).Finite := by
   refine (Ideal.finite_minimalPrimes_of_isNoetherianRing _ (P ⊔ Ideal.span {f})).subset ?_
   intro W hW
   by_contra h
@@ -45,9 +46,9 @@ theorem divCycle_mul_finite {R : Type} [CommRing R] [IsNoetherianRing (MRing ι 
   simp only [divCycle]
   rw [dif_neg (fun h' => h h'.1), zero_mul]
 
-theorem cycList_ratDiv [Fintype K] [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)) (f g : MRing ι O)
+theorem cycList_ratDiv [Fintype K] [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
     (l : List (K → ℤ)) :
-    cycList (ratDiv P f g) l = cycList (divCycle P f) l - cycList (divCycle P g) l := by
+    cycList (ratDiv P f g) l = cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))) l - cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ))) l := by
   unfold cycList cycEval ratDiv
   simp only [sub_mul]
   exact finsum_sub_distrib (divCycle_mul_finite P f _) (divCycle_mul_finite P g _)
@@ -55,8 +56,8 @@ theorem cycList_ratDiv [Fintype K] [∀ k, Fintype (ι k)] (P : Ideal (MRing ι 
 end Cyc
 
 theorem link_monomial {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
-    {P : Ideal (MRing ι ℤ)} {D : ℕ} (hP : IsArithVar P (D + 1))
-    {I : Ideal (MRing ι ℤ) → (n : ℕ) → (Fin n → HermLine ι) → ℝ} (hI : IsIntersectionFamily I)
+    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)} {D : ℕ} (hP : IsArithVar P (D + 1))
+    {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ} (hI : IsIntersectionFamily I)
     {σ : Type} {S : Finset Nat.Primes} {T : LocPair ι ℤ σ} (hT : T.IsVertOff P S)
     {A A' : σ → HermLine ι} (hA : ∀ i, IsSmoothHerm (A i)) (hA' : ∀ i, IsSmoothHerm (A' i))
     (hiso : T.IsIsometric P A A') (i : σ) (μ : σ ⊕ σ →₀ ℕ) (hμ : μ.toMultiset.card = D) :
@@ -114,7 +115,7 @@ theorem link_monomial {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [
   push_cast
   rfl
 
-theorem arNum_eq_sum_log_val : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι ℤ)) (D : ℕ), IsArithVar P (D + 1) → ∀ (I : Ideal (MRing ι ℤ) → (n : ℕ) → (Fin n → HermLine ι) → ℝ), IsIntersectionFamily I → ∀ (σ : Type) [Fintype σ] (S : Finset Nat.Primes) (T : LocPair ι ℤ σ), T.IsVertOff P S → ∀ A A' : σ → HermLine ι, (∀ i, IsSmoothHerm (A i)) → (∀ i, IsSmoothHerm (A' i)) → T.IsIsometric P A A' → ∀ (V : MvPolynomial (σ ⊕ σ) ℝ) (Gs : σ → MvPolynomial (σ ⊕ σ) ℝ), IsMixExpansion D V Gs → arNum I P (Sum.elim A A') V = ∑ p ∈ S, Real.log (p : ℕ) * (T.map (Int.castRingHom (ZP p))).val (extTo (ZP p) P) Gs := by
+theorem arNum_eq_sum_log_val : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (D : ℕ), IsArithVar P (D + 1) → ∀ (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ), IsIntersectionFamily I → ∀ (σ : Type) [Fintype σ] (S : Finset Nat.Primes) (T : LocPair ι ℤ σ), T.IsVertOff P S → ∀ A A' : σ → HermLine ι, (∀ i, IsSmoothHerm (A i)) → (∀ i, IsSmoothHerm (A' i)) → T.IsIsometric P A A' → ∀ (V : MvPolynomial (σ ⊕ σ) ℝ) (Gs : σ → MvPolynomial (σ ⊕ σ) ℝ), IsMixExpansion D V Gs → arNum I P (Sum.elim A A') V = ∑ p ∈ S, Real.log (p : ℕ) * (T.map (Int.castRingHom (ZP p))).val (extTo (ZP p) P) Gs := by
   intro K _ _ ι _ P D hP I hI σ _ S T hT A A' hA hA' hiso V Gs hV
   classical
   obtain ⟨rfl, hG⟩ := hV

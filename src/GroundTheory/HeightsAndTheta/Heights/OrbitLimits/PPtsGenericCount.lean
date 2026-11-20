@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StGoodChartModel
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StComponentsGenericCount
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSheetLift
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PDiscriminantSheetCover
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -11,7 +12,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MeasureTheory Filter Topology Matrix ComplexSets
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsArithVar IsGoodProj mcPts segre fibre IsSheet)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsGoodProj IsArithVar mcPts segre fibre IsSheet)
 
 namespace PtsGenericCount
 

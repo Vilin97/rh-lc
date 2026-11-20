@@ -3,6 +3,7 @@ import Development.WeilBound.CoreStatements.PluriharmonicCharts.IsBlockMapInitia
 import GroundTheory.HeightsAndTheta.Heights.Intersections.PDiagDiv
 import GroundTheory.HeightsAndTheta.Heights.Intersections.PDiagOrd
 import GroundTheory.HeightsAndTheta.Heights.Intersections.PDiagOrdOne
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial Matrix ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
 open scoped Classical
 
@@ -25,7 +26,7 @@ theorem div_eq_of_local {P Δ : Ideal (MRing ι)} (hPp : P.IsPrime) (hΔp : Δ.I
     (hsat : ∀ d ∈ Δ, ∃ u ∉ Δ, u * d ∈ P ⊔ Ideal.span {g})
     (key : ∀ W : Ideal (MRing ι), W.IsPrime → IsRelevant W → P ≤ W → ¬ Δ ≤ W →
       ∃ u v, u ∉ W ∧ v ∉ W ∧ u * g - v * h ∈ P) :
-    divCycle P g = divCycle P h + Finsupp.single Δ 1 := by
+    (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)) = divCycle P h + Finsupp.single Δ 1 := by
   have hP : h ∉ P := fun hh => hhΔ (hPΔ hh)
   have hone : multAt (P ⊔ Ideal.span {g}) Δ = 1 := by
     unfold multAt
@@ -293,7 +294,7 @@ theorem sec_pen (h0 : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 0)
       (∀ o, (dg o : ℤ) - dh o = totDeg k₀ e o) ∧
       aeval (penCo y k₀ (fun m => y ⟨k₀, m⟩) B RatFunc.X) g =
         RatFunc.X * algebraMap Φ (RatFunc Φ) cf * aeval (penCo y k₀ (fun m => y ⟨k₀, m⟩) B RatFunc.X) h ∧
-      divCycle (mCoordIdeal (penCo y k₀ (fun m => y ⟨k₀, m⟩) B RatFunc.X)) g =
+      (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal (penCo y k₀ (fun m => y ⟨k₀, m⟩) B RatFunc.X)) g) W : ℤ)) =
         divCycle (mCoordIdeal (penCo y k₀ (fun m => y ⟨k₀, m⟩) B RatFunc.X)) h +
           Finsupp.single (mCoordIdeal (ext2 y k₀ fun m => y ⟨k₀, m⟩)) 1 := by
   set w := penCo y k₀ (fun m => y ⟨k₀, m⟩) B RatFunc.X with hw

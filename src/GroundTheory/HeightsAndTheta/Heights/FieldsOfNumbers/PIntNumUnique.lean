@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDivSupport
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -39,8 +40,8 @@ theorem IntNumUnique.proof (h1 : CutRational.Statement.{u}) (h2 : IntNumBase.Sta
     · rw [hW, zero_mul, zero_mul]
     · have hsupp : IsMultiProjPrime W ∧ relDim W = (n : ℕ) := by
         unfold ratDiv at hW
-        by_cases hfW : divCycle P f W = 0
-        · have hgW : divCycle P g W ≠ 0 := by
+        by_cases hfW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = 0
+        · have hgW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) ≠ 0 := by
             intro h
             apply hW
             rw [hfW, h, sub_zero]

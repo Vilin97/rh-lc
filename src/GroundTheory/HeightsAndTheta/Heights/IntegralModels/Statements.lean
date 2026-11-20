@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Model
@@ -221,16 +222,16 @@ end More
 open NumbersDVR ReciprocityTheory.ChartRestriction.G.Geo
 
 structure IsRegularSection {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
-    (P : Ideal (MRing ι F)) (b : K → ℤ) (f g : MRing ι F) : Prop where
+    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) : Prop where
   degrees : ∃ bf bg : K → ℕ, IsMultiHomog f bf ∧ IsMultiHomog g bg ∧
     (fun k => (bf k : ℤ) - bg k) = b
   num_not_mem : f ∉ P
   den_not_mem : g ∉ P
-  regular : ∀ W : Ideal (MRing ι F), IsMultiProjPrime W → P ≤ W →
-    ∃ u v : MRing ι F, u ∉ W ∧ u * f - v * g ∈ P
+  regular : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiProjPrime W → P ≤ W →
+    ∃ u v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, u ∉ W ∧ u * f - v * g ∈ P
 
 theorem isRegularSection_form {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
-    {P : Ideal (MRing ι F)} (hP : P.IsPrime) {a : K → ℕ} {s : MRing ι F} (hs : IsMultiHomog s a)
+    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hP : P.IsPrime) {a : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hs : IsMultiHomog s a)
     (hsP : s ∉ P) : IsRegularSection P (fun k => (a k : ℤ)) s 1 where
   degrees := ⟨a, 0, hs, MvPolynomial.isWeightedHomogeneous_one _ _, by funext k; simp⟩
   num_not_mem := hsP
@@ -367,17 +368,17 @@ def ClearDenominators.Statement : Prop :=
 
 def SectionNef.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-    (F : Type) [Field F] (P : Ideal (MRing ι F)), IsMultiProjPrime P →
-    ringKrullDim (MRing ι F ⧸ P) = ((1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
-    ∀ (b : K → ℤ) (f g : MRing ι F), IsRegularSection P b f g → 0 ≤ intNum F P ![b]
+    (F : Type) [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P →
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) = ((1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ∀ (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsRegularSection P b f g → 0 ≤ intNum F P ![b]
 
 def SectionNefGenerated.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-    (F : Type) [Field F] (P : Ideal (MRing ι F)), IsMultiProjPrime P →
-    ringKrullDim (MRing ι F ⧸ P) = ((1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
-    ∀ b : K → ℤ, (∀ W : Ideal (MRing ι F), IsMultiProjPrime W → P ≤ W →
-      ∃ f g : MRing ι F, IsRegularSection P b f g ∧
-        ∃ u v : MRing ι F, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ P) →
+    (F : Type) [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P →
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) = ((1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ∀ b : K → ℤ, (∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiProjPrime W → P ≤ W →
+      ∃ f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsRegularSection P b f g ∧
+        ∃ u v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ P) →
       0 ≤ intNum F P ![b]
 
 theorem SectionNefGenerated.of_sectionNef (h : SectionNef.Statement) :
@@ -572,9 +573,9 @@ theorem ClearDenominators.hypotheses_inhabited :
   ⟨inferInstance, inferInstance, inferInstance, isVectorBundle_structureModule⟩
 
 lemma projectiveLine_dim :
-    ringKrullDim (MRing (fun _ : Unit => Fin 2) ℚ ⧸ (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ))) =
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2) ⧸ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2)))) =
       ((1 + Fintype.card Unit : ℕ) : WithBot ℕ∞) := by
-  rw [ringKrullDim_eq_of_ringEquiv (RingEquiv.quotientBot (MRing (fun _ : Unit => Fin 2) ℚ)),
+  rw [ringKrullDim_eq_of_ringEquiv (RingEquiv.quotientBot (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2))),
     MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field ℚ]
   have hc : Nat.card ((_ : Unit) × Fin 2) = 2 := by
     rw [Nat.card_eq_fintype_card, Fintype.card_sigma]
@@ -583,7 +584,7 @@ lemma projectiveLine_dim :
   norm_num
 
 lemma isMultiHomog_X_zero :
-    IsMultiHomog (MvPolynomial.X ⟨(), 0⟩ : MRing (fun _ : Unit => Fin 2) ℚ) (fun _ => 1) := by
+    IsMultiHomog (MvPolynomial.X ⟨(), 0⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2)) (fun _ => 1) := by
   have := MvPolynomial.isWeightedHomogeneous_X ℚ (blockWeight (fun _ : Unit => Fin 2)) ⟨(), 0⟩
   have h : blockWeight (fun _ : Unit => Fin 2) ⟨(), 0⟩ = fun _ => 1 := by
     funext k
@@ -593,10 +594,10 @@ lemma isMultiHomog_X_zero :
   exact this
 
 theorem SectionNef.hypotheses_inhabited :
-    IsMultiProjPrime (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ)) ∧
-      ringKrullDim (MRing (fun _ : Unit => Fin 2) ℚ ⧸ (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ))) =
+    IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2))) ∧
+      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2) ⧸ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2)))) =
         ((1 + Fintype.card Unit : ℕ) : WithBot ℕ∞) ∧
-      IsRegularSection (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ)) (fun _ => ((1 : ℕ) : ℤ))
+      IsRegularSection (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2))) (fun _ => ((1 : ℕ) : ℤ))
         (MvPolynomial.X ⟨(), 0⟩) 1 := by
   refine ⟨isMultiProjPrime_bot, projectiveLine_dim, isRegularSection_form Ideal.isPrime_bot
     isMultiHomog_X_zero ?_⟩
@@ -604,16 +605,16 @@ theorem SectionNef.hypotheses_inhabited :
   exact MvPolynomial.X_ne_zero _
 
 theorem SectionNefGenerated.hypotheses_inhabited :
-    IsMultiProjPrime (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ)) ∧
-      ringKrullDim (MRing (fun _ : Unit => Fin 2) ℚ ⧸ (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ))) =
+    IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2))) ∧
+      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2) ⧸ (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2)))) =
         ((1 + Fintype.card Unit : ℕ) : WithBot ℕ∞) ∧
-      ∀ W : Ideal (MRing (fun _ : Unit => Fin 2) ℚ), IsMultiProjPrime W → ⊥ ≤ W →
-        ∃ f g : MRing (fun _ : Unit => Fin 2) ℚ,
-          IsRegularSection (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ)) (fun _ => ((1 : ℕ) : ℤ)) f g ∧
-          ∃ u v : MRing (fun _ : Unit => Fin 2) ℚ, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ (⊥ : Ideal _) := by
+      ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2)), IsMultiProjPrime W → ⊥ ≤ W →
+        ∃ f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2),
+          IsRegularSection (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2))) (fun _ => ((1 : ℕ) : ℤ)) f g ∧
+          ∃ u v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2), u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ (⊥ : Ideal _) := by
   refine ⟨isMultiProjPrime_bot, projectiveLine_dim, fun W hW _ => ?_⟩
   obtain ⟨i, hi⟩ := hW.relevant ()
-  have hdeg : IsMultiHomog (MvPolynomial.X ⟨(), i⟩ : MRing (fun _ : Unit => Fin 2) ℚ) (fun _ => 1) := by
+  have hdeg : IsMultiHomog (MvPolynomial.X ⟨(), i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2)) (fun _ => 1) := by
     have := MvPolynomial.isWeightedHomogeneous_X ℚ (blockWeight (fun _ : Unit => Fin 2)) ⟨(), i⟩
     have h : blockWeight (fun _ : Unit => Fin 2) ⟨(), i⟩ = fun _ => 1 := by
       funext k

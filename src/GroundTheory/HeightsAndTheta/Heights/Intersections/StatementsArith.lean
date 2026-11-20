@@ -3,6 +3,7 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersecti
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MixedFieldContraction.ContractMixedFieldStatement
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.InhDivCycleOfSuppEmpty
 import GroundTheory.HeightsAndTheta.Heights.Intersections.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -18,12 +19,12 @@ variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 open Classical in
 
 def horCycle (P : Ideal (MRing ι)) (s : MRing ι) : Ideal (MRing ι) →₀ ℕ :=
-  (divCycle P s).filter IsHorizontal
+  ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).filter IsHorizontal
 
 open Classical in
 
 def vertCycle (P : Ideal (MRing ι)) (s : MRing ι) : Ideal (MRing ι) →₀ ℕ :=
-  (divCycle P s).filter fun W => ¬ IsHorizontal W
+  ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).filter fun W => ¬ IsHorizontal W
 
 def IsClosedPt (Q : Ideal (MRing ι)) : Prop :=
   IsMultiProjPrime Q ∧ ringKrullDim (MRing ι ⧸ Q) = ((Fintype.card K : ℕ) : WithBot ℕ∞)

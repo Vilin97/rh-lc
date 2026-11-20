@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ProjectiveSpaceIncrementHyp
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PHilbExactDivide
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HilbertSamuel
@@ -13,9 +14,9 @@ noncomputable section
 universe u
 
 theorem ringKrullDim_quot_add_one_le {K : Type*} {ι : K → Type*} {F : Type*} [Field F]
-    {P Q : Ideal (MRing ι F)} [P.IsPrime] (hPQ : P ≤ Q)
-    {f : MRing ι F} (hfP : f ∉ P) (hfQ : f ∈ Q) :
-    ringKrullDim (MRing ι F ⧸ Q) + 1 ≤ ringKrullDim (MRing ι F ⧸ P) := by
+    {P Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [P.IsPrime] (hPQ : P ≤ Q)
+    {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hfP : f ∉ P) (hfQ : f ∈ Q) :
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) + 1 ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) := by
   refine ringKrullDim_succ_le_of_surjective (Ideal.Quotient.factor hPQ)
     (Ideal.Quotient.factor_surjective hPQ) (r := Ideal.Quotient.mk P f) ?_ ?_
   · exact mem_nonZeroDivisors_of_ne_zero (by rwa [ne_eq, Ideal.Quotient.eq_zero_iff_mem])
@@ -55,7 +56,7 @@ theorem HilbertIncrement.closed : HilbertIncrement.Statement.{u} := by
   intro F _ K _ _ ι _ d q b i hq hdim hd hX
   have : q.IsPrime := hq.isPrime
   refine ⟨fun a => ?_, fun W _ hle => ?_⟩
-  · have hhom : IsMultiHomog (X ⟨b, i⟩ : MRing ι F) (Pi.single b 1) :=
+  · have hhom : IsMultiHomog (X ⟨b, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (Pi.single b 1) :=
       isWeightedHomogeneous_X F (blockWeight ι) ⟨b, i⟩
     have h := HilbExactDivide.closed F K ι q hq.multiHomog (Pi.single b 1) (X ⟨b, i⟩) hhom a
     have hcast : (a - fun k => (((Pi.single b 1 : K → ℕ) k : ℕ) : ℤ)) = a - Pi.single b 1 := by
@@ -65,7 +66,7 @@ theorem HilbertIncrement.closed : HilbertIncrement.Statement.{u} := by
         simp
       · simp [Pi.single_apply, hk]
     rwa [colon_span_singleton_eq_of_not_mem hX, hcast] at h
-  · have hXW : (X ⟨b, i⟩ : MRing ι F) ∈ W :=
+  · have hXW : (X ⟨b, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∈ W :=
       hle (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _))
     have hstep := ringKrullDim_quot_add_one_le (le_sup_left.trans hle) hX hXW
     rw [hdim] at hstep

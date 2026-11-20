@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceFormLelon
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceIdeal
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceComponents
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PSliceFormLelongCompactLimit
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -21,7 +22,7 @@ theorem SliceFormLelongCompact.proof (hSt : StokesOnVariety.Statement) (hLI : Lo
   have hsm := smoothNear_log_dualNorm_slice h W ℓ
   obtain ⟨g, hg, hgc, hgf⟩ :=
     SliceFormLelongCompact.exists_contDiff_eqOn (SheetSumMeasurable.isClosed_zeroSet _) hf hfc
-  have hSP : ∀ P ∈ (divCycle W u').support,
+  have hSP : ∀ P ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).support,
       W ⊔ Ideal.span {linForm ℓ - 1} ≤ P ⊔ Ideal.span {linForm ℓ - 1} := by
     intro P hP
     have hm : P ⊔ Ideal.span {linForm ℓ - 1} ∈
@@ -33,9 +34,9 @@ theorem SliceFormLelongCompact.proof (hSt : StokesOnVariety.Statement) (hLI : Lo
       W ⊔ Ideal.span {linForm ℓ - 1} ≤ I → varInt I d f ψ = varInt I d g ψ := fun I d ψ hle =>
     SliceFormLelongCompact.varInt_congr_weight
       (fun x hx => (hgf x (SliceFormLelongCompact.zeroSet_anti hle hx)).symm) ψ
-  have hsumf : ∑ P ∈ (divCycle W u').support, ((divCycle W u' P : ℕ) : ℝ) *
+  have hsumf : ∑ P ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).support, ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') P : ℤ) : ℕ) : ℝ) *
         varInt (P ⊔ Ideal.span {linForm ℓ - 1}) e f (fun _ x => Real.log (h.dualNorm x)) =
-      ∑ P ∈ (divCycle W u').support, ((divCycle W u' P : ℕ) : ℝ) *
+      ∑ P ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).support, ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') P : ℤ) : ℕ) : ℝ) *
         varInt (P ⊔ Ideal.span {linForm ℓ - 1}) e g (fun _ x => Real.log (h.dualNorm x)) :=
     Finset.sum_congr rfl fun P hP => by rw [hw _ _ _ (hSP P hP)]
   rw [hsumf, hw (W ⊔ Ideal.span {linForm ℓ - 1}) (e + 1) (fun _ x => Real.log (h.dualNorm x)) le_rfl]
@@ -51,11 +52,11 @@ theorem SliceFormLelongCompact.proof (hSt : StokesOnVariety.Statement) (hLI : Lo
       Real.log (h.dualNorm x)) = fun _ x => Real.log (h.dualNorm x) :=
     funext fun i => Fin.cases rfl (fun _ => rfl) i
   rw [hcons] at hS2
-  have hsum : ∑ P ∈ (divCycle W u').support,
+  have hsum : ∑ P ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).support,
       (localMult (W ⊔ Ideal.span {linForm ℓ - 1} ⊔ Ideal.span {linForm u'})
         (P ⊔ Ideal.span {linForm ℓ - 1}) : ℝ) *
         varInt (P ⊔ Ideal.span {linForm ℓ - 1}) e g (fun _ x => Real.log (h.dualNorm x)) =
-      ∑ P ∈ (divCycle W u').support, ((divCycle W u' P : ℕ) : ℝ) *
+      ∑ P ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))).support, ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') P : ℤ) : ℕ) : ℝ) *
         varInt (P ⊔ Ideal.span {linForm ℓ - 1}) e g (fun _ x => Real.log (h.dualNorm x)) :=
     Finset.sum_congr rfl fun P hP => by rw [hmult P hP]
   rw [hP, ← himg, finsum_mem_image hinj, finsum_mem_coe_finset, hsum, ← hS2] at hlim

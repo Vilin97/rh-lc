@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.InstFintype
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.SameGenericSymm
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyBridgeFull
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBisLast
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -22,7 +23,7 @@ def flagFurtherTerm_independent.Statement : Prop :=
     ∀ (φ₁ φ₂ : IndefiniteRowSideFullHecke.NumbersDVR.Bundles.FlagPair O x E E')
       (I : IFamily (IsLocalRing.ResidueField O) ι), IsFieldIntersection I →
     ∀ G : MvPolynomial (Fin N) ℤ, G.IsSymmetric →
-    ∀ (r : ℕ) (y y' : Fin r → K → ℤ) (f g : Fin r → MRing ι O),
+    ∀ (r : ℕ) (y y' : Fin r → K → ℤ) (f g : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       (∀ l, IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsVertDiv O (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.mcIdeal O x) (y l - y' l)
         (f l) (g l)) →
     ∀ (c : ℕ) (Q : MvPolynomial (Fin r) ℤ), c ≤ d + 1 → G.IsHomogeneous c →

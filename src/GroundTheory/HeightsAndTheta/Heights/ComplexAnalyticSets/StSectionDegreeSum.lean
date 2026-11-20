@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StatementsCurrent
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LineInhabitant
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -15,9 +16,9 @@ def SectionDegreeSum.Statement : Prop :=
     IsProjPrime I → IsChowForm I (e + 2) f → IsMultiHomog δ f → linForm u ∉ I →
       ∃ (g : Ideal (MvPolynomial (Fin n) F) → MvPolynomial (Fin (e + 1) × Fin n) F)
         (δW : Ideal (MvPolynomial (Fin n) F) → ℕ),
-        (∀ W ∈ (divCycle I u).support,
+        (∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support,
           IsProjPrime W ∧ IsChowForm W (e + 1) (g W) ∧ IsMultiHomog (δW W) (g W)) ∧
-        δ = ∑ W ∈ (divCycle I u).support, divCycle I u W * δW W
+        δ = ∑ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ) * δW W
 
 end
 

@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDegZeroLocQuot
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocResidue
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -22,15 +23,15 @@ local notation "fr" Q:max h:max =>
 
 omit [DecidableEq K] in
 
-theorem fr_ne_zero (Q : Ideal (MRing ι F)) [Q.IsPrime] {h : MRing ι F} (hh : h ∉ Q) :
+theorem fr_ne_zero (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [Q.IsPrime] {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hh : h ∉ Q) :
     fr Q h ≠ 0 := by
   rwa [Ne, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
 
-variable {P W : Ideal (MRing ι F)} [P.IsPrime] [W.IsPrime]
+variable {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [P.IsPrime] [W.IsPrime]
 
 omit [DecidableEq K] in
 
-theorem residue_eq (hPW : P ≤ W) {f g f' g' : MRing ι F} (hg : g ∉ W) (hg' : g' ∉ W)
+theorem residue_eq (hPW : P ≤ W) {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hg : g ∉ W) (hg' : g' ∉ W)
     (h : fr P f / fr P g = fr P f' / fr P g') : fr W f / fr W g = fr W f' / fr W g' := by
   rw [div_eq_div_iff (fr_ne_zero P fun h => hg (hPW h)) (fr_ne_zero P fun h => hg' (hPW h)),
     ← map_mul, ← map_mul, ← map_mul, ← map_mul] at h
@@ -40,28 +41,28 @@ theorem residue_eq (hPW : P ≤ W) {f g f' g' : MRing ι F} (hg : g ∉ W) (hg' 
 variable (P W) in
 open Classical in
 
-def res (x : FractionRing (MRing ι F ⧸ P)) : FractionRing (MRing ι F ⧸ W) :=
-  if h : ∃ fg : MRing ι F × MRing ι F, fg.2 ∉ W ∧ x = fr P fg.1 / fr P fg.2 then
+def res (x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) :=
+  if h : ∃ fg : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι × ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, fg.2 ∉ W ∧ x = fr P fg.1 / fr P fg.2 then
     fr W h.choose.1 / fr W h.choose.2 else 0
 
 omit [DecidableEq K] in
 
-theorem res_eq (hPW : P ≤ W) {x : FractionRing (MRing ι F ⧸ P)} {f g : MRing ι F} (hg : g ∉ W)
+theorem res_eq (hPW : P ≤ W) {x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hg : g ∉ W)
     (hx : x = fr P f / fr P g) : res P W x = fr W f / fr W g := by
-  have h : ∃ fg : MRing ι F × MRing ι F, fg.2 ∉ W ∧ x = fr P fg.1 / fr P fg.2 := ⟨(f, g), hg, hx⟩
+  have h : ∃ fg : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι × ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, fg.2 ∉ W ∧ x = fr P fg.1 / fr P fg.2 := ⟨(f, g), hg, hx⟩
   rw [res, dif_pos h]
   exact residue_eq hPW h.choose_spec.1 hg (h.choose_spec.2.symm.trans hx)
 
-theorem exists_rep (x : degZeroLoc P {W}) : ∃ (b : K → ℕ) (f g : MRing ι F), IsMultiHomog f b ∧
-    IsMultiHomog g b ∧ g ∉ W ∧ (x : FractionRing (MRing ι F ⧸ P)) = fr P f / fr P g := by
+theorem exists_rep (x : degZeroLoc P {W}) : ∃ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f b ∧
+    IsMultiHomog g b ∧ g ∉ W ∧ (x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) = fr P f / fr P g := by
   obtain ⟨b, f, g, hf, hg, -, hgW, hx⟩ := DegZeroLocQuot.proof F K ι P {W}
     (by rintro _ rfl; infer_instance) x x.2
   exact ⟨b, f, g, hf, hg, hgW W rfl, hx⟩
 
-def ρ (hPW : P ≤ W) : degZeroLoc P {W} →+* FractionRing (MRing ι F ⧸ W) where
+def ρ (hPW : P ≤ W) : degZeroLoc P {W} →+* FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) where
   toFun x := res P W x
   map_one' := by
-    have h1 : (1 : MRing ι F) ∉ W := (Ideal.ne_top_iff_one W).mp Ideal.IsPrime.ne_top'
+    have h1 : (1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ W := (Ideal.ne_top_iff_one W).mp Ideal.IsPrime.ne_top'
     rw [res_eq hPW (f := 1) (g := 1) h1 (by simp)]; simp
   map_mul' x y := by
     obtain ⟨-, f, g, -, -, hg, hx⟩ := exists_rep x
@@ -85,7 +86,7 @@ def ρ (hPW : P ≤ W) : degZeroLoc P {W} →+* FractionRing (MRing ι F ⧸ W) 
 
 theorem ρ_apply (hPW : P ≤ W) (x : degZeroLoc P {W}) : ρ hPW x = res P W x := rfl
 
-theorem inv_mem (hPW : P ≤ W) {b : K → ℕ} {f g : MRing ι F} (hf : IsMultiHomog f b)
+theorem inv_mem (hPW : P ≤ W) {b : K → ℕ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hf : IsMultiHomog f b)
     (hg : IsMultiHomog g b) (hfW : f ∉ W) : fr P g / fr P f ∈ degZeroLoc P {W} :=
   div_mem_degZeroLoc P {W} hg hf (fun h => hfW (hPW h)) (by rintro _ rfl; exact hfW)
 
@@ -105,7 +106,7 @@ theorem proof : DegZeroLocResidue.Statement := by
     rw [hx, div_mul_div_comm, mul_comm (fr P f), div_self (mul_ne_zero
       (fr_ne_zero P fun h => hgW (hPW h)) (fr_ne_zero P fun h => hfW (hPW h)))]
   · intro hz
-    let E : IntermediateField F (FractionRing (MRing ι F ⧸ W)) :=
+    let E : IntermediateField F (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W)) :=
       { carrier := Set.range (ρ hPW)
         mul_mem' := by rintro _ _ ⟨x, rfl⟩ ⟨y, rfl⟩; exact ⟨x * y, map_mul _ _ _⟩
         add_mem' := by rintro _ _ ⟨x, rfl⟩ ⟨y, rfl⟩; exact ⟨x + y, map_add _ _ _⟩
@@ -114,10 +115,10 @@ theorem proof : DegZeroLocResidue.Statement := by
         algebraMap_mem' := fun c => ⟨algebraMap F _ c, by
           rw [ρ_apply, res_eq hPW (f := C c) (g := 1) ((Ideal.ne_top_iff_one W).mp
             Ideal.IsPrime.ne_top') (by
-              show algebraMap F (FractionRing (MRing ι F ⧸ P)) c = _
-              rw [map_one, map_one, div_one, IsScalarTower.algebraMap_apply F (MRing ι F ⧸ P),
+              show algebraMap F (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) c = _
+              rw [map_one, map_one, div_one, IsScalarTower.algebraMap_apply F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P),
                 ← Ideal.Quotient.mk_algebraMap, MvPolynomial.algebraMap_eq])]
-          rw [map_one, map_one, div_one, IsScalarTower.algebraMap_apply F (MRing ι F ⧸ W),
+          rw [map_one, map_one, div_one, IsScalarTower.algebraMap_apply F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W),
             ← Ideal.Quotient.mk_algebraMap, MvPolynomial.algebraMap_eq]⟩
         inv_mem' := by
           rintro _ ⟨x, rfl⟩

@@ -1,11 +1,12 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SegreLiftVal
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization
 
 open MvPolynomial
-open GroundTheory.Heights₂.Heights.NumbersDVR (MRing blockWeight gradedPiece hilbFn)
+open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver gradedPiece blockWeight hilbFn)
 
 noncomputable section
 
@@ -46,11 +47,11 @@ section Flat
 
 variable (R : Type*) [CommRing R]
 
-def segreFlatVal : (Σ k, segreIdx ι k) → MRing ι R
+def segreFlatVal : (Σ k, segreIdx ι k) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι
   | ⟨Sum.inl _, c⟩ => ∏ k, X ⟨k, c k⟩
   | ⟨Sum.inr k, i⟩ => X ⟨k, i⟩
 
-def segreFlat : MRing (segreIdx ι) R →ₐ[R] MRing ι R :=
+def segreFlat : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι) →ₐ[R] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι :=
   aeval (segreFlatVal ι R)
 
 def segreTDeg : (Σ k, segreIdx ι k) → ℕ
@@ -70,13 +71,13 @@ theorem weight_segreTDeg (d : (Σ k, segreIdx ι k) →₀ ℕ) :
   simp only [Finsupp.weight_apply, Finsupp.sum, Finset.sum_apply, Pi.smul_apply, segreTDeg_eq]
 
 omit [DecidableEq K] in
-theorem segreLiftVal_eq_X_pow_mul_C (W : Ideal (MRing ι R)) (v : Σ k, segreIdx ι k) :
+theorem segreLiftVal_eq_X_pow_mul_C (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (v : Σ k, segreIdx ι k) :
     segreLiftVal ι R W v =
       Polynomial.X ^ segreTDeg ι v * Polynomial.C (Ideal.Quotient.mk W (segreFlatVal ι R v)) := by
   rcases v with ⟨_ | k, c⟩ <;> simp [segreLiftVal, segreTDeg, segreFlatVal]
 
 omit [DecidableEq K] in
-theorem segreLiftMap_monomial_eq_X_pow (W : Ideal (MRing ι R)) (d : (Σ k, segreIdx ι k) →₀ ℕ) (r : R) :
+theorem segreLiftMap_monomial_eq_X_pow (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (d : (Σ k, segreIdx ι k) →₀ ℕ) (r : R) :
     segreLiftMap ι R W (monomial d r) = Polynomial.X ^ Finsupp.weight (segreTDeg ι) d *
       Polynomial.C (Ideal.Quotient.mk W (segreFlat ι R (monomial d r))) := by
   simp only [segreLiftMap, segreFlat, aeval_monomial, segreLiftVal_eq_X_pow_mul_C, Finsupp.prod,
@@ -86,7 +87,7 @@ theorem segreLiftMap_monomial_eq_X_pow (W : Ideal (MRing ι R)) (d : (Σ k, segr
 
 omit [DecidableEq K] in
 
-theorem segreLiftMap_of_homog (W : Ideal (MRing ι R)) {f : MRing (segreIdx ι) R} {m₀ : ℕ}
+theorem segreLiftMap_of_homog (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι)} {m₀ : ℕ}
     (hf : IsWeightedHomogeneous (segreTDeg ι) f m₀) :
     segreLiftMap ι R W f =
       Polynomial.X ^ m₀ * Polynomial.C (Ideal.Quotient.mk W (segreFlat ι R f)) := by
@@ -99,12 +100,12 @@ theorem segreLiftMap_of_homog (W : Ideal (MRing ι R)) {f : MRing (segreIdx ι) 
 
 omit [Fintype K] in
 
-theorem isWeightedHomogeneous_segreTDeg {f : MRing (segreIdx ι) R} {M : Unit ⊕ K → ℕ}
+theorem isWeightedHomogeneous_segreTDeg {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι)} {M : Unit ⊕ K → ℕ}
     (hf : IsWeightedHomogeneous (blockWeight (segreIdx ι)) f M) :
     IsWeightedHomogeneous (segreTDeg ι) f (M (Sum.inl ())) := fun d hd => by
   rw [weight_segreTDeg, hf hd]
 
-theorem mem_segreLift_iff (W : Ideal (MRing ι R)) {f : MRing (segreIdx ι) R} {M : Unit ⊕ K → ℕ}
+theorem mem_segreLift_iff (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι)} {M : Unit ⊕ K → ℕ}
     (hf : IsWeightedHomogeneous (blockWeight (segreIdx ι)) f M) :
     f ∈ segreLift ι R W ↔ segreFlat ι R f ∈ W := by
   rw [segreLift, RingHom.mem_ker,
@@ -117,7 +118,7 @@ def segreDegMap : (Unit ⊕ K → ℕ) →+ (K → ℕ) where
   map_zero' := by funext k; simp
   map_add' M N := by funext k; simp only [Pi.add_apply]; ring
 
-theorem isWeightedHomogeneous_segreFlat {f : MRing (segreIdx ι) R} {M : Unit ⊕ K → ℕ}
+theorem isWeightedHomogeneous_segreFlat {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι)} {M : Unit ⊕ K → ℕ}
     (hf : IsWeightedHomogeneous (blockWeight (segreIdx ι)) f M) :
     IsWeightedHomogeneous (blockWeight ι) (segreFlat ι R f) (segreDegMap M) := by
   refine isWeightedHomogeneous_aeval_of_hom segreDegMap _ (fun v => ?_) hf
@@ -135,14 +136,14 @@ theorem isWeightedHomogeneous_segreFlat {f : MRing (segreIdx ι) R} {M : Unit �
 
 omit [DecidableEq K] in
 
-theorem segreFlat_segreIncl (p : MRing ι R) : segreFlat ι R (segreIncl ι R p) = p := by
+theorem segreFlat_segreIncl (p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : segreFlat ι R (segreIncl ι R p) = p := by
   have : (segreFlatVal ι R ∘ fun v : Σ k, ι k => (⟨Sum.inr v.1, v.2⟩ : Σ k, segreIdx ι k)) = X := by
     funext v; rfl
   rw [segreFlat, segreIncl, aeval_rename, this, aeval_X_left_apply]
 
 omit [Fintype K] in
 
-theorem isWeightedHomogeneous_segreIncl {p : MRing ι R} {m : K → ℕ}
+theorem isWeightedHomogeneous_segreIncl {p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {m : K → ℕ}
     (hp : IsWeightedHomogeneous (blockWeight ι) p m) :
     IsWeightedHomogeneous (blockWeight (segreIdx ι)) (segreIncl ι R p) (Sum.elim (fun _ => 0) m) := by
   let L : (K → ℕ) →+ (Unit ⊕ K → ℕ) :=
@@ -150,7 +151,7 @@ theorem isWeightedHomogeneous_segreIncl {p : MRing ι R} {m : K → ℕ}
       map_zero' := by funext j; rcases j with _ | k <;> rfl
       map_add' := fun a b => by funext j; rcases j with _ | k <;> simp }
   have key : ∀ v : Σ k, ι k, IsWeightedHomogeneous (blockWeight (segreIdx ι))
-      (X (⟨Sum.inr v.1, v.2⟩ : Σ k, segreIdx ι k) : MRing (segreIdx ι) R) (L (blockWeight ι v)) := by
+      (X (⟨Sum.inr v.1, v.2⟩ : Σ k, segreIdx ι k) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι)) (L (blockWeight ι v)) := by
     intro v
     have : L (blockWeight ι v) = blockWeight (segreIdx ι) ⟨Sum.inr v.1, v.2⟩ := by
       funext j
@@ -158,7 +159,7 @@ theorem isWeightedHomogeneous_segreIncl {p : MRing ι R} {m : K → ℕ}
     rw [this]
     exact isWeightedHomogeneous_X _ _ _
   have hI : segreIncl ι R p = aeval (fun v : Σ k, ι k =>
-      (X (⟨Sum.inr v.1, v.2⟩ : Σ k, segreIdx ι k) : MRing (segreIdx ι) R)) p := by
+      (X (⟨Sum.inr v.1, v.2⟩ : Σ k, segreIdx ι k) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι))) p := by
     rw [segreIncl, ← aeval_X_left_apply (rename _ p), aeval_rename]
     rfl
   rw [hI]
@@ -166,7 +167,7 @@ theorem isWeightedHomogeneous_segreIncl {p : MRing ι R} {m : K → ℕ}
 
 theorem exists_segreFlat_eq_monomial (m₀ : ℕ) : ∀ (m : K → ℕ) (e : (Σ k, ι k) →₀ ℕ),
     Finsupp.weight (blockWeight ι) e = m + (fun _ => m₀) →
-    ∃ g : MRing (segreIdx ι) R,
+    ∃ g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι),
       IsWeightedHomogeneous (blockWeight (segreIdx ι)) g (Sum.elim (fun _ => m₀) m) ∧
       segreFlat ι R g = monomial e 1 := by
   induction m₀ with
@@ -256,7 +257,7 @@ theorem map_segreFlat_homog (m₀ : ℕ) (m : K → ℕ) :
     refine ⟨AddMonoidAlgebra.coeff f e • g, Submodule.smul_mem _ _ hg, ?_⟩
     simp [hge, smul_monomial]
 
-theorem finrank_gradedPiece_segreLift (W : Ideal (MRing ι F)) (m₀ : ℕ) (m : K → ℕ) :
+theorem finrank_gradedPiece_segreLift (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m₀ : ℕ) (m : K → ℕ) :
     Module.finrank F (gradedPiece (segreLift ι F W) (Sum.elim (fun _ => m₀) m)) =
       Module.finrank F (gradedPiece W (m + fun _ => m₀)) := by
   set H := weightedHomogeneousSubmodule F (blockWeight (segreIdx ι)) (Sum.elim (fun _ => m₀) m)
@@ -278,7 +279,7 @@ theorem finrank_gradedPiece_segreLift (W : Ideal (MRing ι F)) (m₀ : ℕ) (m :
   exact ((L₁.quotKerEquivRange.symm.trans (Submodule.quotEquivOfEq _ _ hk)).trans
     L₂.quotKerEquivRange).finrank_eq
 
-theorem hilbFn_segreLift (W : Ideal (MRing ι F)) (M : Unit ⊕ K → ℤ) (hM : ∀ j, 0 ≤ M j) :
+theorem hilbFn_segreLift (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (M : Unit ⊕ K → ℤ) (hM : ∀ j, 0 ≤ M j) :
     hilbFn (segreLift ι F W) M = hilbFn W (fun k => M (Sum.inr k) + M (Sum.inl ())) := by
   have h1 : (fun j => (M j).toNat) =
       Sum.elim (fun _ => (M (Sum.inl ())).toNat) (fun k => (M (Sum.inr k)).toNat) := by

@@ -10,6 +10,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PHomLocRing
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMinimalPrimeMultiHomog
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSupSpanMultiHomog
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyDimensionInequality
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -33,40 +34,40 @@ theorem isAlgebraic_div {A L : Type*} [CommRing A] [Field L] [Algebra A L] (a b 
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {J : Type} {R : Type u} [CommRing R]
 
-def blowUpFrac (P : Ideal (MRing ι R)) (u : J → MRing ι R) :
-    MRing (extIdx ι J) R →+* FractionRing (MRing ι R ⧸ P) :=
-  (algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P))).comp (blowUpEval P u)
+def blowUpFrac (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) →+* FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) :=
+  (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P))).comp (blowUpEval P u)
 
-theorem blowUpFrac_apply (P : Ideal (MRing ι R)) (u : J → MRing ι R) (F : MRing (extIdx ι J) R) :
-    blowUpFrac P u F = algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (blowUpEval P u F) := rfl
+theorem blowUpFrac_apply (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) :
+    blowUpFrac P u F = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (blowUpEval P u F) := rfl
 
-theorem blowUpFrac_X_none (P : Ideal (MRing ι R)) (u : J → MRing ι R) (j : J) :
+theorem blowUpFrac_X_none (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (j : J) :
     blowUpFrac P u (X ⟨none, j⟩) =
-      algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (u j)) := by
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (u j)) := by
   rw [blowUpFrac_apply]
   congr 1
-  show Polynomial.eval 1 (aeval (blowUpSubst P u) (newVar j : MRing (extIdx ι J) R)) = _
+  show Polynomial.eval 1 (aeval (blowUpSubst P u) (newVar j : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))) = _
   rw [aeval_blowUpSubst_newVar]
   simp
 
-theorem blowUpFrac_X_some (P : Ideal (MRing ι R)) (u : J → MRing ι R) (k : K) (i : ι k) :
+theorem blowUpFrac_X_some (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (k : K) (i : ι k) :
     blowUpFrac P u (X ⟨some k, i⟩) =
-      algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (X ⟨k, i⟩)) := by
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (X ⟨k, i⟩)) := by
   rw [blowUpFrac_apply, ← blowUpEval_liftForm (J := J) P u, liftForm_X]
 
-theorem blowUpFrac_C (P : Ideal (MRing ι R)) (u : J → MRing ι R) (r : R) :
+theorem blowUpFrac_C (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (r : R) :
     blowUpFrac P u (C r) =
-      algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (C r)) := by
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (C r)) := by
   rw [blowUpFrac_apply, ← blowUpEval_liftForm (J := J) P u, liftForm_C]
 
-theorem blowUpLocRing_isLocal (P : Ideal (MRing ι R)) [P.IsPrime] (u : J → MRing ι R)
-    (Q : Ideal (MRing (extIdx ι J) R)) (hQ : Q.IsPrime) (hle : blowUpOf P u ≤ Q) :
+theorem blowUpLocRing_isLocal (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)
+    (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))) (hQ : Q.IsPrime) (hle : blowUpOf P u ≤ Q) :
     IsLocalRing (blowUpLocRing P u Q) ∧
-      ∀ (z : blowUpLocRing P u Q) (b : Option K → ℕ) (F G : MRing (extIdx ι J) R), IsMultiHomog F b →
+      ∀ (z : blowUpLocRing P u Q) (b : Option K → ℕ) (F G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)), IsMultiHomog F b →
         IsMultiHomog G b → G ∉ Q →
-        (z : FractionRing (MRing ι R ⧸ P)) =
-          algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (blowUpEval P u F) /
-            algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (blowUpEval P u G) →
+        (z : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) =
+          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (blowUpEval P u F) /
+            algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (blowUpEval P u G) →
         (IsUnit z ↔ F ∉ Q) := by
   have : (blowUpOf P u).IsPrime := RingHom.ker_isPrime _
   obtain ⟨φ, hφ⟩ := BlowUpLocRingIso.proof R K ι J P u Q hle
@@ -81,8 +82,8 @@ theorem blowUpLocRing_isLocal (P : Ideal (MRing ι R)) [P.IsPrime] (u : J → MR
   exact (MulEquiv.isUnit_map φ.toMulEquiv).trans (hunit b F G hF hG hGQ _)
 
 theorem isMultiHomog_prod_X_pow (e : ∀ o, extIdx ι J o) (b : Option K → ℕ) :
-    IsMultiHomog (∏ o, (X ⟨o, e o⟩ : MRing (extIdx ι J) R) ^ b o) b := by
-  have h := IsWeightedHomogeneous.prod Finset.univ (fun o => (X ⟨o, e o⟩ : MRing (extIdx ι J) R) ^ b o)
+    IsMultiHomog (∏ o, (X ⟨o, e o⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ^ b o) b := by
+  have h := IsWeightedHomogeneous.prod Finset.univ (fun o => (X ⟨o, e o⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ^ b o)
     (fun o => b o • blockWeight (extIdx ι J) ⟨o, e o⟩)
     (fun o _ => (isWeightedHomogeneous_X R (blockWeight (extIdx ι J)) ⟨o, e o⟩).pow (b o))
   have hb : (∑ o, b o • blockWeight (extIdx ι J) ⟨o, e o⟩) = b := by
@@ -91,22 +92,22 @@ theorem isMultiHomog_prod_X_pow (e : ∀ o, extIdx ι J o) (b : Option K → ℕ
   rw [hb] at h
   exact h
 
-theorem prod_X_pow_not_mem {Q : Ideal (MRing (extIdx ι J) R)} (hQ : Q.IsPrime)
-    {e : ∀ o, extIdx ι J o} (he : ∀ o, (X ⟨o, e o⟩ : MRing (extIdx ι J) R) ∉ Q) (b : Option K → ℕ) :
-    (∏ o, (X ⟨o, e o⟩ : MRing (extIdx ι J) R) ^ b o) ∉ Q := by
+theorem prod_X_pow_not_mem {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))} (hQ : Q.IsPrime)
+    {e : ∀ o, extIdx ι J o} (he : ∀ o, (X ⟨o, e o⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ∉ Q) (b : Option K → ℕ) :
+    (∏ o, (X ⟨o, e o⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ^ b o) ∉ Q := by
   haveI := hQ
   exact fun h => (Q.primeCompl.prod_mem fun o _ => Q.primeCompl.pow_mem (he o) _) h
 
-def chartCoord (P : Ideal (MRing ι R)) [P.IsPrime] (u : J → MRing ι R) (e : ∀ o, extIdx ι J o) :
-    (Σ o, extIdx ι J o) → FractionRing (MRing ι R ⧸ P) :=
+def chartCoord (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (e : ∀ o, extIdx ι J o) :
+    (Σ o, extIdx ι J o) → FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) :=
   fun v => blowUpFrac P u (X v) * (blowUpFrac P u (X ⟨v.1, e v.1⟩))⁻¹
 
-def chartVal (P : Ideal (MRing ι R)) [P.IsPrime] (u : J → MRing ι R) (e : ∀ o, extIdx ι J o) (F : MRing (extIdx ι J) R) :
-    FractionRing (MRing ι R ⧸ P) :=
+def chartVal (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (e : ∀ o, extIdx ι J o) (F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) :
+    FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) :=
   eval₂ ((blowUpFrac P u).comp C) (chartCoord P u e) F
 
-theorem chartVal_of_homog (P : Ideal (MRing ι R)) [P.IsPrime] (u : J → MRing ι R) (e : ∀ o, extIdx ι J o)
-    {F : MRing (extIdx ι J) R} {b : Option K → ℕ} (hF : IsMultiHomog F b) :
+theorem chartVal_of_homog (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (e : ∀ o, extIdx ι J o)
+    {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)} {b : Option K → ℕ} (hF : IsMultiHomog F b) :
     chartVal P u e F = blowUpFrac P u F / blowUpFrac P u (∏ o, X ⟨o, e o⟩ ^ b o) := by
   have hφ : blowUpFrac P u = eval₂Hom ((blowUpFrac P u).comp C) (fun v => blowUpFrac P u (X v)) :=
     ringHom_ext (fun r => by simp) (fun v => by simp)
@@ -122,11 +123,11 @@ variable [∀ k, Fintype (ι k)] [Fintype J]
 
 set_option maxHeartbeats 1000000 in
 
-theorem eq_of_le_of_mem_fibre (P W : Ideal (MRing ι R)) [P.IsPrime]
+theorem eq_of_le_of_mem_fibre (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime]
     (hN : IsNoetherianRing (homLocRing P W)) (hD : ringKrullDim (homLocRing P W) = 1)
-    (hWp : W.IsPrime) (hPW : P ≤ W) (hWrel : IsRelevant W) (N : K → ℕ) (u : J → MRing ι R)
-    (hu : ∀ j, IsMultiHomog (u j) N) (c : K → ℕ) (x : MRing ι R) (hx : IsMultiHomog x c) (hxP : x ∉ P)
-    (hxW : x ∈ W) {Q₀ Q : Ideal (MRing (extIdx ι J) R)}
+    (hWp : W.IsPrime) (hPW : P ≤ W) (hWrel : IsRelevant W) (N : K → ℕ) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)
+    (hu : ∀ j, IsMultiHomog (u j) N) (c : K → ℕ) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (hx : IsMultiHomog x c) (hxP : x ∉ P)
+    (hxW : x ∈ W) {Q₀ Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))}
     (hQ₀ : Q₀.IsPrime ∧ IsMultiHomogIdeal Q₀ ∧ IsRelevant Q₀ ∧ blowUpOf P u ≤ Q₀ ∧
       Q₀.comap (liftForm (ι := ι) (J := J) (R := R)) = W)
     (hQ : Q.IsPrime ∧ IsMultiHomogIdeal Q ∧ IsRelevant Q ∧ blowUpOf P u ≤ Q ∧
@@ -137,23 +138,23 @@ theorem eq_of_le_of_mem_fibre (P W : Ideal (MRing ι R)) [P.IsPrime]
   haveI := hN
   by_contra hne
   choose e he using hQr
-  have hL : ∀ f : MRing ι R, f ∉ P →
-      algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P f) ≠ 0 :=
+  have hL : ∀ f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι, f ∉ P →
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P f) ≠ 0 :=
     fun f hf => HomLocRingMem.algebraMap_mk_ne_zero P hf
 
-  have hφne : ∀ {F : MRing (extIdx ι J) R} {b : Option K → ℕ}, IsMultiHomog F b → F ∉ blowUpOf P u →
+  have hφne : ∀ {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)} {b : Option K → ℕ}, IsMultiHomog F b → F ∉ blowUpOf P u →
       blowUpFrac P u F ≠ 0 := by
     intro F b hF hFn h0
     apply hFn
     rw [blowUpFrac_apply, map_eq_zero_iff _ (IsFractionRing.injective _ _)] at h0
     rw [blowUpOf, RingHom.mem_ker, aeval_blowUpSubst_of_isMultiHomog P u hF, h0, map_zero, zero_mul]
-  have hG : ∀ b : Option K → ℕ, IsMultiHomog (∏ o, (X ⟨o, e o⟩ : MRing (extIdx ι J) R) ^ b o) b :=
+  have hG : ∀ b : Option K → ℕ, IsMultiHomog (∏ o, (X ⟨o, e o⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ^ b o) b :=
     fun b => isMultiHomog_prod_X_pow e b
-  have hGQ : ∀ b : Option K → ℕ, (∏ o, (X ⟨o, e o⟩ : MRing (extIdx ι J) R) ^ b o) ∉ Q := prod_X_pow_not_mem hQp he
+  have hGQ : ∀ b : Option K → ℕ, (∏ o, (X ⟨o, e o⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ^ b o) ∉ Q := prod_X_pow_not_mem hQp he
   have hφe : ∀ o, blowUpFrac P u (X ⟨o, e o⟩) ≠ 0 := fun o =>
     hφne (isWeightedHomogeneous_X R (blockWeight (extIdx ι J)) ⟨o, e o⟩) fun h => he o (hQle h)
 
-  let B : Subalgebra (homLocRing P W) (FractionRing (MRing ι R ⧸ P)) :=
+  let B : Subalgebra (homLocRing P W) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) :=
     Algebra.adjoin (homLocRing P W) (Set.range (chartCoord P u e))
   have hCA : ∀ r : R, blowUpFrac P u (C r) ∈ homLocRing P W := by
     intro r
@@ -173,10 +174,10 @@ theorem eq_of_le_of_mem_fibre (P W : Ideal (MRing ι R)) [P.IsPrime]
       rw [eval₂_mul, eval₂_X]
       exact mul_mem hp (Algebra.subset_adjoin ⟨v, rfl⟩)
 
-  have hτD : ∀ {Q' : Ideal (MRing (extIdx ι J) R)}, Q' ≤ Q → ∀ {F : MRing (extIdx ι J) R} {b : Option K → ℕ},
+  have hτD : ∀ {Q' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))}, Q' ≤ Q → ∀ {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)} {b : Option K → ℕ},
       IsMultiHomog F b → chartVal P u e F ∈ blowUpLocRing P u Q' := fun hQ' F b hF =>
     Subring.subset_closure ⟨b, F, _, hF, hG b, fun h => hGQ b (hQ' h), chartVal_of_homog P u e hF⟩
-  have hBD : ∀ {Q' : Ideal (MRing (extIdx ι J) R)}, Q'.IsPrime → IsMultiHomogIdeal Q' → IsRelevant Q' →
+  have hBD : ∀ {Q' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))}, Q'.IsPrime → IsMultiHomogIdeal Q' → IsRelevant Q' →
       blowUpOf P u ≤ Q' → Q'.comap (liftForm (ι := ι) (J := J) (R := R)) ≤ W → Q' ≤ Q →
       ∀ z ∈ B, z ∈ blowUpLocRing P u Q' := by
     intro Q' h1 h2 h3 h4 h5 h6 z hz
@@ -197,19 +198,19 @@ theorem eq_of_le_of_mem_fibre (P W : Ideal (MRing ι R)) [P.IsPrime]
   obtain ⟨hloc, hunit⟩ := blowUpLocRing_isLocal P u Q hQp hQle
   obtain ⟨hloc₀, hunit₀⟩ := blowUpLocRing_isLocal P u Q₀ hQ₀p hQ₀le
   let f : B →+* blowUpLocRing P u Q :=
-    ((B.val : B →ₐ[homLocRing P W] FractionRing (MRing ι R ⧸ P)) : B →+* _).codRestrict _ fun z => hBQ z z.2
+    ((B.val : B →ₐ[homLocRing P W] FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) : B →+* _).codRestrict _ fun z => hBQ z z.2
   let f₀ : B →+* blowUpLocRing P u Q₀ :=
-    ((B.val : B →ₐ[homLocRing P W] FractionRing (MRing ι R ⧸ P)) : B →+* _).codRestrict _ fun z => hBQ₀ z z.2
+    ((B.val : B →ₐ[homLocRing P W] FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) : B →+* _).codRestrict _ fun z => hBQ₀ z z.2
   let 𝔮 : Ideal B := (IsLocalRing.maximalIdeal _).comap f
   let 𝔮₀ : Ideal B := (IsLocalRing.maximalIdeal _).comap f₀
   have hmem : ∀ z, z ∈ 𝔮 ↔ ¬ IsUnit (f z) := fun z => by
     rw [Ideal.mem_comap, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
   have hmem₀ : ∀ z, z ∈ 𝔮₀ ↔ ¬ IsUnit (f₀ z) := fun z => by
     rw [Ideal.mem_comap, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
-  have hform : ∀ {F : MRing (extIdx ι J) R} {b : Option K → ℕ} (hF : IsMultiHomog F b),
+  have hform : ∀ {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)} {b : Option K → ℕ} (hF : IsMultiHomog F b),
       ((⟨_, hτB F⟩ : B) ∈ 𝔮 ↔ F ∈ Q) := fun {F} {b} hF => by
     rw [hmem, hunit _ b F _ hF (hG b) (hGQ b) (chartVal_of_homog P u e hF), not_not]
-  have hform₀ : ∀ {F : MRing (extIdx ι J) R} {b : Option K → ℕ} (hF : IsMultiHomog F b),
+  have hform₀ : ∀ {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)} {b : Option K → ℕ} (hF : IsMultiHomog F b),
       ((⟨_, hτB F⟩ : B) ∈ 𝔮₀ ↔ F ∈ Q₀) := fun {F} {b} hF => by
     rw [hmem₀, hunit₀ _ b F _ hF (hG b) (fun h => hGQ b (hle h)) (chartVal_of_homog P u e hF), not_not]
   have hDD : blowUpLocRing P u Q ≤ blowUpLocRing P u Q₀ :=
@@ -228,7 +229,7 @@ theorem eq_of_le_of_mem_fibre (P W : Ideal (MRing ι R)) [P.IsPrime]
     refine bot_lt_iff_ne_bot.mpr fun hb => ?_
     rw [hb, Ideal.mem_bot] at hx₀
     have h := congrArg Subtype.val hx₀
-    rw [show ((⟨_, hτB (liftForm x)⟩ : B) : FractionRing (MRing ι R ⧸ P)) = chartVal P u e (liftForm x) from rfl,
+    rw [show ((⟨_, hτB (liftForm x)⟩ : B) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) = chartVal P u e (liftForm x) from rfl,
       chartVal_of_homog P u e (isMultiHomog_liftForm hx), blowUpFrac_apply, blowUpEval_liftForm] at h
     exact div_ne_zero (hL x hxP) (hφne (hG _) fun h' => hGQ _ (hQle h')) h
 
@@ -261,17 +262,17 @@ theorem eq_of_le_of_mem_fibre (P W : Ideal (MRing ι R)) [P.IsPrime]
     | none =>
       obtain ⟨i₀, hi₀⟩ := powMonomial_not_mem hWp hWrel N
       have hmP : powMonomial N i₀ ∉ P := fun h => hi₀ (hPW h)
-      have ha : ∀ k : J, algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (u k)) /
-          algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (powMonomial N i₀)) ∈
+      have ha : ∀ k : J, algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (u k)) /
+          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (powMonomial N i₀)) ∈
             homLocRing P W := fun k =>
         Subring.subset_closure ⟨N, u k, powMonomial N i₀, hu k, isMultiHomog_powMonomial N i₀, hi₀, rfl⟩
-      have hj : algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (u (e none))) ≠ 0 :=
+      have hj : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (u (e none))) ≠ 0 :=
         fun h => hφe none (by rw [← h]; exact blowUpFrac_X_none P u (e none))
       have key : chartCoord P u e ⟨none, i⟩ =
-          (algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (u i)) /
-            algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (powMonomial N i₀))) /
-          (algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (u (e none))) /
-            algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (powMonomial N i₀))) := by
+          (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (u i)) /
+            algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (powMonomial N i₀))) /
+          (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (u (e none))) /
+            algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (powMonomial N i₀))) := by
         show blowUpFrac P u (X ⟨none, i⟩) * (blowUpFrac P u (X ⟨none, e none⟩))⁻¹ = _ / _
         rw [show blowUpFrac P u (X ⟨none, i⟩) = _ from blowUpFrac_X_none P u i,
           show blowUpFrac P u (X ⟨none, e none⟩) = _ from blowUpFrac_X_none P u (e none),
@@ -279,7 +280,7 @@ theorem eq_of_le_of_mem_fibre (P W : Ideal (MRing ι R)) [P.IsPrime]
       rw [key]
       exact isAlgebraic_div (⟨_, ha i⟩ : homLocRing P W) ⟨_, ha (e none)⟩ (div_ne_zero hj (hL _ hmP))
     | some k =>
-      have hnot : (X ⟨k, e (some k)⟩ : MRing ι R) ∉ W := fun h => he (some k) (by
+      have hnot : (X ⟨k, e (some k)⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∉ W := fun h => he (some k) (by
         rw [← hQW, Ideal.mem_comap, liftForm_X] at h
         exact h)
       have hmemA : chartCoord P u e ⟨some k, i⟩ ∈ homLocRing P W := by
@@ -292,7 +293,7 @@ theorem eq_of_le_of_mem_fibre (P W : Ideal (MRing ι R)) [P.IsPrime]
           div_eq_mul_inv]
       exact isAlgebraic_algebraMap (⟨_, hmemA⟩ : homLocRing P W)
   have hinj : Function.Injective (algebraMap (homLocRing P W) B) := fun a a' h => by
-    have h' := congrArg (fun z : B => (z : FractionRing (MRing ι R ⧸ P))) h
+    have h' := congrArg (fun z : B => (z : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P))) h
     exact Subtype.ext h'
   have hdi := DimensionInequality.full (homLocRing P W) B hinj 𝔮
   rw [trdeg_eq_zero (R := homLocRing P W) (A := B), add_zero] at hdi

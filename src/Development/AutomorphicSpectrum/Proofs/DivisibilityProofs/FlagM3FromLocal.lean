@@ -6,6 +6,7 @@ import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CycNumIntAndCom
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CycleNumberLinearStatement
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.DivisorCycleSubstitutionStatement
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CycleNumberRenameStatement
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num GlobalTheory.CompanionTheory.Ar.Top GroundTheory.Heights₂.Heights.ModelLeaves
 open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar IsHorizontal mcPts mCoordIdeal IsIntersectionFamily IsIntersectionSystem IntersectionSystem ptsIntegral geoNum charOf recR arInt ChartBundle chartRing)
 
@@ -16,26 +17,26 @@ noncomputable section
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem divCycle_support_finite (P : Ideal (MRing ι O)) (f : MRing ι O) :
-    (Function.support (divCycle P f)).Finite := by
+theorem divCycle_support_finite (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :
+    (Function.support ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ)))).Finite := by
   refine (Ideal.finite_minimalPrimes_of_isNoetherianRing _ (P ⊔ Ideal.span {f})).subset ?_
   intro W hW
   by_contra h
   apply hW
   simp [divCycle, h]
 
-theorem C_not_mem {P : Ideal (MRing ι O)} {d : ℕ} (hP : IsModelOver P d) {a : O} (ha : a ≠ 0) :
-    (C a : MRing ι O) ∉ P := by
+theorem C_not_mem {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {d : ℕ} (hP : IsModelOver P d) {a : O} (ha : a ≠ 0) :
+    (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
   intro h
-  have h' : a ∈ P.comap (C : O →+* MRing ι O) := h
+  have h' : a ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
   rw [hP.noTorsion] at h'
   exact ha (by simpa using h')
 
-theorem laNum_eq (P : Ideal (MRing ι O)) (a : O) {r : ℕ} (x : Fin r → K → ℤ) (k : ℕ)
+theorem laNum_eq (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (a : O) {r : ℕ} (x : Fin r → K → ℤ) (k : ℕ)
     (Q : List (K → ℤ)) :
     ((laNum P a x k Q : ℤ) : ℝ) =
-      (k : ℝ) * cycNum (divCycle P (C a)) x (∑ i : Fin r, (X i : MvPolynomial (Fin r) ℝ) ^ (k - 1)) Q := by
-  have h := (cycNum_int_and_comb O K ι (Fin r) x Q).1 (divCycle P (C a))
+      (k : ℝ) * cycNum ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a)) W : ℤ))) x (∑ i : Fin r, (X i : MvPolynomial (Fin r) ℝ) ^ (k - 1)) Q := by
+  have h := (cycNum_int_and_comb O K ι (Fin r) x Q).1 ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a)) W : ℤ)))
     (divCycle_support_finite P (C a)) (psum (Fin r) ℤ (k - 1))
   have e : MvPolynomial.map (Int.castRingHom ℝ) (psum (Fin r) ℤ (k - 1)) =
       ∑ i : Fin r, (X i : MvPolynomial (Fin r) ℝ) ^ (k - 1) := by
@@ -65,12 +66,12 @@ theorem liePs_inr (j j' m : ℕ) (τ : Ψ) :
   have h0 : ∀ x : Fin j, ¬ j ≤ (x : ℕ) := fun x => not_le.2 x.2
   simp [h0]
 
-theorem cycNum_neg {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (MRing ι O)} {d : ℕ} (hP : IsModelOver P d)
+theorem cycNum_neg {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {d : ℕ} (hP : IsModelOver P d)
     {a : O} (ha : a ≠ 0) {r : ℕ} (cls : Fin r → K → ℤ) (m : ℕ) (Q : List (K → ℤ))
     (hQ : m + Q.length = d) :
-    cycNum (divCycle P (C a)) (fun i => -cls i) (∑ i : Fin r, (X i : MvPolynomial (Fin r) ℝ) ^ m) Q =
-      cycNum (divCycle P (C a)) cls (∑ i : Fin r, (-(X i : MvPolynomial (Fin r) ℝ)) ^ m) Q := by
-  have hC : IsMultiHomog (C a : MRing ι O) (0 : K → ℕ) := isWeightedHomogeneous_C _ a
+    cycNum ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a)) W : ℤ))) (fun i => -cls i) (∑ i : Fin r, (X i : MvPolynomial (Fin r) ℝ) ^ m) Q =
+      cycNum ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a)) W : ℤ))) cls (∑ i : Fin r, (-(X i : MvPolynomial (Fin r) ℝ)) ^ m) Q := by
+  have hC : IsMultiHomog (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (0 : K → ℕ) := isWeightedHomogeneous_C _ a
   have hH : (∑ i : Fin r, (X i : MvPolynomial (Fin r) ℝ) ^ m).IsHomogeneous m :=
     IsHomogeneous.sum _ _ _ fun i _ => by
       simpa using (isHomogeneous_X ℝ i).pow m
@@ -95,9 +96,9 @@ namespace GlobalTheory.CompanionTheory.Ar.Num
 
 open GlobalTheory.CompanionTheory.Ar.Num.FlagLocalM3 in
 
-theorem flag_m3_of_local_m3 : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P d → ∀ (p : ℕ), (p : O) ≠ 0 → ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (j j' : ℕ) (φ : Equiv.Perm (Ψ ⊕ Ψ)) (T : LocPair ι O (Ψ × Fin (j + j'))) (lie : ∀ σ, LocPair ι O (Fin ((Sum.elim (fun _ : Ψ => j) (fun _ : Ψ => j')) σ))) (om : ∀ σ, LocPair ι O (Fin ((Sum.elim (fun _ : Ψ => j') (fun _ : Ψ => j)) σ))), (∀ τ, lie (Sum.inl τ) = T.comp fun i : Fin j => (τ, Fin.castAdd j' i)) → (∀ τ, om (Sum.inl τ) = T.comp fun i : Fin j' => (τ, Fin.natAdd j i)) → (∀ τ k Q, Q.length + k = d + 1 → laNum P (p : O) (lie (Sum.inr τ)).x k Q = laNum P (p : O) (fun i : Fin j' => -T.x (τ, Fin.natAdd j i)) k Q) → LabelChernComparison P d p φ lie om → FlagChernComparison P d p j φ T := by
+theorem flag_m3_of_local_m3 : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P d → ∀ (p : ℕ), (p : O) ≠ 0 → ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (j j' : ℕ) (φ : Equiv.Perm (Ψ ⊕ Ψ)) (T : LocPair ι O (Ψ × Fin (j + j'))) (lie : ∀ σ, LocPair ι O (Fin ((Sum.elim (fun _ : Ψ => j) (fun _ : Ψ => j')) σ))) (om : ∀ σ, LocPair ι O (Fin ((Sum.elim (fun _ : Ψ => j') (fun _ : Ψ => j)) σ))), (∀ τ, lie (Sum.inl τ) = T.comp fun i : Fin j => (τ, Fin.castAdd j' i)) → (∀ τ, om (Sum.inl τ) = T.comp fun i : Fin j' => (τ, Fin.natAdd j i)) → (∀ τ k Q, Q.length + k = d + 1 → laNum P (p : O) (lie (Sum.inr τ)).x k Q = laNum P (p : O) (fun i : Fin j' => -T.x (τ, Fin.natAdd j i)) k Q) → LabelChernComparison P d p φ lie om → FlagChernComparison P d p j φ T := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP p hp Ψ _ _ j j' φ T lie om hl ho hr hM τ k hk Q hQ
-  set Z := divCycle P (C (p : O)) with hZ
+  set Z := ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (p : O))) with : ℤ) hZ
   have hm : k - 1 + Q.length = d := by omega
 
   have hlab : ∀ τ' : Ψ ⊕ Ψ, ((laNum P (p : O) (lie τ').x k Q : ℤ) : ℝ) =

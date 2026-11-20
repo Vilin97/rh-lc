@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsIncidence
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PChowFormExtend
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PRadicalBaseChange
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PChowFormBaseChange
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -13,7 +14,7 @@ namespace GroundTheory.Heights₂.Heights
 namespace ObjectsChow
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk)
 
 theorem squarefree_of_isChowForm {F : Type*} [Field F] {n k : ℕ} {I : Ideal (MvPolynomial (Fin n) F)}
     {f : MvPolynomial (Fin k × Fin n) F} (hf : IsChowForm I k f) : Squarefree f := by

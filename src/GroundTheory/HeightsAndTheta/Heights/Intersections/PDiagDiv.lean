@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsDiagDiv
 import GroundTheory.HeightsAndTheta.Heights.Intersections.PRFormula
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleMul
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -15,20 +16,20 @@ namespace DiagonalDivisor
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem divCycle_of_mem {P W : Ideal (MRing ι)} {s : MRing ι} (hW : W ∈ divSupp P s) :
-    divCycle P s W = multAt (P ⊔ Ideal.span {s}) W := by
-  unfold divCycle
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = multAt (P ⊔ Ideal.span {s}) W := by
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   simp [Finsupp.ofSupportFinite_coe, hW]
 
 theorem divCycle_of_not_mem {P W : Ideal (MRing ι)} {s : MRing ι} (hW : W ∉ divSupp P s) :
-    divCycle P s W = 0 := by
-  unfold divCycle
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0 := by
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   simp [Finsupp.ofSupportFinite_coe, hW]
 
 open Classical in
 
 theorem divCycle_eq_ite {P : Ideal (MRing ι)} [P.IsPrime] {s u : MRing ι} (hu : u ∉ P)
     (W : Ideal (MRing ι)) :
-    divCycle P s W = if W ∈ divSupp P (s * u) then multAt (P ⊔ Ideal.span {s}) W else 0 := by
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = if W ∈ divSupp P (s * u) then multAt (P ⊔ Ideal.span {s}) W else 0 := by
   by_cases hW : W ∈ divSupp P (s * u)
   · rw [if_pos hW]
     by_cases hWs : W ∈ divSupp P s

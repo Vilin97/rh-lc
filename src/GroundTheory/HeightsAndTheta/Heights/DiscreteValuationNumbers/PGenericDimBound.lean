@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsMaxHeight
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -16,8 +17,8 @@ theorem GenericDimBound.proof (hmax : MaximalIdealHeightFG.Statement.{u}) :
   intro O _ _ _ K _ _ ι _ P hP hT
   classical
   let KO := FractionRing O
-  let S := MRing ι O
-  let MainNotions := MRing ι KO
+  let S := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι
+  let MainNotions := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver KO ι
   let φ : S →+* MainNotions := algebraMap S MainNotions
   let M : Submonoid S := (nonZeroDivisors O).map (C : O →+* S)
   have : IsLocalization M MainNotions := MvPolynomial.isLocalization (nonZeroDivisors O) KO

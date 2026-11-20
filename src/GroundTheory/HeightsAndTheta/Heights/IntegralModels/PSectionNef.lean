@@ -5,6 +5,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PColonMulti
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSupSpanMultiHomog
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PGradedFinite
 import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Model
@@ -18,10 +19,10 @@ section
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {F : Type} [Field F]
 
-theorem exists_forms_mem_of_not_le_relevant {J : Ideal (MRing ι F)} (hJ : IsMultiHomogIdeal J)
-    (hrel : ∀ W : Ideal (MRing ι F), W.IsPrime → IsMultiHomogIdeal W → IsRelevant W → ¬ J ≤ W) :
+theorem exists_forms_mem_of_not_le_relevant {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hJ : IsMultiHomogIdeal J)
+    (hrel : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), W.IsPrime → IsMultiHomogIdeal W → IsRelevant W → ¬ J ≤ W) :
     ∃ n : ℕ, ∀ m : K → ℕ, (∀ k, n * Fintype.card (ι k) < m k) →
-      ∀ x : MRing ι F, IsMultiHomog x m → x ∈ J := by
+      ∀ x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog x m → x ∈ J := by
   classical
 
   let e : (∀ k, ι k) → (Σ k, ι k) →₀ ℕ := fun σ =>
@@ -33,7 +34,7 @@ theorem exists_forms_mem_of_not_le_relevant {J : Ideal (MRing ι F)} (hJ : IsMul
     intro W hW
     have hWp : Ideal.IsPrime W := hW.1.1
     have hWh : IsMultiHomogIdeal W := MinimalPrimeMultiHomog.proof F K ι J W hJ hW
-    obtain ⟨k, hk⟩ : ∃ k, ∀ i : ι k, (X ⟨k, i⟩ : MRing ι F) ∈ W := by
+    obtain ⟨k, hk⟩ : ∃ k, ∀ i : ι k, (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∈ W := by
       by_contra h
       push Not at h
       exact hrel W hWp hWh h hW.1.2
@@ -76,20 +77,20 @@ theorem exists_forms_mem_of_not_le_relevant {J : Ideal (MRing ι F)} (hJ : IsMul
     simpa using hσ k
   · simp
 
-theorem hilbFn_sub_le_of_regular {P : Ideal (MRing ι F)} (hP : IsMultiProjPrime P) {b : K → ℤ}
-    {f g : MRing ι F} (hs : IsRegularSection P b f g) :
+theorem hilbFn_sub_le_of_regular {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hP : IsMultiProjPrime P) {b : K → ℤ}
+    {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hs : IsRegularSection P b f g) :
     ∀ᶠ m in Filter.atTop, hilbFn P (m - b) ≤ hilbFn P m := by
   classical
   have := hP.isPrime
   obtain ⟨bf, bg, hf, hg, hb⟩ := hs.degrees
-  set J : Ideal (MRing ι F) := (P ⊔ Ideal.span {g}).colon {f} with hJdef
+  set J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) := (P ⊔ Ideal.span {g}).colon {f} with hJdef
   have hJh : IsMultiHomogIdeal J :=
     ColonMultiHomog.proof F K ι _ f bf
       (SupSpanMultiHomog.proof F K ι P g bg hP.multiHomog hg) hf
   have hPJ : P ≤ J := fun p hp => by
     rw [hJdef, Submodule.mem_colon_singleton, smul_eq_mul]
     exact Ideal.mem_sup_left (P.mul_mem_right f hp)
-  have hrel : ∀ W : Ideal (MRing ι F), W.IsPrime → IsMultiHomogIdeal W → IsRelevant W →
+  have hrel : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), W.IsPrime → IsMultiHomogIdeal W → IsRelevant W →
       ¬ J ≤ W := by
     intro W hWp hWh hWr hJW
     obtain ⟨u, v, hu, huv⟩ := hs.regular W ⟨hWp, hWh, hWr⟩ (hPJ.trans hJW)
@@ -128,7 +129,7 @@ theorem hilbFn_sub_le_of_regular {P : Ideal (MRing ι F)} (hP : IsMultiProjPrime
     unfold hilbFn; rw [if_pos hmb0]
   rw [e1, e2, Nat.cast_le]
 
-  let φ : MRing ι F → (MRing ι F ⧸ P) →ₗ[F] (MRing ι F ⧸ P) := fun a =>
+  let φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι → (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) →ₗ[F] (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) := fun a =>
     LinearMap.mulLeft F (Ideal.Quotient.mk P a)
   have hinj : ∀ a, a ∉ P → Function.Injective (φ a) := by
     intro a ha

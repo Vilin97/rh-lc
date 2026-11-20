@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -8,7 +9,7 @@ open MvPolynomial
 
 theorem SpecialIdealSurj.proof : SpecialIdealSurj.Statement := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ V hV
-  let π : MRing ι O →+* MRing ι (IsLocalRing.ResidueField O) :=
+  let π : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* MRing ι (IsLocalRing.ResidueField O) :=
     MvPolynomial.map (IsLocalRing.residue O)
   have hπ : Function.Surjective π :=
     MvPolynomial.map_surjective _ (IsLocalRing.residue_surjective)

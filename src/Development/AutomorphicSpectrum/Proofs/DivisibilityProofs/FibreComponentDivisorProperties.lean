@@ -1,6 +1,7 @@
 import Mathlib
 import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.BundleChernComparison
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagIndependence
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num
 
@@ -122,30 +123,30 @@ theorem length_toNat_ne_zero {S : Type} [CommRing S] [IsNoetherianRing S] {J W :
     exact ne_top_of_le_ne_top hlenQ (Module.length_le_of_surjective _ hsurj)
 
 theorem facts_of_divCycle_ne_zero {K : Type} {ι : K → Type} {R : Type} [CommRing R]
-    {P W : Ideal (MRing ι R)} {f : MRing ι R} (h : divCycle P f W ≠ 0) :
+    {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0) :
     W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W := by
   by_contra hc
   apply h
-  unfold divCycle
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   rw [dif_neg hc]
 
-theorem fibre_comp : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P d → (∀ W, IsFibreComp P W ↔ divCycle P (C ϖ) W ≠ 0) ∧ (∀ (a : K → ℕ) (f : MRing ι O), IsMultiHomog f a → f ∉ P → ∀ W, divCycle P f W ≠ 0 → (C ϖ : MRing ι O) ∈ W → IsFibreComp P W) ∧ ∀ (b : K → ℤ) (f g : MRing ι O), IsVerticalDivisor P ϖ b f g → ∀ W, ratDiv P f g W ≠ 0 → IsFibreComp P W := by
+theorem fibre_comp : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P d → (∀ W, IsFibreComp P W ↔ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ) ≠ 0) ∧ (∀ (a : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog f a → f ∉ P → ∀ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W → IsFibreComp P W) ∧ ∀ (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsVerticalDivisor P ϖ b f g → ∀ W, ratDiv P f g W ≠ 0 → IsFibreComp P W := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP
   classical
-  haveI : IsNoetherianRing (MRing ι O) :=
+  haveI : IsNoetherianRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :=
     (inferInstance : IsNoetherianRing (MvPolynomial ((k : K) × ι k) O))
   obtain ⟨⟨hPprime, -, -⟩, hnt, -⟩ := hP
   haveI := hPprime
-  have hmax : Ideal.map (C : O →+* MRing ι O) (IsLocalRing.maximalIdeal O) =
-      Ideal.span {(C ϖ : MRing ι O)} := by
+  have hmax : Ideal.map (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (IsLocalRing.maximalIdeal O) =
+      Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} := by
     rw [(IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).mp hϖ, Ideal.map_span,
       Set.image_singleton]
-  have hϖP : (C ϖ : MRing ι O) ∉ P := by
+  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
     intro h
-    have h2 : ϖ ∈ Ideal.comap (C : O →+* MRing ι O) P := Ideal.mem_comap.mpr h
+    have h2 : ϖ ∈ Ideal.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P := Ideal.mem_comap.mpr h
     rw [hnt] at h2
     exact hϖ.ne_zero ((Submodule.mem_bot O).1 h2)
-  have key : ∀ f : MRing ι O, f ∉ P → ∀ W, divCycle P f W ≠ 0 → (C ϖ : MRing ι O) ∈ W →
+  have key : ∀ f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, f ∉ P → ∀ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W →
       IsFibreComp P W := by
     intro f _ W hW hϖW
     obtain ⟨hWmin, hWrel⟩ := facts_of_divCycle_ne_zero hW
@@ -160,7 +161,7 @@ theorem fibre_comp : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuati
       rw [hmax] at hF
       obtain ⟨hWmin, hWrel⟩ := hF
       haveI : W.IsPrime := hWmin.1.1
-      unfold divCycle
+      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
       rw [dif_pos ⟨hWmin, hWrel⟩]
       exact Nat.cast_ne_zero.mpr (length_toNat_ne_zero hWmin)
     · intro hW
@@ -170,9 +171,9 @@ theorem fibre_comp : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuati
       exact ⟨hWmin, hWrel⟩
   · intro b f g hV W hW
     obtain ⟨-, hfP, hgP, hvert, -⟩ := hV
-    have hϖW : (C ϖ : MRing ι O) ∈ W := hvert W hW
-    by_cases hfW : divCycle P f W = 0
-    · have hgW : divCycle P g W ≠ 0 := by
+    have hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := hvert W hW
+    by_cases hfW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = 0
+    · have hgW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) ≠ 0 := by
         intro hg
         apply hW
         unfold ratDiv

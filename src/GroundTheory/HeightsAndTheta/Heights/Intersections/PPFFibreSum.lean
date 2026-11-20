@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreSum
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreBij
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreMult
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -125,7 +126,7 @@ theorem PFFibreSum.proof (hFD : FibreDimStatement) (hBij : PFFibreBij.Statement)
   set L := fun j : Fin r => fibreDeg κ (N (Fin.castSucc j)).a
   set V := fibreIdeal κ G
   set f := baseSubst κ G s
-  have hD : ∀ Q, (divCycle V f Q : ℝ) = if Q ∈ divSupp V f then (multAt (V ⊔ Ideal.span {f}) Q : ℝ) else 0 := by
+  have hD : ∀ Q, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) Q : ℤ) : ℝ) = if Q ∈ divSupp V f then (multAt (V ⊔ Ideal.span {f}) Q : ℝ) else 0 := by
     intro Q
     simp only [divCycle, Finsupp.ofSupportFinite_coe]
     split_ifs <;> simp
@@ -136,7 +137,7 @@ theorem PFFibreSum.proof (hFD : FibreDimStatement) (hBij : PFFibreBij.Statement)
       Finsupp.sum_mapRange_index (fun _ => zero_mul _), Finsupp.sum, Int.cast_sum,
       finsum_mem_def]
     simp only [Int.cast_mul, Int.cast_natCast]
-    have hsupp : Function.support (fun Q => (divCycle V f Q : ℝ) * (J Q r L : ℝ)) ⊆ ↑(divCycle V f).support := by
+    have hsupp : Function.support (fun Q => (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) Q : ℤ) : ℝ) * (J Q r L : ℝ)) ⊆ ↑((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ))).support := by
       intro Q hQ
       rw [Function.mem_support] at hQ
       rw [Finset.mem_coe, Finsupp.mem_support_iff]

@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsFnDegRelDeg
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PIntNumPoint
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Targets
@@ -66,8 +67,8 @@ variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K �
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 
-theorem dehom_mem_homFracDegZero (V : Ideal (MRing ι F)) [V.IsPrime] (i : ∀ k, ι k)
-    (hi : ∀ k, (X ⟨k, i k⟩ : MRing ι F) ∉ V) (f : MRing ι F) :
+theorem dehom_mem_homFracDegZero (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [V.IsPrime] (i : ∀ k, ι k)
+    (hi : ∀ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ V) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
     IntNumPoint.dehom V i f ∈ homFracDegZero V := by
   have : (IntNumPoint.dehom V i).range ≤ (homFracDegZero V).toSubalgebra := by
     rw [IntNumPoint.dehom, aeval_range]
@@ -78,11 +79,11 @@ theorem dehom_mem_homFracDegZero (V : Ideal (MRing ι F)) [V.IsPrime] (i : ∀ k
         isWeightedHomogeneous_X (R := F) _ _, hi p.1, rfl⟩
   exact this ⟨f, rfl⟩
 
-theorem div_eq_dehom_div (V : Ideal (MRing ι F)) [V.IsPrime] (i : ∀ k, ι k)
-    (hi : ∀ k, (X ⟨k, i k⟩ : MRing ι F) ∉ V) {b : K → ℕ} {f g : MRing ι F}
+theorem div_eq_dehom_div (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [V.IsPrime] (i : ∀ k, ι k)
+    (hi : ∀ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ V) {b : K → ℕ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
     (hf : IsMultiHomog f b) (hg : IsMultiHomog g b) :
-    algebraMap (MRing ι F ⧸ V) (FractionRing (MRing ι F ⧸ V)) (Ideal.Quotient.mk V f) /
-        algebraMap (MRing ι F ⧸ V) (FractionRing (MRing ι F ⧸ V)) (Ideal.Quotient.mk V g) =
+    algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V)) (Ideal.Quotient.mk V f) /
+        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V)) (Ideal.Quotient.mk V g) =
       IntNumPoint.dehom V i f / IntNumPoint.dehom V i g := by
   rw [← IntNumPoint.cls_apply, ← IntNumPoint.cls_apply,
     ← IntNumPoint.dehom_mul_of_isMultiHomog i hi hf, ← IntNumPoint.dehom_mul_of_isMultiHomog i hi hg,
@@ -92,12 +93,12 @@ end Dehom
 
 section Contract
 
-variable {F : Type u} [Field F] {K K' : Type} {ι' : K' → Type} (j : K ↪ K') (P' : Ideal (MRing ι' F))
+variable {F : Type u} [Field F] {K K' : Type} {ι' : K' → Type} (j : K ↪ K') (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι'))
   [P'.IsPrime] (i' : ∀ k', ι' k')
 
-theorem contractFracMap_algebraMap (f : MRing (fun k => ι' (j k)) F) :
+theorem contractFracMap_algebraMap (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))) :
     contractFracMap j P' (algebraMap _ _ (Ideal.Quotient.mk (contractPrime j P') f)) =
-      algebraMap (MRing ι' F ⧸ P') (FractionRing (MRing ι' F ⧸ P'))
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P'))
         (Ideal.Quotient.mk P' (rename (blockIncl j ι') f)) := by
   simp [contractFracMap, contractQuot]
   rfl
@@ -131,7 +132,7 @@ theorem proof : FnDegRelDeg.Statement.{u} := by
   have hw : ∀ r : Σ k, ι' (j k), ∃ q, v q = blockIncl j ι' r := fun r => hκv.2.2.2 _ ⟨r.1, rfl⟩
   let wcoord : (Σ k, ι' (j k)) → (Σ k, ι k) := fun r => (hw r).choose
   have hwcoord : v ∘ wcoord = blockIncl j ι' := funext fun r => (hw r).choose_spec
-  have hi0 : ∀ k, (X ⟨k, i' (j k)⟩ : MRing (fun k => ι' (j k)) F) ∉ contractPrime j P' := by
+  have hi0 : ∀ k, (X ⟨k, i' (j k)⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))) ∉ contractPrime j P' := by
     intro k h
     have h' := Ideal.mem_comap.1 h
     rw [rename_X] at h'
@@ -146,9 +147,9 @@ theorem proof : FnDegRelDeg.Statement.{u} := by
     rw [hρ] at ha
     exact Ideal.Quotient.eq_zero_iff_mem.2 (IntNumPoint.mem_chartIdeal_of_dehom_eq_zero i' hi ha)
   let _ := (ReciprocityTheory.ChartRestriction.G.AI.I1.chartMap v P' i').toAlgebra
-  have hτ : ∀ p : MRing ι F, ρ (ReciprocityTheory.ChartRestriction.G.AI.I1.chartMap v P' i' (Ideal.Quotient.mk _ p)) =
+  have hτ : ∀ p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, ρ (ReciprocityTheory.ChartRestriction.G.AI.I1.chartMap v P' i' (Ideal.Quotient.mk _ p)) =
       IntNumPoint.dehom P' i' (rename v p) := fun p => rfl
-  have key : ∀ p : MRing ι F, IntNumPoint.dehom P' i' (rename v p) =
+  have key : ∀ p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IntNumPoint.dehom P' i' (rename v p) =
       contractFracMap j P' (IntNumPoint.dehom (contractPrime j P') (fun k => i' (j k))
         (rename ucoord p)) := by
     intro p

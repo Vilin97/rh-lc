@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBridge
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -16,8 +17,8 @@ namespace IntNumPoint
 variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
   [∀ k, Fintype (ι k)]
 
-def chartMonomial (i : ∀ k, ι k) (e : K → ℕ) : MRing ι F :=
-  ∏ k, (X ⟨k, i k⟩ : MRing ι F) ^ e k
+def chartMonomial (i : ∀ k, ι k) (e : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι :=
+  ∏ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ e k
 
 theorem isMultiHomog_chartMonomial (i : ∀ k, ι k) (e : K → ℕ) :
     IsMultiHomog (chartMonomial (F := F) i e) e := by
@@ -31,8 +32,8 @@ theorem isMultiHomog_chartMonomial (i : ∀ k, ι k) (e : K → ℕ) :
   rw [he] at h
   exact h
 
-def chartUnitIdeal (i : ∀ k, ι k) : Ideal (MRing ι F) :=
-  Ideal.span (Set.range fun k => (X ⟨k, i k⟩ : MRing ι F) - 1)
+def chartUnitIdeal (i : ∀ k, ι k) : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :=
+  Ideal.span (Set.range fun k => (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) - 1)
 
 theorem mk_X_chart (i : ∀ k, ι k) (k : K) :
     Ideal.Quotient.mk (chartUnitIdeal (F := F) i) (X ⟨k, i k⟩) = 1 := by
@@ -43,8 +44,8 @@ theorem mk_chartMonomial (i : ∀ k, ι k) (e : K → ℕ) :
     Ideal.Quotient.mk (chartUnitIdeal (F := F) i) (chartMonomial i e) = 1 := by
   simp [chartMonomial, map_prod, map_pow, mk_X_chart]
 
-theorem exists_homog_congr (i : ∀ k, ι k) (p : MRing ι F) :
-    ∃ N : K → ℕ, ∀ N', N ≤ N' → ∃ h : MRing ι F, IsMultiHomog h N' ∧
+theorem exists_homog_congr (i : ∀ k, ι k) (p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
+    ∃ N : K → ℕ, ∀ N', N ≤ N' → ∃ h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog h N' ∧
       Ideal.Quotient.mk (chartUnitIdeal i) p = Ideal.Quotient.mk (chartUnitIdeal i) h := by
   induction p using MvPolynomial.induction_on with
   | C a =>
@@ -72,29 +73,29 @@ theorem exists_homog_congr (i : ∀ k, ι k) (p : MRing ι F) :
 
 section Dehom
 
-variable (V : Ideal (MRing ι F)) [V.IsPrime]
+variable (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [V.IsPrime]
 
-def xc (p : Σ k, ι k) : FractionRing (MRing ι F ⧸ V) :=
-  algebraMap (MRing ι F ⧸ V) _ (Ideal.Quotient.mk V (X p))
+def xc (p : Σ k, ι k) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) :=
+  algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) _ (Ideal.Quotient.mk V (X p))
 
-def cls : MRing ι F →ₐ[F] FractionRing (MRing ι F ⧸ V) :=
-  (IsScalarTower.toAlgHom F (MRing ι F ⧸ V) _).comp (Ideal.Quotient.mkₐ F V)
+def cls : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₐ[F] FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) :=
+  (IsScalarTower.toAlgHom F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) _).comp (Ideal.Quotient.mkₐ F V)
 
-def dehom (i : ∀ k, ι k) : MRing ι F →ₐ[F] FractionRing (MRing ι F ⧸ V) :=
+def dehom (i : ∀ k, ι k) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₐ[F] FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) :=
   aeval fun p => xc V p / xc V ⟨p.1, i p.1⟩
 
-theorem cls_apply (f : MRing ι F) :
-    cls V f = algebraMap (MRing ι F ⧸ V) _ (Ideal.Quotient.mk V f) := rfl
+theorem cls_apply (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
+    cls V f = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) _ (Ideal.Quotient.mk V f) := rfl
 
-theorem cls_eq_zero_iff (f : MRing ι F) : cls V f = 0 ↔ f ∈ V := by
+theorem cls_eq_zero_iff (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) : cls V f = 0 ↔ f ∈ V := by
   rw [cls_apply, map_eq_zero_iff _ (IsFractionRing.injective _ _), Ideal.Quotient.eq_zero_iff_mem]
 
 variable {V}
 
-theorem xc_ne_zero {p : Σ k, ι k} (hp : (X p : MRing ι F) ∉ V) : xc V p ≠ 0 :=
+theorem xc_ne_zero {p : Σ k, ι k} (hp : (X p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ V) : xc V p ≠ 0 :=
   fun h => hp ((cls_eq_zero_iff V _).1 h)
 
-variable (i : ∀ k, ι k) (hi : ∀ k, (X ⟨k, i k⟩ : MRing ι F) ∉ V)
+variable (i : ∀ k, ι k) (hi : ∀ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ V)
 include hi
 
 theorem chartProd_ne_zero (a : K → ℕ) : ∏ k, xc V ⟨k, i k⟩ ^ a k ≠ 0 :=
@@ -118,7 +119,7 @@ theorem dehom_monomial_mul (m : (Σ k, ι k) →₀ ℕ) :
     rw [div_mul_cancel₀ _ (pow_ne_zero _ hy)]
     rfl
 
-theorem dehom_mul_of_isMultiHomog {h : MRing ι F} {a : K → ℕ} (hh : IsMultiHomog h a) :
+theorem dehom_mul_of_isMultiHomog {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {a : K → ℕ} (hh : IsMultiHomog h a) :
     dehom V i h * ∏ k, xc V ⟨k, i k⟩ ^ a k = cls V h := by
   conv_rhs => rw [h.as_sum]
   conv_lhs => rw [h.as_sum]
@@ -130,7 +131,7 @@ theorem dehom_mul_of_isMultiHomog {h : MRing ι F} {a : K → ℕ} (hh : IsMulti
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [hmon, map_smul, map_smul, smul_mul_assoc, ← hw, dehom_monomial_mul i hi]
 
-theorem dehom_chartUnitIdeal {f : MRing ι F} (hf : f ∈ chartUnitIdeal i) : dehom V i f = 0 := by
+theorem dehom_chartUnitIdeal {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hf : f ∈ chartUnitIdeal i) : dehom V i f = 0 := by
   have : chartUnitIdeal (F := F) i ≤ RingHom.ker (dehom V i) := by
     refine Ideal.span_le.2 ?_
     rintro _ ⟨k, rfl⟩
@@ -138,7 +139,7 @@ theorem dehom_chartUnitIdeal {f : MRing ι F} (hf : f ∈ chartUnitIdeal i) : de
     rw [div_self (xc_ne_zero (hi k)), sub_self]
   exact this hf
 
-theorem dehom_eq_zero_of_mem (hV : IsMultiHomogIdeal V) {f : MRing ι F} (hf : f ∈ V) :
+theorem dehom_eq_zero_of_mem (hV : IsMultiHomogIdeal V) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hf : f ∈ V) :
     dehom V i f = 0 := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← sum_weightedHomogeneousComponent (blockWeight ι) f,
@@ -149,13 +150,13 @@ theorem dehom_eq_zero_of_mem (hV : IsMultiHomogIdeal V) {f : MRing ι F} (hf : f
   rw [(cls_eq_zero_iff V _).2 (hV f hf b)] at h1
   exact (mul_eq_zero.mp h1).resolve_right (chartProd_ne_zero i hi b)
 
-theorem dehom_eq_zero_of_mem_chartIdeal (hV : IsMultiHomogIdeal V) {f : MRing ι F}
+theorem dehom_eq_zero_of_mem_chartIdeal (hV : IsMultiHomogIdeal V) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
     (hf : f ∈ ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal V i) : dehom V i f = 0 := by
   have : ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal V i ≤ RingHom.ker (dehom V i) :=
     sup_le (fun g hg => dehom_eq_zero_of_mem i hi hV hg) (fun g hg => dehom_chartUnitIdeal i hi hg)
   exact this hf
 
-theorem mem_chartIdeal_of_dehom_eq_zero {f : MRing ι F} (hf : dehom V i f = 0) :
+theorem mem_chartIdeal_of_dehom_eq_zero {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hf : dehom V i f = 0) :
     f ∈ ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal V i := by
   obtain ⟨N, hN⟩ := exists_homog_congr i f
   obtain ⟨h, hh, hc⟩ := hN N le_rfl
@@ -171,11 +172,11 @@ theorem mem_chartIdeal_of_dehom_eq_zero {f : MRing ι F} (hf : dehom V i f = 0) 
 
 end Dehom
 
-theorem finrank_chart_eq (V : Ideal (MRing ι F)) (hV : IsMultiProjPrime V) (i : ∀ k, ι k)
-    (hi : ∀ k, (X ⟨k, i k⟩ : MRing ι F) ∉ V)
+theorem finrank_chart_eq (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hV : IsMultiProjPrime V) (i : ∀ k, ι k)
+    (hi : ∀ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ V)
     (hfin : haveI := hV.isPrime; FiniteDimensional F (FieldNumbers.homFracDegZero V)) :
     haveI := hV.isPrime
-    Module.finrank F (MRing ι F ⧸ ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal V i) =
+    Module.finrank F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal V i) =
       Module.finrank F (FieldNumbers.homFracDegZero V) := by
   haveI := hV.isPrime
   set H := FieldNumbers.homFracDegZero V
@@ -202,7 +203,7 @@ theorem finrank_chart_eq (V : Ideal (MRing ι F)) (hV : IsMultiProjPrime V) (i :
     rintro _ ⟨a, rfl⟩
     obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective a
     exact hdH f
-  let E : IntermediateField F (FractionRing (MRing ι F ⧸ V)) :=
+  let E : IntermediateField F (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V)) :=
     ρ.range.toIntermediateField fun x hx =>
       ρ.range.inv_mem_of_algebraic (x := ⟨x, hx⟩)
         ((IntermediateField.isAlgebraic_iff (x := (⟨x, hle hx⟩ : H))).1 (IsAlgebraic.of_finite F _))

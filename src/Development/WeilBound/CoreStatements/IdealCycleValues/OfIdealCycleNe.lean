@@ -4,6 +4,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialQuo
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMinimalPrimeMultiHomog
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSupSpanMultiHomog
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PLocCyclePos
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 namespace BaseChangeColon.BC
 
@@ -25,13 +26,13 @@ theorem dim_drop {A : Type} [CommRing A] {P : Ideal A} (hP : P.IsPrime) {f : A} 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
-theorem of_idealCycle_ne {R : Type} [CommRing R] {J W : Ideal (MRing ι R)} (h : idealCycle J W ≠ 0) :
+theorem of_idealCycle_ne {R : Type} [CommRing R] {J W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (h : idealCycle J W ≠ 0) :
     W ∈ J.minimalPrimes ∧ IsRelevant W := by
   by_contra h'
   exact h (dif_neg h')
 
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
-theorem cycEval_eq_zero {R : Type} [CommRing R] {J : Ideal (MRing ι R)} {n : Ideal (MRing ι R) → ℤ}
+theorem cycEval_eq_zero {R : Type} [CommRing R] {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {n : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ}
     (h : ∀ W ∈ J.minimalPrimes, n W = 0) : cycEval n (idealCycle J) = 0 := by
   refine finsum_eq_zero_of_forall_eq_zero fun W => ?_
   by_cases h0 : idealCycle J W = 0
@@ -42,8 +43,8 @@ theorem lt_succ_dim {a : WithBot ℕ∞} {d c : ℕ} (h : a < ((d + c : ℕ) : W
     a < ((d + 1 + c : ℕ) : WithBot ℕ∞) :=
   lt_of_lt_of_le h (by exact_mod_cast (by omega : d + c ≤ d + 1 + c))
 
-theorem intNum_small {F : Type} [Field F] {d : ℕ} {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdeal I)
-    (hd : ringKrullDim (MRing ι F ⧸ I) < ((d + Fintype.card K : ℕ) : WithBot ℕ∞))
+theorem intNum_small {F : Type} [Field F] {d : ℕ} {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsMultiHomogIdeal I)
+    (hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) < ((d + Fintype.card K : ℕ) : WithBot ℕ∞))
     (bs : Fin d → K → ℤ) : intNum F I bs = 0 := by
   rw [IntNumAssoc.full F K ι d I hI (lt_succ_dim hd) bs]
   exact cycEval_eq_zero fun W hW => IntNumVanish.full F K ι d W hW.1.1
@@ -51,20 +52,20 @@ theorem intNum_small {F : Type} [Field F] {d : ℕ} {I : Ideal (MRing ι F)} (hI
 
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {ϖ : O}
 
-def NN (J : Ideal (MRing ι O)) {d : ℕ} (bs : Fin d → K → ℤ) : ℤ :=
+def NN (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {d : ℕ} (bs : Fin d → K → ℤ) : ℤ :=
   cycEval (fun W => vNum W bs) (idealCycle J)
 
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
-theorem special_sup (hϖ : Irreducible ϖ) (J : Ideal (MRing ι O)) :
+theorem special_sup (hϖ : Irreducible ϖ) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
     specialIdeal (J ⊔ Ideal.span {C ϖ}) = specialIdeal J := by
   unfold specialIdeal
   rw [Ideal.map_sup, Ideal.map_span, Set.image_singleton, map_C,
     (IsLocalRing.residue_eq_zero_iff ϖ).2 hϖ.not_isUnit, C_0, Ideal.span_singleton_zero, sup_bot_eq]
 
-theorem homog_C (c : O) : IsMultiHomog (C c : MRing ι O) 0 := isWeightedHomogeneous_C _ _
+theorem homog_C (c : O) : IsMultiHomog (C c : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) 0 := isWeightedHomogeneous_C _ _
 
-theorem NN_vert (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (MRing ι O)} (hJ : IsMultiHomogIdeal J)
-    (hd : ringKrullDim (MRing ι O ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞))
+theorem NN_vert (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hJ : IsMultiHomogIdeal J)
+    (hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞))
     (hm : C ϖ ∈ J) (bs : Fin d → K → ℤ) :
     NN J bs = intNum (IsLocalRing.ResidueField O) (specialIdeal J) bs := by
   have h1 := SpecialCycleEval.full O ϖ hϖ K ι J
@@ -74,12 +75,12 @@ theorem NN_vert (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (MRing ι O)} (hJ : 
     (by rw [SpecialQuotDim.proof O ϖ hϖ K ι J hm]; exact hd) bs, ← h1]
   rfl
 
-theorem key (hϖ : Irreducible ϖ) {d : ℕ} {W : Ideal (MRing ι O)} (hW : W.IsPrime)
+theorem key (hϖ : Irreducible ϖ) {d : ℕ} {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hW : W.IsPrime)
     (hh : IsMultiHomogIdeal W)
-    (hd : ringKrullDim (MRing ι O ⧸ W) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞))
+    (hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ W) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞))
     {bs : Fin d → K → ℤ} (hn : vNum W bs ≠ 0) :
-    C ϖ ∈ W ∧ ¬ ringKrullDim (MRing ι O ⧸ W) < ((d + Fintype.card K : ℕ) : WithBot ℕ∞) := by
-  have h1 : ¬ ringKrullDim (MRing ι O ⧸ (W ⊔ Ideal.span {C ϖ})) <
+    C ϖ ∈ W ∧ ¬ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ W) < ((d + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+  have h1 : ¬ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ (W ⊔ Ideal.span {C ϖ})) <
       ((d + Fintype.card K : ℕ) : WithBot ℕ∞) := by
     intro h
     apply hn
@@ -96,9 +97,9 @@ theorem key (hϖ : Irreducible ϖ) {d : ℕ} {W : Ideal (MRing ι O)} (hW : W.Is
   have h5 : d + Fintype.card K + 1 < d + 1 + Fintype.card K := by exact_mod_cast h4
   omega
 
-theorem NN_nzd (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (MRing ι O)} (hJ : IsMultiHomogIdeal J)
-    (hd : ringKrullDim (MRing ι O ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞))
-    (x : MRing ι O) (hx : ∀ W : Ideal (MRing ι O), C ϖ ∈ W → x ∈ W) (hc : J.colon {x} = J)
+theorem NN_nzd (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hJ : IsMultiHomogIdeal J)
+    (hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞))
+    (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (hx : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), C ϖ ∈ W → x ∈ W) (hc : J.colon {x} = J)
     (bs : Fin d → K → ℤ) : NN J bs = 0 := by
   refine cycEval_eq_zero fun W hW => ?_
   by_contra hn
@@ -110,10 +111,10 @@ theorem NN_nzd (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (MRing ι O)} (hJ : I
   exact hxy
 
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
-theorem multAt_zero {R : Type} [CommRing R] {I W : Ideal (MRing ι R)} [W.IsPrime] (h : ¬ I ≤ W) :
+theorem multAt_zero {R : Type} [CommRing R] {I W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} [W.IsPrime] (h : ¬ I ≤ W) :
     multAt I W = 0 := by
   obtain ⟨q, hq, hqW⟩ := SetLike.not_le_iff_exists.1 h
-  haveI : Subsingleton (LocalizedModule W.primeCompl (MRing ι R ⧸ I)) := by
+  haveI : Subsingleton (LocalizedModule W.primeCompl (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ I)) := by
     rw [LocalizedModule.subsingleton_iff]
     intro y
     refine ⟨q, hqW, ?_⟩
@@ -124,11 +125,11 @@ theorem le_colon {A : Type} [CommRing A] (J : Ideal A) (x : A) : J ≤ J.colon {
   rw [Submodule.mem_colon_singleton, smul_eq_mul]
   exact J.mul_mem_right x hy
 
-theorem NN_add (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (MRing ι O)} (hJ : IsMultiHomogIdeal J)
-    (hd : ringKrullDim (MRing ι O ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞))
-    {x : MRing ι O} {s : K → ℕ} (hx : IsMultiHomog x s) (bs : Fin d → K → ℤ) :
+theorem NN_add (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hJ : IsMultiHomogIdeal J)
+    (hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞))
+    {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {s : K → ℕ} (hx : IsMultiHomog x s) (bs : Fin d → K → ℤ) :
     NN J bs = NN (J ⊔ Ideal.span {x}) bs + NN (J.colon {x}) bs := by
-  have hfin : ∀ I : Ideal (MRing ι O),
+  have hfin : ∀ I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       (Function.support fun W => idealCycle I W * vNum W bs).Finite := fun I =>
     (Ideal.finite_minimalPrimes_of_isNoetherianRing _ I).subset fun W hW =>
       (of_idealCycle_ne (left_ne_zero_of_mul hW)).1
@@ -141,7 +142,7 @@ theorem NN_add (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (MRing ι O)} (hJ : I
   congr 1
   by_cases hW : W ∈ J.minimalPrimes ∧ IsRelevant W
   · haveI : W.IsPrime := hW.1.1.1
-    have h1 : ∀ I : Ideal (MRing ι O), J ≤ I → idealCycle I W = ((multAt I W).toNat : ℤ) := by
+    have h1 : ∀ I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), J ≤ I → idealCycle I W = ((multAt I W).toNat : ℤ) := by
       intro I hI
       by_cases hIW : I ≤ W
       · have h2 : W ∈ I.minimalPrimes :=
@@ -154,7 +155,7 @@ theorem NN_add (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (MRing ι O)} (hJ : I
     rw [h1 J le_rfl, h1 _ le_sup_left, h1 _ (le_colon J x), h3]
     rw [h3] at h2
     rw [ENat.toNat_add (WithTop.add_ne_top.1 h2).1 (WithTop.add_ne_top.1 h2).2, Nat.cast_add]
-  · have h1 : ∀ I : Ideal (MRing ι O), J ≤ I → IsMultiHomogIdeal I → idealCycle I W = 0 := by
+  · have h1 : ∀ I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), J ≤ I → IsMultiHomogIdeal I → idealCycle I W = 0 := by
       intro I hI hh
       by_contra h
       obtain ⟨h2, h3⟩ := of_idealCycle_ne h
@@ -167,8 +168,8 @@ theorem NN_add (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (MRing ι O)} (hJ : I
     rw [h1 J le_rfl hJ, h1 _ le_sup_left (SupSpanMultiHomog.proof O K ι J x s hJ hx),
       h1 _ (le_colon J x) (ColonMultiHomog.full O K ι J x s hJ hx), add_zero]
 
-theorem NN_pow (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (MRing ι O)} (hJ : IsMultiHomogIdeal J)
-    (hd : ringKrullDim (MRing ι O ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞)) (e : ℕ)
+theorem NN_pow (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hJ : IsMultiHomogIdeal J)
+    (hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ J) < ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞)) (e : ℕ)
     (he : C ϖ ^ e ∈ J)
     (hk : ∀ k < e, ∀ g, C ϖ ^ k * g ∈ J → g ∈ J ⊔ Ideal.span {C ϖ}) (bs : Fin d → K → ℤ) :
     NN J bs = e * NN (J ⊔ Ideal.span {C ϖ}) bs := by
@@ -196,7 +197,7 @@ theorem NN_pow (hϖ : Irreducible ϖ) {d : ℕ} {J : Ideal (MRing ι O)} (hJ : I
   have h1 : J.colon {C ϖ ^ e} = ⊤ := by
     rw [Ideal.eq_top_iff_one, Submodule.mem_colon_singleton, one_smul]
     exact he
-  have h2 : NN (⊤ : Ideal (MRing ι O)) bs = 0 :=
+  have h2 : NN (⊤ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) bs = 0 :=
     cycEval_eq_zero fun W hW => absurd (top_le_iff.1 hW.1.2) hW.1.1.ne_top
   rw [h e le_rfl, h1, h2, add_zero]
 

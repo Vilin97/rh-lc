@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsS
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagClosureModel
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PAdjoinTrdegAdd
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagClosurePullback
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -107,7 +108,7 @@ theorem trdeg_blocks_add_one_le {O Φ : Type} [CommRing O] [Field Φ] [Algebra O
   exact trdeg_le_of_injective (Subalgebra.inclusion hle) (Subalgebra.inclusion_injective _)
 
 def zeroNewBlocks {O K : Type} [CommRing O] {ι : K → Type} {M M' : ℕ} :
-    (Σ o, bundleIdx (bundleIdx ι M) M' o) → MRing ι O
+    (Σ o, bundleIdx (bundleIdx ι M) M' o) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι
   | ⟨some (some k), i⟩ => X ⟨k, i⟩
   | ⟨some none, _⟩ => 0
   | ⟨none, _⟩ => 0
@@ -116,8 +117,8 @@ theorem trdeg_flag_zero_le {O Ω K : Type} [CommRing O] [Field Ω] [Algebra O Ω
     {E : Type} [AddCommGroup E] [Module Ω E] {Φ : Type} [Field Φ] [Algebra Ω Φ] [Algebra O Φ] [IsScalarTower O Ω Φ]
     (y : (Σ k, ι k) → Ω) (w e : Module.Basis (Fin N) Ω E) (φ : Fin M → Module.Dual Ω E)
     (φ' : Fin M' → Module.Dual Ω E) (t : Fin N → Φ) :
-    Algebra.trdeg O (MRing (bundleIdx (bundleIdx ι M) M') O ⧸ pointIdeal O (flagClosurePt y w e φ φ' t 0)) ≤
-      Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) := by
+    Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M') ⧸ pointIdeal O (flagClosurePt y w e φ φ' t 0)) ≤
+      Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) := by
   let ren : MvPolynomial K Φ →ₐ[O] MvPolynomial (Option (Option K)) Φ :=
     (rename (fun k : K => some (some k)) : MvPolynomial K Φ →ₐ[Φ] _).restrictScalars O
   have hren : Function.Injective ren :=
@@ -147,7 +148,7 @@ theorem FlagProjTrdegLe.proof (hTr : SegreFlagClosureTrdeg.Statement) : FlagProj
     refine (FaithfulSMul.algebraMap_injective Ω Φ).comp ?_
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
-    have hy : a ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := by
+    have hy : a ∈ (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
       rw [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply, ha,
         map_zero]
     rw [hV.noTorsion] at hy
@@ -173,8 +174,8 @@ theorem FlagProjTrdegLe.proof (hTr : SegreFlagClosureTrdeg.Statement) : FlagProj
       (TwistedDualGensSpan.proof O Ω K ι y N E B' a₀' M' φ' hφ' c hyc) hk hkN.le
     obtain ⟨l, hl⟩ := SegreFlagClosureModel.exists_flag_ne_zero w e hli φ
       (TwistedDualGensSpan.proof O Ω K ι y N E B a₀ M φ hφ c hyc) hk hkN.le
-    have key : ∀ a : Cardinal, a + 1 ≤ Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) + ((k + 1 : ℕ) : Cardinal) →
-        a ≤ Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) + (k : Cardinal) := by
+    have key : ∀ a : Cardinal, a + 1 ≤ Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) + ((k + 1 : ℕ) : Cardinal) →
+        a ≤ Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) + (k : Cardinal) := by
       intro a ha
       rw [Nat.cast_add, Nat.cast_one, ← add_assoc] at ha
       exact Cardinal.add_one_le_add_one_iff.1 ha

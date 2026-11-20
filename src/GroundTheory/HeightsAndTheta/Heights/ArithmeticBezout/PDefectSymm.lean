@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsMahler
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -19,8 +20,8 @@ theorem DefectSymm.proof (h1 : CycleSectionData.Statement) (h2 : SpecFirstSwapMa
 
   obtain ⟨c, -, g, hg, -⟩ := hZ.chow
   have G : ∀ W ∈ Z.support,
-      (Z W : ℝ) * (cycleIntegral h (divCycle W u) e (fsLog h u') + coneIntegral h W (e + 1) (fsLog h u)) =
-        (Z W : ℝ) * (cycleIntegral h (divCycle W u') e (fsLog h u) +
+      (Z W : ℝ) * (cycleIntegral h ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) W : ℤ))) e (fsLog h u') + coneIntegral h W (e + 1) (fsLog h u)) =
+        (Z W : ℝ) * (cycleIntegral h ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') W : ℤ))) e (fsLog h u) +
           coneIntegral h W (e + 1) (fsLog h u')) := by
     intro W hW
     congr 1

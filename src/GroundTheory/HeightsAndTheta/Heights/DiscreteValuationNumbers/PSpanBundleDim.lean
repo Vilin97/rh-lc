@@ -5,6 +5,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsS
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSpanBundleTrdegLe
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PCutRegular
 import GroundTheory.ArithmeticGeometry.AbelianVarieties.JacobianSmoothness.RingKrullDimLeRingKrullDimQuotientAddOne
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -38,10 +39,10 @@ theorem SpanBundleDim.proof (h : PointIdealMultiProj.Statement) (hge : SpanBundl
   refine ⟨hprime, ?_⟩
   have := hprime.isPrime
   have := hy.isPrime
-  have hty : Algebra.trdeg F (MRing ι F ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : Cardinal) := by
+  have hty : Algebra.trdeg F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : Cardinal) := by
     rw [GroundTheory.Arith.Abelian.Jacobian.ringKrullDim_eq_trdeg F] at hdim
     exact Cardinal.toENat_eq_natCast.1 (WithBot.coe_injective (by simpa using hdim))
-  have htz : Algebra.trdeg F (MRing (bundleIdx ι M) F ⧸ projIdeal F y (Pi.basisFun Ω (Fin i))
+  have htz : Algebra.trdeg F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) ⧸ projIdeal F y (Pi.basisFun Ω (Fin i))
       (fun l => LinearMap.proj l ∘ₗ (Matrix.of G).mulVecLin) s) =
       ((e + Fintype.card K + i : ℕ) : Cardinal) := by
     apply le_antisymm

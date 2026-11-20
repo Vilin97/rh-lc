@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundleSectionDiv
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -17,15 +18,15 @@ def FlagBundleChartSection.Statement : Prop :=
     ∀ (M : ℕ) (a : K → ℤ) (φ : Fin M → Module.Dual Ω E), IsTwistedDualGens y B a φ →
     ∀ (Φ : Type) [Field Φ] [Algebra Ω Φ] (t : Fin N → Φ), AlgebraicIndependent Ω t →
     ∀ (i : Fin N) (c : ∀ k, ι k), segreVec y c ≠ 0 →
-      ∃ (dl dm : Option K → ℕ) (l μ : MRing (bundleIdx ι M) F) (m : K → ℕ),
-        μ = ∏ k, (X ⟨some k, c k⟩ : MRing (bundleIdx ι M) F) ^ m k ∧
+      ∃ (dl dm : Option K → ℕ) (l μ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) (m : K → ℕ),
+        μ = ∏ k, (X ⟨some k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) ^ m k ∧
         IsMultiHomog l dl ∧ IsMultiHomog μ dm ∧
         (fun o => (dl o : ℤ) - dm o) = zetaDeg + liftDeg (b i - a) ∧
         eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ (truncCoord t ((i : ℕ) + 1))) l =
           t i * eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω))
             (projCoord y w φ (truncCoord t ((i : ℕ) + 1))) μ ∧
         ∀ q ∈ projIdeal F y w φ (truncCoord t i), ∃ n : ℕ,
-          (∏ k, (X ⟨some k, c k⟩ : MRing (bundleIdx ι M) F)) ^ n * q ∈
+          (∏ k, (X ⟨some k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M))) ^ n * q ∈
             projIdeal F y w φ (truncCoord t ((i : ℕ) + 1)) ⊔ Ideal.span {l}
 
 end

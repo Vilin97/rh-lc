@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundleSectionDiv
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -15,7 +16,7 @@ def TruncSpecialize.Statement : Prop :=
     (M : ℕ) (φ : Fin M → Module.Dual Ω E) (Φ : Type) [Field Φ] [Algebra Ω Φ] (t : Fin N → Φ),
     AlgebraicIndependent Ω t → ∀ i : Fin N,
       projIdeal F y w φ (truncCoord t ((i : ℕ) + 1)) ≤ projIdeal F y w φ (truncCoord t i) ∧
-      ∀ x z : MRing (bundleIdx ι M) F,
+      ∀ x z : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M),
         eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ (truncCoord t ((i : ℕ) + 1))) x =
           t i * eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω))
             (projCoord y w φ (truncCoord t ((i : ℕ) + 1))) z →

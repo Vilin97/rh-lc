@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.MemConePointsSpanX0
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ImportsAlt
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PGenericFibreIdeal
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PIntChowFormExists
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -10,7 +11,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk)
 
 theorem ChowFormExistsRat.proof (hA : ObjectsChow.ChowFormToComplexChowForm.Statement)
     (hD : ObjectsChow.GenericFibreDim.Statement) : ChowFormExistsRat.Statement := by

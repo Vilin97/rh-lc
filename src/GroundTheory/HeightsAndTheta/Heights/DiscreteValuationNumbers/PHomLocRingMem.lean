@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsHomLocRingLocal
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -9,17 +10,17 @@ open MvPolynomial
 noncomputable section
 
 theorem HomLocRingMem.algebraMap_mk_ne_zero {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
-    (P : Ideal (MRing ι R)) [P.IsPrime] {g : MRing ι R} (hg : g ∉ P) :
-    algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P g) ≠ 0 := by
+    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] {g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hg : g ∉ P) :
+    algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P g) ≠ 0 := by
   rw [Ne, map_eq_zero_iff _ (IsFractionRing.injective _ _), Ideal.Quotient.eq_zero_iff_mem]
   exact hg
 
 theorem HomLocRingMem.proof : HomLocRingMem.Statement := by
   intro R _ K _ ι P W _ hW hPW z
-  have hne : ∀ g : MRing ι R, g ∉ W →
-      algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P g) ≠ 0 :=
+  have hne : ∀ g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι, g ∉ W →
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P g) ≠ 0 :=
     fun g hg => HomLocRingMem.algebraMap_mk_ne_zero P (fun h => hg (hPW h))
-  have h1W : (1 : MRing ι R) ∉ W := fun h => hW.ne_top ((Ideal.eq_top_iff_one W).mpr h)
+  have h1W : (1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∉ W := fun h => hW.ne_top ((Ideal.eq_top_iff_one W).mpr h)
   constructor
   · intro hz
     refine Subring.closure_induction (fun x hx => hx) ?_ ?_ ?_ ?_ ?_ hz

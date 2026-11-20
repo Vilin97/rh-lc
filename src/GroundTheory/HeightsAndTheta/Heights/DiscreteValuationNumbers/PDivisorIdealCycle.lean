@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.DivisorIdealBotUniformiser
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleMul
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -15,7 +16,7 @@ section General
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem idealCycle_eq_of_mul_mem {J J' U : Ideal (MRing ι R)} {s t : MRing ι R} (hs : s ∉ U)
+theorem idealCycle_eq_of_mul_mem {J J' U : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {s t : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hs : s ∉ U)
     (ht : t ∉ U) (hsJ : ∀ x ∈ J, s * x ∈ J') (htJ : ∀ x ∈ J', t * x ∈ J) :
     idealCycle J U = idealCycle J' U := by
   unfold idealCycle
@@ -30,9 +31,9 @@ theorem idealCycle_eq_of_mul_mem {J J' U : Ideal (MRing ι R)} {s t : MRing ι R
       h ⟨mem_minimalPrimes_of_mul_mem ht hs htJ hsJ h'.1, h'.2⟩
     rw [dif_neg h, dif_neg h']
 
-theorem divCycle_eq_zero_of_not_mem {W U : Ideal (MRing ι R)} {x : MRing ι R} (hx : x ∉ U) :
-    divCycle W x U = 0 := by
-  unfold divCycle
+theorem divCycle_eq_zero_of_not_mem {W U : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hx : x ∉ U) :
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W x) U : ℤ) = 0 := by
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   rw [dif_neg]
   rintro ⟨h, -⟩
   exact hx (h.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self x)))
@@ -46,7 +47,7 @@ theorem DivisorIdealCycle.proof : DivisorIdealCycle.Statement.{u} := by
   · obtain ⟨hUp, hWU, hUrel⟩ := hU
     obtain ⟨u', v', hu'U, hloc'⟩ := hloc U hUp hWU hUrel
     have hu'W : u' ∉ W := fun h => hu'U (hWU h)
-    have h1U : (1 : MRing ι R) ∉ U := (Ideal.ne_top_iff_one U).mp hUp.ne_top
+    have h1U : (1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∉ U := (Ideal.ne_top_iff_one U).mp hUp.ne_top
 
     have hcross : u * v' - u' * v ∈ P := by
       have hmem : (u * v' - u' * v) * g ∈ P := by
@@ -62,11 +63,11 @@ theorem DivisorIdealCycle.proof : DivisorIdealCycle.Statement.{u} := by
 
     have hmul := congrFun (DivCycleMul.proof R K ι W u' v hW hu'W hv) U
     have hmul' := congrFun (DivCycleMul.proof R K ι W u v' hW hu hv'W) U
-    have heq : divCycle W (u' * v) U = divCycle W (u * v') U :=
+    have heq : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W (u' * v)) U : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W (u * v')) U : ℤ) :=
       divCycle_eq_of_mul_sub_mem (P := W) (W := U) (u := 1) (v := 1) h1U h1U (by
         rw [show 1 * (u' * v) - 1 * (u * v') = -(u * v' - u' * v) by ring]
         exact W.neg_mem (hPW hcross))
-    have hu'0 : divCycle W u' U = 0 := divCycle_eq_zero_of_not_mem hu'U
+    have hu'0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u') U : ℤ) = 0 := divCycle_eq_zero_of_not_mem hu'U
     simp only [Pi.add_apply] at hmul hmul'
 
     have hv'D : v' ∈ divisorIdeal P f g := by
@@ -95,17 +96,17 @@ theorem DivisorIdealCycle.proof : DivisorIdealCycle.Statement.{u} := by
       rw [show u' * (w + d) = (u' * w + (u' * d - a * v')) + a * v' by ring]
       exact Submodule.add_mem_sup (W.add_mem (W.mul_mem_left _ hw) (hPW h2))
         (Ideal.mem_span_singleton'.mpr ⟨a, rfl⟩)
-    have hR : idealCycle (W ⊔ divisorIdeal P f g) U = divCycle W v' U := by
+    have hR : idealCycle (W ⊔ divisorIdeal P f g) U = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W v') U : ℤ) := by
       rw [divCycle_eq_idealCycle]
       exact (idealCycle_eq_of_mul_mem h1U hu'U hsJ htJ).symm
     rw [hR]
-    show divCycle W v U - divCycle W u U = divCycle W v' U
+    show ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W v) U : ℤ) - ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) U : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W v') U : ℤ)
     omega
-  · have hcomp : ∀ J : Ideal (MRing ι R), W ≤ J → ¬ (U ∈ J.minimalPrimes ∧ IsRelevant U) := by
+  · have hcomp : ∀ J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι), W ≤ J → ¬ (U ∈ J.minimalPrimes ∧ IsRelevant U) := by
       rintro J hWJ ⟨h, hrel⟩
       exact hU ⟨h.1.1, hWJ.trans h.1.2, hrel⟩
-    show divCycle W v U - divCycle W u U = idealCycle (W ⊔ divisorIdeal P f g) U
-    unfold divCycle idealCycle
+    show ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W v) U : ℤ) - ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) U : ℤ) = idealCycle (W ⊔ divisorIdeal P f g) U
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle idealCycle
     rw [dif_neg (hcomp _ le_sup_left), dif_neg (hcomp _ le_sup_left), dif_neg (hcomp _ le_sup_left),
       sub_self]
 

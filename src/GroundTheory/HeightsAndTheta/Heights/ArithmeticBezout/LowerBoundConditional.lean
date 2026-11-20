@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ChowDegree
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ContinuousHermNormGroup
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -127,7 +128,7 @@ theorem isProjPrime_of_mem_support_fundCycle {J : Ideal (MvPolynomial (Fin n) R)
   exact heq
 
 theorem isProjPrime_of_mem_support_divCycle {I : Ideal (MvPolynomial (Fin n) R)} (hI : IsProjPrime I)
-    (u : Fin n → R) {W : Ideal (MvPolynomial (Fin n) R)} (hW : W ∈ (divCycle I u).support) :
+    (u : Fin n → R) {W : Ideal (MvPolynomial (Fin n) R)} (hW : W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support) :
     IsProjPrime W :=
   isProjPrime_of_mem_support_fundCycle (isHomogIdeal_sup_span_linForm hI.isHomog u) hW
 
@@ -274,13 +275,13 @@ theorem chowHeightLowerBound_of (hR : ChowHeightRecursion.Statement) (hS : ChowF
         rw [heq] at hδs hne
         obtain ⟨δW, hδW, hsum⟩ := exists_degrees_of_chowFormCycle he _ c g hg hδs hne
         rw [heq, ← hsum, chowHt_C_mul_prod hMul H _ _ _ _ (fun W hW => (hg W hW).1) hc]
-        have hprime : ∀ W ∈ (divCycle I fun j => (s j : K)).support, IsProjPrime W := by
+        have hprime : ∀ W ∈ (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I fun) j : ℤ) => (s j : K)).support, IsProjPrime W := by
           intro W hW
           exact isProjPrime_of_mem_support_divCycle hI _ hW
-        calc -(((e * ∑ W ∈ (divCycle I fun j => (s j : K)).support,
-                (divCycle I fun j => (s j : K)) W * δW W : ℕ)) : ℝ) * L
-            = ∑ W ∈ (divCycle I fun j => (s j : K)).support,
-                ((divCycle I fun j => (s j : K)) W : ℝ) * (-((e * δW W : ℕ) : ℝ) * L) := by
+        calc -(((e * ∑ W ∈ (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I fun) j : ℤ) => (s j : K)).support,
+                (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I fun) j : ℤ) => (s j : K)) W * δW W : ℕ)) : ℝ) * L
+            = ∑ W ∈ (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I fun) j : ℤ) => (s j : K)).support,
+                ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I fun) j : ℤ) => (s j : K)) W : ℝ) * (-((e * δW W : ℕ) : ℝ) * L) := by
               push_cast
               rw [Finset.mul_sum, ← Finset.sum_neg_distrib, Finset.sum_mul]
               refine Finset.sum_congr rfl fun W _ => ?_

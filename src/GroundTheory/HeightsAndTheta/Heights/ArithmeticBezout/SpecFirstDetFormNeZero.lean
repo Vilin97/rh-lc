@@ -2,6 +2,7 @@ import Mathlib
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.LatticePointLogCount
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
 import GroundTheory.HeightsAndTheta.Heights.Intersections.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -109,7 +110,7 @@ def ChowFormSection.Statement : Prop :=
     (u : Fin n → ℤ),
     IsArithVar P (e + 1 + 1) → IsIntChowForm P (e + 1) δ f → linForm u ∉ P →
       ∃ ε : ℤ, IsUnit ε ∧ specFirst u f =
-        C ε * cycleChowForm (divCycle P (linForm u)) fun W =>
+        C ε * cycleChowForm ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (linForm u)) W : ℤ))) fun W =>
           if IsHorizontal W then chowFormZ W e
           else C ((charOf W : ℤ) ^ (geoNum (e + 1) W fun _ _ => 1).toNat)
 
@@ -117,7 +118,7 @@ def ChowFormSectionPoint.Statement : Prop :=
   ∀ (n δ : ℕ) (P : Ideal (MRing (PBlk n))) (f : MvPolynomial (Fin (0 + 1) × Fin n) ℤ) (u : Fin n → ℤ),
     IsArithVar P (0 + 1) → IsIntChowForm P 0 δ f → linForm u ∉ P →
       ∃ ε : ℤ, IsUnit ε ∧ specFirst u f =
-        C ε * cycleChowForm (divCycle P (linForm u)) fun W =>
+        C ε * cycleChowForm ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (linForm u)) W : ℤ))) fun W =>
           C ((charOf W : ℤ) ^ (geoNum 0 W fun _ _ => 1).toNat)
 
 def VerticalPartGauss.Statement : Prop :=

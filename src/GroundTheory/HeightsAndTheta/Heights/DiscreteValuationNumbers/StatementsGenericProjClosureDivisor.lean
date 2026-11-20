@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreClosureNumber
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -20,7 +21,7 @@ def GenericProjClosureDivisor.Statement : Prop :=
     ∀ (Φ : Type) [Field Φ] [Algebra Ω Φ] [Algebra O Φ] [IsScalarTower O Ω Φ]
       (e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ), AlgebraicIndependent Ω t →
       IsModelOver (pointIdeal O (pairProjCoord y e φ φ' t)) (d + (N - 1)) →
-      ∃ f₀ g₀ : MRing (bundleIdx (bundleIdx ι M) M') O,
+      ∃ f₀ g₀ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'),
         IsVerticalDivisor (pointIdeal O (pairProjCoord y e φ φ' t)) ϖ
           (zetaFirst a₀ - zetaSecond a₀') f₀ g₀ ∧
         aeval (pairProjCoord y e φ φ' t) f₀ = aeval (pairProjCoord y e φ φ' t) g₀

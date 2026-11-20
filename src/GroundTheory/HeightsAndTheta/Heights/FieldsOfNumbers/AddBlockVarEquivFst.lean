@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PfContractedHypothesesExample
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -17,8 +18,8 @@ section Projection
 
 variable {F : Type u} [Field F] {K L : Type} {ι : K → Type} {ι₂ : L → Type}
 
-example : MRing (fun k => Sum.elim ι ι₂ ((Function.Embedding.inl : K ↪ K ⊕ L) k)) F =
-    MRing ι F := rfl
+example : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => Sum.elim ι ι₂ ((Function.Embedding.inl : K ↪ K ⊕ L) k)) =
+    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι := rfl
 
 theorem pullDeg_inl (b : K → ℤ) :
     pullDeg (Function.Embedding.inl : K ↪ K ⊕ L) b = IndefiniteRowSideFullHecke.FieldNumbers.pullDeg (L := L) b := by
@@ -31,7 +32,7 @@ theorem pullDeg_inl (b : K → ℤ) :
     rintro ⟨k, hk⟩
     exact Sum.inl_ne_inr hk
 
-theorem pulledFunField_eq [DecidableEq K] (P' : Ideal (MRing (Sum.elim ι ι₂) F)) [P'.IsPrime] :
+theorem pulledFunField_eq [DecidableEq K] (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (Sum.elim ι ι₂))) [P'.IsPrime] :
     IndefiniteRowSideFullHecke.FieldNumbers.pulledFunField ι₂ P' =
       (homFracDegZero (contractPrime (Function.Embedding.inl : K ↪ K ⊕ L) P')).map
         (contractFracMap Function.Embedding.inl P') := by
@@ -49,7 +50,7 @@ theorem pulledFunField_eq [DecidableEq K] (P' : Ideal (MRing (Sum.elim ι ι₂)
     simp [contractFracMap, contractQuot, map_div₀, IndefiniteRowSideFullHecke.FieldNumbers.blockIncl]
     rfl
 
-theorem relDeg_inl [DecidableEq K] [DecidableEq L] (P' : Ideal (MRing (Sum.elim ι ι₂) F))
+theorem relDeg_inl [DecidableEq K] [DecidableEq L] (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (Sum.elim ι ι₂)))
     [P'.IsPrime] :
     relDeg (Function.Embedding.inl : K ↪ K ⊕ L) P' = IndefiniteRowSideFullHecke.FieldNumbers.fibreDeg ι₂ P' := by
   unfold relDeg IndefiniteRowSideFullHecke.FieldNumbers.fibreDeg
@@ -76,7 +77,7 @@ def addBlockVarEquiv (ι : K → Type) (N : ℕ) :
   right_inv v := by rcases v with ⟨k | ⟨⟩, x⟩ <;> rfl
 
 def addBlockRingEquiv (ι : K → Type) (N : ℕ) :
-    MRing (addBlock ι N) F ≃ₐ[F] MRing (Sum.elim ι (fun _ : Unit => Fin (N + 1))) F :=
+    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (addBlock ι N) ≃ₐ[F] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (Sum.elim ι (fun _ : Unit => Fin (N + 1))) :=
   renameEquiv F (addBlockVarEquiv ι N)
 
 theorem pullDeg_some (c : K → ℤ) :

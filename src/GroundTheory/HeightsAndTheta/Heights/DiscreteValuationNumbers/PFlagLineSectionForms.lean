@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagLineSection
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -18,11 +19,11 @@ variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type} {Ω : Type*} 
 
 abbrev projMap (F : Type*) [Field F] [Algebra F Ω] (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) :
-    MRing (bundleIdx ι M) F →+* MvPolynomial (Option K) Φ :=
+    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →+* MvPolynomial (Option K) Φ :=
   eval₂Hom (C.comp ((algebraMap Ω Φ).comp (algebraMap F Ω))) (fun p => C (projCoord y w φ t p) * X p.1)
 
 theorem mem_projIdeal_iff {y : (Σ k, ι k) → Ω} {w : Module.Basis (Fin N) Ω E}
-    {φ : Fin M → Module.Dual Ω E} {t : Fin N → Φ} {h : MRing (bundleIdx ι M) F} :
+    {φ : Fin M → Module.Dual Ω E} {t : Fin N → Φ} {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)} :
     h ∈ projIdeal F y w φ t ↔ projMap F y w φ t h = 0 :=
   RingHom.mem_ker
 
@@ -36,8 +37,8 @@ def liftN (α : K → ℕ) : Option K → ℕ := fun o => Option.elim o 0 α
 theorem liftN_add (α β : K → ℕ) : liftN (α + β) = liftN α + liftN β := by
   funext o; cases o <;> simp [liftN]
 
-def chartMon (F : Type*) [Field F] (M : ℕ) (c : ∀ k, ι k) (α : K → ℕ) : MRing (bundleIdx ι M) F :=
-  ∏ k, (X ⟨some k, c k⟩ : MRing (bundleIdx ι M) F) ^ α k
+def chartMon (F : Type*) [Field F] (M : ℕ) (c : ∀ k, ι k) (α : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) :=
+  ∏ k, (X ⟨some k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) ^ α k
 
 theorem projMap_X_some (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) (k : K) (i : ι k) :
@@ -75,7 +76,7 @@ theorem isMultiHomog_chartMon (c : ∀ k, ι k) (α : K → ℕ) :
     IsMultiHomog (chartMon F M c α) (liftN α) := by
   unfold IsMultiHomog chartMon
   have h := IsWeightedHomogeneous.prod (w := blockWeight (bundleIdx ι M)) Finset.univ
-    (fun k => (X ⟨some k, c k⟩ : MRing (bundleIdx ι M) F) ^ α k)
+    (fun k => (X ⟨some k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) ^ α k)
     (fun k => α k • blockWeight (bundleIdx ι M) ⟨some k, c k⟩)
     (fun k _ => (isWeightedHomogeneous_X F _ _).pow (α k))
   convert h using 1
@@ -85,7 +86,7 @@ theorem isMultiHomog_chartMon (c : ∀ k, ι k) (α : K → ℕ) :
   | some k => simp [liftN, blockWeight, Finset.sum_apply, Pi.single_apply]
 
 theorem isMultiHomog_X_none (l : Fin M) :
-    IsMultiHomog (X ⟨none, l⟩ : MRing (bundleIdx ι M) F) (Pi.single none 1) := by
+    IsMultiHomog (X ⟨none, l⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) (Pi.single none 1) := by
   unfold IsMultiHomog
   exact isWeightedHomogeneous_X F _ _
 
@@ -93,13 +94,13 @@ variable (F M) in
 
 def IsChartForm (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) (c : ∀ k, ι k) (a : Ω) (n : ℕ)
-    (A : MRing (bundleIdx ι M) F) : Prop :=
+    (A : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) : Prop :=
   IsMultiHomog A (liftN fun _ => n) ∧
     projMap F y w φ t A = C (algebraMap Ω Φ (a * segreVec y c ^ n)) * tMon (fun _ => n)
 
 theorem IsChartForm.pad {y : (Σ k, ι k) → Ω} {w : Module.Basis (Fin N) Ω E}
     {φ : Fin M → Module.Dual Ω E} {t : Fin N → Φ} {c : ∀ k, ι k} {a : Ω} {n : ℕ}
-    {A : MRing (bundleIdx ι M) F} (h : IsChartForm F M y w φ t c a n A) (m : ℕ) :
+    {A : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)} (h : IsChartForm F M y w φ t c a n A) (m : ℕ) :
     IsChartForm F M y w φ t c a (n + m) (A * chartMon F M c (fun _ => m)) := by
   refine ⟨?_, ?_⟩
   · have := h.1.mul (isMultiHomog_chartMon (F := F) (M := M) c (fun _ => m))
@@ -113,7 +114,7 @@ theorem IsChartForm.pad {y : (Σ k, ι k) → Ω} {w : Module.Basis (Fin N) Ω E
 theorem exists_chartForm (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) (c : ∀ k, ι k) (hc : segreVec y c ≠ 0)
     {a : Ω} (ha : a ∈ chartRing F (segreVec y) c) :
-    ∃ (n : ℕ) (A : MRing (bundleIdx ι M) F), IsChartForm F M y w φ t c a n A := by
+    ∃ (n : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)), IsChartForm F M y w φ t c a n A := by
   induction ha using Algebra.adjoin_induction with
   | mem x hx =>
     obtain ⟨j, rfl⟩ := hx
@@ -152,7 +153,7 @@ theorem exists_chartForm (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω 
 theorem exists_chartForm_family (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) (c : ∀ k, ι k) (hc : segreVec y c ≠ 0)
     {J : Type*} [Fintype J] (a : J → Ω) (ha : ∀ j, a j ∈ chartRing F (segreVec y) c) :
-    ∃ n : ℕ, ∀ m, n ≤ m → ∀ j, ∃ A : MRing (bundleIdx ι M) F, IsChartForm F M y w φ t c (a j) m A := by
+    ∃ n : ℕ, ∀ m, n ≤ m → ∀ j, ∃ A : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M), IsChartForm F M y w φ t c (a j) m A := by
   choose n A hA using fun j => exists_chartForm (M := M) y w φ t c hc (ha j)
   refine ⟨∑ j, n j, fun m hm j => ?_⟩
   have hle : n j ≤ m := (Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ j)).trans hm

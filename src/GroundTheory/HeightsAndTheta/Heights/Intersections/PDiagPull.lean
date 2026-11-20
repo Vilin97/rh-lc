@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsDiagPull
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.MemDivSuppOfDivCycleNeZero
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRedC
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -164,8 +165,8 @@ theorem multAt_eq_locLen (J W : Ideal (MRing (T.wwIdx ι ν κ))) (hW : W.IsPrim
   simp [multAt, hW, locLen]
 
 theorem divCycle_eq (s : MRing (T.yyIdx ι ν κ)) (d : T.YBlk → ℕ) (hs : IsMultiHomog s d) :
-    divCycle (T.wwIdeal x δ e φ a₀ a₀) (rename (T.yyEmb 0) s) =
-      divCycle (T.wwIdeal x δ e φ a₀ a₀) (rename (T.yyEmb 1) s) := by
+    (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (T.wwIdeal x δ e φ a₀ a₀) (rename (T.yyEmb 0) s)) W : ℤ)) =
+      (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (T.wwIdeal x δ e φ a₀ a₀) (rename (T.yyEmb 1) s)) W : ℤ)) := by
   classical
   have hV : (T.wwIdeal x δ e φ a₀ a₀).IsPrime := RingHom.ker_isPrime _
   have hc := cross_mem x δ e φ a₀ s d hs

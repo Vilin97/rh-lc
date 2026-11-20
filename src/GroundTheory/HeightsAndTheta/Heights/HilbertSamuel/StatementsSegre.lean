@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsMultiDegreePositive
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -10,17 +11,17 @@ noncomputable section
 
 variable {K : Type} [Fintype K] {ι : K → Type} (F : Type) [Field F]
 
-def segreMap : MRing (fun _ : Unit => ∀ k, ι k) F →ₐ[F] MRing ι F :=
+def segreMap : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k) →ₐ[F] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι :=
   aeval fun v => ∏ k, X ⟨k, v.2 k⟩
 
-def segrePrime (q : Ideal (MRing ι F)) : Ideal (MRing (fun _ : Unit => ∀ k, ι k) F) :=
+def segrePrime (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k)) :=
   q.comap (segreMap F)
 
 theorem segreMap_X (f : ∀ k, ι k) :
-    segreMap F (X ⟨(), f⟩ : MRing (fun _ : Unit => ∀ k, ι k) F) = ∏ k, X ⟨k, f k⟩ :=
+    segreMap F (X ⟨(), f⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k)) = ∏ k, X ⟨k, f k⟩ :=
   aeval_X _ _
 
-instance segrePrime.isPrime (q : Ideal (MRing ι F)) [q.IsPrime] : (segrePrime F q).IsPrime :=
+instance segrePrime.isPrime (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [q.IsPrime] : (segrePrime F q).IsPrime :=
   Ideal.comap_isPrime _ _
 
 end

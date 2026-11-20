@@ -1,11 +1,12 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailBis
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization
 
 open MvPolynomial
-open GroundTheory.Heights₂.Heights.NumbersDVR (MRing IsMultiProjPrime blockWeight)
+open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver blockWeight IsMultiProjPrime)
 
 noncomputable section
 
@@ -13,7 +14,7 @@ section Lift
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {F : Type} [Field F]
 
-def segreSubstVal : (Σ d, segreIdx ι d) → MRing ι F
+def segreSubstVal : (Σ d, segreIdx ι d) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι
   | ⟨Sum.inl _, c⟩ => ∏ k, X ⟨k, c k⟩
   | ⟨Sum.inr k, i⟩ => X ⟨k, i⟩
 
@@ -30,7 +31,7 @@ theorem segreDeg_injective_of_fst {b b' : Unit ⊕ K → ℕ} (h₀ : b' (Sum.in
     simp only [segreDeg] at this
     omega
 
-theorem segreLiftVal_eq_and_isWeightedHomogeneous (W : Ideal (MRing ι F)) (v : Σ d, segreIdx ι d) :
+theorem segreLiftVal_eq_and_isWeightedHomogeneous (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (v : Σ d, segreIdx ι d) :
     segreLiftVal ι F W v = Polynomial.C (Ideal.Quotient.mk W (segreSubstVal v)) *
         Polynomial.X ^ (blockWeight (segreIdx ι) v (Sum.inl ())) ∧
       IsWeightedHomogeneous (blockWeight ι) (segreSubstVal (F := F) v)
@@ -40,7 +41,7 @@ theorem segreLiftVal_eq_and_isWeightedHomogeneous (W : Ideal (MRing ι F)) (v : 
   · cases u
     refine ⟨by simp [segreLiftVal, segreSubstVal, blockWeight]; ring, ?_⟩
     have hp := IsWeightedHomogeneous.prod (w := blockWeight ι) Finset.univ
-      (fun k => (X ⟨k, i k⟩ : MRing ι F)) (fun k => blockWeight ι ⟨k, i k⟩)
+      (fun k => (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (fun k => blockWeight ι ⟨k, i k⟩)
       (fun k _ => isWeightedHomogeneous_X _ _ _)
     have hd : segreDeg (blockWeight (segreIdx ι) ⟨Sum.inl (), i⟩) =
         ∑ k, blockWeight ι ⟨k, i k⟩ := by
@@ -57,8 +58,8 @@ theorem segreLiftVal_eq_and_isWeightedHomogeneous (W : Ideal (MRing ι F)) (v : 
     rw [hd]
     exact isWeightedHomogeneous_X _ _ _
 
-theorem segreLiftMap_of_isMultiHomog (W : Ideal (MRing ι F)) (b : Unit ⊕ K → ℕ)
-    {f : MRing (segreIdx ι) F} (hf : IsWeightedHomogeneous (blockWeight (segreIdx ι)) f b) :
+theorem segreLiftMap_of_isMultiHomog (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (b : Unit ⊕ K → ℕ)
+    {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (segreIdx ι)} (hf : IsWeightedHomogeneous (blockWeight (segreIdx ι)) f b) :
     segreLiftMap ι F W f = Polynomial.C (Ideal.Quotient.mk W (aeval segreSubstVal f)) *
         Polynomial.X ^ (b (Sum.inl ())) ∧
       IsWeightedHomogeneous (blockWeight ι) (aeval (segreSubstVal (F := F)) f) (segreDeg b) := by

@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsRename
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.ContractBlocksSplitPrime
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PRenameMultiHomog
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -15,27 +16,27 @@ universe u
 section SplitRelDeg
 
 variable {F : Type u} [Field F] {K K' : Type} (j : K ↪ K') {ι' : K' → Type}
-  (P' : Ideal (MRing ι' F)) [P'.IsPrime]
+  (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime]
 
 def splitQuotToFrac :
-    (MRing (splitCoord j ι') F ⧸ splitPrime j P') →ₐ[F] FractionRing (MRing ι' F ⧸ P') :=
-  (IsScalarTower.toAlgHom F (MRing ι' F ⧸ P') (FractionRing (MRing ι' F ⧸ P'))).comp
+    (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (splitCoord j ι') ⧸ splitPrime j P') →ₐ[F] FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') :=
+  (IsScalarTower.toAlgHom F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P'))).comp
     (Ideal.quotientMapₐ P' (rename (splitVar j ι')) le_rfl)
 
 def splitFracMap :
-    FractionRing (MRing (splitCoord j ι') F ⧸ splitPrime j P') →ₐ[F]
-      FractionRing (MRing ι' F ⧸ P') :=
+    FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (splitCoord j ι') ⧸ splitPrime j P') →ₐ[F]
+      FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') :=
   IsFractionRing.liftAlgHom (g := splitQuotToFrac j P')
-    ((IsFractionRing.injective (MRing ι' F ⧸ P') (FractionRing (MRing ι' F ⧸ P'))).comp
+    ((IsFractionRing.injective (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P'))).comp
       Ideal.quotientMap_injective)
 
-theorem splitFracMap_mk (f : MRing (splitCoord j ι') F) :
+theorem splitFracMap_mk (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (splitCoord j ι')) :
     splitFracMap j P' (algebraMap _ _ (Ideal.Quotient.mk (splitPrime j P') f)) =
       algebraMap _ _ (Ideal.Quotient.mk P' (rename (splitVar j ι') f)) := by
   simp [splitFracMap, splitQuotToFrac]
   rfl
 
-theorem contractFracMap_mk (f : MRing (fun k => ι' (j k)) F) :
+theorem contractFracMap_mk (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))) :
     contractFracMap j P' (algebraMap _ _ (Ideal.Quotient.mk (contractPrime j P') f)) =
       algebraMap _ _ (Ideal.Quotient.mk P' (rename (blockIncl j ι') f)) := by
   simp [contractFracMap, contractQuot]
@@ -60,12 +61,12 @@ theorem extend_equiv_zero {A B : Type} (E : A ≃ B) (d : A → ℕ) :
   simp [E.injective.extend_apply]
 
 omit [P'.IsPrime] in
-theorem mem_contractPrime_inl_iff (g : MRing (fun k => ι' (j k)) F) :
+theorem mem_contractPrime_inl_iff (g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))) :
     g ∈ contractPrime (Function.Embedding.inl : K ↪ K ⊕ blockCompl j) (splitPrime j P') ↔
       g ∈ contractPrime j P' :=
   iff_of_eq (congrArg (· ∈ P') (rename_splitVar_blockIncl_inl j g))
 
-theorem splitFracMap_contractFracMap_inl_mk (f : MRing (fun k => ι' (j k)) F) :
+theorem splitFracMap_contractFracMap_inl_mk (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))) :
     splitFracMap j P' (contractFracMap (Function.Embedding.inl : K ↪ K ⊕ blockCompl j)
         (splitPrime j P') (algebraMap _ _
           (Ideal.Quotient.mk (contractPrime Function.Embedding.inl (splitPrime j P')) f))) =
@@ -75,7 +76,7 @@ theorem splitFracMap_contractFracMap_inl_mk (f : MRing (fun k => ι' (j k)) F) :
   have h3 := contractFracMap_mk j P' f
   have h4 := rename_splitVar_blockIncl_inl j (R := F) f
   exact (congrArg (splitFracMap j P') h1).trans (h2.trans ((congrArg (fun p =>
-    algebraMap (MRing ι' F ⧸ P') (FractionRing (MRing ι' F ⧸ P')) (Ideal.Quotient.mk P' p)) h4).trans
+    algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P')) (Ideal.Quotient.mk P' p)) h4).trans
       h3.symm))
 
 theorem map_splitFracMap_homFracDegZero [DecidableEq K] [DecidableEq K'] :

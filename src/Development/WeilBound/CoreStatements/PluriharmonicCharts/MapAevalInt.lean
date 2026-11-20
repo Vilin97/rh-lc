@@ -4,6 +4,7 @@ import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsPeriodOn
 import Development.AutomorphicSpectrum.Proofs.MetricProofs.PullbackPullback
 import Development.WeilBound.CoreStatements.PluriharmonicCharts.MinorEmpty
 import Development.WeilBound.CoreStatements.PluriharmonicCharts.IsBlockMapInitialVertex
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial MeasureTheory Filter Topology Matrix ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
 open scoped ComplexOrder Classical
 open GlobalTheory.CompanionTheory.Ar.PB.WSq
@@ -17,7 +18,7 @@ theorem PositivityTheory.Xgp.c_algsq.LC.map_aeval_int {σ S T : Type} [CommRing 
 
 open PositivityTheory.Xgp.c_algsq.LC GlobalTheory.CompanionTheory.Ar.PB.WSq.Pts GlobalTheory.CompanionTheory.Ar.PB.CPts GlobalTheory.CompanionTheory.Ar.PB.ValRing in
 set_option maxHeartbeats 1000000 in
-theorem PositivityTheory.Xgp.c_algsq.lc : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Φ : Type) [Field Φ] (y : (Σ k, ι k) → Φ) (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N j : ℕ) (M : FlagModel y Ψ N j) (d : ℕ) (τ : Ψ) (a b : Fin N) (k₀ : K) (ca cb : Fin N), (b : ℕ) = a + 1 → ((b : ℕ) < j ∨ j ≤ (a : ℕ)) → M.blk (τ, a) = some k₀ → (ca : ℕ) = lastCol N j a → (cb : ℕ) = ca + 1 → IsArithVar (mCoordIdeal y) (d + 2) → ∀ (g h : MRing fun o : Option K => ι (o.getD k₀)) (dg dh : Option K → ℕ), IsMultiHomog g dg → IsMultiHomog h dh → (∀ o : Option K, (dg o : ℤ) - dh o = o.elim 1 fun k => -(fun k => ∑ p, xiCoef τ a p * M.dy p k) k - (if M.blk (τ, a) = some k then 1 else 0)) → aeval (M.wCo (τ, a) k₀ ca cb RatFunc.X) g = RatFunc.X * algebraMap Φ (RatFunc Φ) (∏ p, (if IsProperStep N j p.2 then 1 else algebraMap M.Ω Φ (M.lam p) * (if (p.2 : ℕ) + 1 = j then (if (a : ℕ) < j then minorIJ (M.g p.1) (wIdx N j) (wIdx N j) else 1) else minorIJ (M.g p.1) (omIdx N j) (omIdx N j))) ^ xiCoef τ a p) * aeval (M.wCo (τ, a) k₀ ca cb RatFunc.X) h → ∀ z ∈ mcPts (mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X)), ∀ F, M.IsFrame F → M.GoodAt F (mCoordIdeal (basePart M.blk (fstPt k₀ z))) → ∀ (hm : Matrix (Fin N) (Fin N) ℂ) (t : ℂ), IsBlockDiag j hm → hm.det ≠ 0 → (∀ i, M.ExactAt F (τ, i) (fstPt k₀ z) hm) → M.ExactAt F (τ, a) (sndPt k₀ z) (hm * (1 + Matrix.single cb ca t)) → eval z (map (Int.castRingHom ℂ) g) = t * (∏ i : Fin N, (if IsProperStep N j i then 1 else valAt M.x (F.υ (τ, i)) (basePart M.blk (fstPt k₀ z)) * (if (i : ℕ) + 1 = j then (if (a : ℕ) < j then minorIJ hm (wIdx N j) (wIdx N j) else 1) else minorIJ hm (omIdx N j) (omIdx N j))) ^ xiCoef τ a (τ, i)) * eval z (map (Int.castRingHom ℂ) h) := by
+theorem PositivityTheory.Xgp.c_algsq.lc : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Φ : Type) [Field Φ] (y : (Σ k, ι k) → Φ) (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N j : ℕ) (M : FlagModel y Ψ N j) (d : ℕ) (τ : Ψ) (a b : Fin N) (k₀ : K) (ca cb : Fin N), (b : ℕ) = a + 1 → ((b : ℕ) < j ∨ j ≤ (a : ℕ)) → M.blk (τ, a) = some k₀ → (ca : ℕ) = lastCol N j a → (cb : ℕ) = ca + 1 → IsArithVar (mCoordIdeal y) (d + 2) → ∀ (g h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀)) (dg dh : Option K → ℕ), IsMultiHomog g dg → IsMultiHomog h dh → (∀ o : Option K, (dg o : ℤ) - dh o = o.elim 1 fun k => -(fun k => ∑ p, xiCoef τ a p * M.dy p k) k - (if M.blk (τ, a) = some k then 1 else 0)) → aeval (M.wCo (τ, a) k₀ ca cb RatFunc.X) g = RatFunc.X * algebraMap Φ (RatFunc Φ) (∏ p, (if IsProperStep N j p.2 then 1 else algebraMap M.Ω Φ (M.lam p) * (if (p.2 : ℕ) + 1 = j then (if (a : ℕ) < j then minorIJ (M.g p.1) (wIdx N j) (wIdx N j) else 1) else minorIJ (M.g p.1) (omIdx N j) (omIdx N j))) ^ xiCoef τ a p) * aeval (M.wCo (τ, a) k₀ ca cb RatFunc.X) h → ∀ z ∈ mcPts (mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X)), ∀ F, M.IsFrame F → M.GoodAt F (mCoordIdeal (basePart M.blk (fstPt k₀ z))) → ∀ (hm : Matrix (Fin N) (Fin N) ℂ) (t : ℂ), IsBlockDiag j hm → hm.det ≠ 0 → (∀ i, M.ExactAt F (τ, i) (fstPt k₀ z) hm) → M.ExactAt F (τ, a) (sndPt k₀ z) (hm * (1 + Matrix.single cb ca t)) → eval z (map (Int.castRingHom ℂ) g) = t * (∏ i : Fin N, (if IsProperStep N j i then 1 else valAt M.x (F.υ (τ, i)) (basePart M.blk (fstPt k₀ z)) * (if (i : ℕ) + 1 = j then (if (a : ℕ) < j then minorIJ hm (wIdx N j) (wIdx N j) else 1) else minorIJ hm (omIdx N j) (omIdx N j))) ^ xiCoef τ a (τ, i)) * eval z (map (Int.castRingHom ℂ) h) := by
   intro K _ ι _ Φ _ y Ψ _ _ N j M d τ a b k₀ ca cb hb hab hk hca hcb _ g h dg dh hg hh hdeg hq z hz F hF hG hm t hmb hmd
     hex hex'
   have hS := same_summand hb hab hca hcb
@@ -188,13 +189,13 @@ theorem PositivityTheory.Xgp.c_algsq.lc : ∀ (K : Type) [Fintype K] (ι : K →
       (∏ i₀ : Fin N, if (i₀ : ℕ) + 1 = a then f (FR i₀) else 1) * f (FR b) := fun f => by
     simp only [Ft, map_mul, map_prod, apply_ite f, map_one]
   let sq : (Σ o : Option K, ι (o.getD k₀)) → R := fun q => sv q.1 q.2
-  have ev1 : ∀ (f : MRing fun o : Option K => ι (o.getD k₀)) (df : Option K → ℕ), IsMultiHomog f df →
+  have ev1 : ∀ (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀)) (df : Option K → ℕ), IsMultiHomog f df →
       θ (aeval (M.wCo (τ, a) k₀ ca cb RatFunc.X) f) = (∏ o, e o ^ df o) * i (aeval sq f) := fun f df hf => by
     rw [map_aeval_int i, ← PositivityTheory.Xgp.W.aeval_scale' e _ hf, map_aeval_int θ]
     congr 2
     funext q
     exact has q.1 q.2
-  have ev2 : ∀ (f : MRing fun o : Option K => ι (o.getD k₀)) (df : Option K → ℕ), IsMultiHomog f df →
+  have ev2 : ∀ (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀)) (df : Option K → ℕ), IsMultiHomog f df →
       ρ (aeval sq f) = (∏ o, t' o ^ df o) * eval z (map (Int.castRingHom ℂ) f) := fun f df hf => by
     rw [PositivityTheory.Xgp.W.eval_map_eq_aeval, ← PositivityTheory.Xgp.W.aeval_scale' t' _ hf, map_aeval_int ρ]
     congr 2

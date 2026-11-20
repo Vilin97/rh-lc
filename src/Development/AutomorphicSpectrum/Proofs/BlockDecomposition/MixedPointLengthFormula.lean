@@ -5,6 +5,7 @@ import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.Multiprojective
 import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.FiniteResidueFieldOfIsClosedOfLocallyOfFiniteTyp
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockImageInverse
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PointIdealMultiprojectivePrime
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 set_option autoImplicit false
 
@@ -14,7 +15,7 @@ open CategoryTheory AlgebraicGeometry Limits TopologicalSpace MvPolynomial
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open GlobalTheory.AbLaw GlobalTheory.CechPic GlobalTheory.ProjSpace GlobalTheory.CxPts GlobalTheory.Cartier GlobalTheory.ArInt
 open GroundTheory.Arith.SchemeCoh GroundTheory.Arith.SchemeCoh.ProjSpace
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsMultiHomog geoNum charOf mCoordIdeal mConeMap)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver geoNum IsMultiHomog charOf mCoordIdeal mConeMap)
 open GlobalTheory.CompanionTheory.MPDict
 
 namespace GlobalTheory.CompanionTheory.MixZ.PtLenProof

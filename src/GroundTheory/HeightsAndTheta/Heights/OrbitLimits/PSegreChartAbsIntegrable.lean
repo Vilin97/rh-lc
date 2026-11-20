@@ -7,6 +7,7 @@ import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PSheetSumMeasura
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PCutOffGradient
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PCutOff
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PVarIntAdd
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -14,7 +15,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MeasureTheory MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine)
 open ComplexSets Matrix
 
 theorem SegreChartAbsIntegrable.proof (h₁ : SliceMassFinite.Statement)

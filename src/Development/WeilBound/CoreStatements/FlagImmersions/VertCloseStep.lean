@@ -5,6 +5,7 @@ import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.RootOriginHeigh
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.RootOriginHeightComparisonThreeStatement
 import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FlagLabelBasesExist
 import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 noncomputable section
 
@@ -150,7 +151,7 @@ theorem vertClose_none (hi : i.comp o₀.g = o.g) (hv : IsBlockMap κ v) (hv₀ 
   obtain ⟨Tp, hx, hx', hvert, hiso⟩ := LineUnit.lines_isometric E H D l Xo c Y S ∅ M R Sys Fx o o₀ M.Ω K ι y κ v κ₀ v₀
     (RingHom.id _) i hv hv₀ hy hy₀ (by rw [hi]; rfl) hA
   obtain ⟨⟨bf, bg, hbf, hbg, hb⟩, hfP, hgP, hW⟩ := hvert ()
-  have hdiv : divCycle (mCoordIdeal y) (Tp.f ()) = divCycle (mCoordIdeal y) (Tp.g ()) :=
+  have hdiv : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) (Tp.f ())) W : ℤ)) = (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal y) (Tp.g ())) W : ℤ)) :=
     div_eq_of_unit hA.2.1.1 hfP hgP fun W h₁ h₂ h₃ => hW W h₁ h₂ h₃ (by simp)
   refine ⟨Tp.f (), Tp.g (), bf, bg, (GroundTheory.Heights₂.Heights.Bridge.isMultiHomog_iff _ _).1 hbf,
     (GroundTheory.Heights₂.Heights.Bridge.isMultiHomog_iff _ _).1 hbg, hfP, hgP, fun k => ?_, fun z hz => ?_,

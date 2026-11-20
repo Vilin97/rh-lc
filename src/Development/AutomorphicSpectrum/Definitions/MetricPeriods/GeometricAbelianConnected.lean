@@ -2,6 +2,7 @@ import Mathlib
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.CompRightEqZero
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.KappaSt
 import Development.AutomorphicSpectrum.Definitions.MetricPeriods.MetricsProjectionFormulaNef
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 noncomputable section
 
@@ -104,11 +105,7 @@ structure AlgSq (P : Ideal (MRing ι)) (d : ℕ) (k₀ : K) (xi2 : K → ℤ) wh
   PW_le : PW ≤ Δ
   diag : ∀ i i' : ι k₀, X (v 0 ⟨k₀, i⟩) * X (v 1 ⟨k₀, i'⟩) - X (v 0 ⟨k₀, i'⟩) * X (v 1 ⟨k₀, i⟩) ∈ Δ
 
-  g : MRing ιW
-
-  h : MRing ιW
-
-  dg : KW → ℕ
+  g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver h ιW : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver dg ιW : KW → ℕ
 
   dh : KW → ℕ
   g_deg : IsMultiHomog g dg
@@ -116,7 +113,7 @@ structure AlgSq (P : Ideal (MRing ι)) (d : ℕ) (k₀ : K) (xi2 : K → ℤ) wh
   g_nmem : g ∉ PW
   h_nmem : h ∉ PW
   deg_eq : ∀ k', 2 * ((dg k' : ℤ) - dh k') = -(pullDeg (κ 0) xi2 k' + pullDeg (κ 1) xi2 k')
-  div_eq : divCycle PW g = divCycle PW h + Finsupp.single Δ 1
+  div_eq : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle PW g) W : ℤ)) = divCycle PW h + Finsupp.single Δ 1
 
 attribute [instance] AlgSq.finKW AlgSq.finιW
 

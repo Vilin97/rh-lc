@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsFunctionFi
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsMChart
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PPFDegree
 import GroundTheory.ArithmeticGeometry.AbelianVarieties.JacobianSmoothness.RingKrullDimLeRingKrullDimQuotientAddOne
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -17,25 +18,25 @@ namespace FunctionFieldFinite
 
 variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
 
-def chartGens (P : Ideal (MRing ι F)) [P.IsPrime] (u : ∀ k, ι k) :
-    Set (FractionRing (MRing ι F ⧸ P)) :=
-  Set.range fun v => algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P (X v)) /
-    algebraMap (MRing ι F ⧸ P) _ (Ideal.Quotient.mk P (X ⟨v.1, u v.1⟩))
+def chartGens (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] (u : ∀ k, ι k) :
+    Set (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) :=
+  Set.range fun v => algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P (X v)) /
+    algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _ (Ideal.Quotient.mk P (X ⟨v.1, u v.1⟩))
 
 omit [Fintype K] [DecidableEq K] in
 
-theorem range_chartMap (P : Ideal (MRing ι F)) [P.IsPrime] (u : ∀ k, ι k) :
+theorem range_chartMap (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] (u : ∀ k, ι k) :
     (chartMap P u).range = Algebra.adjoin F (chartGens P u) :=
   aeval_range _
 
-theorem homFracDegZero_eq (hD : MChartDehomog.Statement.{u}) (P : Ideal (MRing ι F)) [P.IsPrime]
-    (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ P) :
+theorem homFracDegZero_eq (hD : MChartDehomog.Statement.{u}) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime]
+    (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P) :
     homFracDegZero P = IntermediateField.adjoin F (chartGens P u) := by
   apply le_antisymm
   · unfold homFracDegZero
     rw [IntermediateField.adjoin_le_iff]
     rintro _ ⟨b, f, g, hf, hg, -, rfl⟩
-    have hm : algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P))
+    have hm : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P))
         (Ideal.Quotient.mk P (chartMonomial u b)) ≠ 0 := by
       rw [chartMonomial, map_prod, map_prod]
       refine Finset.prod_ne_zero_iff.mpr fun k _ => ?_
@@ -55,22 +56,22 @@ theorem homFracDegZero_eq (hD : MChartDehomog.Statement.{u}) (P : Ideal (MRing �
 open IntermediateField.algebraAdjoinAdjoin in
 
 theorem trdeg_homFracDegZero (hD : MChartDehomog.Statement.{u}) (hT : MChartTrdeg.Statement.{u})
-    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)) [P.IsPrime] (hP : IsMultiHomogIdeal P)
-    (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ P) :
-    Algebra.trdeg F (homFracDegZero P) + Fintype.card K = Algebra.trdeg F (MRing ι F ⧸ P) := by
+    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] (hP : IsMultiHomogIdeal P)
+    (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P) :
+    Algebra.trdeg F (homFracDegZero P) + Fintype.card K = Algebra.trdeg F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) := by
   rw [← hT F K ι P hP u hu, homFracDegZero_eq hD P u hu,
     GroundTheory.Arith.Abelian.Jacobian.trdeg_eq_of_isFractionRing (k := F)
       (A := Algebra.adjoin F (chartGens P u)), ← range_chartMap]
   exact congrArg (· + _) (Ideal.quotientKerEquivRange (chartMap P u)).trdeg_eq.symm
 
 theorem relDim_eq_trdeg (hD : MChartDehomog.Statement.{u}) (hT : MChartTrdeg.Statement.{u})
-    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)) [P.IsPrime] (hP : IsMultiProjPrime P) :
+    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] (hP : IsMultiProjPrime P) :
     ∃ n : ℕ, Algebra.trdeg F (homFracDegZero P) = n ∧
       relDim P = (((n : ℤ) : WithTop ℤ) : WithBot (WithTop ℤ)) := by
   choose u hu using hP.relevant
   have h1 := trdeg_homFracDegZero hD hT P hP.multiHomog u hu
   obtain ⟨m, hdim, htr⟩ :=
-    GroundTheory.Arith.Abelian.Jacobian.exists_ringKrullDim_eq_trdeg (k := F) (A := MRing ι F ⧸ P)
+    GroundTheory.Arith.Abelian.Jacobian.exists_ringKrullDim_eq_trdeg (k := F) (A := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)
   rw [htr] at h1
   have hlt : Algebra.trdeg F (homFracDegZero P) < Cardinal.aleph0 :=
     lt_of_le_of_lt (h1 ▸ self_le_add_right _ _) (Cardinal.natCast_lt_aleph0 (n := m))
@@ -116,8 +117,8 @@ theorem FunctionFieldFinite.proof (hD : MChartDehomog.Statement.{u})
     have : n + m = n := by exact_mod_cast htow
     omega
   have : Algebra.IsAlgebraic E κ' := trdeg_eq_zero_iff.mp (by rw [hm, hm0]; rfl)
-  let g : κ' →ₐ[E] FractionRing (MRing ι' F ⧸ P') :=
-    { (κ'.val : κ' →+* FractionRing (MRing ι' F ⧸ P')) with commutes' := fun _ => rfl }
+  let g : κ' →ₐ[E] FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') :=
+    { (κ'.val : κ' →+* FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P')) with commutes' := fun _ => rfl }
   choose u hu using hP'.relevant
   have hκ' : κ' = IntermediateField.adjoin F (chartGens P' u) := homFracDegZero_eq hD P' u hu
   have hint : ∀ x ∈ chartGens P' u, IsIntegral E x := by

@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -165,11 +166,11 @@ section Forms
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem divCycle_eq_toNat_multAt {P : Ideal (MRing ι R)} (f g : MRing ι R)
-    {W : Ideal (MRing ι R)} [W.IsPrime] (hW : W ∈ (P ⊔ Ideal.span {g}).minimalPrimes)
+theorem divCycle_eq_toNat_multAt {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)
+    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} [W.IsPrime] (hW : W ∈ (P ⊔ Ideal.span {g}).minimalPrimes)
     (hrel : IsRelevant W) (hle : P ⊔ Ideal.span {g} ≤ P ⊔ Ideal.span {f}) :
-    divCycle P f W = ((multAt (P ⊔ Ideal.span {f}) W).toNat : ℤ) := by
-  unfold divCycle
+    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = ((multAt (P ⊔ Ideal.span {f}) W).toNat : ℤ) := by
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   by_cases hfW : P ⊔ Ideal.span {f} ≤ W
   · have hm : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes :=
       ⟨⟨hW.1.1, hfW⟩, fun Q hQ hQW => hW.2 ⟨hQ.1, hle.trans hQ.2⟩ hQW⟩
@@ -188,7 +189,7 @@ theorem DivCycleMul.proof : DivCycleMul.Statement := by
   by_cases hrel : IsRelevant W
   swap
   · simp only [Pi.add_apply]
-    unfold divCycle
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
     rw [dif_neg (fun h => hrel h.2), dif_neg (fun h => hrel h.2), dif_neg (fun h => hrel h.2),
       add_zero]
   by_cases hm : W ∈ (P ⊔ Ideal.span {x * y}).minimalPrimes
@@ -211,7 +212,7 @@ theorem DivCycleMul.proof : DivCycleMul.Statement := by
     push_cast
     ring
   · simp only [Pi.add_apply]
-    unfold divCycle
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
     have hnx : ¬ W ∈ (P ⊔ Ideal.span {x}).minimalPrimes :=
       fun h => hm (mem_minimalPrimes_sup_span_mul hy h)
     have hny : ¬ W ∈ (P ⊔ Ideal.span {y}).minimalPrimes :=

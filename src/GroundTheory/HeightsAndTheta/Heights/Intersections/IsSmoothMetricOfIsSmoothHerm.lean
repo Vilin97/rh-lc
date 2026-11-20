@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.Intersections.Statements
 import GroundTheory.HeightsAndTheta.Heights.Intersections.AnalyticResolutionHypothesesProjectiveLine
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsVerticalDivOfIsVerticalDivisorAlt
 import ReciprocityTheory.AnalyticForms.RegularLocalRings.IntToRat
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -34,7 +35,7 @@ theorem isOpen_blockNonzero : IsOpen {w : MCone ι | ∀ k, ∃ i, w ⟨k, i⟩ 
 
 omit [DecidableEq K] in
 
-theorem isSmoothMetric_of_isSmoothHerm (P : Ideal (MRing ι ℂ)) (L : HLine ι)
+theorem isSmoothMetric_of_isSmoothHerm (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) (L : HLine ι)
     (h : ReciprocityTheory.ChartRestriction.G.Geo.IsSmoothHerm L) : IsSmoothMetric P L := by
   intro z hz
   refine ⟨_, isOpen_blockNonzero.mem_nhds hz.1, logH L, ?_, fun w _ => rfl⟩

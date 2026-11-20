@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsLast
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleMul
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PComponentDim
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.RingKrullDimQuotientLeComapAddOne
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -12,11 +13,11 @@ open MvPolynomial
 universe u
 
 theorem residual_newVar_mem {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)] {R : Type u}
-    [CommRing R] [IsNoetherianRing R] {P : Ideal (MRing ι R)} [P.IsPrime] {s g f m : MRing ι R}
-    (e : K → ℕ) (hfP : f ∉ P) (hmP : m ∉ P) {G' : Ideal (MRing (extIdx ι (BlowUpIdx ι)) R)}
+    [CommRing R] [IsNoetherianRing R] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} [P.IsPrime] {s g f m : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
+    (e : K → ℕ) (hfP : f ∉ P) (hmP : m ∉ P) {G' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι (BlowUpIdx ι)))}
     (hP'G' : blowUpOf P (blowUpGens s g f m e) ≤ G')
     (hres : 0 < ratDiv (blowUpOf P (blowUpGens s g f m e)) (newVar (some none)) (liftForm m) G') :
-    ∀ j, j ≠ none → (newVar j : MRing (extIdx ι (BlowUpIdx ι)) R) ∈ G' := by
+    ∀ j, j ≠ none → (newVar j : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι (BlowUpIdx ι))) ∈ G' := by
   set P' := blowUpOf P (blowUpGens s g f m e) with hP'def
   have hP'prime : P'.IsPrime := RingHom.ker_isPrime _
   have hmul := DivCycleMul.proof R (Option K) (extIdx ι (BlowUpIdx ι)) P'
@@ -24,14 +25,14 @@ theorem residual_newVar_mem {K : Type} [Fintype K] [DecidableEq K] {ι : K → T
     rw [hP'def, blowUpOf, RingHom.mem_ker, aeval_blowUpSubst_liftForm, Polynomial.C_eq_zero,
       Ideal.Quotient.eq_zero_iff_mem] at h
     exact hmP h
-  have hY₁P' : (newVar (some none) : MRing (extIdx ι (BlowUpIdx ι)) R) ∉ P' := fun h => by
+  have hY₁P' : (newVar (some none) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι (BlowUpIdx ι))) ∉ P' := fun h => by
     rw [hP'def, blowUpOf, RingHom.mem_ker] at h
     simp only [newVar, aeval_X, blowUpSubst, blowUpGens, mul_eq_zero, Polynomial.X_ne_zero, or_false,
       Polynomial.C_eq_zero, Ideal.Quotient.eq_zero_iff_mem] at h
     exact (Ideal.IsPrime.mem_or_mem inferInstance h).elim hfP hmP
-  have hnonneg : ∀ x W, 0 ≤ divCycle P' x W := fun x W => by
-    unfold divCycle; split_ifs <;> simp
-  have hY₁G' : (newVar (some none) : MRing (extIdx ι (BlowUpIdx ι)) R) ∈ G' := by
+  have hnonneg : ∀ x W, 0 ≤ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P' x) W : ℤ) := fun x W => by
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; split_ifs <;> simp
+  have hY₁G' : (newVar (some none) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι (BlowUpIdx ι))) ∈ G' := by
     apply form_mem_of_divCycle_ne_zero (P := P')
     have := hnonneg (liftForm m) G'
     unfold ratDiv at hres; omega
@@ -44,15 +45,15 @@ theorem residual_newVar_mem {K : Type} [Fintype K] [DecidableEq K] {ι : K → T
     rw [hP'def, blowUpOf, RingHom.mem_ker]
     simp only [map_sub, map_mul, aeval_blowUpSubst_liftForm, newVar, aeval_X, blowUpSubst, blowUpGens]
     ring
-  have hYiP' : (newVar (some (some i)) : MRing (extIdx ι (BlowUpIdx ι)) R) ∉ P' := fun h => hYi (hP'G' h)
-  by_cases hp : liftForm (J := BlowUpIdx ι) (powMonomial e i : MRing ι R) ∈ P'
+  have hYiP' : (newVar (some (some i)) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι (BlowUpIdx ι))) ∉ P' := fun h => hYi (hP'G' h)
+  by_cases hp : liftForm (J := BlowUpIdx ι) (powMonomial e i : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∈ P'
   · have h := P'.sub_mem (P'.mul_mem_right (newVar (some none)) hp) hrel
     rw [sub_sub_cancel] at h
     exact (hP'prime.mem_or_mem h).elim hlm hYiP'
   · have h1 := congrFun (divCycle_congr_of_sub_mem hrel) G'
     rw [hmul _ _ hP'prime hp hY₁P', hmul _ _ hP'prime hlm hYiP'] at h1
     simp only [Pi.add_apply] at h1
-    have h2 : divCycle P' (newVar (some (some i))) G' = 0 := by
+    have h2 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P' (newVar (some (some i)))) G' : ℤ) = 0 := by
       by_contra h; exact hYi (form_mem_of_divCycle_ne_zero h)
     have h3 := hnonneg (liftForm (powMonomial e i)) G'
     unfold ratDiv at hres; omega
@@ -64,7 +65,7 @@ theorem ResidualContractionComponent.proof (hpieces : BlowUpDecomposition.Statem
   have : P.IsPrime := hP.multiProj.isPrime
   have hG'supp : G' ∈ (blowUpOf P (blowUpGens s g f m e) ⊔ Ideal.span {liftForm s}).minimalPrimes ∧
       IsRelevant G' := by
-    by_contra h; unfold divCycle at hsG'; rw [dif_neg h] at hsG'; exact lt_irrefl _ hsG'
+    by_contra h; unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hsG'; rw [dif_neg h] at hsG'; exact lt_irrefl _ hsG'
   have : G'.IsPrime := hG'supp.1.1.1
   have hP'G' : blowUpOf P (blowUpGens s g f m e) ≤ G' := le_sup_left.trans hG'supp.1.1.2
   have hY := residual_newVar_mem e hD.1.num_not_mem hmP hP'G' hresG'

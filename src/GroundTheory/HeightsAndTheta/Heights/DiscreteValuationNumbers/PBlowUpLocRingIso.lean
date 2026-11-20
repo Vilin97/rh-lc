@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpFibreSemilocalCut
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PBlowUpModel
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -68,8 +69,8 @@ end Abstract
 
 variable {K : Type*} [DecidableEq K] {ι : K → Type} {J : Type} {R : Type*} [CommRing R]
 
-theorem aeval_blowUpSubst_of_isMultiHomog (P : Ideal (MRing ι R)) (u : J → MRing ι R)
-    {F : MRing (extIdx ι J) R} {b : Option K → ℕ} (hF : IsMultiHomog F b) :
+theorem aeval_blowUpSubst_of_isMultiHomog (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)
+    {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)} {b : Option K → ℕ} (hF : IsMultiHomog F b) :
     aeval (blowUpSubst P u) F = Polynomial.C (blowUpEval P u F) * Polynomial.X ^ (b none) := by
   classical
   set w := blockWeight (extIdx ι J)
@@ -102,7 +103,7 @@ theorem aeval_blowUpSubst_of_isMultiHomog (P : Ideal (MRing ι R)) (u : J → MR
 theorem BlowUpLocRingIso.proof : BlowUpLocRingIso.Statement.{u} := by
   intro R _ K _ ι J P _ u Q _
   have hB : (blowUpOf P u).IsPrime := RingHom.ker_isPrime _
-  let θ : MRing (extIdx ι J) R ⧸ blowUpOf P u →+* Polynomial (MRing ι R ⧸ P) :=
+  let θ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ blowUpOf P u →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) :=
     Ideal.Quotient.lift (blowUpOf P u) (aeval (blowUpSubst P u)).toRingHom
       (fun a ha => RingHom.mem_ker.mp ha)
   have hθ : Function.Injective θ := by
@@ -111,7 +112,7 @@ theorem BlowUpLocRingIso.proof : BlowUpLocRingIso.Statement.{u} := by
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective a
     rw [Ideal.Quotient.lift_mk] at ha
     exact Ideal.Quotient.eq_zero_iff_mem.mpr (RingHom.mem_ker.mpr ha)
-  let I := {t : (Option K → ℕ) × MRing (extIdx ι J) R × MRing (extIdx ι J) R //
+  let I := {t : (Option K → ℕ) × ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) × ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) //
     IsMultiHomog t.2.1 t.1 ∧ IsMultiHomog t.2.2 t.1 ∧ t.2.2 ∉ Q}
   have hf : ∀ i : I, θ (Ideal.Quotient.mk (blowUpOf P u) i.1.2.1) =
       Polynomial.C (blowUpEval P u i.1.2.1) * Polynomial.X ^ (i.1.1 none) := fun i => by
@@ -122,8 +123,8 @@ theorem BlowUpLocRingIso.proof : BlowUpLocRingIso.Statement.{u} := by
     rw [Ideal.Quotient.lift_mk]
     exact aeval_blowUpSubst_of_isMultiHomog P u i.2.2.1
   have h₁ : homLocRing (blowUpOf P u) Q = Subring.closure (Set.range fun i : I =>
-      algebraMap _ (FractionRing (MRing (extIdx ι J) R ⧸ blowUpOf P u)) (Ideal.Quotient.mk (blowUpOf P u) i.1.2.1) /
-        algebraMap _ (FractionRing (MRing (extIdx ι J) R ⧸ blowUpOf P u)) (Ideal.Quotient.mk (blowUpOf P u) i.1.2.2)) := by
+      algebraMap _ (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ blowUpOf P u)) (Ideal.Quotient.mk (blowUpOf P u) i.1.2.1) /
+        algebraMap _ (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ blowUpOf P u)) (Ideal.Quotient.mk (blowUpOf P u) i.1.2.2)) := by
     rw [homLocRing]
     congr 1
     ext z
@@ -133,8 +134,8 @@ theorem BlowUpLocRingIso.proof : BlowUpLocRingIso.Statement.{u} := by
     · rintro ⟨⟨⟨b, F, G⟩, hF, hG, hGQ⟩, rfl⟩
       exact ⟨b, F, G, hF, hG, hGQ, rfl⟩
   have h₂ : blowUpLocRing P u Q = Subring.closure (Set.range fun i : I =>
-      algebraMap _ (FractionRing (MRing ι R ⧸ P)) (blowUpEval P u i.1.2.1) /
-        algebraMap _ (FractionRing (MRing ι R ⧸ P)) (blowUpEval P u i.1.2.2)) := by
+      algebraMap _ (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (blowUpEval P u i.1.2.1) /
+        algebraMap _ (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (blowUpEval P u i.1.2.2)) := by
     rw [blowUpLocRing]
     congr 1
     ext z

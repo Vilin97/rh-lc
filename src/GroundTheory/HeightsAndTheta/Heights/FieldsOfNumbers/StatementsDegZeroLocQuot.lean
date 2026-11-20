@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocalRing
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FieldNumbers
@@ -11,12 +12,12 @@ noncomputable section
 universe u
 
 def DegZeroLocQuot.Statement : Prop :=
-  ∀ (F : Type u) [Field F] (K : Type) [DecidableEq K] (ι : K → Type) (P : Ideal (MRing ι F))
-    [P.IsPrime] (𝒲 : Set (Ideal (MRing ι F))), (∀ W ∈ 𝒲, W.IsPrime) →
-    ∀ x ∈ degZeroLoc P 𝒲, ∃ (b : K → ℕ) (f g : MRing ι F), IsMultiHomog f b ∧ IsMultiHomog g b ∧
+  ∀ (F : Type u) [Field F] (K : Type) [DecidableEq K] (ι : K → Type) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
+    [P.IsPrime] (𝒲 : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))), (∀ W ∈ 𝒲, W.IsPrime) →
+    ∀ x ∈ degZeroLoc P 𝒲, ∃ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f b ∧ IsMultiHomog g b ∧
       g ∉ P ∧ (∀ W ∈ 𝒲, g ∉ W) ∧
-      x = algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P f) /
-        algebraMap (MRing ι F ⧸ P) _ (Ideal.Quotient.mk P g)
+      x = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P f) /
+        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _ (Ideal.Quotient.mk P g)
 
 end
 

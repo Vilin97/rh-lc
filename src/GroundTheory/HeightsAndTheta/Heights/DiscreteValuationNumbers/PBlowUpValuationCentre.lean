@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsB
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PBlowUpModel
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LiftFormNotMemBlowUpOf
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.ContractRelevant
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -27,7 +28,7 @@ theorem prod_pow_blockWeight (t : K → T) (d : (Σ k, ι k) →₀ ℕ) :
   rw [Finset.prod_eq_single s.1 (fun k _ hk => by simp [hk]) (by simp)]
   simp
 
-theorem eval₂_blockScale (f : R →+* T) (t : K → T) (a : (Σ k, ι k) → T) {F : MRing ι R} {b : K → ℕ}
+theorem eval₂_blockScale (f : R →+* T) (t : K → T) (a : (Σ k, ι k) → T) {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {b : K → ℕ}
     (hF : IsMultiHomog F b) :
     eval₂ f (fun s => t s.1 * a s) F = (∏ k, t k ^ b k) * eval₂ f a F := by
   rw [eval₂_eq, eval₂_eq, Finset.mul_sum]
@@ -39,7 +40,7 @@ theorem eval₂_blockScale (f : R →+* T) (t : K → T) (a : (Σ k, ι k) → T
 
 variable {κ : Type*} [CommRing κ]
 
-theorem eval₂_blockVar_of_isMultiHomog (g : R →+* κ) (c : (Σ k, ι k) → κ) {F : MRing ι R} {b : K → ℕ}
+theorem eval₂_blockVar_of_isMultiHomog (g : R →+* κ) (c : (Σ k, ι k) → κ) {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {b : K → ℕ}
     (hF : IsMultiHomog F b) :
     eval₂ ((C : κ →+* MvPolynomial K κ).comp g) (fun s => X s.1 * C (c s)) F =
       monomial (Finsupp.equivFunOnFinite.symm b) (eval₂ g c F) := by
@@ -50,7 +51,7 @@ theorem eval₂_blockVar_of_isMultiHomog (g : R →+* κ) (c : (Σ k, ι k) → 
   simp only [Finsupp.coe_equivFunOnFinite_symm]
   ring
 
-theorem eval₂_blockVar_component (g : R →+* κ) (c : (Σ k, ι k) → κ) (F : MRing ι R) (b : K → ℕ) :
+theorem eval₂_blockVar_component (g : R →+* κ) (c : (Σ k, ι k) → κ) (F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (b : K → ℕ) :
     eval₂ ((C : κ →+* MvPolynomial K κ).comp g) (fun s => X s.1 * C (c s))
         (weightedHomogeneousComponent (blockWeight ι) b F) =
       monomial (Finsupp.equivFunOnFinite.symm b)
@@ -58,20 +59,20 @@ theorem eval₂_blockVar_component (g : R →+* κ) (c : (Σ k, ι k) → κ) (F
           (Finsupp.equivFunOnFinite.symm b)) := by
   induction F using MvPolynomial.induction_on' with
   | monomial d r =>
-    have hd : IsMultiHomog (monomial d r : MRing ι R) (Finsupp.weight (blockWeight ι) d) :=
+    have hd : IsMultiHomog (monomial d r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (Finsupp.weight (blockWeight ι) d) :=
       isWeightedHomogeneous_monomial _ _ _ rfl
     rw [eval₂_blockVar_of_isMultiHomog g c hd, coeff_monomial]
     by_cases h : Finsupp.weight (blockWeight ι) d = b
     · subst h
       rw [hd.weightedHomogeneousComponent_same, eval₂_blockVar_of_isMultiHomog g c hd, if_pos rfl]
-    · have h0 : weightedHomogeneousComponent (blockWeight ι) b (monomial d r : MRing ι R) = 0 := by
-        rw [weightedHomogeneousComponent_of_mem (p := (monomial d r : MRing ι R))
+    · have h0 : weightedHomogeneousComponent (blockWeight ι) b (monomial d r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) = 0 := by
+        rw [weightedHomogeneousComponent_of_mem (p := (monomial d r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))
           (n := Finsupp.weight (blockWeight ι) d) hd, if_neg (Ne.symm h)]
       rw [h0, if_neg (fun h' => h (Finsupp.equivFunOnFinite.symm.injective h')), eval₂_zero, map_zero]
   | add p q hp hq =>
     rw [map_add (f := _), eval₂_add, hp, hq, eval₂_add, MvPolynomial.coeff_add, map_add (f := _)]
 
-theorem eval₂_blockVar_eq_zero_iff (g : R →+* κ) (c : (Σ k, ι k) → κ) (F : MRing ι R) :
+theorem eval₂_blockVar_eq_zero_iff (g : R →+* κ) (c : (Σ k, ι k) → κ) (F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
     eval₂ ((C : κ →+* MvPolynomial K κ).comp g) (fun s => X s.1 * C (c s)) F = 0 ↔
       ∀ b, eval₂ ((C : κ →+* MvPolynomial K κ).comp g) (fun s => X s.1 * C (c s))
         (weightedHomogeneousComponent (blockWeight ι) b F) = 0 := by
@@ -87,17 +88,17 @@ section Centre
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {J : Type} [Fintype J] {O : Type u} [CommRing O]
 
-theorem exists_blowUp_centre (P W : Ideal (MRing ι O)) [P.IsPrime] (hPh : IsMultiHomogIdeal P)
-    (hW : W.IsPrime) (hPW : P ≤ W) (hWrel : IsRelevant W) (N : K → ℕ) (u : J → MRing ι O)
+theorem exists_blowUp_centre (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) [P.IsPrime] (hPh : IsMultiHomogIdeal P)
+    (hW : W.IsPrime) (hPW : P ≤ W) (hWrel : IsRelevant W) (N : K → ℕ) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
     (hu : ∀ j, IsMultiHomog (u j) N) (hu' : ∃ j, u j ∉ P)
-    (V : ValuationSubring (FractionRing (MRing ι O ⧸ P))) (hAV : homLocRing P W ≤ V.toSubring) :
-    ∃ W' : Ideal (MRing (extIdx ι J) O),
+    (V : ValuationSubring (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P))) (hAV : homLocRing P W ≤ V.toSubring) :
+    ∃ W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)),
       W'.IsPrime ∧ IsMultiHomogIdeal W' ∧ IsRelevant W' ∧ blowUpOf P u ≤ W' ∧
         W'.comap (liftForm (ι := ι) (J := J) (R := O)) ≤ W ∧ blowUpLocRing P u W' ≤ V.toSubring := by
   classical
-  set L := FractionRing (MRing ι O ⧸ P)
-  let τ : MRing (extIdx ι J) O →+* L := (algebraMap (MRing ι O ⧸ P) L).comp (blowUpEval P u)
-  let q : MRing ι O →+* L := (algebraMap (MRing ι O ⧸ P) L).comp (Ideal.Quotient.mk P)
+  set L := FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)
+  let τ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) →+* L := (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) L).comp (blowUpEval P u)
+  let q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* L := (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) L).comp (Ideal.Quotient.mk P)
   have hτl : ∀ f, τ (liftForm f) = q f := fun f => by
     simp only [τ, q, RingHom.comp_apply, blowUpEval_liftForm]
   have hτX : ∀ (k : K) (i : ι k), τ (X ⟨some k, i⟩) = q (X ⟨k, i⟩) := fun k i => by
@@ -107,7 +108,7 @@ theorem exists_blowUp_centre (P W : Ideal (MRing ι O)) [P.IsPrime] (hPh : IsMul
   have hq0 : ∀ f, q f = 0 ↔ f ∈ P := fun f => by
     simp only [q, RingHom.comp_apply]
     rw [map_eq_zero_iff _ (IsFractionRing.injective _ L), Ideal.Quotient.eq_zero_iff_mem]
-  have hAgen : ∀ (b : K → ℕ) (f g : MRing ι O), IsMultiHomog f b → IsMultiHomog g b → g ∉ W →
+  have hAgen : ∀ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog f b → IsMultiHomog g b → g ∉ W →
       q f / q g ∈ V := fun b f g hf hg hgW => hAV (Subring.subset_closure ⟨b, f, g, hf, hg, hgW, rfl⟩)
   choose ik hik using hWrel
   obtain ⟨j, hjP, hjmax⟩ : ∃ j, u j ∉ P ∧ ∀ l, u l ∉ P → V.valuation (q (u l)) ≤ V.valuation (q (u j)) := by
@@ -152,7 +153,7 @@ theorem exists_blowUp_centre (P W : Ideal (MRing ι O)) [P.IsPrime] (hPh : IsMul
     rwa [RingHom.comp_apply, ← liftForm_C, hτl]
   let cV : O →+* V := (τ.comp C).codRestrict V hC
   let aV : (Σ o, extIdx ι J o) → V := fun s => ⟨a s, ha s⟩
-  let ψV : MRing (extIdx ι J) O →+* V := eval₂Hom cV aV
+  let ψV : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) →+* V := eval₂Hom cV aV
   have hψ : ∀ F, (ψV F : L) = eval₂ (τ.comp C) a F := fun F => by
     have h := eval₂_comp_left V.subtype cV aV F
     exact h
@@ -167,7 +168,7 @@ theorem exists_blowUp_centre (P W : Ideal (MRing ι O)) [P.IsPrime] (hPh : IsMul
   have hM : ∀ b : Option K → ℕ, (∏ o, t o ^ b o) ≠ 0 := fun b =>
     Finset.prod_ne_zero_iff.2 fun o _ => pow_ne_zero _ (ht o)
   let ρ : V →+* IsLocalRing.ResidueField V := IsLocalRing.residue V
-  let Φ : MRing (extIdx ι J) O →+* MvPolynomial (Option K) (IsLocalRing.ResidueField V) :=
+  let Φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) →+* MvPolynomial (Option K) (IsLocalRing.ResidueField V) :=
     eval₂Hom ((C : IsLocalRing.ResidueField V →+* _).comp (ρ.comp cV)) (fun s => X s.1 * C (ρ (aV s)))
   have hΦhom : ∀ F b, IsMultiHomog F b → Φ F = monomial (Finsupp.equivFunOnFinite.symm b) (ρ (ψV F)) := by
     intro F b hF

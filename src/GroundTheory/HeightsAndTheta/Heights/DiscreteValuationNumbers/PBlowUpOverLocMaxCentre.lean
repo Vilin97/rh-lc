@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpOverLocMaxCentreCut
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PHomLocRingIsLocal
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PHomLocRingMem
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -46,27 +47,27 @@ theorem BlowUpOverLocMaxCentre.proof (h₁ : BlowUpOverLocCentreDom.Statement.{u
   obtain ⟨φ, hφ⟩ := h₄ O K ι J P u W' hW'le
   obtain ⟨-, hBunit⟩ := HomLocRingIsLocal.proof HomLocRingMem.proof O (Option K) (extIdx ι J)
     (blowUpOf P u) W' hW'p hW'le
-  have key : ∀ (b : K → ℕ) (w : MRing ι O), IsMultiHomog w b → w ∈ W →
+  have key : ∀ (b : K → ℕ) (w : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog w b → w ∈ W →
       liftForm (J := J) w ∈ W' := by
     intro b w hw hwW
     by_contra hwW'
     obtain ⟨i, hi⟩ := powMonomial_not_mem hWp hWrel b
     have hg := isMultiHomog_powMonomial (R := O) b i
     have hgW' : liftForm (J := J) (powMonomial b i) ∉ W' := fun hg' => hi (hW'c hg')
-    have hzA := Subring.subset_closure (s := {z | ∃ (b : K → ℕ) (f g : MRing ι O), IsMultiHomog f b ∧
+    have hzA := Subring.subset_closure (s := {z | ∃ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog f b ∧
       IsMultiHomog g b ∧ g ∉ W ∧
-      z = algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P f) /
-        algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P g)})
+      z = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P f) /
+        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P g)})
       ⟨b, w, powMonomial b i, hw, hg, hi, rfl⟩
     have hm : (⟨_, hzA⟩ : homLocRing P W) ∈
         𝔫.comap (algebraMap (homLocRing P W) (blowUpOverLoc P W u)) := by
       rw [hcomap]
       exact fun hu => (hAunit b w _ hw hg hi hzA).1 hu hwW
-    have hzB : algebraMap (MRing (extIdx ι J) O ⧸ blowUpOf P u)
-          (FractionRing (MRing (extIdx ι J) O ⧸ blowUpOf P u))
+    have hzB : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)
+          (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u))
           (Ideal.Quotient.mk (blowUpOf P u) (liftForm w)) /
-        algebraMap (MRing (extIdx ι J) O ⧸ blowUpOf P u)
-          (FractionRing (MRing (extIdx ι J) O ⧸ blowUpOf P u))
+        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)
+          (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u))
           (Ideal.Quotient.mk (blowUpOf P u) (liftForm (powMonomial b i))) ∈
         homLocRing (blowUpOf P u) W' := by
       unfold homLocRing

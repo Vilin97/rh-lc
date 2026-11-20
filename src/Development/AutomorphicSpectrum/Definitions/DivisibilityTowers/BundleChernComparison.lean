@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBundles
 import GroundTheory.HeightsAndTheta.Heights.IterateExamples.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 namespace GlobalTheory.CompanionTheory.Ar.Num
 
@@ -14,9 +15,9 @@ structure LocPair {K : Type} (ι : K → Type) (R : Type) [CommRing R] (σ : Typ
 
   x' : σ → K → ℤ
 
-  f : σ → MRing ι R
+  f : σ → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι
 
-  g : σ → MRing ι R
+  g : σ → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι
 
 variable {K : Type} {ι : K → Type} {σ σ' : Type}
 
@@ -34,33 +35,33 @@ def mixDiff (F : MvPolynomial σ ℝ) : MvPolynomial (σ ⊕ σ) ℝ := rename S
 
 variable [DecidableEq K]
 
-def genNum (F : Type) [Field F] (V : Ideal (MRing ι F)) (cls : σ → K → ℤ) (H : MvPolynomial σ ℝ)
+def genNum (F : Type) [Field F] (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (cls : σ → K → ℤ) (H : MvPolynomial σ ℝ)
     (Q : List (K → ℤ)) : ℝ :=
   ∑ μ ∈ H.support, H.coeff μ * (intNumL F V (classList cls μ ++ Q) : ℝ)
 
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-def cycList (Z : Ideal (MRing ι O) → ℤ) (l : List (K → ℤ)) : ℤ := cycEval (fun W => vNumL W l) Z
+def cycList (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ) (l : List (K → ℤ)) : ℤ := cycEval (fun W => vNumL W l) Z
 
-def cycNum (Z : Ideal (MRing ι O) → ℤ) (cls : σ → K → ℤ) (H : MvPolynomial σ ℝ) (Q : List (K → ℤ)) : ℝ :=
+def cycNum (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ) (cls : σ → K → ℤ) (H : MvPolynomial σ ℝ) (Q : List (K → ℤ)) : ℝ :=
   ∑ μ ∈ H.support, H.coeff μ * (cycList Z (classList cls μ ++ Q) : ℝ)
 
-def LocPair.IsVert (T : LocPair ι O σ) (P : Ideal (MRing ι O)) (ϖ : O) : Prop :=
+def LocPair.IsVert (T : LocPair ι O σ) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (ϖ : O) : Prop :=
   ∀ i, IsVerticalDivisor P ϖ (T.x i - T.x' i) (T.f i) (T.g i)
 
-def LocPair.val [Fintype σ] (T : LocPair ι O σ) (P : Ideal (MRing ι O))
+def LocPair.val [Fintype σ] (T : LocPair ι O σ) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))
     (Gs : σ → MvPolynomial (σ ⊕ σ) ℝ) : ℝ :=
   ∑ i, cycNum (ratDiv P (T.f i) (T.g i)) (Sum.elim T.x T.x') (Gs i) []
 
-def LocPair.ck {r : ℕ} (T : LocPair ι O (Fin r)) (P : Ideal (MRing ι O)) (k : ℕ) (Q : List (K → ℤ)) : ℤ :=
+def LocPair.ck {r : ℕ} (T : LocPair ι O (Fin r)) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (k : ℕ) (Q : List (K → ℤ)) : ℤ :=
   pairNum P T.x T.x' T.f T.g (psumExpansion r k) Q
 
-def laNum {r : ℕ} (P : Ideal (MRing ι O)) (a : O) (x : Fin r → K → ℤ) (k : ℕ) (Q : List (K → ℤ)) : ℤ :=
-  (k : ℤ) * cycEval (fun W => classNum x (psum (Fin r) ℤ (k - 1)) Q W) (divCycle P (C a))
+def laNum {r : ℕ} (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (a : O) (x : Fin r → K → ℤ) (k : ℕ) (Q : List (K → ℤ)) : ℤ :=
+  (k : ℤ) * cycEval (fun W => classNum x (psum (Fin r) ℤ (k - 1)) Q W) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a)) W : ℤ)))
 
 section Labels
 
-variable {Sg : Type} (P : Ideal (MRing ι O)) (d p : ℕ) (φ : Equiv.Perm Sg) {r s : Sg → ℕ}
+variable {Sg : Type} (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d p : ℕ) (φ : Equiv.Perm Sg) {r s : Sg → ℕ}
   (lie : ∀ τ, LocPair ι O (Fin (r τ))) (om : ∀ τ, LocPair ι O (Fin (s τ)))
 
 def Relations : Prop :=
@@ -76,20 +77,20 @@ def LabelChernComparison [Fintype Sg] [DecidableEq Sg] : Prop :=
 
 end Labels
 
-def BundleChernComparison (P : Ideal (MRing ι O)) (d p : ℕ) {r s : ℕ} (lie : LocPair ι O (Fin r))
+def BundleChernComparison (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d p : ℕ) {r s : ℕ} (lie : LocPair ι O (Fin r))
     (om : LocPair ι O (Fin s)) : Prop :=
   ∀ k : ℕ, 1 ≤ k → ∀ Q : List (K → ℤ), Q.length + k = d + 1 →
     ((lie.ck P k Q : ℤ) : ℝ) + ((om.ck P k Q : ℤ) : ℝ) =
       (1 / ((p : ℝ) ^ k - 1) - 1 / ((p : ℝ) - 1)) * ((laNum P (p : O) lie.x k Q : ℤ) : ℝ)
 
-def IsFibreComp (P : Ideal (MRing ι O)) (W : Ideal (MRing ι O)) : Prop :=
-  W ∈ (P ⊔ (IsLocalRing.maximalIdeal O).map (C : O →+* MRing ι O)).minimalPrimes ∧ IsRelevant W
+def IsFibreComp (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) : Prop :=
+  W ∈ (P ⊔ (IsLocalRing.maximalIdeal O).map (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)).minimalPrimes ∧ IsRelevant W
 
-def PowerSumsVanish (P : Ideal (MRing ι O)) (d : ℕ) {N : ℕ} (x : Fin N → K → ℤ) : Prop :=
+def PowerSumsVanish (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ) {N : ℕ} (x : Fin N → K → ℤ) : Prop :=
   ∀ W, IsFibreComp P W → ∀ k : ℕ, 1 ≤ k → ∀ Q : List (K → ℤ), Q.length + k = d →
     classNum x (psum (Fin N) ℤ k) Q W = 0
 
-def TrivFlagAt [Fintype K] (W : Ideal (MRing ι O)) {N : ℕ} (x : Fin N → K → ℤ) : Prop :=
+def TrivFlagAt [Fintype K] (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {N : ℕ} (x : Fin N → K → ℤ) : Prop :=
   ∃ (Ω : Type) (_ : Field Ω) (_ : Algebra (IsLocalRing.ResidueField O) Ω) (y : (Σ k, ι k) → Ω)
     (w : Module.Basis (Fin N) Ω (Fin N → Ω)),
     pointIdeal (IsLocalRing.ResidueField O) y = specialIdeal W ∧
@@ -117,11 +118,11 @@ def deltaPoly (j : ℕ) (φ : Equiv.Perm (Ψ ⊕ Ψ)) (p : ℕ) (Qs : Ψ → ℕ
     MvPolynomial (Ψ × Fin N) ℝ :=
   ∑ τ, ∑ k ∈ Finset.Icc 1 N, bracket j φ p k τ * Qs τ k
 
-def FlagChernComparison (P : Ideal (MRing ι O)) (d p j : ℕ) (φ : Equiv.Perm (Ψ ⊕ Ψ)) (T : LocPair ι O (Ψ × Fin N)) :
+def FlagChernComparison (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d p j : ℕ) (φ : Equiv.Perm (Ψ ⊕ Ψ)) (T : LocPair ι O (Ψ × Fin N)) :
     Prop :=
   ∀ τ, ∀ k : ℕ, 1 ≤ k → ∀ Q : List (K → ℤ), Q.length + k = d + 1 →
     (((T.comp fun i : Fin N => (τ, i)).ck P k Q : ℤ) : ℝ) =
-      cycNum (divCycle P (C (p : O))) T.x (bracket j φ p k τ) Q
+      cycNum ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (p : O))) W : ℤ))) T.x (bracket j φ p k τ) Q
 
 end Roots
 

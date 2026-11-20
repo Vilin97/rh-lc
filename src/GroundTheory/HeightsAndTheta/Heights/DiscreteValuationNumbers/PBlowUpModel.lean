@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsReesAlgebraDim
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -53,7 +54,7 @@ theorem coeff_aeval_C_mul_X_pow {B : Type*} [CommRing B] [Algebra R B] (a : σ �
   | add p q hp hq => simp only [map_add (f := _), Polynomial.coeff_add, hp, hq]
 
 theorem aeval_weightedHomogeneousComponent_of_forms {K : Type*} [DecidableEq K] {ι : K → Type*}
-    (ω : σ → K → ℕ) (e : σ → MRing ι R) (he : ∀ v, IsMultiHomog (e v) (ω v)) (m : K → ℕ)
+    (ω : σ → K → ℕ) (e : σ → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (he : ∀ v, IsMultiHomog (e v) (ω v)) (m : K → ℕ)
     (p : MvPolynomial σ R) :
     aeval e (weightedHomogeneousComponent ω m p) =
       weightedHomogeneousComponent (blockWeight ι) m (aeval e p) := by
@@ -81,7 +82,7 @@ section BlowUp
 
 variable {K : Type*} [DecidableEq K] {ι : K → Type} {J : Type} {R : Type*} [CommRing R]
 
-def blowUpAtOne (u : J → MRing ι R) : (Σ o, extIdx ι J o) → MRing ι R
+def blowUpAtOne (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : (Σ o, extIdx ι J o) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι
   | ⟨none, j⟩ => u j
   | ⟨some k, i⟩ => X ⟨k, i⟩
 
@@ -95,8 +96,8 @@ def blowUpDegMap (N : K → ℕ) : (Option K → ℕ) →+ (K → ℕ) where
     simp only [Pi.add_apply]
     ring
 
-theorem isMultiHomogIdeal_blowUpOf {P : Ideal (MRing ι R)} (hP : IsMultiHomogIdeal P) (N : K → ℕ)
-    (u : J → MRing ι R) (hu : ∀ j, IsMultiHomog (u j) N) : IsMultiHomogIdeal (blowUpOf P u) := by
+theorem isMultiHomogIdeal_blowUpOf {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hP : IsMultiHomogIdeal P) (N : K → ℕ)
+    (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (hu : ∀ j, IsMultiHomog (u j) N) : IsMultiHomogIdeal (blowUpOf P u) := by
   classical
   set w := blockWeight (extIdx ι J)
   set L := blowUpDegMap N
@@ -147,7 +148,7 @@ theorem isMultiHomogIdeal_blowUpOf {P : Ideal (MRing ι R)} (hP : IsMultiHomogId
         have := congrFun h1 k
         simp only [L, blowUpDegMap, AddMonoidHom.coe_mk, ZeroHom.coe_mk, h2] at this
         omega
-  have hsplit : ∀ (m : Option K → ℕ) (n : ℕ) (r : MRing (extIdx ι J) R),
+  have hsplit : ∀ (m : Option K → ℕ) (n : ℕ) (r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)),
       weightedHomogeneousComponent ωT n (weightedHomogeneousComponent w m r) =
         if n = m none then weightedHomogeneousComponent ωL (L m) (weightedHomogeneousComponent ωT n r)
         else 0 := by
@@ -181,7 +182,7 @@ end BlowUp
 theorem BlowUpModel.proof (h₁ : ReesAlgebraDim.Statement.{u}) : BlowUpModel.Statement.{u} := by
   intro O _ _ _ K _ _ ι _ J _ P d hP N u hu hne
   have : P.IsPrime := hP.multiProj.isPrime
-  set φ : MRing (extIdx ι J) O →ₐ[O] Polynomial (MRing ι O ⧸ P) := aeval (blowUpSubst P u)
+  set φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) →ₐ[O] Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) := aeval (blowUpSubst P u)
   refine ⟨⟨RingHom.ker_isPrime φ, isMultiHomogIdeal_blowUpOf hP.multiProj.multiHomog N u hu, ?_⟩,
     ?_, ?_⟩
   ·
@@ -206,17 +207,17 @@ theorem BlowUpModel.proof (h₁ : ReesAlgebraDim.Statement.{u}) : BlowUpModel.St
     rw [Ideal.mem_comap, blowUpOf, RingHom.mem_ker, Ideal.mem_bot]
     change aeval (blowUpSubst P u) (C c) = 0 ↔ c = 0
     rw [aeval_C, Polynomial.algebraMap_apply, Polynomial.C_eq_zero,
-      show algebraMap O (MRing ι O ⧸ P) c = Ideal.Quotient.mk P (C c) from rfl,
+      show algebraMap O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) c = Ideal.Quotient.mk P (C c) from rfl,
       Ideal.Quotient.eq_zero_iff_mem, ← Ideal.mem_comap, hP.noTorsion, Ideal.mem_bot]
   ·
-    set I : Ideal (MRing ι O ⧸ P) := Ideal.span (Set.range fun j => Ideal.Quotient.mk P (u j))
+    set I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) := Ideal.span (Set.range fun j => Ideal.Quotient.mk P (u j))
     have hI : I ≠ ⊥ := by
       obtain ⟨j, hj⟩ := hne
       intro h
       apply hj
       rw [← Ideal.Quotient.eq_zero_iff_mem, ← Ideal.mem_bot, ← h]
       exact Ideal.subset_span ⟨j, rfl⟩
-    have hC : ∀ c : MRing ι O ⧸ P, Polynomial.C c ∈ φ.range := by
+    have hC : ∀ c : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P, Polynomial.C c ∈ φ.range := by
       intro c
       obtain ⟨q, rfl⟩ := Ideal.Quotient.mk_surjective c
       exact ⟨liftForm (J := J) q, aeval_blowUpSubst_liftForm P u q⟩
@@ -272,9 +273,9 @@ theorem BlowUpModel.proof (h₁ : ReesAlgebraDim.Statement.{u}) : BlowUpModel.St
           exact hC a
         | add x y _ _ hx hy => exact add_mem hx hy
         | mul x y _ _ hx hy => exact mul_mem hx hy
-    have e : (MRing (extIdx ι J) O ⧸ blowUpOf P u) ≃+* reesAlgebra I :=
+    have e : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u) ≃+* reesAlgebra I :=
       (Ideal.quotientKerEquivRange φ).toRingEquiv.trans (RingEquiv.subringCongr hrange)
-    rw [ringKrullDim_eq_of_ringEquiv e, h₁ (MRing ι O ⧸ P) I hI _ hP.dim, Fintype.card_option]
+    rw [ringKrullDim_eq_of_ringEquiv e, h₁ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) I hI _ hP.dim, Fintype.card_option]
     rfl
 
 end

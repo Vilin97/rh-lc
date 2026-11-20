@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagConeAlg
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPairConeAlg
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagClosureModel
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -119,7 +120,7 @@ theorem SegreFlagConeAlg.proof : SegreFlagConeAlg.Statement := by
 
   have hϖ0 : algebraMap O Ω ϖ ≠ 0 := by
     intro h0
-    have hmem : ϖ ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := by
+    have hmem : ϖ ∈ (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
       rw [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply, h0,
         map_zero]
     rw [hV.noTorsion] at hmem

@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.Intersections.StZIntPoint
 import GroundTheory.HeightsAndTheta.Heights.Intersections.CompsDim
 import GroundTheory.HeightsAndTheta.Heights.Intersections.FourierIntegralBound
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -10,7 +11,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter
 
 open MvPolynomial MeasureTheory
-open GroundTheory.Heights₂.Heights.NumbersDVR (MRing IsMultiHomog IsMultiHomogIdeal IsMultiProjPrime blockWeight)
+open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiHomogIdeal IsMultiHomog IsMultiProjPrime blockWeight)
 open GroundTheory.Heights₂.Heights.FieldNumbers (IntNumBase.full homFracDegZero)
 open ReciprocityTheory.AnForm.M (FinHolAtlas LocPot ChartPartition mInt integralWith locDens)
 
@@ -18,15 +19,15 @@ section Algebra
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem mem_of_forall_eval_eq_zero {P : Ideal (MRing ι ℂ)} (hP : IsMultiProjPrime P)
-    {h : MRing ι ℂ} (hv : ∀ z ∈ zPts P, eval z h = 0) : h ∈ P := by
+theorem mem_of_forall_eval_eq_zero {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hP : IsMultiProjPrime P)
+    {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι} (hv : ∀ z ∈ zPts P, eval z h = 0) : h ∈ P := by
   have hpr := hP.isPrime
   choose i hi using hP.relevant
-  have hg : h * ∏ k, (X ⟨k, i k⟩ : MRing ι ℂ) ∈ P := by
+  have hg : h * ∏ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι) ∈ P := by
     rw [← MvPolynomial.IsPrime.vanishingIdeal_zeroLocus (K := ℂ) P]
     intro x hx
     have hx' : ∀ f ∈ P, eval x f = 0 := fun f hf => hx f hf
-    show eval x (h * ∏ k, (X ⟨k, i k⟩ : MRing ι ℂ)) = 0
+    show eval x (h * ∏ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) = 0
     by_cases hz : ∀ k, x ⟨k, i k⟩ ≠ 0
     · rw [map_mul, hv x ⟨fun k => ⟨i k, hz k⟩, hx'⟩, zero_mul]
     · push Not at hz
@@ -38,23 +39,23 @@ theorem mem_of_forall_eval_eq_zero {P : Ideal (MRing ι ℂ)} (hP : IsMultiProjP
   · obtain ⟨k, -, hk⟩ := Ideal.IsPrime.prod_mem_iff.mp h'
     exact absurd hk (hi k)
 
-theorem zPts_nonempty {P : Ideal (MRing ι ℂ)} (hP : IsMultiProjPrime P) : (zPts P).Nonempty := by
+theorem zPts_nonempty {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hP : IsMultiProjPrime P) : (zPts P).Nonempty := by
   by_contra hne
   rw [Set.not_nonempty_iff_eq_empty] at hne
-  have h1 : (1 : MRing ι ℂ) ∈ P :=
+  have h1 : (1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι) ∈ P :=
     mem_of_forall_eval_eq_zero hP fun z hz => by rw [hne] at hz; exact absurd hz (Set.notMem_empty z)
   exact hP.isPrime.ne_top ((Ideal.eq_top_iff_one P).mpr h1)
 
-theorem exists_sub_mem_of_isProjVar_zero {P : Ideal (MRing ι ℂ)} (hP : IsProjVar P 0) (k : K)
-    {i : ι k} (hi : (X ⟨k, i⟩ : MRing ι ℂ) ∉ P) (i' : ι k) :
-    ∃ c : ℂ, (X ⟨k, i'⟩ - C c * X ⟨k, i⟩ : MRing ι ℂ) ∈ P := by
+theorem exists_sub_mem_of_isProjVar_zero {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hP : IsProjVar P 0) (k : K)
+    {i : ι k} (hi : (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι) ∉ P) (i' : ι k) :
+    ∃ c : ℂ, (X ⟨k, i'⟩ - C c * X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι) ∈ P := by
   have := hP.1.isPrime
   have hrel : GroundTheory.Heights₂.Heights.FieldNumbers.relDim P = 0 := by
     rw [relDim_of_isProjVar hP]
     rfl
   obtain ⟨hfd, -⟩ := IntNumBase.full ℂ K ι P hP.1 hrel
   have hbot : homFracDegZero P = ⊥ := IntermediateField.eq_bot_of_isAlgClosed_of_isAlgebraic _
-  set Q := MRing ι ℂ ⧸ P
+  set Q := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι ⧸ P
   set F := FractionRing Q
   have hinj : Function.Injective (algebraMap Q F) := IsFractionRing.injective Q F
   set a : F := algebraMap Q F (Ideal.Quotient.mk P (X ⟨k, i'⟩))
@@ -77,7 +78,7 @@ theorem exists_sub_mem_of_isProjVar_zero {P : Ideal (MRing ι ℂ)} (hP : IsProj
   show a - a / b * b = 0
   rw [div_mul_cancel₀ a hb, sub_self]
 
-theorem sameOrbit_of_isProjVar_zero {P : Ideal (MRing ι ℂ)} (hP : IsProjVar P 0) {z z' : MCone ι}
+theorem sameOrbit_of_isProjVar_zero {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hP : IsProjVar P 0) {z z' : MCone ι}
     (hz : z ∈ zPts P) (hz' : z' ∈ zPts P) : ReciprocityTheory.AnForm.R.SameOrbit z z' := by
   choose i hi using hP.1.relevant
   choose c hc using fun (k : K) (i' : ι k) => exists_sub_mem_of_isProjVar_zero hP k (hi k) i'
@@ -98,7 +99,7 @@ theorem sameOrbit_of_isProjVar_zero {P : Ideal (MRing ι ℂ)} (hP : IsProjVar P
   rw [hzq q, hzq' q]
   field_simp [hz0' q.1]
 
-theorem not_mem_conePts_of_isProjVar_zero {P D : Ideal (MRing ι ℂ)} (hP : IsProjVar P 0)
+theorem not_mem_conePts_of_isProjVar_zero {P D : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hP : IsProjVar P 0)
     (hD : IsMultiHomogIdeal D) (hDP : ¬ D ≤ P) {z : MCone ι} (hz : z ∈ zPts P) :
     z ∉ ReciprocityTheory.AnForm.R.conePts D := by
   intro hzD
@@ -124,7 +125,7 @@ section Resolution
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem Res.eq_of_isProjVar_zero {P : Ideal (MRing ι ℂ)} (hP : IsProjVar P 0) (R : Res ι P 0) :
+theorem Res.eq_of_isProjVar_zero {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hP : IsProjVar P 0) (R : Res ι P 0) :
     ∃ x₀ : R.R.M, ∀ x, x = x₀ := by
   obtain ⟨z, hz⟩ := zPts_nonempty hP.1
   obtain ⟨i₀, x₀, hx₀, -⟩ :=

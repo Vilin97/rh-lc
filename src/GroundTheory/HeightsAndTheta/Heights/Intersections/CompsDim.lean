@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.Intersections.AnalyticResolutionHypo
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDivPrincipalDegree
 import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.CycDim
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -10,14 +11,14 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter
 
 open MvPolynomial
-open GroundTheory.Heights₂.Heights.NumbersDVR (MRing IsMultiHomog IsMultiHomogIdeal IsRelevant IsMultiProjPrime
+open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiHomogIdeal IsMultiHomog IsRelevant IsMultiProjPrime
   blockWeight)
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 omit [∀ k, Fintype (ι k)] in
 
-theorem relDim_of_isProjVar {P : Ideal (MRing ι ℂ)} {e : ℕ} (h : IsProjVar P e) :
+theorem relDim_of_isProjVar {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} {e : ℕ} (h : IsProjVar P e) :
     GroundTheory.Heights₂.Heights.FieldNumbers.relDim P = (e : ℕ) := by
   rw [GroundTheory.Heights₂.Heights.FieldNumbers.relDim_of_ringKrullDim_eq P _ h.2]
   show ((((e + Fintype.card K : ℕ) : ℤ) - Fintype.card K : ℤ) : WithBot (WithTop ℤ)) =
@@ -26,8 +27,8 @@ theorem relDim_of_isProjVar {P : Ideal (MRing ι ℂ)} {e : ℕ} (h : IsProjVar 
   push_cast
   ring
 
-theorem isProjVar_of_mem_comps {P : Ideal (MRing ι ℂ)} {e : ℕ} {s : MRing ι ℂ} {c : K → ℕ}
-    (hP : IsProjVar P (e + 1)) (hs : IsMultiHomog s c) (hsP : s ∉ P) {W : Ideal (MRing ι ℂ)}
+theorem isProjVar_of_mem_comps {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} {e : ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι} {c : K → ℕ}
+    (hP : IsProjVar P (e + 1)) (hs : IsMultiHomog s c) (hsP : s ∉ P) {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)}
     (hW : W ∈ comps P s) : IsProjVar W e := by
   obtain ⟨hmin, hrel⟩ := hW
   have hWh : IsMultiHomogIdeal W := (GroundTheory.Heights₂.Heights.Bridge.isMultiHomogIdeal_iff W).mpr
@@ -37,7 +38,7 @@ theorem isProjVar_of_mem_comps {P : Ideal (MRing ι ℂ)} {e : ℕ} {s : MRing �
   refine ⟨⟨hmin.1.1, hWh, hrel⟩, ?_⟩
   have := hP.1.isPrime
   have hPd := hP.2
-  have key : ringKrullDim (MRing ι ℂ ⧸ W) + 1 = ringKrullDim (MRing ι ℂ ⧸ P) :=
+  have key : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι ⧸ W) + 1 = ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι ⧸ P) :=
     ReciprocityTheory.ChartRestriction.G.AI.I1.cyc_dim_quot_minimal_add_one hsP hmin (fun h => by
       rw [hPd] at h
       exact ENat.natCast_ne_top _ (WithBot.coe_injective h))
@@ -46,12 +47,12 @@ theorem isProjVar_of_mem_comps {P : Ideal (MRing ι ℂ)} {e : ℕ} {s : MRing �
 
 omit [∀ k, Fintype (ι k)] in
 
-theorem exists_form {P : Ideal (MRing ι ℂ)} (hP : IsMultiProjPrime P) (c : K → ℕ) :
-    ∃ s : MRing ι ℂ, IsMultiHomog s c ∧ s ∉ P := by
+theorem exists_form {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hP : IsMultiProjPrime P) (c : K → ℕ) :
+    ∃ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι, IsMultiHomog s c ∧ s ∉ P := by
   choose i hi using hP.relevant
   have hpr := hP.isPrime
   refine ⟨∏ k, X ⟨k, i k⟩ ^ c k, ?_, ?_⟩
-  · have h : IsWeightedHomogeneous (blockWeight ι) (∏ k, (X ⟨k, i k⟩ : MRing ι ℂ) ^ c k)
+  · have h : IsWeightedHomogeneous (blockWeight ι) (∏ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι) ^ c k)
         (∑ k, c k • blockWeight ι ⟨k, i k⟩) :=
       IsWeightedHomogeneous.prod _ _ _ fun k _ => (isWeightedHomogeneous_X ℂ _ _).pow (c k)
     have hw : (∑ k, c k • blockWeight ι ⟨k, i k⟩) = c := by

@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsSectionCh
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PRecQOfRecursion
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ArchOfPlacesEmbedding
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ContinuousHermNormGroup
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -10,7 +11,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial NumberField
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar IsHorizontal divSupp multAt)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk IsHorizontal divSupp multAt)
 
 namespace SectionChowHeight
 
@@ -66,7 +67,7 @@ open Classical in
 theorem SectionChowHeight.proof (hSec : ChowFormSection.Statement) : SectionChowHeight.Statement := by
   intro n e δ S P f u g d hS hP hf hu hg
   set s := IndefiniteRowSideFullHecke.ArithBezout.linForm u
-  have hcyc : IsChowFormCycle (divCycle (ObjectsChow.genericIdeal P) fun j => (u j : ℚ)) (e + 1)
+  have hcyc : IsChowFormCycle (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (ObjectsChow.genericIdeal P) fun) j : ℤ) => (u j : ℚ)) (e + 1)
       (specFirst f fun j => (u j : ℚ)) :=
     hSec ℚ n (e + 1) (ObjectsChow.genericIdeal P) f _
       (VerticalPartGauss.isProjPrime_genericIdeal hP) (VerticalPartGauss.isChowForm_genericIdeal hP hf)

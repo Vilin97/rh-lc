@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreClosureNumber
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -28,8 +29,8 @@ def closureDeg {K : Type*} {m : ℕ} (ζ : Option (Option K) → ℤ) (L : Fin m
   Fin.append (fun _ : Fin 1 => ζ) (fun j => liftPairDeg (L j))
 
 def closureForm {K : Type*} {ι : K → Type} {R : Type*} [CommRing R] {m : ℕ} (M M' : ℕ)
-    (h : MRing (bundleIdx (bundleIdx ι M) M') R) (F : Fin m → MRing ι R) :
-    Fin (1 + m) → MRing (bundleIdx (bundleIdx ι M) M') R :=
+    (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (bundleIdx (bundleIdx ι M) M')) (F : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+    Fin (1 + m) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (bundleIdx (bundleIdx ι M) M') :=
   Fin.append (fun _ : Fin 1 => h) (fun j => liftPairForm M M' (F j))
 
 def SegreFlagClosureModel.Statement : Prop :=
@@ -39,7 +40,7 @@ def SegreFlagClosureModel.Statement : Prop :=
       (y : (Σ k, ι k) → Ω) (d : ℕ), IsModelOver (pointIdeal O y) d →
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E]
       (B B' : ChartBundle O (segreVec y) N E), SameGenericFibre ϖ B B' →
-    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O),
+    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       IsFlagPair ϖ y B B' w w' x x' f g →
     ∀ (M M' : ℕ) (a₀ a₀' : K → ℤ) (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E),
       IsTwistedDualGens y B a₀ φ → IsTwistedDualGens y B' a₀' φ' →
@@ -47,7 +48,7 @@ def SegreFlagClosureModel.Statement : Prop :=
       (e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ), AlgebraicIndependent Ω t →
     ∀ k : ℕ, 1 ≤ k → k ≤ N →
       IsModelOver (pointIdeal O (flagClosurePt y w e φ φ' t k)) (d + (k - 1)) ∧
-      ∃ f₀ g₀ : MRing (bundleIdx (bundleIdx ι M) M') O,
+      ∃ f₀ g₀ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'),
         IsVerticalDivisor (pointIdeal O (flagClosurePt y w e φ φ' t k)) ϖ
           (zetaFirst a₀ - zetaSecond a₀') f₀ g₀ ∧
         aeval (flagClosurePt y w e φ φ' t k) f₀ = aeval (flagClosurePt y w e φ φ' t k) g₀
@@ -59,20 +60,20 @@ def SegreFlagClosureCut.Statement : Prop :=
       (y : (Σ k, ι k) → Ω) (d : ℕ), IsModelOver (pointIdeal O y) d →
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E]
       (B B' : ChartBundle O (segreVec y) N E), SameGenericFibre ϖ B B' →
-    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O),
+    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       IsFlagPair ϖ y B B' w w' x x' f g →
     ∀ (M M' : ℕ) (a₀ a₀' : K → ℤ) (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E),
       IsTwistedDualGens y B a₀ φ → IsTwistedDualGens y B' a₀' φ' →
     ∀ (Φ : Type) [Field Φ] [Algebra Ω Φ] [Algebra O Φ] [IsScalarTower O Ω Φ]
       (e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ), AlgebraicIndependent Ω t →
-    ∀ (k : ℕ) (hk : k < N) (f₁ g₁ f₂ g₂ : MRing (bundleIdx (bundleIdx ι M) M') O),
+    ∀ (k : ℕ) (hk : k < N) (f₁ g₁ f₂ g₂ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')),
       IsVerticalDivisor (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) ϖ
         (zetaFirst a₀ - zetaSecond a₀') f₁ g₁ →
       aeval (flagClosurePt y w e φ φ' t (k + 1)) f₁ = aeval (flagClosurePt y w e φ φ' t (k + 1)) g₁ →
       (0 < k → IsVerticalDivisor (pointIdeal O (flagClosurePt y w e φ φ' t k)) ϖ
           (zetaFirst a₀ - zetaSecond a₀') f₂ g₂ ∧
         aeval (flagClosurePt y w e φ φ' t k) f₂ = aeval (flagClosurePt y w e φ φ' t k) g₂) →
-    ∀ (n : ℕ) (z z' : Fin n → K → ℤ) (fz gz : Fin n → MRing ι O),
+    ∀ (n : ℕ) (z z' : Fin n → K → ℤ) (fz gz : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       (∀ j, IsVerticalDivisor (pointIdeal O y) ϖ (z j - z' j) (fz j) (gz j)) →
     ∀ (m : ℕ) (A : MvPolynomial (Fin (1 + (N + n))) ℤ), A.IsHomogeneous m →
     ∀ As Bs : Fin (1 + (N + n)) → MvPolynomial (Fin (1 + (N + n)) ⊕ Fin (1 + (N + n))) ℤ,
@@ -97,17 +98,17 @@ def SegreFlagClosurePullback.Statement : Prop :=
       (y : (Σ k, ι k) → Ω) (d : ℕ), IsModelOver (pointIdeal O y) d →
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E]
       (B B' : ChartBundle O (segreVec y) N E), SameGenericFibre ϖ B B' →
-    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O),
+    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       IsFlagPair ϖ y B B' w w' x x' f g →
     ∀ (M M' : ℕ) (a₀ a₀' : K → ℤ) (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E),
       IsTwistedDualGens y B a₀ φ → IsTwistedDualGens y B' a₀' φ' →
     ∀ (Φ : Type) [Field Φ] [Algebra Ω Φ] [Algebra O Φ] [IsScalarTower O Ω Φ]
       (e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ), AlgebraicIndependent Ω t →
-    ∀ (k : ℕ), 1 ≤ k → k ≤ N → ∀ f₁ g₁ : MRing (bundleIdx (bundleIdx ι M) M') O,
+    ∀ (k : ℕ), 1 ≤ k → k ≤ N → ∀ f₁ g₁ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'),
       IsVerticalDivisor (pointIdeal O (flagClosurePt y w e φ φ' t k)) ϖ
         (zetaFirst a₀ - zetaSecond a₀') f₁ g₁ →
       aeval (flagClosurePt y w e φ φ' t k) f₁ = aeval (flagClosurePt y w e φ φ' t k) g₁ →
-    ∀ (n : ℕ) (z z' : Fin n → K → ℤ) (fz gz : Fin n → MRing ι O),
+    ∀ (n : ℕ) (z z' : Fin n → K → ℤ) (fz gz : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       (∀ j, IsVerticalDivisor (pointIdeal O y) ϖ (z j - z' j) (fz j) (gz j)) →
     ∀ (r : ℕ) (Bf : MvPolynomial (Fin (N + n)) ℤ), Bf.IsHomogeneous r →
     ∀ (As : Fin (1 + (N + n)) → MvPolynomial (Fin (1 + (N + n)) ⊕ Fin (1 + (N + n))) ℤ)

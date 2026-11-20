@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -81,21 +82,21 @@ theorem length_localizedModule_eq_of_surjective {S T : Type*} [CommRing S] [Comm
 
 theorem SpecialMultAt.proof : SpecialMultAt.Statement.{u} := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P W _ hW _
-  let π : MRing ι O →+* MRing ι (IsLocalRing.ResidueField O) :=
+  let π : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* MRing ι (IsLocalRing.ResidueField O) :=
     MvPolynomial.map (IsLocalRing.residue O)
-  have hspec : ∀ I : Ideal (MRing ι O), specialIdeal I = I.map π := fun _ => rfl
+  have hspec : ∀ I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), specialIdeal I = I.map π := fun _ => rfl
   have hπ : Function.Surjective π := MvPolynomial.map_surjective _ IsLocalRing.residue_surjective
   have hker : RingHom.ker π = Ideal.span {C ϖ} := by
     rw [MvPolynomial.ker_map, IsLocalRing.ker_residue,
       (IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).mp hϖ, Ideal.map_span,
       Set.image_singleton]
-  have hcm : ∀ I : Ideal (MRing ι O), (specialIdeal I).comap π = I ⊔ Ideal.span {C ϖ} := by
+  have hcm : ∀ I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), (specialIdeal I).comap π = I ⊔ Ideal.span {C ϖ} := by
     intro I
     rw [hspec, Ideal.comap_map_of_surjective π hπ, ← RingHom.ker_eq_comap_bot, hker]
   have hWc : W = (specialIdeal W).comap π := by
     rw [hcm]
     exact (sup_eq_left.mpr (Ideal.span_le.mpr (Set.singleton_subset_iff.mpr hW))).symm
-  let f : MRing ι O →+* MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal P :=
+  let f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal P :=
     (Ideal.Quotient.mk _).comp π
   have hf : Function.Surjective f := Ideal.Quotient.mk_surjective.comp hπ
   have hkerf : RingHom.ker f = P ⊔ Ideal.span {C ϖ} := by
@@ -104,7 +105,7 @@ theorem SpecialMultAt.proof : SpecialMultAt.Statement.{u} := by
     simp [f, RingHom.mem_ker, Ideal.Quotient.eq_zero_iff_mem]
   let e := ((Ideal.quotEquivOfEq hkerf.symm).trans (RingHom.quotientKerEquivOfSurjective hf))
   have hemk : ∀ z, e (Ideal.Quotient.mk _ z) = f z := fun z => rfl
-  have he : ∀ (s : MRing ι O) (x : MRing ι O ⧸ (P ⊔ Ideal.span {C ϖ})),
+  have he : ∀ (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ (P ⊔ Ideal.span {C ϖ})),
       e.toAddEquiv (s • x) = π s • e.toAddEquiv x := by
     intro s x
     obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x

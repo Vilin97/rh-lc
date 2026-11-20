@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBundles
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -17,7 +18,7 @@ def FlagBundleDim.Statement : Prop :=
     (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (y : (Σ k, ι k) → Ω) (e : ℕ),
     IsMultiProjPrime (pointIdeal F y) →
-    ringKrullDim (MRing ι F ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E]
       (B : ChartBundle F (segreVec y) N E) (w : Module.Basis (Fin N) Ω E) (b : Fin N → K → ℤ),
       IsFlagFrame y B w b →
@@ -33,7 +34,7 @@ def FlagBundleCut.Statement : Prop :=
     (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (y : (Σ k, ι k) → Ω) (e : ℕ),
     IsMultiProjPrime (pointIdeal F y) →
-    ringKrullDim (MRing ι F ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E]
       (B : ChartBundle F (segreVec y) N E) (w : Module.Basis (Fin N) Ω E) (b : Fin N → K → ℤ),
       IsFlagFrame y B w b →
@@ -49,7 +50,7 @@ def FlagBundlePullbackVanish.Statement : Prop :=
     (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (y : (Σ k, ι k) → Ω) (e : ℕ),
     IsMultiProjPrime (pointIdeal F y) →
-    ringKrullDim (MRing ι F ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E]
       (B : ChartBundle F (segreVec y) N E) (w : Module.Basis (Fin N) Ω E) (b : Fin N → K → ℤ),
       IsFlagFrame y B w b →
@@ -63,7 +64,7 @@ def FlagBundleLineBase.Statement : Prop :=
     (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (y : (Σ k, ι k) → Ω) (e : ℕ),
     IsMultiProjPrime (pointIdeal F y) →
-    ringKrullDim (MRing ι F ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E]
       (B : ChartBundle F (segreVec y) N E) (w : Module.Basis (Fin N) Ω E) (b : Fin N → K → ℤ),
       IsFlagFrame y B w b →

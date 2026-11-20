@@ -6,6 +6,7 @@ import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.MonomialRatioIntegra
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPairCocycle
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial GlobalTheory.CompanionTheory.Ar.Num GroundTheory.Heights₂.Heights.NumbersDVR
 open ReciprocityTheory.ChartRestriction.G.Geo (ChartBundle chartRing)
 open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.Bundles (mseg mcIdeal chartMon joinCoord bcCoord pullDeg restrictChart fnField ck rootNum SameGeneric LatLE IsPull IsPullBC)
@@ -60,7 +61,7 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
-theorem isVerticalDivisor_swap {P : Ideal (MRing ι O)} {ϖ : O} {b : K → ℤ} {f g : MRing ι O}
+theorem isVerticalDivisor_swap {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {ϖ : O} {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
     (hD : IsVerticalDivisor P ϖ b f g) : IsVerticalDivisor P ϖ (-b) g f where
   degrees := by
     obtain ⟨bf, bg, hf, hg, hb⟩ := hD.degrees
@@ -80,10 +81,10 @@ theorem isVerticalDivisor_swap {P : Ideal (MRing ι O)} {ϖ : O} {b : K → ℤ}
     rw [← neg_sub]
     exact P.neg_mem h
 
-theorem exists_zpow {Ω : Type} [Field Ω] (φ : MRing ι O →+* Ω) {P : Ideal (MRing ι O)} [P.IsPrime]
-    {ϖ : O} {b : K → ℤ} {f g : MRing ι O} (hD : IsVerticalDivisor P ϖ b f g) {u : Ω} (hu : u ≠ 0)
+theorem exists_zpow {Ω : Type} [Field Ω] (φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* Ω) {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} [P.IsPrime]
+    {ϖ : O} {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hD : IsVerticalDivisor P ϖ b f g) {u : Ω} (hu : u ≠ 0)
     (hfg : φ f * u = φ g) (m : ℤ) :
-    ∃ F G : MRing ι O, IsVerticalDivisor P ϖ (m • b) F G ∧ φ F * u ^ m = φ G ∧
+    ∃ F G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, IsVerticalDivisor P ϖ (m • b) F G ∧ φ F * u ^ m = φ G ∧
       ∀ W, ratDiv P F G W = m * ratDiv P f g W := by
   induction m using Int.induction_on with
   | zero =>
@@ -112,8 +113,8 @@ theorem exists_zpow {Ω : Type} [Field Ω] (φ : MRing ι O →+* Ω) {P : Ideal
       unfold ratDiv
       ring
 
-theorem pairNum_scale {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (MRing ι O)} {d : ℕ}
-    (hP : IsModelOver P d) {a b : K → ℤ} {f g F G : MRing ι O}
+theorem pairNum_scale {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {d : ℕ}
+    (hP : IsModelOver P d) {a b : K → ℤ} {f g F G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
     (hD : IsVerticalDivisor P ϖ b f g) (m : ℤ) (hr : ∀ W, ratDiv P F G W = m * ratDiv P f g W)
     {k : ℕ} (hk : 1 ≤ k) {Q : List (K → ℤ)} (hQ : Q.length + k = d + 1) :
     pairNum P (fun _ : Fin 1 => m • a) (fun _ => 0) (fun _ => F) (fun _ => G)
@@ -171,7 +172,7 @@ theorem main : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing
     field_simp
   have : (pointIdeal O x).IsPrime := hW'.multiProj.isPrime
   obtain ⟨F, G, hFG, hv, hr⟩ := exists_zpow
-    (aeval x : MRing ι O →ₐ[O] Ω).toRingHom hD hu hfg' m
+    (aeval x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →ₐ[O] Ω).toRingHom hD hu hfg' m
   have hFG' : IsVerticalDivisor (pointIdeal O x) ϖ (m • a - 0) F G := by
     simpa using hFG
   obtain ⟨hs1, h1⟩ := GlobalTheory.T.line_bundle_model_degree O Ω K ι x ϖ hϖ d hM Am T (u ^ m) 1 (m • a) 0 hAm hT F G hFG'

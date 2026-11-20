@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCutForms
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagCutTools
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundleSectionFormsTools
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -252,7 +253,7 @@ theorem chart_pair (y : (Σ k, ι k) → Ω) (B' : ChartBundle O (segreVec y) N 
     (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E) (hφ' : IsTwistedDualGens y B' a₀' φ')
     (t : Fin N → Φ) (k : ℕ) (hk : k < N) (c : ∀ k, ι k) :
     ∃ bH : K → ℕ, segreVec y c ≠ 0 → ∀ β : K → ℕ, (∀ j, bH j ≤ β j) →
-      ∃ s : MRing (bundleIdx (bundleIdx ι M) M') O,
+      ∃ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'),
         IsMultiHomog s (Pi.single none 1 + vdeg (fun j => (β j + (x' ⟨k, hk⟩ j - a₀' j)).toNat)) ∧
         aeval (flagClosurePt y w e φ φ' t (k + 1)) s =
           flagLineCoord w' w e t (k + 1) ⟨k, hk⟩ *
@@ -287,7 +288,7 @@ theorem chart_pair (y : (Σ k, ι k) → Ω) (B' : ChartBundle O (segreVec y) N 
   rw [hgen] at hval
   simp only [pow_zero, map_one, one_mul] at hval
   refine ⟨bH, fun _ β hβ => ⟨(∑ l, X ⟨none, l⟩ * G l) * chartMonoZ O M M' c (β - bH), ?_, ?_⟩⟩
-  · have h1 : IsMultiHomog (∑ l, X ⟨none, l⟩ * G l : MRing (bundleIdx (bundleIdx ι M) M') O)
+  · have h1 : IsMultiHomog (∑ l, X ⟨none, l⟩ * G l : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))
         (Pi.single none 1 + vdeg bG) :=
       IsWeightedHomogeneous.sum _ _ _ fun l _ =>
         IsWeightedHomogeneous.mul (isWeightedHomogeneous_X O _ _) (hG l)
@@ -315,7 +316,7 @@ theorem chart_pair (y : (Σ k, ι k) → Ω) (B' : ChartBundle O (segreVec y) N 
       simp only [Pi.sub_apply]
       omega
     have hs : aeval (pairProjCoord y w φ φ' (flagCoord w e t (k + 1)))
-        (∑ l, X ⟨none, l⟩ * G l : MRing (bundleIdx (bundleIdx ι M) M') O) =
+        (∑ l, X ⟨none, l⟩ * G l : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) =
         ∑ l, aeval (pairProjCoord y w φ φ' (flagCoord w e t (k + 1))) (G l) *
           genVal w (flagCoord w e t (k + 1)) (φ' l) := by
       set_option synthInstance.maxHeartbeats 100000 in
@@ -351,10 +352,10 @@ theorem SegreFlagCutForms.proof : SegreFlagCutForms.Statement := by
   set P := pointIdeal O (flagClosurePt y w e φ φ' t (k + 1)) with hPdef
   set τ := flagLineCoord w' w e t (k + 1) ⟨k, hk⟩ with hτdef
   set pt := flagClosurePt y w e φ φ' t (k + 1) with hptdef
-  let G : Set (MRing (bundleIdx (bundleIdx ι M) M') O × MRing (bundleIdx (bundleIdx ι M) M') O) :=
+  let G : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M') × ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) :=
     {p | IsMultiHomog p.1 (Pi.single none 1 + vdeg (fun j => (β j + (x' ⟨k, hk⟩ j - a₀' j)).toNat)) ∧
       IsMultiHomog p.2 (vdeg β) ∧ aeval pt p.1 = τ * aeval pt p.2}
-  have h0 : (0 : MRing (bundleIdx (bundleIdx ι M) M') O × MRing (bundleIdx (bundleIdx ι M) M') O) ∈ G :=
+  have h0 : (0 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M') × ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ G :=
     ⟨isWeightedHomogeneous_zero _ _ _, isWeightedHomogeneous_zero _ _ _, by simp⟩
   have hG : ∀ p ∈ G, ∀ q ∈ G, ∀ r : O, p + r • q ∈ G := by
     intro p hp q hq r
@@ -368,23 +369,23 @@ theorem SegreFlagCutForms.proof : SegreFlagCutForms.Statement := by
     · show aeval pt (p.1 + r • q.1) = τ * aeval pt (p.2 + r • q.2)
       rw [map_add (f := _), map_add (f := _), map_smul, map_smul, hp.2.2, hq.2.2, mul_add, mul_smul_comm]
 
-  have hpair : ∀ (Q : Ideal (MRing (bundleIdx (bundleIdx ι M) M') O)) (c : ∀ j, ι j),
+  have hpair : ∀ (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))) (c : ∀ j, ι j),
       segreVec y c ≠ 0 → chartMonoZ O M M' c β ∉ Q → ∃ p ∈ G, p.2 ∉ Q := by
     intro Q c hc hcQ
     obtain ⟨s, hs, hsv⟩ := hbH c hc β (hβ c)
     exact ⟨(s, chartMonoZ O M M' c β), ⟨hs, chartMonoZ_homog c β, hsv⟩, hcQ⟩
   have hT : ∀ Q ∈ insert P S, Q.IsPrime ∧
-      (∀ a : O, algebraMap O (MRing (bundleIdx (bundleIdx ι M) M') O) a ∈ Q → a = 0) ∧ ∃ p ∈ G, p.2 ∉ Q := by
+      (∀ a : O, algebraMap O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) a ∈ Q → a = 0) ∧ ∃ p ∈ G, p.2 ∉ Q := by
     intro Q hQ
     rw [MvPolynomial.algebraMap_eq]
     rcases Finset.mem_insert.mp hQ with rfl | hQS
     · refine ⟨RingHom.ker_isPrime _, fun a ha => ?_, ?_⟩
-      · have h1 : aeval pt (C a : MRing (bundleIdx (bundleIdx ι M) M') O) = 0 := aeval_eq_zero_of_mem ha
+      · have h1 : aeval pt (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) = 0 := aeval_eq_zero_of_mem ha
         rw [aeval_C, IsScalarTower.algebraMap_apply O Ω Φ] at h1
         have h2 : algebraMap O Ω a = 0 := (algebraMap Ω Φ).injective (by rw [h1, map_zero])
-        have h3 : (C a : MRing ι O) ∈ pointIdeal O y :=
+        have h3 : (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ pointIdeal O y :=
           mem_of_homog (b := 0) (isWeightedHomogeneous_C _ _) (by rw [aeval_C, h2])
-        have h4 : a ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := h3
+        have h4 : a ∈ (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h3
         rw [hV.noTorsion] at h4
         exact (Submodule.mem_bot O).mp h4
       · choose c hc using hV.multiProj.relevant

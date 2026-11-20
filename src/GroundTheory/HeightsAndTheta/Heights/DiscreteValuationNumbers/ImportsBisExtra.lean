@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBundles
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.InstFintypeSumElim
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.SameGenericSymm
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -28,7 +29,7 @@ def FlagModelCommonModel.Statement : Prop :=
                                 IndefiniteRowSideFullHecke.NumbersDVR.Bundles.fnField O x ∧
       IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsPull O x z E EB ∧ IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsPull O x z E' E'B ∧
       IndefiniteRowSideFullHecke.NumbersDVR.Bundles.SameGeneric O (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.joinCoord x z) EB E'B ∧
-      (∀ (b : K → ℤ) (f g : MRing ι O),
+      (∀ (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
         IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsVertDiv O (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.mcIdeal O x) b f g →
         IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsVertDiv O
           (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.mcIdeal O (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.joinCoord x z))
@@ -38,7 +39,7 @@ def FlagModelCommonModel.Statement : Prop :=
           (IsLocalRing.ResidueField O) (Sum.elim ι F₁.ι'))
         (I₂ : IFamily (IsLocalRing.ResidueField O) (Sum.elim ι F₂.ι')),
         IsFieldIntersection I → IsFieldIntersection I₁ → IsFieldIntersection I₂ →
-      ∀ (G : MvPolynomial (Fin N) ℤ) (r : ℕ) (y y' : Fin r → K → ℤ) (f g : Fin r → MRing ι O),
+      ∀ (G : MvPolynomial (Fin N) ℤ) (r : ℕ) (y y' : Fin r → K → ℤ) (f g : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
         (∀ l, IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsVertDiv O (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.mcIdeal O x) (y l - y' l)
           (f l) (g l)) →
       ∀ (c : ℕ) (Q : MvPolynomial (Fin r) ℤ), c ≤ d + 1 → G.IsHomogeneous c →

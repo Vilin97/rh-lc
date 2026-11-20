@@ -12,6 +12,7 @@ import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SameGenericBundleCha
 import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SameGenericFlagDifferenceStatement
 import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XPullPreserve
 import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XRelabelBundle
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial GlobalTheory.CompanionTheory.Ar.Num GroundTheory.Heights₂.Heights.NumbersDVR
 open ReciprocityTheory.ChartRestriction.G.Geo (ChartBundle chartRing)
 open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.Bundles (mseg mcIdeal chartMon joinCoord bcCoord pullDeg liftVar fnField ck rootNum SameGeneric LatLE IsPull IsPullBC IsSubQuot QuotIso IsFrobPres FlagModel modelDeg)
@@ -25,7 +26,7 @@ section Numbers
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 theorem classNum_perm {K : Type} [DecidableEq K] {ι : K → Type} {S : Type} (cls : S → K → ℤ)
-    (H : MvPolynomial S ℤ) {Q Q' : List (K → ℤ)} (p : Q.Perm Q') (W : Ideal (MRing ι O)) :
+    (H : MvPolynomial S ℤ) {Q Q' : List (K → ℤ)} (p : Q.Perm Q') (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
     classNum cls H Q W = classNum cls H Q' W := by
   unfold classNum
   refine Finset.sum_congr rfl fun μ _ => ?_
@@ -42,8 +43,8 @@ theorem classList_map_perm {K₁ K₂ : Type} {S : Type} (cls : S → K₂ → �
 variable {K₁ K₂ : Type} [DecidableEq K₁] [DecidableEq K₂] {ι₁ : K₁ → Type} {ι₂ : K₂ → Type}
   (e : K₁ ≃ K₂) (σ : (Σ k, ι₁ k) ≃ (Σ k, ι₂ k))
 
-theorem pairNum_relabel (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (MRing ι₁ O)) {n : ℕ}
-    (x x' : Fin n → K₂ → ℤ) (f g : Fin n → MRing ι₁ O)
+theorem pairNum_relabel (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)) {n : ℕ}
+    (x x' : Fin n → K₂ → ℤ) (f g : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)
     (Gs : Fin n → MvPolynomial (Fin n ⊕ Fin n) ℤ) {S : Type} (cls : S → K₂ → ℤ) (μ : S →₀ ℕ) :
     pairNum (P.map (rename σ)) x x' (fun i => rename σ (f i)) (fun i => rename σ (g i)) Gs
         (classList cls μ) =
@@ -53,12 +54,12 @@ theorem pairNum_relabel (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (MRing ι₁ 
   unfold pairNum
   simp only [classNum_perm _ _ (classList_map_perm cls e μ)]
 
-theorem rootTerm_relabel (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (MRing ι₁ O)) {n : ℕ}
+theorem rootTerm_relabel (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)) {n : ℕ}
     (x : Fin n → K₂ → ℤ) (G : MvPolynomial (Fin n) ℤ) {S : Type} (cls : S → K₂ → ℤ)
     (μ : S →₀ ℕ) (a : O) :
-    cycEval (fun W => classNum x G (classList cls μ) W) (divCycle (P.map (rename σ)) (C a)) =
+    cycEval (fun W => classNum x G (classList cls μ) W) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P.map (rename σ)) (C a)) W : ℤ))) =
       cycEval (fun W => classNum (fun i => x i ∘ e) G (classList (fun s => cls s ∘ e) μ) W)
-        (divCycle P (C a)) := by
+        ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a)) W : ℤ))) := by
   rw [PairNumberRelabel.map_rename_eq]
   unfold cycEval
   rw [← finsum_comp_equiv (PairNumberRelabel.idealEquiv (R := O) σ)]

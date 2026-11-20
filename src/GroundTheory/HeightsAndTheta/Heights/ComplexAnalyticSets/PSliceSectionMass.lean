@@ -3,6 +3,7 @@ import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceSectionMa
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceIdeal
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceComponents
 import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSliceExhaustion
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -45,7 +46,7 @@ theorem SliceSectionMass.proof (hSt : StokesOnVariety.Statement) (hPL : Poincare
   obtain ⟨hinj, himg, hmult⟩ := hC n J u ℓ hJ hℓW
   obtain ⟨f, hfs, hfc, -, -, hlimJ, hlimW, herr⟩ := hE n e h J F u ℓ hJ hF hu hℓ hℓW
   have hsm := smoothNear_log_dualNorm_slice h J ℓ
-  have hk : ∀ k, ∑ W ∈ (divCycle J u).support, ((divCycle J u W : ℕ) : ℝ) *
+  have hk : ∀ k, ∑ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ))).support, ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ) : ℕ) : ℝ) *
         varInt (W ⊔ Ideal.span {linForm ℓ - 1}) e (f k) (fun _ x => Real.log (h.dualNorm x)) +
       (varInt (J ⊔ Ideal.span {linForm ℓ - 1}) (e + 1) (fun x => Real.log (h.dualNorm x))
           (vecCons (f k) fun _ x => Real.log (h.dualNorm x)) -
@@ -64,17 +65,17 @@ theorem SliceSectionMass.proof (hSt : StokesOnVariety.Statement) (hPL : Poincare
       funext fun i => Fin.cases rfl (fun _ => rfl) i
     rw [hcons] at hS
     rw [hS, hP, ← himg, finsum_mem_image hinj, finsum_mem_coe_finset]
-    have hsum : ∑ W ∈ (divCycle J u).support,
+    have hsum : ∑ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ))).support,
         (localMult (J ⊔ Ideal.span {linForm ℓ - 1} ⊔ Ideal.span {linForm u})
           (W ⊔ Ideal.span {linForm ℓ - 1}) : ℝ) *
           varInt (W ⊔ Ideal.span {linForm ℓ - 1}) e (f k) (fun _ x => Real.log (h.dualNorm x)) =
-        ∑ W ∈ (divCycle J u).support, ((divCycle J u W : ℕ) : ℝ) *
+        ∑ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ))).support, ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ) : ℕ) : ℝ) *
           varInt (W ⊔ Ideal.span {linForm ℓ - 1}) e (f k) (fun _ x => Real.log (h.dualNorm x)) :=
       Finset.sum_congr rfl fun W hW => by rw [hmult W hW]
     rw [hsum]
     ring
   have hlim := (tendsto_finsetSum _ fun W hW => (hlimW W hW).const_mul
-    ((divCycle J u W : ℕ) : ℝ)).add herr
+    ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle J u) W : ℤ) : ℕ) : ℝ)).add herr
   rw [add_zero] at hlim
   exact tendsto_nhds_unique hlimJ (hlim.congr hk)
 

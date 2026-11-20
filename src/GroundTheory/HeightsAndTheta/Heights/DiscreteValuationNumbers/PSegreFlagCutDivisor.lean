@@ -8,6 +8,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagC
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagConeAlg
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagCutTools
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundleSectionDiv
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -71,12 +72,12 @@ theorem SegreFlagCutDivisor.proof (hSpec : SegreFlagCutSpecialize.Statement)
         (fun q hq => by
           obtain ⟨n, hn⟩ := hsat hkpos q hq
           exact ⟨_, huW' n, hn⟩)
-      unfold divCycle
+      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
       rw [dif_pos ⟨hmin, hWrel⟩, hmult]
       rfl
     · by_contra hne
       have hmin : W ∈ (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1)) ⊔ Ideal.span {l}).minimalPrimes := by
-        unfold divCycle at hne
+        unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hne
         split_ifs at hne with h'
         · exact h'.1
         · exact absurd rfl hne
@@ -90,8 +91,8 @@ theorem SegreFlagCutDivisor.proof (hSpec : SegreFlagCutSpecialize.Statement)
             pointIdeal O (flagClosurePt y w e φ φ' t k) :=
           lt_of_le_of_ne hPQ (fun h' => hlP (by rw [h']; exact hlQ hkpos))
         exact hc ⟨hkpos, (eq_of_lt_of_le_of_mem_minimalPrimes hmin hPQ' hQW).symm⟩
-  · have h0 : ∀ z, divCycle (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) z W = 0 := fun z => by
-      unfold divCycle
+  · have h0 : ∀ z, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) z) W : ℤ) = 0 := fun z => by
+      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
       rw [dif_neg]
       rintro ⟨h', hr⟩
       exact hWc ⟨h'.1.1, hr, le_sup_left.trans h'.1.2⟩

@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagLineDegree
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PSplitRelDeg
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -20,7 +21,7 @@ theorem weight_blockWeight_apply {K : Type*} [Fintype K] [DecidableEq K] {ι : K
 
 theorem cone_of_isMultiHomog {K Kt : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*}
     [∀ k, Fintype (ι k)] {R S : Type*} [CommRing R] [CommRing S] (r : R →+* S)
-    (x : (Σ k, ι k) → S) (τ : K → Kt) {h : MRing ι R} {D : K → ℕ} (hh : IsMultiHomog h D) :
+    (x : (Σ k, ι k) → S) (τ : K → Kt) {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {D : K → ℕ} (hh : IsMultiHomog h D) :
     eval₂Hom (C.comp r) (fun p => C (x p) * X (τ p.1)) h =
       C (eval₂ r x h) * ∏ k, (X (τ k) : MvPolynomial Kt S) ^ D k := by
   conv_lhs => rw [h.as_sum]
@@ -41,19 +42,19 @@ theorem cone_of_isMultiHomog {K Kt : Type*} [Fintype K] [DecidableEq K] {ι : K 
 
 theorem segreForm_homog {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} {R : Type*}
     [CommRing R] (c : ∀ k, ι k) :
-    IsMultiHomog (∏ k, (X ⟨k, c k⟩ : MRing ι R)) (fun _ => 1) := by
-  have h := IsWeightedHomogeneous.prod Finset.univ (fun k => (X ⟨k, c k⟩ : MRing ι R))
+    IsMultiHomog (∏ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (fun _ => 1) := by
+  have h := IsWeightedHomogeneous.prod Finset.univ (fun k => (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))
     (fun k => Pi.single k 1) (w := blockWeight ι) (fun k _ => isWeightedHomogeneous_X R _ _)
   rwa [Finset.univ_sum_single (fun _ : K => (1 : ℕ))] at h
 
 theorem chart_form {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} {F Ω : Type*} [Field F]
     [Field Ω] [Algebra F Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : segreVec y c ≠ 0) {α : Ω}
     (hα : α ∈ chartRing F (segreVec y) c) :
-    ∃ (m : ℕ) (A : MRing ι F), IsMultiHomog A (fun _ => m) ∧ α * segreVec y c ^ m = aeval y A := by
-  have hσ : aeval y (∏ k, (X ⟨k, c k⟩ : MRing ι F)) = segreVec y c := by
+    ∃ (m : ℕ) (A : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog A (fun _ => m) ∧ α * segreVec y c ^ m = aeval y A := by
+  have hσ : aeval y (∏ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) = segreVec y c := by
     simp [segreVec, map_prod]
   have hdeg : ∀ m n : ℕ, ((fun _ : K => m) + fun _ : K => n) = fun _ => m + n := fun _ _ => rfl
-  have hpow : ∀ n : ℕ, IsMultiHomog ((∏ k, (X ⟨k, c k⟩ : MRing ι F)) ^ n) (fun _ => n) := by
+  have hpow : ∀ n : ℕ, IsMultiHomog ((∏ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) ^ n) (fun _ => n) := by
     intro n
     have h := (segreForm_homog (R := F) c).pow n
     have e : (n • fun _ : K => (1 : ℕ)) = fun _ => n := by funext k; simp
@@ -87,14 +88,14 @@ theorem chart_form {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} {F
     · rw [map_mul, ← hAe, ← hBe]
       ring
 
-def substVar {K : Type*} {ι : K → Type} {M : ℕ} {F : Type*} [CommRing F] (A : Fin M → MRing ι F) :
-    (Σ o, bundleIdx ι M o) → MRing ι F
+def substVar {K : Type*} {ι : K → Type} {M : ℕ} {F : Type*} [CommRing F] (A : Fin M → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
+    (Σ o, bundleIdx ι M o) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι
   | ⟨none, l⟩ => A l
   | ⟨some k, i⟩ => X ⟨k, i⟩
 
 theorem subst_homog {K : Type*} [DecidableEq K] {ι : K → Type} {M : ℕ} {F : Type*} [CommRing F]
-    (m : ℕ) (A : Fin M → MRing ι F) (hA : ∀ l, IsMultiHomog (A l) (fun _ => m))
-    {h : MRing (bundleIdx ι M) F} {D : Option K → ℕ} (hh : IsMultiHomog h D) :
+    (m : ℕ) (A : Fin M → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (hA : ∀ l, IsMultiHomog (A l) (fun _ => m))
+    {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)} {D : Option K → ℕ} (hh : IsMultiHomog h D) :
     IsMultiHomog (aeval (substVar A) h) (fun k => D (some k) + D none * m) := by
   let L : (Option K → ℕ) →+ (K → ℕ) :=
     { toFun := fun d k => d (some k) + d none * m
@@ -175,9 +176,9 @@ theorem FlagLineDegree.proof : FlagLineDegree.Statement := by
 
   let m0 : ℕ := Finset.univ.sup m
   have hm : ∀ l, m l ≤ m0 := fun l => Finset.le_sup (Finset.mem_univ l)
-  let σ : MRing ι F := ∏ k, X ⟨k, c k⟩
+  let σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι := ∏ k, X ⟨k, c k⟩
   have hσ : aeval y σ = segreVec y c := by simp [σ, segreVec, map_prod]
-  let A' : Fin M → MRing ι F := fun l => A l * σ ^ (m0 - m l)
+  let A' : Fin M → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι := fun l => A l * σ ^ (m0 - m l)
   have hA' : ∀ l, IsMultiHomog (A' l) (fun _ => m0) := by
     intro l
     have h1 := (hA l).mul ((segreForm_homog (R := F) c).pow (m0 - m l))
@@ -217,20 +218,20 @@ theorem FlagLineDegree.proof : FlagLineDegree.Statement := by
   let r : F →+* Φ := (algebraMap Ω Φ).comp (algebraMap F Ω)
   let cone := eval₂Hom (C.comp r) (fun p : (Σ o, bundleIdx ι M o) => C (x p) * X p.1)
   have hmemP : ∀ q, q ∈ projIdeal F y w φ (truncCoord t 1) ↔ cone q = 0 := fun q => Iff.rfl
-  let θ : MRing (bundleIdx ι M) F →ₐ[F] MRing ι F := aeval (substVar A')
-  let E' : MRing ι F →+* Φ := eval₂Hom r (fun p => algebraMap Ω Φ (y p))
+  let θ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →ₐ[F] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι := aeval (substVar A')
+  let E' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* Φ := eval₂Hom r (fun p => algebraMap Ω Φ (y p))
   have hE' : ∀ q, E' q = algebraMap Ω Φ (aeval y q) := by
     intro q
     rw [aeval_def, eval₂_comp_left]
     rfl
 
-  have key : ∀ (D : Option K → ℕ) (f : MRing (bundleIdx ι M) F), IsMultiHomog f D →
+  have key : ∀ (D : Option K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)), IsMultiHomog f D →
       eval₂ r x f = lam ^ D none * E' (θ f) := by
     intro D f hf
     let x0 : (Σ o, bundleIdx ι M o) → Φ := fun p => E' (θ (X p))
     let sc : MvPolynomial (Option K) Φ →+* Φ :=
       eval₂Hom (RingHom.id Φ) (fun o => Option.elim o lam (fun _ => 1))
-    have h1 : (eval₂Hom r x : MRing (bundleIdx ι M) F →+* Φ) =
+    have h1 : (eval₂Hom r x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →+* Φ) =
         sc.comp (eval₂Hom (C.comp r) (fun p => C (x0 p) * X p.1)) := by
       apply MvPolynomial.ringHom_ext
       · intro q; simp [sc]
@@ -242,7 +243,7 @@ theorem FlagLineDegree.proof : FlagLineDegree.Statement := by
         | some k =>
           simp only [RingHom.comp_apply, eval₂Hom_X', sc, x0, θ, aeval_X, substVar]
           simp [E', x, projCoord]
-    have h2 : (eval₂Hom r x0 : MRing (bundleIdx ι M) F →+* Φ) = E'.comp θ.toRingHom := by
+    have h2 : (eval₂Hom r x0 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →+* Φ) = E'.comp θ.toRingHom := by
       apply MvPolynomial.ringHom_ext
       · intro q; simp [E', θ]
       · intro p; simp [x0]
@@ -261,7 +262,7 @@ theorem FlagLineDegree.proof : FlagLineDegree.Statement := by
     rw [h4, mul_comm]
     rfl
 
-  have hren : ∀ (D : K → ℕ) (q : MRing (fun k => bundleIdx ι M (Function.Embedding.some k)) F),
+  have hren : ∀ (D : K → ℕ) (q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => bundleIdx ι M (Function.Embedding.some k))),
       IsMultiHomog q D →
       cone (rename (FieldNumbers.blockIncl (Function.Embedding.some : K ↪ Option K)
         (bundleIdx ι M)) q) = C (E' q) * ∏ k, (X (some k) : MvPolynomial (Option K) Φ) ^ D k := by
@@ -270,7 +271,7 @@ theorem FlagLineDegree.proof : FlagLineDegree.Statement := by
     rw [eval₂_rename]
     exact cone_of_isMultiHomog (ι := fun k => bundleIdx ι M (Function.Embedding.some k)) r
       (fun p => algebraMap Ω Φ (y p)) some hq
-  have hcone : ∀ (D : Option K → ℕ) (f : MRing (bundleIdx ι M) F), IsMultiHomog f D →
+  have hcone : ∀ (D : Option K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)), IsMultiHomog f D →
       cone f = C (lam ^ D none * E' (θ f)) * ∏ o, (X o : MvPolynomial (Option K) Φ) ^ D o := by
     intro D f hf
     rw [← key D f hf]
@@ -292,8 +293,8 @@ theorem FlagLineDegree.proof : FlagLineDegree.Statement := by
     rw [hmemP, hren _ _ (subst_homog m0 A' hA' hg)]
     exact mul_ne_zero (C_ne_zero.mpr hEg) (hmon _)
   have hne : ∀ q ∉ projIdeal F y w φ (truncCoord t 1),
-      algebraMap (MRing (bundleIdx ι M) F ⧸ projIdeal F y w φ (truncCoord t 1))
-        (FractionRing (MRing (bundleIdx ι M) F ⧸ projIdeal F y w φ (truncCoord t 1)))
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) ⧸ projIdeal F y w φ (truncCoord t 1))
+        (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) ⧸ projIdeal F y w φ (truncCoord t 1)))
         (Ideal.Quotient.mk _ q) ≠ 0 := by
     intro q hq
     rw [map_ne_zero_iff _ (IsFractionRing.injective _ _)]

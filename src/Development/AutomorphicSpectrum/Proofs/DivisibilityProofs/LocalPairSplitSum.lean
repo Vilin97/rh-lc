@@ -1,6 +1,7 @@
 import Mathlib
 import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.BundleChernComparison
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagIndependence
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num
 
@@ -13,7 +14,7 @@ theorem classList_mapDomain_eq {K σ τ : Type} (cls : τ → K → ℤ) (e : σ
 
 theorem classNum_rename_eq {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} [CommRing O] [IsDomain O]
     [IsDiscreteValuationRing O] {σ τ : Type} (cls : τ → K → ℤ) (e : σ → τ) (he : Function.Injective e)
-    (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
+    (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
     classNum cls (rename e H) Q W = classNum (cls ∘ e) H Q W := by
   classical
   unfold classNum
@@ -28,8 +29,8 @@ theorem psumExpansion_rename (N k : ℕ) (i : Fin N) :
   simp [psumExpansion]
 
 theorem pairNum_psumExpansion {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} [CommRing O] [IsDomain O]
-    [IsDiscreteValuationRing O] {N : ℕ} (P : Ideal (MRing ι O)) (x x' : Fin N → K → ℤ)
-    (f g : Fin N → MRing ι O) (k : ℕ) (Q : List (K → ℤ)) :
+    [IsDiscreteValuationRing O] {N : ℕ} (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (x x' : Fin N → K → ℤ)
+    (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (k : ℕ) (Q : List (K → ℤ)) :
     pairNum P x x' f g (psumExpansion N k) Q =
       ∑ i, pairNum P (fun _ : Fin 1 => x i) (fun _ => x' i) (fun _ => f i) (fun _ => g i)
         (psumExpansion 1 k) Q := by
@@ -46,7 +47,7 @@ theorem pairNum_psumExpansion {K : Type} [DecidableEq K] {ι : K → Type} {O : 
 
 theorem ck_append : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (K : Type) [Fintype K]
     [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (j j' : ℕ) (T : LocPair ι O (Fin (j + j')))
-    (P : Ideal (MRing ι O)) (k : ℕ) (Q : List (K → ℤ)),
+    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (k : ℕ) (Q : List (K → ℤ)),
     T.ck P k Q = (T.comp (Fin.castAdd j')).ck P k Q + (T.comp (Fin.natAdd j)).ck P k Q := by
   intro O _ _ _ K _ _ ι _ j j' T P k Q
   unfold LocPair.ck

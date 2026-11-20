@@ -2,6 +2,7 @@ import Mathlib
 import Development.AutomorphicSpectrum.Proofs.MetricProofs.MinorIJEqSubmatrix
 import Development.WeilBound.CoreStatements.PluriharmonicCharts.BlockFnFieldCompLe
 import Development.WeilBound.CoreStatements.PluriharmonicCharts.IsOpenHoloPreimage
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 open MvPolynomial MeasureTheory Filter Topology Matrix ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
 open scoped ComplexOrder Classical
 open GlobalTheory.CompanionTheory.Ar.PB.WSq GlobalTheory.CompanionTheory.Ar.PB.CovMap GlobalTheory.CompanionTheory.Ar.PB.CovGraph GlobalTheory.CompanionTheory.Ar.PB.CovMap.LocImg PositivityTheory.Xgp.c_algsq
@@ -107,12 +108,12 @@ theorem log_eval_smul {g : MRing ι} {dg : K → ℕ} (hg : IsMultiHomog g dg) (
     Real.log_prod fun k _ => norm_ne_zero_iff.2 (pow_ne_zero _ (hc k)), add_comm]
   simp only [norm_pow, Real.log_pow]
 
-def lognorm (τ : Ψ) (a : Fin N) (k₀ : K) (g h : MRing fun o : Option K => ι (o.getD k₀))
+def lognorm (τ : Ψ) (a : Fin N) (k₀ : K) (g h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀))
     (A : Ψ × Fin N → HermLine ι) (z : (Σ o : Option K, ι (o.getD k₀)) → ℂ) : ℝ :=
   Real.log ‖eval z (map (Int.castRingHom ℂ) g)‖ - Real.log ‖eval z (map (Int.castRingHom ℂ) h)‖ +
     (1 / 2) * ∑ p, (xiCoef τ a p : ℝ) * (Real.log ((A p).h (fstPt k₀ z)) + Real.log ((A p).h (sndPt k₀ z)))
 
-theorem lognorm_orbit {τ : Ψ} {a : Fin N} {k₀ : K} {g h : MRing fun o : Option K => ι (o.getD k₀)}
+theorem lognorm_orbit {τ : Ψ} {a : Fin N} {k₀ : K} {g h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀)}
     {dg dh : Option K → ℕ} (hg : IsMultiHomog g dg) (hh : IsMultiHomog h dh) {A : Ψ × Fin N → HermLine ι}
     (hxi : ∑ p, xiCoef τ a p * (A p).a k₀ = -2)
     (hdeg : ∀ o : Option K, (dg o : ℤ) - dh o =
@@ -194,7 +195,7 @@ variable {M : FlagModel y Ψ N j} {M' : FlagModel y' Ψ N j} {n d : ℕ} {BM : B
   {Cv : FlagCover M' M} {τ : Ψ} {a b : Fin N} {k₀' : K'} {ca cb : Fin N}
 
 theorem norm_pt (CR : CovReal FA Cv) (S' : Sw M' τ a b k₀' ca cb) (hy' : IsArithVar (mCoordIdeal y') (d + 2))
-    {g h : MRing fun o : Option K' => ι' (o.getD k₀')} {dg dh : Option K' → ℕ} (hg : IsMultiHomog g dg)
+    {g h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K' => ι' (o.getD k₀')} {dg dh : Option K' → ℕ} (hg : IsMultiHomog g dg)
     (hh : IsMultiHomog h dh) (hxi : ∑ p, xiCoef τ a p * (CR.Re.ref p).a k₀' = -2)
     (hdeg : ∀ o : Option K', (dg o : ℤ) - dh o =
       o.elim 1 fun k => -(∑ p, xiCoef τ a p * (CR.Re.ref p).a k) - if k₀' = k then 1 else 0)

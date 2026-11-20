@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundle
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumSymm
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -109,25 +110,25 @@ omit [DecidableEq K] in
 theorem rootList_zero {n : ℕ} (x : Fin n → K → ℤ) : rootList x 0 = [] := by
   simp [rootList]
 
-theorem intNumL_eq {ι : K → Type*} (F : Type*) [Field F] (P : Ideal (MRing ι F))
+theorem intNumL_eq {ι : K → Type*} (F : Type*) [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
     (l : List (K → ℤ)) : intNumL F P l = eventualValue (l.foldr diffStep (hilbFn P)) := by
   unfold intNumL intNum mixedDiff
   rw [List.ofFn_get]
 
-theorem intNumL_perm {ι : K → Type*} (F : Type*) [Field F] (P : Ideal (MRing ι F))
+theorem intNumL_perm {ι : K → Type*} (F : Type*) [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
     {l l' : List (K → ℤ)} (h : l.Perm l') : intNumL F P l = intNumL F P l' := by
   rw [intNumL_eq, intNumL_eq, h.foldr_eq]
 
 end Lists
 
 def segreSide {K : Type*} [DecidableEq K] {ι : K → Type*} (F : Type*) [Field F]
-    (P : Ideal (MRing ι F)) {i : ℕ} (x : Fin i → K → ℤ) (n : ℕ) (Y : List (K → ℤ)) : ℤ :=
+    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {i : ℕ} (x : Fin i → K → ℤ) (n : ℕ) (Y : List (K → ℤ)) : ℤ :=
   if i - 1 ≤ n then
     ∑ α ∈ Finset.Nat.antidiagonalTuple i (n - (i - 1)), intNumL F P (rootList x α ++ Y)
   else 0
 
 theorem segreSide_succ {K : Type*} [DecidableEq K] {ι : K → Type*} (F : Type*) [Field F]
-    (P : Ideal (MRing ι F)) {i : ℕ} (hi : 1 ≤ i) (x : Fin (i + 1) → K → ℤ) (m : ℕ)
+    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {i : ℕ} (hi : 1 ≤ i) (x : Fin (i + 1) → K → ℤ) (m : ℕ)
     (Y : List (K → ℤ)) :
     segreSide F P x (m + 1) Y =
       segreSide F P (fun j => x (Fin.castSucc j)) m Y +
@@ -161,7 +162,7 @@ theorem truncCoord_of_le {N : ℕ} {Φ : Type*} [Zero Φ] (t : Fin N → Φ) {i 
 
 theorem intNumL_cons_add (hadd : FieldNumbers.IntNumAdd.Statement.{0}) (F : Type) [Field F]
     {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
-    (P : Ideal (MRing ι F)) (hP : IsMultiProjPrime P) (l : List (K → ℤ))
+    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hP : IsMultiProjPrime P) (l : List (K → ℤ))
     (hd : FieldNumbers.relDim P = ((l.length + 1 : ℕ) : WithBot (WithTop ℤ))) (c c' : K → ℤ) :
     intNumL F P ((c + c') :: l) = intNumL F P (c :: l) + intNumL F P (c' :: l) := by
   have key : ∀ d, Function.update (c :: l).get (0 : Fin (l.length + 1)) d = (d :: l).get := by

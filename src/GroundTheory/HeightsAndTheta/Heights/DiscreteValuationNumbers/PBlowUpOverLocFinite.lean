@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpOverLocFiniteCut
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -115,18 +116,18 @@ theorem BlowUpOverLocFinite.proof (hloc : HomLocRingLocal.Statement.{u})
   obtain ⟨hL, hN, hD⟩ := hloc O K ι P hP.multiProj c x hx hxP W hW hWrel
   have hWp : W.IsPrime := hW.1.1
   have hPW : P ≤ W := le_sup_left.trans hW.1.2
-  have he : ∀ f, f ∉ P → algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P))
+  have he : ∀ f, f ∉ P → algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P))
       (Ideal.Quotient.mk P f) ≠ 0 := fun f hf h0 => hf (by
     rw [← Ideal.Quotient.eq_zero_iff_mem]
-    exact IsFractionRing.injective _ (FractionRing (MRing ι O ⧸ P)) (h0.trans (map_zero _).symm))
-  have he0 : ∀ f, f ∈ P → algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P))
+    exact IsFractionRing.injective _ (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (h0.trans (map_zero _).symm))
+  have he0 : ∀ f, f ∈ P → algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P))
       (Ideal.Quotient.mk P f) = 0 := fun f hf => by
     rw [Ideal.Quotient.eq_zero_iff_mem.mpr hf, map_zero]
   obtain ⟨i, hi⟩ := powMonomial_not_mem hWp hWrel N
   have hh0 := he (powMonomial N i) fun hm => hi (hPW hm)
   let a : J → homLocRing P W := fun k =>
-    ⟨algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P (u k)) /
-      algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P (powMonomial N i)),
+    ⟨algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P (u k)) /
+      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P (powMonomial N i)),
       Subring.subset_closure ⟨N, u k, powMonomial N i, hu k, isMultiHomog_powMonomial N i, hi, rfl⟩⟩
   have hI : Ideal.span (Set.range a) ≠ ⊥ := by
     intro hb
@@ -134,11 +135,11 @@ theorem BlowUpOverLocFinite.proof (hloc : HomLocRingLocal.Statement.{u})
     rw [hb, Ideal.mem_bot] at h1
     exact div_ne_zero (he _ hj₀) hh0 (congrArg Subtype.val h1)
 
-  have hle : ∀ f ∈ blowUpOverLoc P W u, f ∈ blowUpColon (FractionRing (MRing ι O ⧸ P)) (Ideal.span (Set.range a)) := by
+  have hle : ∀ f ∈ blowUpOverLoc P W u, f ∈ blowUpColon (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.span (Set.range a)) := by
     intro f hf
     refine hcolon (homLocRing P W) _ J a f fun k hk => ?_
     have huk : u k ∉ P := fun hm => hk (by
-      show algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P (u k)) / _ = 0
+      show algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P (u k)) / _ = 0
       rw [he0 _ hm, zero_div])
     refine (Subring.closure_le (t := (Algebra.adjoin (homLocRing P W) _).toSubring)).mpr
       (Set.union_subset ?_ ?_) (hchart O K ι J P W hP.multiProj.multiHomog hWp hPW hWrel N u hu k huk hf)
@@ -147,8 +148,8 @@ theorem BlowUpOverLocFinite.proof (hloc : HomLocRingLocal.Statement.{u})
     · rintro _ ⟨l, rfl⟩
       refine Algebra.subset_adjoin ⟨l, ?_⟩
       exact div_div_div_cancel_right₀ hh0
-        (algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P (u l)))
-        (algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P (u k)))
+        (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P (u l)))
+        (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P (u k)))
   have := hN
   exact finite_finrank_one_of_le_blowUpColon (homLocRing P W) (blowUpOverLoc P W u)
     (homLocRing_le_blowUpOverLoc P W u) _ hI

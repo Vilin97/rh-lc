@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegrePrime
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -17,16 +18,16 @@ theorem segreMap_monomial_isMultiHomog (d : ((_ : Unit) × ((k : K) → ι k)) �
   rw [segreMap, aeval_monomial, algebraMap_eq, Finsupp.prod]
   refine IsWeightedHomogeneous.C_mul ?_ a
   have hX : ∀ v : (_ : Unit) × ((k : K) → ι k),
-      IsWeightedHomogeneous (blockWeight ι) (∏ k, (X ⟨k, v.2 k⟩ : MRing ι F)) (fun _ => 1) := by
+      IsWeightedHomogeneous (blockWeight ι) (∏ k, (X ⟨k, v.2 k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (fun _ => 1) := by
     intro v
     have := IsWeightedHomogeneous.prod (w := blockWeight ι) Finset.univ
-      (fun k => (X ⟨k, v.2 k⟩ : MRing ι F)) (fun k => Pi.single k 1)
+      (fun k => (X ⟨k, v.2 k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (fun k => Pi.single k 1)
       (fun k _ => isWeightedHomogeneous_X F _ _)
     convert this using 1
     ext j
     simp [Finset.sum_apply, Pi.single_apply]
   have := IsWeightedHomogeneous.prod d.support
-    (fun v => (∏ k, (X ⟨k, v.2 k⟩ : MRing ι F)) ^ d v) (fun v => d v • (fun _ : K => (1 : ℕ)))
+    (fun v => (∏ k, (X ⟨k, v.2 k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) ^ d v) (fun v => d v • (fun _ : K => (1 : ℕ)))
     (fun v _ => (hX v).pow _)
   have e : (fun _ : K => Finsupp.weight (blockWeight (fun _ : Unit => ∀ k, ι k)) d ()) =
       ∑ v ∈ d.support, d v • (fun _ : K => (1 : ℕ)) := by
@@ -36,7 +37,7 @@ theorem segreMap_monomial_isMultiHomog (d : ((_ : Unit) × ((k : K) → ι k)) �
   exact this
 
 theorem segreMap_weightedHomogeneousComponent [Nonempty K] (b : Unit → ℕ)
-    (g : MRing (fun _ : Unit => ∀ k, ι k) F) :
+    (g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k)) :
     segreMap F (weightedHomogeneousComponent (blockWeight (fun _ : Unit => ∀ k, ι k)) b g) =
       weightedHomogeneousComponent (blockWeight ι) (fun _ => b ()) (segreMap F g) := by
   classical

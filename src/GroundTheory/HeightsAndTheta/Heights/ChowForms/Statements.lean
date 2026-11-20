@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Statements
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -87,8 +88,8 @@ def SectionOrder.Statement : Prop :=
     IsProjPrime I → IsChowForm I (e + 1) f → linForm u ∉ I →
       specFirst f u ≠ 0 ∧ ∀ q : MvPolynomial (Fin e × Fin n) F, Irreducible q →
         emultiplicity q (specFirst f u) =
-          ∑ W ∈ (divCycle I u).support with Ideal.span {q} = incIdeal W e,
-            ((divCycle I u W : ℕ) : ℕ∞)
+          ∑ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support with Ideal.span {q} = incIdeal W e,
+            ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ) : ℕ) : ℕ∞)
 
 section Inhabitants
 

@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsHomLocRingLocal
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -14,8 +15,8 @@ namespace HomLocRingNoetherian
 
 variable {R : Type u} [CommRing R] {K : Type} [DecidableEq K] {ι : K → Type}
 
-theorem component_form_mul {s : MRing ι R} {e : K → ℕ} (hs : IsMultiHomog s e) (d : K → ℕ)
-    (h : MRing ι R) :
+theorem component_form_mul {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {e : K → ℕ} (hs : IsMultiHomog s e) (d : K → ℕ)
+    (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
     weightedHomogeneousComponent (blockWeight ι) (e + d) (s * h) =
       s * weightedHomogeneousComponent (blockWeight ι) d h := by
   classical
@@ -28,19 +29,19 @@ theorem component_form_mul {s : MRing ι R} {e : K → ℕ} (hs : IsMultiHomog s
     ← weightedDecomposition.decompose'_apply R (blockWeight ι) h d]
   exact this
 
-variable (P : Ideal (MRing ι R)) [P.IsPrime]
+variable (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime]
 
-abbrev img : MRing ι R →+* FractionRing (MRing ι R ⧸ P) :=
-  (algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P))).comp (Ideal.Quotient.mk P)
+abbrev img : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) :=
+  (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P))).comp (Ideal.Quotient.mk P)
 
 variable {P}
 
 omit [DecidableEq K] in
 
-theorem img_eq_zero_iff {f : MRing ι R} : img P f = 0 ↔ f ∈ P := by
+theorem img_eq_zero_iff {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} : img P f = 0 ↔ f ∈ P := by
   simp [img, Ideal.Quotient.eq_zero_iff_mem]
 
-theorem img_component_congr (hP : IsMultiHomogIdeal P) {u v : MRing ι R} (huv : img P u = img P v)
+theorem img_component_congr (hP : IsMultiHomogIdeal P) {u v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (huv : img P u = img P v)
     (d : K → ℕ) :
     img P (weightedHomogeneousComponent (blockWeight ι) d u) =
       img P (weightedHomogeneousComponent (blockWeight ι) d v) := by
@@ -50,10 +51,10 @@ theorem img_component_congr (hP : IsMultiHomogIdeal P) {u v : MRing ι R} (huv :
 
 omit [DecidableEq K] in
 
-theorem img_ne_zero {W : Ideal (MRing ι R)} (hPW : P ≤ W) {t : MRing ι R} (ht : t ∉ W) :
+theorem img_ne_zero {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hPW : P ≤ W) {t : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (ht : t ∉ W) :
     img P t ≠ 0 := fun h0 => ht (hPW (img_eq_zero_iff.mp h0))
 
-theorem quot_mem {W : Ideal (MRing ι R)} {b : K → ℕ} {f g : MRing ι R} (hf : IsMultiHomog f b)
+theorem quot_mem {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {b : K → ℕ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hf : IsMultiHomog f b)
     (hg : IsMultiHomog g b) (hgW : g ∉ W) : img P f / img P g ∈ homLocRing P W :=
   Subring.subset_closure ⟨b, f, g, hf, hg, hgW, rfl⟩
 
@@ -65,7 +66,7 @@ theorem HomLocRingNoetherian.proof (hmem : HomLocRingMem.Statement.{u}) :
     HomLocRingNoetherian.Statement.{u} := by
   intro R _ _ K _ _ ι _ P W _ hP hW _ hPW
   classical
-  set S := MRing ι R
+  set S := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι
   set D := S ⧸ P
   set F := FractionRing D
 

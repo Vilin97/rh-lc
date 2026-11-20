@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagCutTools
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreClosureNumber
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -22,8 +23,8 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
   set cls' := closureDeg (zetaSecond a₀') (Fin.append x' z') with hcls'
   set Q' := Q.map liftPairDeg with hQ'
   have hQlen : Q'.length = Q.length := List.length_map _
-  set FV : Fin (N + n) → MRing ι O := Fin.append f fz with hFV
-  set GV : Fin (N + n) → MRing ι O := Fin.append g gz with hGV
+  set FV : Fin (N + n) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι := Fin.append f fz with hFV
+  set GV : Fin (N + n) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι := Fin.append g gz with hGV
   have hvV : ∀ j, IsVerticalDivisor (pointIdeal O y) ϖ (Fin.append x z j - Fin.append x' z' j) (FV j) (GV j) := by
     intro j
     refine Fin.addCases (fun i => ?_) (fun i => ?_) j
@@ -136,7 +137,7 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
     (1 + (N + n)) cls cls' F3 G3 hv3 (m + 1) ((X ζi + X xi) * A) hyA As (E1 + E2) hAs hCs Q'
     (by rw [hQlen]; omega)
   rw [hExp1, pairNum_add_expansion, hE1, pairNum_add_expansion, pairNum_single, pairNum_single]
-  have hnA : ∀ W : Ideal (MRing (bundleIdx (bundleIdx ι M) M') O), classNum (Sum.elim cls cls') (rename Sum.inl A) Q' W = classNum cls A Q' W := fun W => by
+  have hnA : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')), classNum (Sum.elim cls cls') (rename Sum.inl A) Q' W = classNum cls A Q' W := fun W => by
     rw [classNum_rename_vars]
     rfl
   have hF3ζ : F3 ζi = f₃ := by rw [hF3, hζi, closureForm_zero]
@@ -146,8 +147,8 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
   simp only [hnA]
   rw [hF3ζ, hG3ζ, hF3x, hG3x]
 
-  have hgen' : ∀ H, (divCycle (pointIdeal O pt1) s H ≠ 0 ∨ divCycle (pointIdeal O pt1) h H ≠ 0) →
-      (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∉ H →
+  have hgen' : ∀ H, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O pt1) s) H : ℤ) ≠ 0 ∨ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O pt1) h) H : ℤ) ≠ 0) →
+      (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∉ H →
       ∀ i, IsVerticalDivisor H ϖ (cls i - cls' i) (F3 i) (G3 i) := by
     intro H hH hϖH i
     obtain ⟨hf3H, hg3H, haH⟩ := hgen H hH hϖH
@@ -170,7 +171,7 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
         have h' := haH (Fin.natAdd (N + n) j)
         rwa [Fin.append_right] at h'
   have hT3 : pairNum (pointIdeal O pt1) cls cls' F3 G3 E2 Q' =
-      cycEval (fun W => if (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W then
+      cycEval (fun W => if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W then
           classNum cls A Q' W - classNum cls' A Q' W
         else pairNum W cls cls' F3 G3 Bs₀ Q') (ratDiv (pointIdeal O pt1) s h) := by
     by_cases hm : m = 0
@@ -201,7 +202,7 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
   have hGVk : GV ki = g ⟨k, hk⟩ := by rw [hGV, hki, Fin.append_left]
   rw [hFVk, hGVk] at hlfk
   have hPr : (pointIdeal O pt1).IsPrime := hM1.multiProj.isPrime
-  have hmn : ∀ {a b : MRing (bundleIdx (bundleIdx ι M) M') O}, a ∉ pointIdeal O pt1 → b ∉ pointIdeal O pt1 →
+  have hmn : ∀ {a b : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')}, a ∉ pointIdeal O pt1 → b ∉ pointIdeal O pt1 →
       a * b ∉ pointIdeal O pt1 := fun ha hb hab => (hPr.mem_or_mem hab).elim ha hb
   set sT := s * f₃ * liftPairForm M M' (f ⟨k, hk⟩) with hsT_def
   set hT := h * g₃ * liftPairForm M M' (g ⟨k, hk⟩) with hhT_def
@@ -224,7 +225,7 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
     linarith
   have hsTP : sT ∉ pointIdeal O pt1 := hmn (hmn hsP hv₃.num_not_mem) hlfk.num_not_mem
   have hhTP : hT ∉ pointIdeal O pt1 := hmn (hmn hhP hv₃.den_not_mem) hlfk.den_not_mem
-  have haL : ∀ a : MRing ι O, aeval pt1 (liftPairForm M M' a) = algebraMap Ω Φ (aeval y a) := fun a =>
+  have haL : ∀ a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, aeval pt1 (liftPairForm M M' a) = algebraMap Ω Φ (aeval y a) := fun a =>
     aeval_liftPairForm (hpt (k + 1)) a
   have hvT : aeval pt1 sT = flagLineCoord w w e t (k + 1) ⟨k, hk⟩ * aeval pt1 hT := by
     simp only [hsT_def, hhT_def, map_mul, hsv, haL, hF.generic, flagLineCoord_flag w w' e hF.sameFlag t k hk, hg₃]
@@ -241,7 +242,7 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
     exact ⟨i, hi⟩
   have hvan : ∀ (c : Fin (1 + (N + n)) → Option (Option K) → ℤ) (o : Option (Option K)),
       (∀ i, c i o = 0) → (∀ q : K → ℤ, liftPairDeg q o = 0) →
-      ∀ W : Ideal (MRing (bundleIdx (bundleIdx ι M) M') O),
+      ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')),
         (∀ l : List (Option (Option K) → ℤ), l.length = d + k → (∀ b ∈ l, b o = 0) → vNumL W l = 0) →
         classNum c A Q' W = 0 := by
     intro c o hc hq W hW
@@ -272,10 +273,10 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
       rfl
     · rw [hcls', closureDeg_natAdd]
       rfl
-  have hnA0 : ∀ W, (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W →
+  have hnA0 : ∀ W, (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W →
       ratDiv (pointIdeal O pt1) sT hT W ≠ 0 → classNum cls A Q' W = 0 := fun W hϖW hW =>
     hvan cls none hclsn (fun _ => rfl) W (hc1 W hϖW hW)
-  have hnA'0 : ∀ W, (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W →
+  have hnA'0 : ∀ W, (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W →
       ratDiv (pointIdeal O pt1) s h W ≠ 0 → classNum cls' A Q' W = 0 := fun W hϖW hW =>
     hvan cls' (some none) hcls'n (fun _ => rfl) W (hc2 W hϖW hW)
 
@@ -291,18 +292,18 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
     rw [hrT]
     abel
   rw [hsum, ← cycEval_sub_cycle _ _ _ (ratDiv_finite_support _ _ _) hfs]
-  set n' : Ideal (MRing (bundleIdx (bundleIdx ι M) M') O) → ℤ := fun W =>
-    if (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W then 0 else classNum cls A Q' W with hn'
+  set n' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) → ℤ := fun W =>
+    if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W then 0 else classNum cls A Q' W with hn'
   have e1a : cycEval (fun W => classNum cls A Q' W) (ratDiv (pointIdeal O pt1) sT hT) =
       cycEval n' (ratDiv (pointIdeal O pt1) sT hT) := by
     refine cycEval_congr_support fun W hW => ?_
-    by_cases hϖW : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W
+    by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W
     · simp only [hn', if_pos hϖW]
       exact hnA0 W hϖW hW
     · simp only [hn', if_neg hϖW]
   have e1b : cycEval n' (ratDiv (pointIdeal O pt1) sT hT) = cycEval n' (ratDiv (pointIdeal O pt1) s h) := by
     refine cycEval_congr_cycle fun W => ?_
-    by_cases hϖW : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W
+    by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W
     · simp only [hn', if_pos hϖW, mul_zero]
     · have h3 : ratDiv (pointIdeal O pt1) f₃ g₃ W = 0 := by
         by_contra hne
@@ -313,14 +314,14 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
       rw [hrT]
       simp only [Pi.add_apply, h3, h4, add_zero]
   rw [e1a, e1b, ← cycEval_sub_fun _ _ _ hfs, ← cycEval_add_fun _ _ _ hfs]
-  set G : Ideal (MRing (bundleIdx (bundleIdx ι M) M') O) → ℤ := fun W =>
-    if (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W then 0 else pairNum W cls cls' F3 G3 Bs₀ Q' with hG
+  set G : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) → ℤ := fun W =>
+    if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W then 0 else pairNum W cls cls' F3 G3 Bs₀ Q' with hG
   have e2 : cycEval (fun W => n' W - classNum cls A Q' W +
-      if (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W then classNum cls A Q' W - classNum cls' A Q' W
+      if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W then classNum cls A Q' W - classNum cls' A Q' W
       else pairNum W cls cls' F3 G3 Bs₀ Q') (ratDiv (pointIdeal O pt1) s h) =
       cycEval G (ratDiv (pointIdeal O pt1) s h) := by
     refine cycEval_congr_support fun W hW => ?_
-    by_cases hϖW : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W
+    by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W
     · rw [hn', hG]
       simp only [if_pos hϖW]
       have := hnA'0 W hϖW hW
@@ -334,13 +335,13 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
   rw [finsum_eq_single _ (pointIdeal O pt0) ?_]
   · by_cases hk0 : k = 0
     · rw [if_pos hk0]
-      by_cases hϖ0 : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ pointIdeal O pt0
+      by_cases hϖ0 : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ pointIdeal O pt0
       · simp only [hG, if_pos hϖ0, mul_zero]
       · rw [hdiv _ hϖ0, if_neg (by omega), zero_mul]
     · have hk0' : 0 < k := Nat.pos_of_ne_zero hk0
       have hM0 : IsModelOver (pointIdeal O pt0) (d + (k - 1)) := (hModk k hk0' hk.le).1
-      have hϖ0 : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∉ pointIdeal O pt0 := fun h' => by
-        have h'' : ϖ ∈ (pointIdeal O pt0).comap (C : O →+* MRing (bundleIdx (bundleIdx ι M) M') O) := h'
+      have hϖ0 : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∉ pointIdeal O pt0 := fun h' => by
+        have h'' : ϖ ∈ (pointIdeal O pt0).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) := h'
         rw [hM0.noTorsion, Ideal.mem_bot] at h''
         exact hϖ.ne_zero h''
       rw [if_neg hk0, hdiv _ hϖ0, if_pos ⟨hk0', rfl⟩, one_mul, hG]
@@ -371,7 +372,7 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
           exact h32
         · rw [hF3, hG3, closureForm_natAdd, closureForm_natAdd, closureForm_natAdd, closureForm_natAdd]
   · intro W hW
-    by_cases hϖW : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W
+    by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W
     · rw [hG]
       simp only [if_pos hϖW, mul_zero]
     · rw [hdiv W hϖW, if_neg (fun h' => hW h'.2), zero_mul]

@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartLength
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChartLengthAlgClosed
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChartResidueDegreeAlgClosed
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
@@ -42,7 +43,7 @@ theorem ChartLengthAlgClosed.proof (h₂ : SpecFirstMemIncIdeal.Statement)
       exact hqt this
     obtain ⟨_, hord⟩ := h₆ F n e I W f t u q p hI hf hu hq hp hqt hrel hqW htW
     have hlen := h₇ F n e I W f t u q p hI hf hu hq hp hqt hrel hqW htW
-    have hdiv : divCycle I u W = localMult (I ⊔ Ideal.span {linForm u}) W := by
+    have hdiv : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ) = localMult (I ⊔ Ideal.span {linForm u}) W := by
       simp [divCycle, fundCycle, Finsupp.onFinset_apply, hrel]
     rw [hlen, mul_one, hdiv]
     exact hord

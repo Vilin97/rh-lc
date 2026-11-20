@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpOrderLe
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleMul
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -56,13 +57,13 @@ theorem BlowUpOrderLe.proof (h₁ : LocalizedQuotLength.Statement.{u})
   have hGp : G'.IsPrime := hG'.1.1
   obtain ⟨G₀, W₀, hG₀p, hW₀p, hG₀, hW₀⟩ := BlowUpLocalChart.exists_quotient_primes hGp
     (le_sup_left.trans hG'.1.2) (le_sup_left.trans hG.1.2)
-  have hRHS0 : (0 : ℤ) ≤ divCycle P z (G'.comap (liftForm (J := J))) := by
-    unfold divCycle
+  have hRHS0 : (0 : ℤ) ≤ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P z) (G'.comap (liftForm (J := J))) : ℤ) := by
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
     split_ifs <;> positivity
   by_cases hL : G' ∈ (blowUpOf P u ⊔ Ideal.span {liftForm z}).minimalPrimes ∧ IsRelevant G'
   swap
-  · have h0 : divCycle (blowUpOf P u) (liftForm z) G' = 0 := by
-      unfold divCycle
+  · have h0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm z)) G' : ℤ) = 0 := by
+      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
       rw [dif_neg hL]
     rw [h0]
     exact hRHS0
@@ -82,7 +83,7 @@ theorem BlowUpOrderLe.proof (h₁ : LocalizedQuotLength.Statement.{u})
     rw [Ideal.mem_comap] at hmem
     simpa [liftForm, rename_X] using hmem
   have hfin := length_localizedQuot_ne_top (P ⊔ Ideal.span {z}) (G'.comap (liftForm (J := J))) hRmin
-  unfold divCycle
+  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   rw [dif_pos hL, dif_pos ⟨hRmin, hRrel⟩]
   suffices key : multAt (blowUpOf P u ⊔ Ideal.span {liftForm z}) G' ≤
       multAt (P ⊔ Ideal.span {z}) (G'.comap (liftForm (J := J))) by
@@ -90,10 +91,10 @@ theorem BlowUpOrderLe.proof (h₁ : LocalizedQuotLength.Statement.{u})
 
   obtain ⟨C, f, hfinj, hfrac, hfcompat, hmax⟩ := h₄ R K ι J P hP u G' y hy hG' hrel x hx hG G₀ hG₀ W₀ hW₀
   have hQp : (blowUpOf P u).IsPrime := RingHom.ker_isPrime _
-  have hSn : IsNoetherianRing (MRing ι R ⧸ P) := inferInstance
+  have hSn : IsNoetherianRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) := inferInstance
   have hAn : IsNoetherianRing (Localization.AtPrime G₀) :=
     IsLocalization.isNoetherianRing G₀.primeCompl _ hSn
-  have hAinj : Function.Injective (algebraMap (MRing ι R ⧸ P) (Localization.AtPrime G₀)) :=
+  have hAinj : Function.Injective (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (Localization.AtPrime G₀)) :=
     IsLocalization.injective (Localization.AtPrime G₀) (Ideal.primeCompl_le_nonZeroDivisors G₀)
   have hdim : ringKrullDim (Localization.AtPrime G₀) = 1 := by
     rw [IsLocalization.AtPrime.ringKrullDim_eq_height G₀ (Localization.AtPrime G₀)]
@@ -112,17 +113,17 @@ theorem BlowUpOrderLe.proof (h₁ : LocalizedQuotLength.Statement.{u})
     rw [h1]
     rfl
   set a : Localization.AtPrime G₀ :=
-    algebraMap (MRing ι R ⧸ P) (Localization.AtPrime G₀) (Ideal.Quotient.mk P z) with ha_def
+    algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (Localization.AtPrime G₀) (Ideal.Quotient.mk P z) with ha_def
   have ha : a ≠ 0 := by
     intro h0
-    rw [ha_def, ← map_zero (algebraMap (MRing ι R ⧸ P) (Localization.AtPrime G₀))] at h0
+    rw [ha_def, ← map_zero (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (Localization.AtPrime G₀))] at h0
     exact hz (Ideal.Quotient.eq_zero_iff_mem.mp (hAinj h0))
   have hDom : IsDomain (Localization.AtPrime W₀) := inferInstance
   have hchain := length_quot_le_of_subring h₂ h₃ hdim C f hfinj hfrac hmax a ha
   rw [ha_def, hfcompat z] at hchain
-  have e₁ := h₁ (MRing (extIdx ι J) R) (blowUpOf P u) W₀ (liftForm z)
-  have e₂ := h₁ (MRing ι R) P G₀ z
-  have key : ∀ (H : Ideal (MRing (extIdx ι J) R)) [H.IsPrime] (G : Ideal (MRing ι R)) [G.IsPrime],
+  have e₁ := h₁ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) (blowUpOf P u) W₀ (liftForm z)
+  have e₂ := h₁ (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) P G₀ z
+  have key : ∀ (H : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))) [H.IsPrime] (G : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [G.IsPrime],
       W₀.comap (Ideal.Quotient.mk (blowUpOf P u)) = H → G₀.comap (Ideal.Quotient.mk P) = G →
       multAt (blowUpOf P u ⊔ Ideal.span {liftForm z}) H ≤ multAt (P ⊔ Ideal.span {z}) G := by
     intro H _ G _ hH hGG

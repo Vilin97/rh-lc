@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -35,12 +36,12 @@ attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 open Classical in
 
-theorem component_mul {x : MRing ι F} {e : K → ℕ} (hx : IsMultiHomog x e) (y : MRing ι F)
+theorem component_mul {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {e : K → ℕ} (hx : IsMultiHomog x e) (y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)
     (m : K → ℕ) :
     weightedHomogeneousComponent (blockWeight ι) m (x * y) =
       if e ≤ m then x * weightedHomogeneousComponent (blockWeight ι) (m - e) y else 0 := by
-  have key : ∀ (p : MRing ι F) (n : K → ℕ),
-      (DirectSum.decompose (weightedHomogeneousSubmodule F (blockWeight ι)) p n : MRing ι F) =
+  have key : ∀ (p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (n : K → ℕ),
+      (DirectSum.decompose (weightedHomogeneousSubmodule F (blockWeight ι)) p n : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) =
         weightedHomogeneousComponent (blockWeight ι) n p :=
     fun p n => weightedDecomposition.decompose'_apply F _ p n
   have hx' : x ∈ weightedHomogeneousSubmodule F (blockWeight ι) e := hx
@@ -60,9 +61,9 @@ theorem CutPieces.proof : CutPieces.Statement := by
   by_cases hx0 : x = 0
   · have hI1 : I = ⊤ := (Ideal.eq_top_iff_one I).2 (hnzd 1 (by simp [hx0]))
     subst hI1
-    have e1 : S m ⊓ ((⊤ : Ideal (MRing ι F)) ⊔ Ideal.span {x}).restrictScalars F = S m := by
+    have e1 : S m ⊓ ((⊤ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) ⊔ Ideal.span {x}).restrictScalars F = S m := by
       rw [top_sup_eq, Submodule.restrictScalars_top, inf_top_eq]
-    have e2 : ∀ n, S n ⊓ (⊤ : Ideal (MRing ι F)).restrictScalars F = S n := fun n => by
+    have e2 : ∀ n, S n ⊓ (⊤ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)).restrictScalars F = S n := fun n => by
       rw [Submodule.restrictScalars_top, inf_top_eq]
     rw [e1, e2, e2]
     split_ifs <;> simp
@@ -72,7 +73,7 @@ theorem CutPieces.proof : CutPieces.Statement := by
   have hx' : x ∈ S e := hx
 
   have hsplit : ∀ f ∈ S m, f ∈ I ⊔ Ideal.span {x} →
-      ∃ i ∈ S m ⊓ I.restrictScalars F, ∃ y : MRing ι F,
+      ∃ i ∈ S m ⊓ I.restrictScalars F, ∃ y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι,
         f = i + weightedHomogeneousComponent (blockWeight ι) m (x * y) := by
     intro f hf hfI
     obtain ⟨i, hi, z, hz, rfl⟩ := Submodule.mem_sup.mp hfI

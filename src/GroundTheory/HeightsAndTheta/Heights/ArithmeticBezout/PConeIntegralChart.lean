@@ -2,6 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsConeChartArea
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsConeChartIntegrable
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PFsLogSmul
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -9,7 +10,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial MeasureTheory Matrix Filter Topology
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsSheet sheetDensity ptsIntegralAt pot)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSheet PBlk sheetDensity ptsIntegralAt pot)
 
 theorem hermLine_h_eq {n : ℕ} (S : Matrix (Fin n) (Fin n) ℂ) (hS : IsUnit S)
     (z : (Σ _ : Unit, PBlk n ()) → ℂ) :

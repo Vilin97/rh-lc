@@ -1,13 +1,14 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StGoodChartModel
 import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartZeroSet
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 noncomputable section
 
 namespace GroundTheory.Heights₂.Heights
 
-open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsMultiHomogIdeal PBlk)
+open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver PBlk IsMultiHomogIdeal)
 open ComplexSets
 
 def GoodChartZeroSet.Statement : Prop :=

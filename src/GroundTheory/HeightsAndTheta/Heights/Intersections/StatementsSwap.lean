@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsArith
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
@@ -13,10 +14,8 @@ def SwapCycles.Statement : Prop :=
     (a a' : K → ℕ) (s s' : MRing ι),
     IsArithVar P d → IsMultiHomog s a → IsMultiHomog s' a' → s ∉ P → s' ∉ P →
     (∀ W, W ∈ divSupp P s → W ∉ divSupp P s') →
-    ((divCycle P s).sum fun W m => m • divCycle W s') =
-      (divCycle P s').sum fun W m => m • divCycle W s
-
-def GeoNumCut.Statement : Prop :=
+    (((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))).sum fun W m => m • (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W s') W : ℤ))) =
+      ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s') W : ℤ))).sum fun W m => m • ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W s) def : ℤ) GeoNumCut.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (V : Ideal (MRing ι)) (n : ℕ)
     (a : Fin n → K → ℤ) (b : K → ℕ) (t : MRing ι),
     IsMultiProjPrime V → (charOf V).Prime →

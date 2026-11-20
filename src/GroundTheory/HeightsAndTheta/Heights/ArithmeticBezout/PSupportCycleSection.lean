@@ -1,12 +1,13 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsMahler
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
 
 theorem mem_support_cycleSection_iff {n : ℕ} (Z : ProjCycle ℂ n) (u : Fin n → ℂ)
     (W' : Ideal (MvPolynomial (Fin n) ℂ)) :
-    W' ∈ (cycleSection Z u).support ↔ ∃ W ∈ Z.support, W' ∈ (divCycle W u).support := by
+    W' ∈ (cycleSection Z u).support ↔ ∃ W ∈ Z.support, W' ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W u) W : ℤ))).support := by
   simp only [Finsupp.mem_support_iff, cycleSection, Finsupp.finsetSum_apply, Finsupp.smul_apply,
     smul_eq_mul, ne_eq, Finset.sum_eq_zero_iff, not_forall, mul_eq_zero, not_or, exists_prop]
   constructor <;> rintro ⟨W, h⟩ <;> exact ⟨W, by tauto⟩

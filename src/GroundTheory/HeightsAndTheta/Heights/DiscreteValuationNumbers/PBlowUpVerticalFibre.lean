@@ -10,6 +10,7 @@ import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIde
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIdealMultiHomog
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundlePullbackVanish
 import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
@@ -28,23 +29,23 @@ theorem mem_map_iff_of_ker_le {A B : Type*} [CommRing A] [CommRing B] {f : A →
 
 theorem contractPrime_specialIdeal {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     {ϖ : O} (hϖ : Irreducible ϖ) {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {J : Type}
-    (W' : Ideal (MRing (extIdx ι J) O)) (hϖW : (C ϖ : MRing (extIdx ι J) O) ∈ W') :
+    (W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J))) (hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)) ∈ W') :
     (FieldNumbers.contractPrime Function.Embedding.some (specialIdeal W') :
         Ideal (MRing ι (IsLocalRing.ResidueField O))) =
       specialIdeal (W'.comap (liftForm (ι := ι) (J := J) (R := O))) := by
   have hres := IsLocalRing.residue_surjective (R := O)
   have hs : Function.Surjective
-      (MvPolynomial.map (IsLocalRing.residue O) : MRing ι O →+* MRing ι (IsLocalRing.ResidueField O)) :=
+      (MvPolynomial.map (IsLocalRing.residue O) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* MRing ι (IsLocalRing.ResidueField O)) :=
     MvPolynomial.map_surjective _ hres
   have hker' : RingHom.ker (MvPolynomial.map (IsLocalRing.residue O) :
-      MRing (extIdx ι J) O →+* MRing (extIdx ι J) (IsLocalRing.ResidueField O)) ≤ W' := by
+      ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) →+* MRing (extIdx ι J) (IsLocalRing.ResidueField O)) ≤ W' := by
     rw [ker_map_residue_eq_span hϖ, Ideal.span_le, Set.singleton_subset_iff]
     exact hϖW
   have hker : RingHom.ker (MvPolynomial.map (IsLocalRing.residue O) :
-      MRing ι O →+* MRing ι (IsLocalRing.ResidueField O)) ≤
+      ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* MRing ι (IsLocalRing.ResidueField O)) ≤
         W'.comap (liftForm (ι := ι) (J := J) (R := O)) := by
     rw [ker_map_residue_eq_span hϖ, Ideal.span_le, Set.singleton_subset_iff]
-    change liftForm (J := J) (C ϖ : MRing ι O) ∈ W'
+    change liftForm (J := J) (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W'
     rw [liftForm_C]
     exact hϖW
   ext y
@@ -58,19 +59,19 @@ theorem contractPrime_specialIdeal {O : Type*} [CommRing O] [IsDomain O] [IsDisc
   exact Iff.of_eq (congrArg (· ∈ specialIdeal W') e)
 
 theorem relDim_eq_of_dim {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
-    (I : Ideal (MRing ι F)) (m : ℕ)
-    (h : ringKrullDim (MRing ι F ⧸ I) = ((m + Fintype.card K : ℕ) : WithBot ℕ∞)) :
+    (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : ℕ)
+    (h : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = ((m + Fintype.card K : ℕ) : WithBot ℕ∞)) :
     FieldNumbers.relDim I = (m : WithBot (WithTop ℤ)) := by
   rw [FieldNumbers.relDim, h]
   have : (((m + Fintype.card K : ℕ) : ℤ) - Fintype.card K) = m := by push_cast; ring
   exact congrArg (fun z : ℤ => ((z : WithTop ℤ) : WithBot (WithTop ℤ))) this
 
 theorem relDim_lt_of_dim_lt {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} {F : Type*}
-    [Field F] (I : Ideal (MRing ι F)) (m : ℕ)
-    (h : ringKrullDim (MRing ι F ⧸ I) < ((m + Fintype.card K : ℕ) : WithBot ℕ∞)) :
+    [Field F] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : ℕ)
+    (h : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) < ((m + Fintype.card K : ℕ) : WithBot ℕ∞)) :
     FieldNumbers.relDim I < (m : WithBot (WithTop ℤ)) := by
   unfold FieldNumbers.relDim
-  generalize ringKrullDim (MRing ι F ⧸ I) = x at h ⊢
+  generalize ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = x at h ⊢
   induction x using WithBot.recBotCoe with
   | bot => exact WithBot.bot_lt_coe _
   | coe y =>
@@ -114,14 +115,14 @@ theorem BlowUpVerticalFibre.proof (hmodel : BlowUpModel.Statement.{u})
     funext i
     exact FlagBundlePullbackVanish.liftDeg_eq_pullDeg (a i)
 
-  have key : ∀ W' : Ideal (MRing (extIdx ι J) O), divCycle (blowUpOf P u) (liftForm x) W' ≠ 0 →
+  have key : ∀ W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)), ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm x)) W' : ℤ) ≠ 0 →
       W'.comap (liftForm (ι := ι) (J := J) (R := O)) = W →
       IsMultiProjPrime (specialIdeal W') ∧ FieldNumbers.relDim (specialIdeal W') = (n : ℕ) ∧
         (FieldNumbers.contractPrime Function.Embedding.some (specialIdeal W') :
           Ideal (MRing ι (IsLocalRing.ResidueField O))) = specialIdeal W := by
     intro W' hW' hcomap
     obtain ⟨hWp, hWrel, -, hWh⟩ := divCycle_ne_zero_facts hB.multiProj.multiHomog hxl hW'
-    have hϖ' : (C ϖ : MRing (extIdx ι J) O) ∈ W' := by
+    have hϖ' : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)) ∈ W' := by
       rw [← hcomap, Ideal.mem_comap, liftForm_C] at hϖW
       exact hϖW
     obtain ⟨hsp, -, hrel, -⟩ :=
@@ -133,19 +134,19 @@ theorem BlowUpVerticalFibre.proof (hmodel : BlowUpModel.Statement.{u})
           W' hW' hϖ']
     · rw [← hcomap]
       exact contractPrime_specialIdeal hϖ W' hϖ'
-  by_cases hW : divCycle P x W ≠ 0
+  by_cases hW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) ≠ 0
   ·
     have hdimW : FieldNumbers.relDim (specialIdeal W) = (n : ℕ) := by
       apply relDim_eq_of_dim
       rw [SpecialQuotDim.proof O ϖ hϖ K ι W hϖW, ComponentDim.proof O ϖ hϖ K ι P n hP c x hx hxP W hW hϖW]
-    have hterm : ∀ W' : Ideal (MRing (extIdx ι J) O),
+    have hterm : ∀ W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)),
         (if W'.comap (liftForm (ι := ι) (J := J) (R := O)) = W then
-          divCycle (blowUpOf P u) (liftForm x) W' * vNum W' (liftDegs a) else 0) =
+          ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm x)) W' : ℤ) * vNum W' (liftDegs a) else 0) =
         (if W'.comap (liftForm (ι := ι) (J := J) (R := O)) = W then
-          divCycle (blowUpOf P u) (liftForm x) W' * (specialRelDeg W' : ℤ) else 0) * vNum W a := by
+          ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm x)) W' : ℤ) * (specialRelDeg W' : ℤ) else 0) * vNum W a := by
       intro W'
       split_ifs with h1
-      · by_cases h0 : divCycle (blowUpOf P u) (liftForm x) W' = 0
+      · by_cases h0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm x)) W' : ℤ) = 0
         · simp [h0]
         obtain ⟨hmp, hrd, hcon⟩ := key W' h0 h1
         have hpf' := (hpf (IsLocalRing.ResidueField O) K (Option K) Function.Embedding.some (extIdx ι J)
@@ -162,13 +163,13 @@ theorem BlowUpVerticalFibre.proof (hmodel : BlowUpModel.Statement.{u})
     rw [hW, zero_mul]
     refine finsum_eq_zero_of_forall_eq_zero fun W' => ?_
     split_ifs with h1
-    · by_cases h0 : divCycle (blowUpOf P u) (liftForm x) W' = 0
+    · by_cases h0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm x)) W' : ℤ) = 0
       · rw [h0, zero_mul]
       obtain ⟨hmp, hrd, hcon⟩ := key W' h0 h1
       obtain ⟨hWmin', hWrel'⟩ :
           W' ∈ (blowUpOf P u ⊔ Ideal.span {liftForm x}).minimalPrimes ∧ IsRelevant W' := by
         by_contra hc
-        exact h0 (by unfold divCycle; rw [dif_neg hc])
+        exact h0 (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dif_neg hc])
       obtain ⟨hWp, hPW, hWrel, -⟩ := comap_liftForm_facts hWmin'.1.1
         (le_sup_left.trans hWmin'.1.2) hWrel'
       rw [h1] at hWp hPW hWrel
@@ -179,13 +180,13 @@ theorem BlowUpVerticalFibre.proof (hmodel : BlowUpModel.Statement.{u})
 
       have hnmin : W ∉ (P ⊔ Ideal.span {x}).minimalPrimes := by
         intro hWmin
-        refine (show divCycle P x W ≠ 0 from ?_) hW
-        unfold divCycle
+        refine (show ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) ≠ 0 from ?_) hW
+        unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
         rw [dif_pos ⟨hWmin, hWrel⟩]
         have := localizedQuot_nontrivial_of_le (P ⊔ Ideal.span {x}) W hJW
         have h0 : multAt (P ⊔ Ideal.span {x}) W ≠ 0 :=
           (Module.length_pos (R := Localization.AtPrime W)
-            (M := LocalizedModule W.primeCompl (MRing ι O ⧸ (P ⊔ Ideal.span {x})))).ne'
+            (M := LocalizedModule W.primeCompl (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ (P ⊔ Ideal.span {x})))).ne'
         have htop := length_localizedQuot_ne_top _ W hWmin
         exact_mod_cast (ENat.toNat_pos h0 htop).ne'
       obtain ⟨Q, hQ, hQW⟩ := Ideal.exists_minimalPrimes_le hJW
@@ -194,8 +195,8 @@ theorem BlowUpVerticalFibre.proof (hmodel : BlowUpModel.Statement.{u})
       have hPQ : P < Q := lt_of_le_of_ne (le_sup_left.trans hQ.1.2) (fun h =>
         hxP (h ▸ hQ.1.2 (Ideal.mem_sup_right (Ideal.subset_span rfl))))
       have := hP.multiProj.isPrime
-      have hd1 := DimStrictDrop.proof (MRing ι O) Q W hQW'
-      have hd2 := DimStrictDrop.proof (MRing ι O) P Q hPQ
+      have hd1 := DimStrictDrop.proof (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) Q W hQW'
+      have hd2 := DimStrictDrop.proof (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P Q hPQ
       rw [hP.dim, show n + 1 + Fintype.card K = (n + Fintype.card K) + 1 by omega] at hd2
       have hlt := lt_of_two_drops hd1 hd2
       have hltW : FieldNumbers.relDim (specialIdeal W) < ((n : ℕ) : WithBot (WithTop ℤ)) :=

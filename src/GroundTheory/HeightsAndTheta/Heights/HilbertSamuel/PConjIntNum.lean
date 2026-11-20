@@ -1,5 +1,6 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsConjIntNum
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -19,17 +20,17 @@ theorem isWeightedHomogeneous_map {σ M : Type*} [AddCommMonoid M] (w : σ → M
   rw [coeff_map] at hd
   exact hf fun h => hd (by rw [h, map_zero])
 
-def quotEquiv (τ : F ≃+* F) (J : Ideal (MRing ι F)) :
-    (MRing ι F ⧸ J) ≃+* (MRing ι F ⧸ J.map (MvPolynomial.map (τ : F →+* F))) :=
+def quotEquiv (τ : F ≃+* F) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) :
+    (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ J) ≃+* (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ J.map (MvPolynomial.map (τ : F →+* F))) :=
   Ideal.quotientEquiv J _ (MvPolynomial.mapEquiv _ τ) (by
     congr 1)
 
 omit [DecidableEq K] in
-theorem quotEquiv_mk (τ : F ≃+* F) (J : Ideal (MRing ι F)) (f : MRing ι F) :
+theorem quotEquiv_mk (τ : F ≃+* F) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
     quotEquiv τ J (Ideal.Quotient.mk J f) = Ideal.Quotient.mk _ (MvPolynomial.map (τ : F →+* F) f) :=
   rfl
 
-theorem mem_gradedPiece_iff (τ : F ≃+* F) (J : Ideal (MRing ι F)) (m : K → ℕ) (x : MRing ι F ⧸ J) :
+theorem mem_gradedPiece_iff (τ : F ≃+* F) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : K → ℕ) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ J) :
     quotEquiv τ J x ∈ gradedPiece (J.map (MvPolynomial.map (τ : F →+* F))) m ↔ x ∈ gradedPiece J m := by
   simp only [gradedPiece, Submodule.mem_map, mem_weightedHomogeneousSubmodule]
   constructor
@@ -42,7 +43,7 @@ theorem mem_gradedPiece_iff (τ : F ≃+* F) (J : Ideal (MRing ι F)) (m : K →
   · rintro ⟨f, hf, rfl⟩
     exact ⟨MvPolynomial.map (τ : F →+* F) f, isWeightedHomogeneous_map _ _ hf, rfl⟩
 
-def pieceEquiv (τ : F ≃+* F) (J : Ideal (MRing ι F)) (m : K → ℕ) :
+def pieceEquiv (τ : F ≃+* F) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : K → ℕ) :
     gradedPiece J m ≃+ gradedPiece (J.map (MvPolynomial.map (τ : F →+* F))) m where
   toFun x := ⟨quotEquiv τ J x, (mem_gradedPiece_iff τ J m x).2 x.2⟩
   invFun y := ⟨(quotEquiv τ J).symm y,
@@ -53,9 +54,9 @@ def pieceEquiv (τ : F ≃+* F) (J : Ideal (MRing ι F)) (m : K → ℕ) :
 
 omit [DecidableEq K] in
 
-theorem quotEquiv_smul (τ : F ≃+* F) (J : Ideal (MRing ι F)) (c : F) (x : MRing ι F ⧸ J) :
+theorem quotEquiv_smul (τ : F ≃+* F) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (c : F) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ J) :
     quotEquiv τ J (c • x) = τ c • quotEquiv τ J x := by
-  have hs : ∀ (I : Ideal (MRing ι F)) (a : F) (g : MRing ι F),
+  have hs : ∀ (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (a : F) (g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι),
       a • Ideal.Quotient.mk I g = Ideal.Quotient.mk I (C a * g) := fun I a g => by
     rw [← smul_eq_C_mul]
     exact (map_smul (Ideal.Quotient.mkₐ F I) a g).symm
@@ -63,14 +64,14 @@ theorem quotEquiv_smul (τ : F ≃+* F) (J : Ideal (MRing ι F)) (c : F) (x : MR
   rw [hs, quotEquiv_mk, quotEquiv_mk, hs, map_mul, map_C]
   rfl
 
-theorem finrank_gradedPiece (τ : F ≃+* F) (J : Ideal (MRing ι F)) (m : K → ℕ) :
+theorem finrank_gradedPiece (τ : F ≃+* F) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : K → ℕ) :
     Module.finrank F (gradedPiece (J.map (MvPolynomial.map (τ : F →+* F))) m) =
       Module.finrank F (gradedPiece J m) := by
   have h := rank_eq_of_equiv_equiv (τ : F → F) (pieceEquiv τ J m) τ.bijective
     (fun c x => Subtype.ext (quotEquiv_smul τ J c x))
   simp only [Module.finrank, h]
 
-theorem hilbFn_map (τ : F ≃+* F) (J : Ideal (MRing ι F)) :
+theorem hilbFn_map (τ : F ≃+* F) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) :
     hilbFn (J.map (MvPolynomial.map (τ : F →+* F))) = hilbFn J := by
   funext m
   unfold hilbFn

@@ -4,13 +4,14 @@ import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
 import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyCN
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LengthLocalizedModuleQuotient
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LocalMultRadical
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter
 
 open MvPolynomial
 open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter
-open GroundTheory.Heights₂.Heights.NumbersDVR (MRing IsMultiHomogIdeal IsMultiProjPrime)
+open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiProjPrime IsMultiHomogIdeal)
 
 noncomputable section
 
@@ -43,22 +44,22 @@ set_option linter.unusedSectionVars false
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem comps_finite {R : Type} [CommRing R] [IsNoetherianRing R] (P : Ideal (MRing ι R))
-    (f : MRing ι R) : (comps P f).Finite :=
+theorem comps_finite {R : Type} [CommRing R] [IsNoetherianRing R] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))
+    (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : (comps P f).Finite :=
   (Ideal.finite_minimalPrimes_of_isNoetherianRing _ (P ⊔ Ideal.span {f})).subset fun _ h => h.1
 
-theorem mem_comps_of_divCycle_ne_zero {R : Type} [CommRing R] {P W : Ideal (MRing ι R)}
-    {f : MRing ι R} (h : NumbersDVR.divCycle P f W ≠ 0) : W ∈ comps P f := by
+theorem mem_comps_of_divCycle_ne_zero {R : Type} [CommRing R] {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)}
+    {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (h : NumbersDVR.divCycle P f W ≠ 0) : W ∈ comps P f := by
   unfold NumbersDVR.divCycle at h
   split_ifs at h with hh
   · exact hh
   · exact absurd rfl h
 
-theorem comap_extC {P0 : Ideal (MRing ι ℚ)} [P0.IsPrime] {Z : Ideal (MRing ι ℂ)}
+theorem comap_extC {P0 : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι)} [P0.IsPrime] {Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)}
     (hZ : Z ∈ (extC P0).minimalPrimes) : Z.comap (MvPolynomial.map (algebraMap ℚ ℂ)) = P0 :=
   ReciprocityTheory.AnForm.R.comap_of_mem_minimalPrimes_extC P0 Z hZ
 
-theorem isRelevant_of_comap {P0 : Ideal (MRing ι ℚ)} {Z : Ideal (MRing ι ℂ)} (hP : NumbersDVR.IsRelevant P0)
+theorem isRelevant_of_comap {P0 : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι)} {Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hP : NumbersDVR.IsRelevant P0)
     (h : Z.comap (MvPolynomial.map (algebraMap ℚ ℂ)) = P0) : NumbersDVR.IsRelevant Z := by
   intro k
   obtain ⟨i, hi⟩ := hP k
@@ -66,11 +67,11 @@ theorem isRelevant_of_comap {P0 : Ideal (MRing ι ℚ)} {Z : Ideal (MRing ι ℂ
   rw [← h, Ideal.mem_comap, MvPolynomial.map_X]
   exact hX
 
-theorem sC_not_mem {P0 : Ideal (MRing ι ℚ)} {Z : Ideal (MRing ι ℂ)}
-    (h : Z.comap (MvPolynomial.map (algebraMap ℚ ℂ)) = P0) {s : MRing ι ℚ} (hs : s ∉ P0) :
+theorem sC_not_mem {P0 : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι)} {Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)}
+    (h : Z.comap (MvPolynomial.map (algebraMap ℚ ℂ)) = P0) {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι} (hs : s ∉ P0) :
     sC s ∉ Z := fun hZ => hs (h ▸ Ideal.mem_comap.mpr hZ)
 
-theorem isMultiHomog_sC {s : MRing ι ℚ} {a : K → ℕ} (hs : NumbersDVR.IsMultiHomog s a) :
+theorem isMultiHomog_sC {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι} {a : K → ℕ} (hs : NumbersDVR.IsMultiHomog s a) :
     NumbersDVR.IsMultiHomog (sC s) a := by
   intro d hd
   apply hs
@@ -78,32 +79,32 @@ theorem isMultiHomog_sC {s : MRing ι ℚ} {a : K → ℕ} (hs : NumbersDVR.IsMu
   apply hd
   simp [sC, coeff_map, h0]
 
-theorem isMultiHomogIdeal_extC {P0 : Ideal (MRing ι ℚ)} (h : IsMultiHomogIdeal P0) :
+theorem isMultiHomogIdeal_extC {P0 : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι)} (h : IsMultiHomogIdeal P0) :
     IsMultiHomogIdeal (extC P0) :=
   FieldNumbers.isMultiHomogIdeal_map (F' := ℂ) h
 
-theorem isProjVar_of_mem_minimalPrimes {P0 : Ideal (MRing ι ℚ)} {e : ℕ} (hP : IsProjVarQ P0 e)
-    {Z : Ideal (MRing ι ℂ)} (hZ : Z ∈ (extC P0).minimalPrimes) : IsProjVar Z e := by
+theorem isProjVar_of_mem_minimalPrimes {P0 : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι)} {e : ℕ} (hP : IsProjVarQ P0 e)
+    {Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (hZ : Z ∈ (extC P0).minimalPrimes) : IsProjVar Z e := by
   have := hP.1.isPrime
   refine ⟨⟨hZ.1.1, FieldNumbers.PFContracted.isMultiHomogIdeal_of_mem_minimalPrimes
     (isMultiHomogIdeal_extC hP.1.multiHomog) hZ, isRelevant_of_comap hP.1.relevant (comap_extC hZ)⟩, ?_⟩
   rw [← hP.2]
   exact ReciprocityTheory.AnForm.R.ringKrullDim_of_mem_minimalPrimes_extC P0 Z hZ
 
-theorem zPts_anti {P Q : Ideal (MRing ι ℂ)} (h : P ≤ Q) : zPts Q ⊆ zPts P :=
+theorem zPts_anti {P Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (h : P ≤ Q) : zPts Q ⊆ zPts P :=
   fun _ hz => ⟨hz.1, fun f hf => hz.2 f (h hf)⟩
 
-theorem isLocSmooth_anti {P Q : Ideal (MRing ι ℂ)} (h : P ≤ Q) {g : MCone ι → ℝ}
+theorem isLocSmooth_anti {P Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (h : P ≤ Q) {g : MCone ι → ℝ}
     (hg : IsLocSmooth P g) : IsLocSmooth Q g := by
   intro z hz
   obtain ⟨U, hU, G, hG, hgG⟩ := hg z (zPts_anti h hz)
   exact ⟨U, hU, G, hG, fun w hw => hgG w ⟨hw.1, zPts_anti h hw.2⟩⟩
 
-theorem isSmoothFn_anti {P Q : Ideal (MRing ι ℂ)} (h : P ≤ Q) {g : MCone ι → ℝ}
+theorem isSmoothFn_anti {P Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} (h : P ≤ Q) {g : MCone ι → ℝ}
     (hg : IsSmoothFn P g) : IsSmoothFn Q g :=
   ⟨fun c hc z hz => hg.1 c hc z (zPts_anti h hz), isLocSmooth_anti h hg.2⟩
 
-theorem multAt_extC_toNat {P0 : Ideal (MRing ι ℚ)} [P0.IsPrime] {Z : Ideal (MRing ι ℂ)}
+theorem multAt_extC_toNat {P0 : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι)} [P0.IsPrime] {Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)}
     [Z.IsPrime] (hZ : Z ∈ (extC P0).minimalPrimes) : (NumbersDVR.multAt (extC P0) Z).toNat = 1 := by
   have h1 := localMult_eq_one_of_isRadical (ReciprocityTheory.AnForm.R.extC_isRadical P0) hZ
   unfold localMult at h1
@@ -127,7 +128,7 @@ theorem BCDeg.intersectionNumber_baseChange : BCDeg.Statement := by
   have := hP.1.isPrime
   have hmin : ∀ Z ∈ (extC P0).minimalPrimes, IsProjVar Z e :=
     fun Z hZ => isProjVar_of_mem_minimalPrimes hP hZ
-  have hdim : ringKrullDim (MRing ι ℂ ⧸ extC P0) < ((e + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+  have hdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι ⧸ extC P0) < ((e + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
     refine lt_of_le_of_lt (ringKrullDim_quotient_le_of_minimalPrimes _
       (N := ((e + Fintype.card K : ℕ) : WithBot ℕ∞)) fun Z hZ => (hmin Z hZ).2.le) ?_
     exact_mod_cast (show e + Fintype.card K < e + 1 + Fintype.card K by omega)
@@ -152,8 +153,8 @@ set_option linter.unusedSectionVars false
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem comps_descend {P0 : Ideal (MRing ι ℚ)} {e : ℕ} (hP : IsProjVarQ P0 (e + 1))
-    {s : MRing ι ℚ} (hsP : s ∉ P0) {Z Wa : Ideal (MRing ι ℂ)}
+theorem comps_descend {P0 : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι)} {e : ℕ} (hP : IsProjVarQ P0 (e + 1))
+    {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι} (hsP : s ∉ P0) {Z Wa : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)}
     (hZ : Z ∈ (extC P0).minimalPrimes) (hWa : Wa ∈ comps Z (sC s)) :
     Wa.comap (MvPolynomial.map (algebraMap ℚ ℂ)) ∈ comps P0 s ∧
       Wa ∈ (extC (Wa.comap (MvPolynomial.map (algebraMap ℚ ℂ)))).minimalPrimes := by
@@ -162,7 +163,7 @@ theorem comps_descend {P0 : Ideal (MRing ι ℚ)} {e : ℕ} (hP : IsProjVarQ P0 
   have : Z.IsPrime := hZ.1.1
   have : Wa.IsPrime := hWa.1.1.1
   have hZc := comap_extC hZ
-  have hdWa : ringKrullDim (MRing ι ℂ ⧸ Wa) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) :=
+  have hdWa : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι ⧸ Wa) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) :=
     FieldNumbers.CutRegular.ringKrullDim_minimalPrime (sC_not_mem hZc hsP) hWa.1
       (by rw [hZv.2, show e + 1 + Fintype.card K = e + Fintype.card K + 1 by omega])
   have hPsW : P0 ⊔ Ideal.span {s} ≤ Wa.comap (MvPolynomial.map (algebraMap ℚ ℂ)) := by
@@ -173,18 +174,18 @@ theorem comps_descend {P0 : Ideal (MRing ι ℚ)} {e : ℕ} (hP : IsProjVarQ P0 
       exact (le_sup_right.trans hWa.1.1.2) (Ideal.mem_span_singleton_self _)
   obtain ⟨W', hW', hW'W⟩ := Ideal.exists_minimalPrimes_le hPsW
   have : W'.IsPrime := hW'.1.1
-  have hdW' : ringKrullDim (MRing ι ℚ ⧸ W') = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) :=
+  have hdW' : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι ⧸ W') = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) :=
     FieldNumbers.CutRegular.ringKrullDim_minimalPrime hsP hW'
       (by rw [hP.2, show e + 1 + Fintype.card K = e + Fintype.card K + 1 by omega])
   have hext : extC W' ≤ Wa := Ideal.map_le_iff_le_comap.mpr hW'W
   obtain ⟨Wa', hWa', hWa'Wa⟩ := Ideal.exists_minimalPrimes_le hext
   have : Wa'.IsPrime := hWa'.1.1
-  have hdWa' : ringKrullDim (MRing ι ℂ ⧸ Wa') = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+  have hdWa' : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι ⧸ Wa') = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) := by
     rw [← hdW']
     exact ReciprocityTheory.AnForm.R.ringKrullDim_of_mem_minimalPrimes_extC W' Wa' hWa'
   have heq : Wa' = Wa := by
     by_contra hne
-    have h := NumbersDVR.DimStrictDrop.full (MRing ι ℂ) Wa' Wa (lt_of_le_of_ne hWa'Wa hne)
+    have h := NumbersDVR.DimStrictDrop.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι) Wa' Wa (lt_of_le_of_ne hWa'Wa hne)
     rw [hdWa, hdWa'] at h
     have h' : ((e + Fintype.card K + 1 : ℕ) : WithBot ℕ∞) ≤ ((e + Fintype.card K : ℕ) : WithBot ℕ∞) := by
       exact_mod_cast h
@@ -204,11 +205,11 @@ theorem comps_descend {P0 : Ideal (MRing ι ℚ)} {e : ℕ} (hP : IsProjVarQ P0 
   · rw [hcW, ← heq]
     exact hWa'
 
-theorem sum_components {P0 : Ideal (MRing ι ℚ)} {e : ℕ} (hP : IsProjVarQ P0 (e + 1))
-    {s : MRing ι ℚ} (hsP : s ∉ P0)
+theorem sum_components {P0 : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι)} {e : ℕ} (hP : IsProjVarQ P0 (e + 1))
+    {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ ι} (hsP : s ∉ P0)
     (hm : ∀ W ∈ comps P0 s, ∀ Wa ∈ (extC W).minimalPrimes,
       NumbersDVR.divCycle P0 s W = ∑ᶠ Z ∈ (extC P0).minimalPrimes, NumbersDVR.divCycle Z (sC s) Wa)
-    (F : Ideal (MRing ι ℂ) → ℝ) :
+    (F : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι) → ℝ) :
     ∑ᶠ Z ∈ (extC P0).minimalPrimes, ∑ᶠ Wa ∈ comps Z (sC s),
         (NumbersDVR.divCycle Z (sC s) Wa : ℝ) * F Wa =
       ∑ᶠ W ∈ comps P0 s, (NumbersDVR.divCycle P0 s W : ℝ) * ∑ᶠ Wa ∈ (extC W).minimalPrimes, F Wa := by
