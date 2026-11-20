@@ -27,7 +27,7 @@ theorem ringKrullDim_add_one_le {P Q : Ideal (ReciprocityTheory.ChartRestriction
 theorem ringKrullDim_lt_top [Finite K] [∀ k, Finite (ι k)] (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) :
     ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) < ⊤ := by
   refine lt_of_le_of_lt (ringKrullDim_quotient_le Q) ?_
-  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, zero_add]
+  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field, zero_add]
   exact WithBot.coe_lt_coe.mpr (ENat.natCast_lt_top _)
 
 end Drop
