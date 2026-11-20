@@ -67,7 +67,7 @@ theorem UpperTheory.V.AlgebraTools.Conn.base :
   obtain ⟨y, hy, hyP⟩ := base_exists_out (A := A) P hP hPm
   obtain ⟨z, hz, hzQ⟩ := base_exists_out (A := A) Q hQ hQm
   have hcom : (maximalIdeal R).comap (algebraMap A R) = maximalIdeal A := by
-    haveI := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := A) (maximalIdeal R)
+    haveI := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := A) (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal R)
     exact IsLocalRing.eq_maximalIdeal this
   have hmem : ∀ a ∈ maximalIdeal A, algebraMap A R a ∈ (b ⊔ c).radical := by
     intro a ha

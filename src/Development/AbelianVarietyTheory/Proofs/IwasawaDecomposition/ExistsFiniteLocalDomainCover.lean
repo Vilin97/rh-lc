@@ -104,7 +104,7 @@ theorem exists_isCN_common_of_finite : ∀ (R₀ A R' : Type) [CommRing R₀] [I
     exact hφρ r
   haveI : CharZero W := charZero_of_injective_algebraMap hinjW
   have h1 : (maximalIdeal W).comap (algebraMap V W) = maximalIdeal V :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal W))
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal W))
   have hlocW : IsLocalHom (algebraMap V W) := ((local_hom_tfae _).out 1 5).2 h1
   refine ⟨W, inferInstance, inferInstance, inferInstance, algebraMap V W, ψ',
     ⟨IsNoetherianRing.of_finite V W, integralClosure.isIntegrallyClosedOfFiniteExtension K,

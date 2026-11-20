@@ -121,7 +121,7 @@ theorem UpperTheory.V.Alg.co_finite :
     haveI := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := R) P hcm
     exact IsLocalRing.eq_maximalIdeal this
   have hcm' : (maximalIdeal R').comap (algebraMap R R') = maximalIdeal R :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) (maximalIdeal R'))
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal R'))
   have hloc : IsLocalHom (algebraMap R R') := by
     refine ⟨fun a ha => ?_⟩
     by_contra hna

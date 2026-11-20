@@ -76,7 +76,7 @@ theorem locHom_of_int {A B : Type} [CommRing A] [CommRing B] [IsLocalRing A] [Is
   have hm : ((maximalIdeal B).comap b).IsMaximal := by
     let _ := b.toAlgebra
     have : Algebra.IsIntegral A B := ⟨hb⟩
-    exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal B)
+    exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal B)
   have he := IsLocalRing.eq_maximalIdeal hm
   refine ⟨fun a ha => ?_⟩
   by_contra hna

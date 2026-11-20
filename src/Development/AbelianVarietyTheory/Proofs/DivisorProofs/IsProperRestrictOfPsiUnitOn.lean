@@ -87,6 +87,6 @@ theorem exists_dvr_centre (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing
   refine ⟨V', inferInstance, inferInstance, inferInstance, (algebraMap V V').comp φ, h3, h1.comp hφ, ?_⟩
   rw [← Ideal.comap_comap, ← hc]
   congr 1
-  exact eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal V'))
+  exact eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal V'))
 
 end GlobalTheory.UnifProperChar

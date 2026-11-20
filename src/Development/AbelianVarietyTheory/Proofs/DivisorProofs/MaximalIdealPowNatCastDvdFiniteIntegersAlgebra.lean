@@ -12,7 +12,7 @@ theorem maxIdeal_pow_dvd_natCast_of_integers :
   intro p hp C _ _ v O _ _ hv A _ _ _ _ a ha
 
   set J : Ideal O := (maximalIdeal A).comap (algebraMap O A) with hJdef
-  haveI : J.IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal A)
+  haveI : J.IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal A)
 
   have hJp : ∀ c ∈ J, ∃ k : ℕ, (p : O) ∣ c ^ k := by
     intro c hc

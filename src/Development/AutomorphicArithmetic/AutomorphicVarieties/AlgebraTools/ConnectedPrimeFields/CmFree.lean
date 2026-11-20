@@ -13,7 +13,7 @@ theorem UpperTheory.V.AlgebraTools.Conn.cmFree :
   obtain ⟨hN, n, hdim, rs, hlen, hmem, hreg⟩ := h
   have hinj : Function.Injective (algebraMap A B) := FaithfulSMul.algebraMap_injective A B
   have hm : (maximalIdeal B).comap (algebraMap A B) = maximalIdeal A :=
-    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal B))
+    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal B))
   refine ⟨IsNoetherianRing.of_finite A B, n, ?_, rs.map (algebraMap A B), by simpa using hlen, ?_,
     hreg.of_faithfullyFlat⟩
   · rw [← hdim]

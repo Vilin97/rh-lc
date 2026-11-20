@@ -109,7 +109,7 @@ theorem isLocalHom_of_finite (O S : Type) [CommRing O] [IsLocalRing O] [CommRing
   intro a ha
   by_contra hna
   have hm : (IsLocalRing.maximalIdeal S).comap (algebraMap O S) = IsLocalRing.maximalIdeal O :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (IsLocalRing.maximalIdeal S))
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal S))
   have hmem : a ∈ (IsLocalRing.maximalIdeal S).comap (algebraMap O S) := by
     rw [hm]
     exact hna

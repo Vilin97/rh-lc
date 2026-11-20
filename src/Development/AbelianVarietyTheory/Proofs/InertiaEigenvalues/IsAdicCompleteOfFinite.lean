@@ -43,7 +43,7 @@ theorem isAdicComplete_of_finite (R S : Type) [CommRing R] [IsLocalRing R] [IsNo
   haveI : IsNoetherianRing S := IsNoetherianRing.of_finite R S
   haveI : Algebra.IsIntegral R S := Algebra.IsIntegral.of_finite R S
   have hcomap : (maximalIdeal S).comap (algebraMap R S) = maximalIdeal R :=
-    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal S))
+    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal S))
   have hle : (maximalIdeal R).map (algebraMap R S) ≤ maximalIdeal S :=
     Ideal.map_le_iff_le_comap.mpr hcomap.ge
   have hrad : maximalIdeal S ≤ ((maximalIdeal R).map (algebraMap R S)).radical := by

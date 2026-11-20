@@ -33,7 +33,7 @@ lemma finOf_local_of_comp {O Q S : Type} [CommRing O] [CommRing Q] [CommRing S] 
 lemma finOf_local_algebraMap {O Q : Type} [CommRing O] [CommRing Q] [IsLocalRing O]
     [IsLocalRing Q] [Algebra O Q] [Algebra.IsIntegral O Q] : IsLocalHom (algebraMap O Q) :=
   ((local_hom_TFAE (algebraMap O Q)).out 5 1).1
-    (eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal Q)))
+    (eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal Q)))
 
 variable {R₀ : Type} [CommRing R₀]
 

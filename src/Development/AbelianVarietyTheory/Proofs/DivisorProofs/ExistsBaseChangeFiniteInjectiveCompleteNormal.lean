@@ -33,7 +33,7 @@ theorem UMem.exists_baseChange : ∀ {g n : ℕ} {F : SFam g n (zetaAway n)} {W 
   have hI : (maximalIdeal V).map io ≤ maximalIdeal V' := by
     letI := io.toAlgebra
     haveI : Algebra.IsIntegral V V' := ⟨hfin.to_isIntegral⟩
-    have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := V) (maximalIdeal V')
+    have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := V) (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal V')
     rw [Ideal.map_le_iff_le_comap]
     exact (IsLocalRing.eq_maximalIdeal hmax).ge
   let G' : Over (Sp V') := (Over.pullback (spMap io)).obj 𝔪.G

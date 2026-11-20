@@ -211,7 +211,7 @@ theorem abhyankar_residueField_isSeparable : ∀ (S K L : Type) [CommRing S] [Is
   haveI h4 : Algebra.IsSeparable (S ⧸ maximalIdeal S) (integralClosure D (TensorProduct S D L) ⧸ Q) :=
     Algebra.IsSeparable.trans (S ⧸ maximalIdeal S) (integralClosure S L ⧸ P) _
   haveI : (maximalIdeal D).LiesOver (maximalIdeal S) :=
-    ⟨(IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal D))).symm⟩
+    ⟨(IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal D))).symm⟩
   haveI : IsScalarTower (S ⧸ maximalIdeal S) (D ⧸ maximalIdeal D)
       (integralClosure D (TensorProduct S D L) ⧸ Q) := IsScalarTower.of_algebraMap_eq fun x => by
     obtain ⟨s, rfl⟩ := Ideal.Quotient.mk_surjective x

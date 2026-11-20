@@ -225,7 +225,7 @@ theorem reg_vertical {O A : Type} [CommRing O] [IsDomain O] [IsDiscreteValuation
     have hQ : φ (algebraMap A S q) ^ n ≠ 0 := pow_ne_zero _ hφ
     apply mul_left_cancel₀ hQ
     linear_combination -h1
-  have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := O) (maximalIdeal V)
+  have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := O) (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal V)
   have heq : Ideal.comap (algebraMap O V) (maximalIdeal V) = maximalIdeal O :=
     IsLocalRing.eq_maximalIdeal hmax
   have hmV : algebraMap O V ϖ ∈ maximalIdeal V := by

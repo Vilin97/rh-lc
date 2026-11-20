@@ -26,7 +26,7 @@ theorem refine_factor_baseChange : ∀ (R : Type) [CommRing R] [IsDomain R] [IsL
   have hloc : IsLocalHom ρ := by
     letI := ρ.toAlgebra
     have hint : Algebra.IsIntegral R R' := ⟨fun x => RingHom.IsIntegral.of_finite hfin x⟩
-    have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) (maximalIdeal R')
+    have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal R')
     have hc : (maximalIdeal R').comap ρ = maximalIdeal R := IsLocalRing.eq_maximalIdeal hmax
     refine ⟨fun a ha => ?_⟩
     by_contra hna

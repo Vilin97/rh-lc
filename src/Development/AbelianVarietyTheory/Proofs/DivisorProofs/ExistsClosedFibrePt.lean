@@ -66,7 +66,7 @@ theorem isLocalHom_of_finite {W W' : Type} [CommRing W] [IsLocalRing W] [CommRin
   letI := io.toAlgebra
   haveI : Module.Finite W W' := hf
   have hmax : (maximalIdeal W').comap (algebraMap W W') = maximalIdeal W :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal W'))
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal W'))
   refine ⟨fun a ha => ?_⟩
   by_contra h
   have : a ∈ (maximalIdeal W').comap (algebraMap W W') := hmax ▸ (IsLocalRing.mem_maximalIdeal a).2 h

@@ -29,7 +29,7 @@ theorem spMap_closedPoint_of_finite {R R' : Type} [CommRing R] [IsLocalRing R] [
   apply PrimeSpectrum.ext
   show Ideal.comap ρ (maximalIdeal R') = maximalIdeal R
   have : (Ideal.comap (algebraMap R R') (maximalIdeal R')).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal R')
+    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal R')
   exact IsLocalRing.eq_maximalIdeal this
 
 theorem comp_eq_of_near {R R' : Type} [CommRing R] [IsLocalRing R] [CommRing R'] [IsDomain R'] [IsLocalRing R']

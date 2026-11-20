@@ -17,7 +17,7 @@ theorem p_nonunit (hS : HidaSetting p n' W Qq O Kf ι σ j w) : ¬ IsUnit (p : O
   intro hu
   let _ : Algebra W O := j.toAlgebra
   have _ : Module.Finite W O := hS.finite
-  have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := W) (IsLocalRing.maximalIdeal O)
+  have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := W) (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal O)
   have heq : (IsLocalRing.maximalIdeal O).comap (algebraMap W O) = IsLocalRing.maximalIdeal W :=
     IsLocalRing.eq_maximalIdeal hmax
   have hpW : (p : W) ∈ IsLocalRing.maximalIdeal W := hS.p_unif.not_isUnit

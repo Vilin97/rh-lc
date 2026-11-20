@@ -66,7 +66,7 @@ theorem closedPoint_mem_abLocus_of_fixedTorsion : ∀ (R : Type) [CommRing R] [I
   letI : Algebra V W := io.toAlgebra
   have : Algebra.IsIntegral V W := ⟨fun w => hfin.to_isIntegral w⟩
   have hm : (maximalIdeal W).comap io = maximalIdeal V :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := V) (maximalIdeal W))
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := V) (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal W))
   have : IsLocalHom io := ((IsLocalRing.local_hom_tfae io).out 5 1).1 hm
   have e : spMap io (closedPoint W) = closedPoint V := by
     have h : ⇑(spMap io) = PrimeSpectrum.comap io := by

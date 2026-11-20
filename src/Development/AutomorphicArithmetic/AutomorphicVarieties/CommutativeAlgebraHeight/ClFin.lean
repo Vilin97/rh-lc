@@ -63,7 +63,7 @@ theorem UpperTheory.V.CA.cl_fin :
   haveI := h.res_fin
   haveI hN : IsNoetherianRing R' := IsNoetherianRing.of_finite R R'
   have hcomap : (maximalIdeal R').comap (algebraMap R R') = maximalIdeal R :=
-    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal R'))
+    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal R'))
   have hle : (maximalIdeal R).map (algebraMap R R') ≤ maximalIdeal R' :=
     Ideal.map_le_iff_le_comap.2 hcomap.ge
   have hrad : maximalIdeal R' ≤ ((maximalIdeal R).map (algebraMap R R')).radical := by

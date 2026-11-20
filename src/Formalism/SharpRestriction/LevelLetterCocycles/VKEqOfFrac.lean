@@ -19,7 +19,7 @@ private theorem exists_ne_zero_addVal_algebraMap_eq_mul (hinj : Function.Injecti
   have hnu : ¬ IsUnit (algebraMap R R' ϖ) := by
     intro hu
     have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R)
-      (IsLocalRing.maximalIdeal R')
+      (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal R')
     have heq := IsLocalRing.eq_maximalIdeal hmax
     have hmem : ϖ ∈ (IsLocalRing.maximalIdeal R').comap (algebraMap R R') := by
       rw [heq]; exact (IsLocalRing.mem_maximalIdeal ϖ).mpr hϖ.not_isUnit

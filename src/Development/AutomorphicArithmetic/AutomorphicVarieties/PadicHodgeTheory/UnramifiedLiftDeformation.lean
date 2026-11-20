@@ -148,7 +148,7 @@ variable {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsLocalRing O] [IsNoe
 private theorem maxZ_le (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [IsLocalRing O] [Algebra ℤ_[l] O]
     [Module.Finite ℤ_[l] O] {c : ℤ_[l]} (hc : c ∈ maximalIdeal ℤ_[l]) : algebraMap ℤ_[l] O c ∈ maximalIdeal O := by
   have h : (maximalIdeal O).comap (algebraMap ℤ_[l] O) = maximalIdeal ℤ_[l] :=
-    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal O))
+    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal O))
   rw [← h] at hc
   exact hc
 

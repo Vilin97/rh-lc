@@ -26,7 +26,7 @@ theorem isLocalHom_of_finExt {R R' : Type} [CommRing R] [IsLocalRing R] [CommRin
   letI := ρ.toAlgebra
   have hi : Algebra.IsIntegral R R' := ⟨fun x => h.2.2.to_isIntegral x⟩
   have hm : (maximalIdeal R').comap ρ = maximalIdeal R :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) (maximalIdeal R'))
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal R'))
   exact ((IsLocalRing.local_hom_tfae ρ).out 1 5).2 hm
 
 theorem exists_factor {S S₁ S₂ : Scheme.{0}} {G : Over S} {G₁ : Over S₁} {G₂ : Over S₂} [GrpObj G] [GrpObj G₁] [GrpObj G₂]

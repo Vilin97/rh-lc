@@ -13,7 +13,7 @@ private theorem exists_unit {l : ℕ} [Fact l.Prime] (O : Type) [CommRing O] [Is
     [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] :
     ∃ t : Oˣ, (t : O) - 1 ∈ maximalIdeal O ∧ Function.Injective fun j : ℤ => t ^ j := by
   have h1 : (maximalIdeal O).comap (algebraMap ℤ_[l] O) = maximalIdeal ℤ_[l] :=
-    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal O))
+    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal O))
   have h2 : (l : O) ∈ maximalIdeal O := by
     have : (l : ℤ_[l]) ∈ maximalIdeal ℤ_[l] := by
       rw [PadicInt.maximalIdeal_eq_span_p]; exact Ideal.mem_span_singleton_self _
